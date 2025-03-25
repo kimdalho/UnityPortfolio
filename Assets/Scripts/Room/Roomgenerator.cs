@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 
 public struct StrRoom
 {
-    
     public Vector3 pos;
     public int x, y, z;
 }
 
 public class Roomgenerator : MonoBehaviour
 {
+    public StartRoom startroom;
+
     [SerializeField]
     private GameObject roomPrefab;
+    [SerializeField]
+    private GameObject startRoomPrefab;
 
 
     public float StartPosX;
@@ -36,16 +38,12 @@ public class Roomgenerator : MonoBehaviour
     public Dictionary<int,Dictionary<int,Room>> grid = new Dictionary<int, Dictionary<int, Room>>();
 
 
-    public void Update()
+    public void SetData()
     {
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            BuildMap();
-            SetNeighbor();
-           
-        }
-
+        BuildMap();
+        SetNeighbor();
     }
+
     /// <summary>
     /// 맵을 생성한다.
     /// </summary>
@@ -54,36 +52,36 @@ public class Roomgenerator : MonoBehaviour
         Room LastRoom = null;
         StrRoom tempRoom = new StrRoom();
         //처음 스타트룸 생성
-        GameObject startRoom = Instantiate(roomPrefab);       
-        LastRoom = startRoom.GetComponent<Room>();
-        LastRoom.x = 0;
-        LastRoom.y = 0;
-        startRoom.gameObject.name = "StartRoom";
-        startRoom.transform.position = new Vector3(StartPosX, StartPosY, StartPosZ);
-        SetValue(0, 0, LastRoom);
+        GameObject startObject = Instantiate(startRoomPrefab);       
+        LastRoom = startObject.GetComponent<Room>();
+        LastRoom.SetRoom("StartRoom",0, 0);
+        GameManager.instance.SetCurrentRoom(LastRoom);
+        startObject.transform.position = new Vector3(StartPosX, StartPosY, StartPosZ);
+        startroom = startObject.GetComponent<StartRoom>();
+        SetGridValue(0, 0, LastRoom);
         int roomCount = RoomCount;
  
         while (roomCount > 0)
         {
-            tempRoom.x = LastRoom.x;
-            tempRoom.y = LastRoom.y;
+            tempRoom.x = LastRoom.GetX();
+            tempRoom.y = LastRoom.GetY();
             var type = Random.Range(0, 4);
             switch(type)
             {
                 case 0:
-                    tempRoom.y = LastRoom.y + 1;
+                    tempRoom.y = LastRoom.GetY() + 1;
                     tempRoom.pos = new Vector3(LastRoom.transform.position.x, LastRoom.transform.position.y, LastRoom.transform.position.z + PosZ);
                     break;
                 case 1:
-                    tempRoom.x = LastRoom.x + 1;
+                    tempRoom.x = LastRoom.GetX() + 1;
                     tempRoom.pos = new Vector3(LastRoom.transform.position.x + PosX, LastRoom.transform.position.y, LastRoom.transform.position.z);
                     break;
                 case 2:
-                    tempRoom.y = LastRoom.y - 1;
+                    tempRoom.y = LastRoom.GetY() - 1;
                     tempRoom.pos = new Vector3(LastRoom.transform.position.x, LastRoom.transform.position.y, LastRoom.transform.position.z - PosZ);
                     break;
                 case 3:
-                    tempRoom.x = LastRoom.x - 1;
+                    tempRoom.x = LastRoom.GetX() - 1;
                     tempRoom.pos = new Vector3(LastRoom.transform.position.x - PosX, LastRoom.transform.position.y, LastRoom.transform.position.z);
                     break;
             }
@@ -93,21 +91,17 @@ public class Roomgenerator : MonoBehaviour
                 Room room = Instantiate(roomPrefab).GetComponent<Room>();
                 
                 room.transform.position = new Vector3(tempRoom.pos.x, tempRoom.pos.y, tempRoom.pos.z);
-                room.x = tempRoom.x;
-                room.y = tempRoom.y;
-                room.gameObject.name = $"room {room.x},{room.y}";
-                SetValue(room.x, room.y, room);
+                room.SetRoom(tempRoom.x, tempRoom.y);
+                
+                SetGridValue(room.GetX(), room.GetY(), room);
                 LastRoom = room;
-                Debug.Log($"{LastRoom.x} {LastRoom.y}");
                 roomCount--;
             }
         }
-
-
     }
 
   
-    void SetValue(int x, int y, Room value)
+    void SetGridValue(int x, int y, Room value)
     {
         if (!grid.ContainsKey(x))
         {
@@ -136,37 +130,14 @@ public class Roomgenerator : MonoBehaviour
             {
                 Room room = col.Value;
 
-                Room up = GetValue(room.x, room.y + 1);
-                Room right = GetValue(room.x +1, room.y);
-                Room down = GetValue(room.x, room.y - 1);
-                Room left = GetValue(room.x -1, room.y);
+                Debug.Log($"{room.gameObject.name}");
 
-                if(up != null)
-                {
-                    room.neighbor[0] = up;
-                    room.SetDoor(0, true);
-                }
+                Room up = GetValue(room.GetX(), room.GetY() + 1);
+                Room right = GetValue(room.GetX() +1, room.GetY());
+                Room down = GetValue(room.GetX(), room.GetY() - 1);
+                Room left = GetValue(room.GetX() -1, room.GetY());
 
-                if (right != null)
-                {
-                    room.neighbor[1] = right;
-                    room.SetDoor(1, true);
-                }
-
-                if (down != null)
-                {
-                    room.neighbor[2] = down;
-                    room.SetDoor(2, true);
-                }
-
-                if (left != null)
-                {
-                    room.neighbor[3] = left;
-                    room.SetDoor(3, true);
-                }
-
-
-
+                room.SetNeighbor(up, right, down, left);
             }
         }
     }
