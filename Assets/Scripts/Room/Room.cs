@@ -2,25 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum eRoomType
+{
+    None = 0,
+    Neighbor = 1,
+    Floor = 2,
+}
+
+
+
 public class Room : MonoBehaviour
 {
+    public eRoomType state;
     public Transform camPoint;
 
     public List<GameObject> doorlist;
     private int x;
     private int y;
 
+    public Door nextFloorDoor;
+
     public List<Room> neighbor;
 
-    public Room()
+    public void CreateRoom(eRoomType type, Vector3 position, StrRoom strPos)
     {
-        neighbor = new List<Room>();
-        neighbor.Add(null);
-        neighbor.Add(null);
-        neighbor.Add(null);
-        neighbor.Add(null);        
+        state = type;
+        neighbor = new List<Room>
+        {
+            null,
+            null,
+            null,
+            null
+        };
+
+        transform.position = position;
+        SetRoom(strPos.x, strPos.y);
+        nextFloorDoor.SetData(this);
+        nextFloorDoor.gameObject.SetActive(type == eRoomType.Floor);
+
+
     }
 
+    /// <summary>
+    /// 이웃한 룸의 정보를 리스트로 가지고온다.
+    /// </summary>
+    /// <param name="up"></param>
+    /// <param name="right"></param>
+    /// <param name="down"></param>
+    /// <param name="left"></param>
     public void SetNeighbor(Room up, Room right, Room down, Room left)
     {
         Room[] rooms = { up, right, down, left };
@@ -33,9 +63,14 @@ public class Room : MonoBehaviour
                 SetDoor(i, true);
 
                 if (doorlist[i] != null)
-                {
+                {                    
                     int index = i; // 람다 캡처 문제 방지
-                    doorlist[i].GetComponent<Door>().callback = () => SetCurrentRoom(index);
+                    //람다 캡처 콜백을 담을시 index가 value 형태가 아니라 ref 형태로 4만을 반환하게 될수있다. 
+                    Door door = doorlist[i].GetComponent<Door>();
+                    if(door != null)
+                    {
+                        door.SetData(this,index);
+                    }
                 }
             }
             else
@@ -43,20 +78,7 @@ public class Room : MonoBehaviour
                 SetDoor(i, false);
             }
         }
-
-
     }
-
-
-    private void OnDestroy()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            doorlist[i].GetComponent<Door>().callback = null;
-        }
-    }
-
-
 
     public void SetDoor(int dir, bool isOpen)
     {
@@ -84,22 +106,10 @@ public class Room : MonoBehaviour
     public int GetX() { return x; }
     public int GetY() { return y; }
 
+
+
     /// <summary>
     /// 활성화될 룸을 선택 문 트리거 발생 시
     /// </summary>
-    public void SetCurrentRoom(int target)
-    {
-        if (target >= 4)
-        {
-            Debug.Log($"{target}");
-            return;
-
-        }
-            
-        GameManager GM = GameManager.instance;
-        GM.SetCurrentRoom(this);
-        GM.mainCam.transform.position = neighbor[target].camPoint.transform.position;
-    }
-
 
 }

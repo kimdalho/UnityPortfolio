@@ -320,8 +320,8 @@ Camera:
   m_GameObject: {fileID: 541305701}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -516,6 +516,7 @@ MonoBehaviour:
   currentRoom: {fileID: 0}
   roomgenerator: {fileID: 1992221570}
   playerPrefab: {fileID: 1805356684446764008, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
+  mainCam: {fileID: 541305704}
 --- !u!4 &2011068934
 Transform:
   m_ObjectHideFlags: 0
