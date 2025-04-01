@@ -98,10 +98,7 @@ public class Player : MonoBehaviour
         {
             door = other.GetComponent<Door>();
         }
-        else if (other.tag == "Item")
-        {
-            Debug.Log("xx");
-        }
+
     }
 
 
