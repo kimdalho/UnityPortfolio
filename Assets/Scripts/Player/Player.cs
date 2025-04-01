@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,19 +16,33 @@ public class Player : MonoBehaviour
     Vector3 moveVec;
     [SerializeField]
     private Rigidbody rb;
+    public Vector3 vec;
+
+    private IinputController iinputController;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         characterController = GetComponent<CharacterController>();
+        iinputController = InputController.instance.GetComponent<IinputController>();
     }
-
+    public GameAbility currentAbility;
     private void Update()
     {
         Move();
         RotateToCameraDirection();
-    }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if(door != null)
+                door.GetComponent<Door>().InputyPress();
+        }
 
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            _ = currentAbility.ActivateAbility();
+        }
+    }
+    Door door;
 
     /// <summary>
     /// 해당 코드는 이전에 사용했던 코드 이제 사용하지않지만 비교차원해서 남겨둠
@@ -48,8 +64,11 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        hAxis = Input.GetAxis("Horizontal");
-        vAxis = Input.GetAxis("Vertical");
+        hAxis = iinputController.GetHorizontal();
+        vAxis = iinputController.GetVertical();
+
+        //hAxis = Input.GetAxis("Horizontal");
+        //vAxis = Input.GetAxis("Vertical");
 
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -71,5 +90,20 @@ public class Player : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Door")
+        {
+            door = other.GetComponent<Door>();
+        }
+
+    }
+
+
+    public void SetPos(Vector3 vec3)
+    {
+        gameObject.transform.position = vec3;
     }
 }

@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        //마우스 커서 안보이게, 마우스 커서 고정
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
         roomgenerator.SetData();
         //player = Instantiate(playerPrefab).gameObject.GetComponent<Player>();
         player.transform.position = roomgenerator.startroom.spawnPoint.transform.position;

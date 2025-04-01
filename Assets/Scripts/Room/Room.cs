@@ -5,9 +5,8 @@ using UnityEngine;
 
 public enum eRoomType
 {
-    None = 0,
-    Neighbor = 1,
-    Floor = 2,
+    Neighbor = 0,
+    Floor = 1,
 }
 
 
@@ -37,7 +36,7 @@ public class Room : MonoBehaviour
 
         transform.position = position;
         SetRoom(strPos.x, strPos.y);
-        nextFloorDoor.SetData(this);
+        nextFloorDoor.SetFloorData(this);
         nextFloorDoor.gameObject.SetActive(type == eRoomType.Floor);
     }
 
@@ -66,7 +65,7 @@ public class Room : MonoBehaviour
                     Door door = doorlist[i].GetComponent<Door>();
                     if(door != null)
                     {
-                        door.SetData(this,index);
+                        door.SetDoorData(this,index);
                     }
                 }
             }
