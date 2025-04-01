@@ -12,7 +12,7 @@ using UnityEngine.Windows;
 
 public class Door : MonoBehaviour
 {
-    private readonly String STR_PLAYER = "Player";
+    
     [SerializeField]
     private Room ownerRoom;
     private int myIndex;

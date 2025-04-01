@@ -1,4 +1,5 @@
 using Unity.VisualScripting;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -25,14 +26,20 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         iinputController = InputController.instance.GetComponent<IinputController>();
     }
-
+    public GameAbility currentAbility;
     private void Update()
     {
         Move();
         RotateToCameraDirection();
         if (Input.GetKeyDown(KeyCode.F))
         {
-            door.GetComponent<Door>().InputyPress();
+            if(door != null)
+                door.GetComponent<Door>().InputyPress();
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            _ = currentAbility.ActivateAbility();
         }
     }
     Door door;
@@ -84,14 +91,19 @@ public class Player : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
-    private void OnTriggerStay(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Door")
         {
-            door = other.GetComponent<Door>();         
+            door = other.GetComponent<Door>();
+        }
+        else if (other.tag == "Item")
+        {
+            Debug.Log("xx");
         }
     }
-   
+
 
     public void SetPos(Vector3 vec3)
     {
