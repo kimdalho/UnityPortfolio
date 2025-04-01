@@ -69,8 +69,6 @@ public class Door : MonoBehaviour
         Room nextRoom = ownerRoom.neighbor[myIndex];
 
         player.transform.position = nextRoom.doorlist[otherSide].transform.position;
-        Debug.Log($"otherSide {nextRoom.neighbor[otherSide].name}");
-        GM.mainCam.transform.position = ownerRoom.neighbor[myIndex].camPoint.transform.position;
     }
 
     /// <summary>

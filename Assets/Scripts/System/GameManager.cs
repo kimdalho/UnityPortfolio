@@ -6,11 +6,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField]
     Roomgenerator roomgenerator;
+    //[SerializeField]
+    //public GameObject playerPrefab;
     [SerializeField]
-    public GameObject playerPrefab;
     private Player player;
-
-    public Camera mainCam;
 
     private void Awake()
     {
@@ -27,7 +26,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         roomgenerator.SetData();
-        player = Instantiate(playerPrefab).gameObject.GetComponent<Player>();
+        //player = Instantiate(playerPrefab).gameObject.GetComponent<Player>();
         player.transform.position = roomgenerator.startroom.spawnPoint.transform.position;
 
     }
