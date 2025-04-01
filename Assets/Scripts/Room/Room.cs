@@ -22,7 +22,6 @@ public class Room : MonoBehaviour
     private int y;
 
     public Door nextFloorDoor;
-
     public List<Room> neighbor;
 
     public void CreateRoom(eRoomType type, Vector3 position, StrRoom strPos)
@@ -40,8 +39,6 @@ public class Room : MonoBehaviour
         SetRoom(strPos.x, strPos.y);
         nextFloorDoor.SetData(this);
         nextFloorDoor.gameObject.SetActive(type == eRoomType.Floor);
-
-
     }
 
     /// <summary>
