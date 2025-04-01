@@ -12,41 +12,33 @@ using UnityEngine.Windows;
 
 public class Door : MonoBehaviour
 {
+    private readonly String STR_PLAYER = "Player";
+    [SerializeField]
     private Room ownerRoom;
     private int myIndex;
 
-
-    public void SetData(Room room)
+    IinputController inputController;
+    /// <summary>
+    /// 살짝 잘못만든구조 계단 내려가는 문을 초기화하는 함수 이건 인덱스가 없어서 별개로 만듬
+    /// </summary>
+    /// <param name="room"></param>
+    public void SetFloorData(Room room)
     {
         this.ownerRoom = room;
+
     }
     
-    public void SetData(Room room, int index)
+    /// <summary>
+    /// 내 인덱스를 초기화하는 상위 스택에서 매개변수로 받아온다.
+    /// </summary>
+    /// <param name="room"></param>
+    /// <param name="index"></param>
+    public void SetDoorData(Room room,int index)
     {
         this.ownerRoom = room;
         myIndex = index;
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            if(UnityEngine.Input.GetKeyDown(KeyCode.F))
-            {
-                if(ownerRoom.state == eRoomType.Floor)
-                {
-                    OpenNextFloor();
-                }
-                else
-                {
-                    Debug.Log("check2");
-                    OpenRoomNeighbor();
-                }
-               
-            }
-        }
-
-    }
 
     // 도어 공식 메모
     // 0 = 2
@@ -54,21 +46,31 @@ public class Door : MonoBehaviour
     // 2 = 0
     // 3 = 1
 
+    public void InputyPress()
+    {
+       
+        if (ownerRoom.state == eRoomType.Floor)
+        {
+            OpenNextFloor();
+        }
+        else
+        {
+            OpenRoomNeighbor();
+        }
+    }
 
 
-    private void OpenRoomNeighbor()
+
+    public void OpenRoomNeighbor()
     {
         GameManager GM = GameManager.instance;
-        //활성화 룸 선택
-       
-        GM.SetCurrentRoom(this.ownerRoom);
-        Player player = GM.GetPlayer();
-
-        int otherSide = GetOtherSide(myIndex);
-        
+        //활성화 룸 선택  
+        int otherSide = GetOtherSide(myIndex); 
         Room nextRoom = ownerRoom.neighbor[myIndex];
+        GM.SetCurrentRoom(nextRoom);
+        Player player = GM.GetPlayer();
+        player.SetPos(nextRoom.doorlist[otherSide].transform.position);
 
-        player.transform.position = nextRoom.doorlist[otherSide].transform.position;
     }
 
     /// <summary>
