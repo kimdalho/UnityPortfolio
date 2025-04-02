@@ -478,6 +478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hAxis: 0
   vAxis: 0
+  attack1: 0
 --- !u!4 &592921303
 Transform:
   m_ObjectHideFlags: 0
@@ -1179,10 +1180,6 @@ PrefabInstance:
     - target: {fileID: 3699101498662529524, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6462978079765270456, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
-      propertyPath: vec.y
-      value: 17.97
       objectReference: {fileID: 0}
     - target: {fileID: 6462978079765270456, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
       propertyPath: cameraTransform

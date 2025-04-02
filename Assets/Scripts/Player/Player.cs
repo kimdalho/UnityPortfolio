@@ -25,6 +25,8 @@ public partial class Player : MonoBehaviour , IPlayerserveice
     [SerializeField]
     private PlayerInventory inventory;
     private Door door;
+    [SerializeField]
+    private Animator animator;
 
     private void Start()
     {
@@ -43,6 +45,10 @@ public partial class Player : MonoBehaviour , IPlayerserveice
         Move();
         RotateToCameraDirection();
         DropItemUpdate();
+        if( iinputController.GetMouseLeft() > 0)
+        {
+            animator.SetTrigger("Trg_Attack");
+        }
 
 
     }

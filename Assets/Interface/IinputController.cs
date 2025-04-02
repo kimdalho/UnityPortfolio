@@ -20,5 +20,7 @@ public interface IinputController
     public void SubscribeToXKeyPress(Action callback);
     public void UnsubscribeFromXKeyPress(Action callback);
 
+    public float GetMouseLeft();
+
 
 }

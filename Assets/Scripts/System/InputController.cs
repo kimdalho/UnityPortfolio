@@ -11,6 +11,8 @@ public class InputController : MonoBehaviour , IinputController
     private float hAxis;
     [SerializeField]
     private float vAxis;
+    [SerializeField]
+    private float attack1;
 
     public Action OnFKeyPressed;
     public Action OnXKeyPressed;
@@ -33,6 +35,7 @@ public class InputController : MonoBehaviour , IinputController
     {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");
+        attack1 = Input.GetAxis("Fire1");
         if (Input.GetKeyDown(KeyCode.F))
         {
             // OnFKeyPressed 콜백 호출
@@ -75,5 +78,10 @@ public class InputController : MonoBehaviour , IinputController
     public void UnsubscribeFromXKeyPress(Action callback)
     {
         OnXKeyPressed -= callback;
+    }
+
+    public float GetMouseLeft()
+    {
+        return attack1;
     }
 }
