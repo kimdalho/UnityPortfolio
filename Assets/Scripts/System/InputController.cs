@@ -1,31 +1,30 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
-
 /// <summary>
-/// ÃßÈÄ ÀÎÇ²½Ã½ºÅÛÀ¸·Î ¾÷µ¥ÀÌÆ® ÇÒ¼öµµÀÖ´Ù. ÀÌ½Ä¼º À§ÇØ¼­ ÀÔ·Â ÀÌº¥Æ®¸¦ °ü¸®ÇÏ´Â ÄÁÆ®·Ñ·¯
+/// ì¶”í›„ ì¸í’‹ì‹œìŠ¤í…œìœ¼ë¡œ ì—…ë°ì´íŠ¸ í•  ìˆ˜ë„ ìžˆë‹¤. ì´ì‹ì„±ì„ ìœ„í•´ ìž…ë ¥ ì´ë²¤íŠ¸ë¥¼ ê´€ë¦¬í•˜ëŠ” ì»¨íŠ¸ë¡¤ëŸ¬
 /// </summary>
-public class InputController : MonoBehaviour , IinputController
+public class InputController : MonoBehaviour
 {
-    [SerializeField]
-    private float hAxis;
-    [SerializeField]
-    private float vAxis;
+    [SerializeField] private float hAxis;
+    [SerializeField] private float vAxis;
 
-    public Action OnFKeyPressed;
-    public Action OnXKeyPressed;
+    public  Action OnFKeyPressed = () => { };
+    public  Action OnXKeyPressed = () => { };
+    public  Action OnLeftDown = () => { };
+    public  Action OnLeftUp = () => { };
 
-    public static InputController instance;
+    public static InputController Instance { get; private set; }
 
     private void Awake()
     {
-        if(instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(this);
         }
     }
 
@@ -33,47 +32,20 @@ public class InputController : MonoBehaviour , IinputController
     {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            // OnFKeyPressed ÄÝ¹é È£Ãâ
-            OnFKeyPressed?.Invoke();       
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            // OnFKeyPressed ÄÝ¹é È£Ãâ
-            OnXKeyPressed?.Invoke();
-        }
-
     }
 
-    public float GetHorizontal()
+    private void FixedUpdate()
     {
-        return hAxis;
+        if (Input.GetKeyDown(KeyCode.F)) OnFKeyPressed.Invoke();
+        if (Input.GetKeyDown(KeyCode.X)) OnXKeyPressed.Invoke();
+        if (Input.GetMouseButton(0)) OnLeftDown.Invoke();
+        if (Input.GetMouseButtonUp(0)) OnLeftUp.Invoke();
     }
 
-    public float GetVertical()
-    {
-        return vAxis;
-    }
+    public float GetHorizontal() => hAxis;
+    public float GetVertical() => vAxis;
 
-    public void SubscribeToFKeyPress(Action callback)
-    {
-        OnFKeyPressed += callback;
-    }
-
-    // ±¸µ¶ ÇØÁ¦ ¸Þ¼­µå
-    public void UnsubscribeFromFKeyPress(Action callback)
-    {
-        OnFKeyPressed -= callback;
-    }
-
-    public void SubscribeToXKeyPress(Action callback)
-    {
-        OnXKeyPressed += callback;
-    }
-
-    public void UnsubscribeFromXKeyPress(Action callback)
-    {
-        OnXKeyPressed -= callback;
-    }
+    // âœ… ì œë„¤ë¦­ì„ í™œìš©í•œ Subscribe / Unsubscribe í†µí•©
+    public void Subscribe(ref Action eventAction, Action callback) => eventAction += callback;
+    public void Unsubscribe(ref Action eventAction, Action callback) => eventAction -= callback;
 }
