@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using static ItemData;
 
-public class Player : MonoBehaviour , IPlayerserveice
+public partial class Player : MonoBehaviour , IPlayerserveice
 {
     private IinputController iinputController;
 
@@ -37,12 +37,14 @@ public class Player : MonoBehaviour , IPlayerserveice
 
     }
     public GameAbility currentAbility;
-    Task task;
+    Task abilityskill;
     private void Update()
     {
         Move();
         RotateToCameraDirection();
-        
+        DropItemUpdate();
+
+
     }
 
     private void OnDestroy()
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour , IPlayerserveice
 
     private void AbilitySkillX()
     {
-        task = currentAbility.ActivateAbility();
+        abilityskill = currentAbility.ActivateAbility();
     }
 
 
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour , IPlayerserveice
     /// 해당 코드는 이전에 사용했던 코드 이제 사용하지않지만 비교차원해서 남겨둠
     /// 가장큰 차이점은 linerarVelocity를 사용했을때는 감속으로 미끄러지는 이동이 남아있었지만
     /// SimpleMove의 속도는 입력이 없으면 바로 0 이된다.
+    /// 다음에는 이런식으로 사용하지말자
     /// </summary>
     private void OldMove()
     {
@@ -108,13 +111,26 @@ public class Player : MonoBehaviour , IPlayerserveice
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out DroppedItem item))
+        {
+            nearbyItems.Remove(item);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
+        
         if (other.tag == "Door")
         {
             door = other.GetComponent<Door>();
         }
-
+        else if(other.TryGetComponent(out DroppedItem item))
+        {
+            Debug.Log($"{other.gameObject.name}");
+            nearbyItems.Add(item);
+        }
     }
 
 
@@ -135,24 +151,4 @@ public class Player : MonoBehaviour , IPlayerserveice
 
     public List<ItemData> itemlist = new List<ItemData>();
 
-    public void MakeItemData()
-    {
-        
-        ItemData BlokWood = new ItemData(
-            "나무",
-            "설치된 나무",
-            eItemType.PlaceableBlock,
-            1
-            );
-
-        ItemData wood = new ItemData(
-        "나무",
-        "목재이다",
-         eItemType.DroppedItem,
-        1
-        );
-        itemlist.Add(BlokWood);
-        itemlist.Add(wood);
-
-    }
 }

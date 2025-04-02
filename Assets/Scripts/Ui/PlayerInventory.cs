@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public List<Item> inventory = new List<Item>();
-    public void AddItem(Item item)
+    public List<DroppedItem> inventory = new List<DroppedItem>();
+    public void AddItem(DroppedItem item)
     {
         inventory.Add(item);
-        Debug.Log($"æ∆¿Ã≈€ »πµÊ: {item.GetItemName()}");
+        //Debug.Log($"æ∆¿Ã≈€ »πµÊ: {item.GetItemName()}");
     }
 }
