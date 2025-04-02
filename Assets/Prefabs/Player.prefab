@@ -130,13 +130,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce9b6abc9f37ae4e8741f8034296c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputController: {fileID: 0}
   moveSpeed: 5
   rotationSpeed: 10
   cameraTransform: {fileID: 0}
   rb: {fileID: 0}
   inventory: {fileID: 3986017991151147004}
   animator: {fileID: 8726658883902515400}
-  currentAbility: {fileID: 1356645583240906301, guid: 9ae65118ce443194991762c737e875a4, type: 3}
   itemlist: []
   magnetRange: 3
   magnetPower: 1.5

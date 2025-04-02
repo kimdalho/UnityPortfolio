@@ -17,7 +17,6 @@ public class Door : MonoBehaviour
     private Room ownerRoom;
     private int myIndex;
 
-    IinputController inputController;
     /// <summary>
     /// 살짝 잘못만든구조 계단 내려가는 문을 초기화하는 함수 이건 인덱스가 없어서 별개로 만듬
     /// </summary>

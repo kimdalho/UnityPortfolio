@@ -4,7 +4,7 @@ using UnityEngine;
 /// 드롭 아이템에 사용될 변수들 묶음
 /// 플레이어가 너무 무거워진다 변수라도 좀 나눠 놓자
 /// </summary>
-public partial class Player : MonoBehaviour
+public partial class Player : Character
 {
     public float magnetRange = 3f;  // 흡수 범위
     public float magnetPower = 1.5f;  // 흡수 속도 가중치

@@ -1,6 +1,7 @@
 
 using System.Collections;
 using UnityEngine;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 /// <summary>
 /// 원래는 객체가 비활성화 되어도 사용가능한 테스크로 만들었으나
@@ -10,15 +11,14 @@ using UnityEngine;
 public abstract class GameAbility : MonoBehaviour
 {
     public Character owner;
+    public string AbilityTag;
     public string AbilityName;
     public float Cooldown;
     public float Duration;
     protected bool isOnCooldown = false;
+
+    //스킬에 구독할 태그
     protected GameplayTagSystem tagSystem = new GameplayTagSystem();
-
-    public string attackAnimation;
-
-    public Coroutine Handle;
 
     protected IEnumerator CoActivateAbility()
     {
@@ -38,18 +38,17 @@ public abstract class GameAbility : MonoBehaviour
         isOnCooldown = false;
     }
 
-    public Coroutine ActivateAbility()
+    public void ActivateAbility(Character owner)
     {
-      Handle = StartCoroutine(CoActivateAbility());
-      return Handle;
+        this.owner = owner;
+        StartCoroutine(CoActivateAbility());
     }
 
     protected abstract IEnumerator ExecuteAbility();
 
     public void EndAbility()
-    {       
-        Handle = null;
-        Destroy(this.gameObject);
+    {
+        
     }
 
 
