@@ -46,7 +46,7 @@ public class Door : MonoBehaviour
     // 2 = 0
     // 3 = 1
 
-    public void InputyPress()
+    public void Open()
     {
        
         if (ownerRoom.state == eRoomType.Floor)
@@ -61,7 +61,7 @@ public class Door : MonoBehaviour
 
 
 
-    public void OpenRoomNeighbor()
+    private void OpenRoomNeighbor()
     {
         GameManager GM = GameManager.instance;
         //활성화 룸 선택  
