@@ -1,10 +1,15 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static ItemData;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour , IPlayerserveice
 {
+    private IinputController iinputController;
+
     public float moveSpeed = 5f;
     public float rotationSpeed = 10f;
     public Transform cameraTransform;
@@ -16,33 +21,47 @@ public class Player : MonoBehaviour
     Vector3 moveVec;
     [SerializeField]
     private Rigidbody rb;
-    public Vector3 vec;
-
-    private IinputController iinputController;
+    
+    [SerializeField]
+    private PlayerInventory inventory;
+    private Door door;
 
     private void Start()
     {
+        gameObject.tag = "Player"; 
         rb = GetComponent<Rigidbody>();
         characterController = GetComponent<CharacterController>();
         iinputController = InputController.instance.GetComponent<IinputController>();
+        iinputController.SubscribeToFKeyPress(OpentheDoor);
+        iinputController.SubscribeToXKeyPress(AbilitySkillX);
+
     }
     public GameAbility currentAbility;
+    Task task;
     private void Update()
     {
         Move();
         RotateToCameraDirection();
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if(door != null)
-                door.GetComponent<Door>().InputyPress();
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            _ = currentAbility.ActivateAbility();
-        }
+        
     }
-    Door door;
+
+    private void OnDestroy()
+    {
+        iinputController.UnsubscribeFromFKeyPress(OpentheDoor);
+        iinputController.UnsubscribeFromXKeyPress(AbilitySkillX);
+    }
+
+    private void OpentheDoor()
+    {
+        if (door != null)
+            door.Open();
+    }
+
+    private void AbilitySkillX()
+    {
+        task = currentAbility.ActivateAbility();
+    }
+
 
     /// <summary>
     /// 해당 코드는 이전에 사용했던 코드 이제 사용하지않지만 비교차원해서 남겨둠
@@ -66,9 +85,6 @@ public class Player : MonoBehaviour
     {
         hAxis = iinputController.GetHorizontal();
         vAxis = iinputController.GetVertical();
-
-        //hAxis = Input.GetAxis("Horizontal");
-        //vAxis = Input.GetAxis("Vertical");
 
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -105,5 +121,38 @@ public class Player : MonoBehaviour
     public void SetPos(Vector3 vec3)
     {
         gameObject.transform.position = vec3;
+    }
+
+    public PlayerInventory GetPlayerInventory()
+    {
+        return inventory;
+    }
+
+    /// <summary>
+    /// 이건 단순 테스트를 위해 만든 아이템 데이터 나중에수정필요
+    /// </summary>
+
+
+    public List<ItemData> itemlist = new List<ItemData>();
+
+    public void MakeItemData()
+    {
+        
+        ItemData BlokWood = new ItemData(
+            "나무",
+            "설치된 나무",
+            eItemType.PlaceableBlock,
+            1
+            );
+
+        ItemData wood = new ItemData(
+        "나무",
+        "목재이다",
+         eItemType.DroppedItem,
+        1
+        );
+        itemlist.Add(BlokWood);
+        itemlist.Add(wood);
+
     }
 }

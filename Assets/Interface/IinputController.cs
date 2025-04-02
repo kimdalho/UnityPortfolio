@@ -16,4 +16,9 @@ public interface IinputController
     /// </summary>
     public void UnsubscribeFromFKeyPress(Action callback);
 
+
+    public void SubscribeToXKeyPress(Action callback);
+    public void UnsubscribeFromXKeyPress(Action callback);
+
+
 }

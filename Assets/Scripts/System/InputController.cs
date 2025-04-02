@@ -13,6 +13,8 @@ public class InputController : MonoBehaviour , IinputController
     private float vAxis;
 
     public Action OnFKeyPressed;
+    public Action OnXKeyPressed;
+
     public static InputController instance;
 
     private void Awake()
@@ -34,9 +36,14 @@ public class InputController : MonoBehaviour , IinputController
         if (Input.GetKeyDown(KeyCode.F))
         {
             // OnFKeyPressed 콜백 호출
-            OnFKeyPressed?.Invoke();
-           
+            OnFKeyPressed?.Invoke();       
         }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            // OnFKeyPressed 콜백 호출
+            OnXKeyPressed?.Invoke();
+        }
+
     }
 
     public float GetHorizontal()
@@ -58,5 +65,15 @@ public class InputController : MonoBehaviour , IinputController
     public void UnsubscribeFromFKeyPress(Action callback)
     {
         OnFKeyPressed -= callback;
+    }
+
+    public void SubscribeToXKeyPress(Action callback)
+    {
+        OnXKeyPressed += callback;
+    }
+
+    public void UnsubscribeFromXKeyPress(Action callback)
+    {
+        OnXKeyPressed -= callback;
     }
 }
