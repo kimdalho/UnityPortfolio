@@ -19,8 +19,6 @@ public class DroppedItem : MonoBehaviour
             attractionSpeed += Time.deltaTime * 5f; // 이동 속도 가속
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, attractionSpeed * Time.deltaTime);
 
-            Debug.Log((Vector3.Distance(transform.position, targetPosition)));
-
             if (Vector3.Distance(transform.position, targetPosition) < collectDistance)
             {
                 CollectItem();

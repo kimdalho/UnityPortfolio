@@ -42,12 +42,12 @@ public class PlaceableObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(STR_PLAYER))
-        {
-            DestroyObject();
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag(STR_PLAYER))
+    //    {
+    //        DestroyObject();
+    //    }
+    //}
 
 }
