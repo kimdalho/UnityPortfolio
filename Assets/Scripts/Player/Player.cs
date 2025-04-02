@@ -38,8 +38,8 @@ public partial class Player : MonoBehaviour , IPlayerserveice
         iinputController.SubscribeToXKeyPress(AbilitySkillX);
 
     }
-    public GameAbility currentAbility;
-    Task abilityskill;
+    public GameObject currentAbility;
+    Coroutine abilityskill;
     private void Update()
     {
         Move();
@@ -67,7 +67,9 @@ public partial class Player : MonoBehaviour , IPlayerserveice
 
     private void AbilitySkillX()
     {
-        abilityskill = currentAbility.ActivateAbility();
+        GameObject instantiatedAbility = Instantiate(currentAbility);
+        GameAbility abilityComponent = instantiatedAbility.GetComponent<GameAbility>();
+        abilityskill = abilityComponent.ActivateAbility();
     }
 
 
