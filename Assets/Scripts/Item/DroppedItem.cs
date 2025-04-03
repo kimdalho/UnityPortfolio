@@ -1,5 +1,3 @@
-using System;
-using TMPro;
 using UnityEngine;
 
 public class DroppedItem : MonoBehaviour
@@ -11,6 +9,13 @@ public class DroppedItem : MonoBehaviour
 
     public MeshRenderer meshRenderer;
     public Texture itemTexture;
+    
+    public static ItemData model = new ItemData("나무", "나무 이다", ItemData.eItemType.Resource, 1);
+
+    private void Start()
+    {
+        //model = new ItemData("나무", "나무 이다", ItemData.eItemType.Resource, 1);
+    }
 
     void Update()
     {
@@ -21,6 +26,7 @@ public class DroppedItem : MonoBehaviour
 
             if (Vector3.Distance(transform.position, targetPosition) < collectDistance)
             {
+              
                 CollectItem();
             }
         }
@@ -44,12 +50,8 @@ public class DroppedItem : MonoBehaviour
 
     void CollectItem()
     {
+        GameObject.Find("Inventory").GetComponent<InvenViewer>().AddItem(model, 1);
         Debug.Log($"{gameObject.name} 획득!");
         gameObject.SetActive(false);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        
     }
 }
