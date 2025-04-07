@@ -1,0 +1,15 @@
+ID,KO,EN,JP
+Condition_01,캐릭터 선택,character selection,キャラクター選択
+Condition_02,불러오기,load,読み込む
+Condition_03,종료,end,終了
+Condition_04,캐릭터 생성 가능,Character creation possible,キャラクター生成可能
+Condition_05,캐릭터 삭제,delete character,キャラクターを削除
+Condition_06,게임 접속,game access,ゲーム接続
+Condition_07,기사,knight,記事
+Condition_08,도적,thief,盗賊
+Condition_09,레벨,level,レベル
+Condition_10,길드,guild,ギルド
+Condition_11,설정,setting,設定
+Condition_12,언어,language,言語
+Condition_13,자연환경,natural environment,自然環境
+Condition_14,효과음,sound effect,効果音

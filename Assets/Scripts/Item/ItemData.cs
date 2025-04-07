@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewItem", menuName = "Game/Item")]
-public class ItemData : ScriptableObject
+//[CreateAssetMenu(fileName = "NewItem", menuName = "Game/Item")]
+//ScriptableObject
+[SerializeField]
+public class ItemData
 {
     public string itemName;       // 아이템 이름
     public string description;    // 아이템 설명
@@ -12,10 +15,9 @@ public class ItemData : ScriptableObject
     public enum eItemType
     {
         Consumable,  // 소비형 (포션 등)
-        Equipment,   // 장비형 (검, 방어구)
-        DroppedItem,  // 바닥에 떨어진 상태
-        PlaceableBlock, // 맵에 배치된 상태
+        Equipment,   // 장비형 (검, 방어구)        
         UsableEntity, // 상자, 작업대처럼 동작하는 오브젝트
+        Resource,
     }
 
     public ItemData(string itemName, string description, eItemType itemType, int itemValue) {

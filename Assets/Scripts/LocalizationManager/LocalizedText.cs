@@ -1,0 +1,55 @@
+using TMPro;
+using UnityEngine;
+/// <summary>
+/// RequireComponent 처음 써봄 역할
+/// TMP_Text 컴포넌트를 강제화 한다 없으면 에러로 간주된다.
+/// </summary>
+[RequireComponent(typeof(TMP_Text))]
+public class LocalizedText : MonoBehaviour
+{
+    [SerializeField]
+    private string localizationID;
+
+    private TMP_Text textComponent;
+
+    private void Awake()
+    {
+        textComponent = GetComponent<TMP_Text>();
+        LocalizationManager.OnLanguageChanged += UpdateLocalizedText;
+    }
+
+    private void OnDestroy()
+    {
+        LocalizationManager.OnLanguageChanged -= UpdateLocalizedText;
+    }
+
+    private void OnEnable()
+    {
+        // 초기화가 안됐으면 무시하고, 이벤트를 통해 갱신되도록 대기
+        if (LocalizationManager.Instance != null)
+        {
+            UpdateLocalizedText();
+        }
+    }
+
+    public void UpdateLocalizedText()
+    {
+        if (string.IsNullOrEmpty(localizationID))
+        {
+            Debug.LogWarning($"[{name}] Localization ID is empty.");
+            return;
+        }
+
+        if (LocalizationManager.Instance == null)
+            return;
+
+        string localizedText = LocalizationManager.Instance.GetText(localizationID);
+        textComponent.text = localizedText;
+    }
+
+    public void SetLocalizationID(string newID)
+    {
+        localizationID = newID;
+        UpdateLocalizedText();
+    }
+}
