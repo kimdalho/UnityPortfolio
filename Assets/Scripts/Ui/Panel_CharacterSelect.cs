@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +17,8 @@ public class Panel_CharacterSelect : MonoBehaviour
     
     public List<CreateCharacterSlot> slotList;
 
-    private void Start()
+   
+    private void Awake()
     {
         SetData();
     }
@@ -43,6 +43,16 @@ public class Panel_CharacterSelect : MonoBehaviour
 
         img_Status.gameObject.SetActive(false);
         img_Class.gameObject.SetActive(false);
+
+        btn_Back.onClick.AddListener(() =>
+        {
+            gameObject.SetActive(false);
+        });
+
+        btn_GameAccess.onClick.AddListener(() => 
+        {
+            SceneContainer.Instance.LoadScene(eSceneType.GameScene);
+        });
     }
 
 
