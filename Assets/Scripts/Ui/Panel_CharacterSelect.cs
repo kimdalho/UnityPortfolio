@@ -1,16 +1,53 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Panel_CharacterSelect : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField]
+    Panel_CharacterName panel_CharacterName;
+    public GameObject model;
+
+    public Button btn_Back;
+    public Button btn_GameAccess;
+    public Button btn_DelectCharacter;
+
+    public Image img_Status;
+    public Image img_Class;
+    
+    public List<CreateCharacterSlot> slotList;
+
+    private void Start()
     {
-        
+        SetData();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetData()
     {
-        
+        foreach (CreateCharacterSlot slot in slotList)
+        {
+            slot.BtnCreate.onClick.AddListener(() => 
+            {
+                panel_CharacterName.gameObject.SetActive(true);
+                panel_CharacterName.SetData(slot);
+                panel_CharacterName.btn_Ok.onClick.AddListener(() => 
+                {
+                    img_Status.gameObject.SetActive(true);
+                    img_Class.gameObject.SetActive(true);
+                    model.gameObject.SetActive(true);
+                });
+
+            });
+        }
+
+        img_Status.gameObject.SetActive(false);
+        img_Class.gameObject.SetActive(false);
     }
+
+
+
+
+
+
 }
