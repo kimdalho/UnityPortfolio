@@ -6,7 +6,7 @@ public class PlaceableObject : MonoBehaviour
     private readonly String STR_PLAYER = "Player";
 
     public GameObject droppedItemPrefab; // 드롭될 아이템 프리팹
-    public int maxHealth = 3; // 내구도
+    public int maxHealth = 1; // 내구도
     private int currentHealth;
     public MeshRenderer meshRenderer;  // 모델의 렌더러
     public Texture texture;  //텍스처
@@ -41,13 +41,5 @@ public class PlaceableObject : MonoBehaviour
 
         Destroy(gameObject);
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag(STR_PLAYER))
-    //    {
-    //        DestroyObject();
-    //    }
-    //}
 
 }

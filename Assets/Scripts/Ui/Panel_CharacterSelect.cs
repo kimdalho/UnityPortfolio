@@ -47,6 +47,7 @@ public class Panel_CharacterSelect : MonoBehaviour
         btn_Back.onClick.AddListener(() =>
         {
             gameObject.SetActive(false);
+            LobbySceneController.Instance.panel_Title.gameObject.SetActive(true);
         });
 
         btn_GameAccess.onClick.AddListener(() => 

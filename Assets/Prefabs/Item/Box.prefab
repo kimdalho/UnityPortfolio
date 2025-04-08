@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 2229188202317433268}
   - component: {fileID: 7725990129495081711}
   m_Layer: 8
-  m_Name: Item
+  m_Name: Box
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

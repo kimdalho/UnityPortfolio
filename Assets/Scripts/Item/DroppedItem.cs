@@ -50,7 +50,11 @@ public class DroppedItem : MonoBehaviour
 
     void CollectItem()
     {
-        GameObject.Find("Inventory").GetComponent<InvenViewer>().AddItem(model, 1);
+        var Inventory = GameObject.Find("Inventory").GetComponent<InvenViewer>();
+        if (Inventory == null)
+            return;
+
+        Inventory.AddItem(model, 1);
         Debug.Log($"{gameObject.name} È¹µæ!");
         gameObject.SetActive(false);
     }
