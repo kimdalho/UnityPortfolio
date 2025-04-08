@@ -12,6 +12,7 @@ public enum eEntityType
 public class GridNode : MonoBehaviour
 {
     //테스트용 나중에 따로 빼야함
+    public GameObject wall;
     public GameObject boxItem;
     public GameObject Enemy;
 
@@ -38,5 +39,12 @@ public class GridNode : MonoBehaviour
         var newEntity = Instantiate(Enemy);
         newEntity.transform.localPosition = Vector3.zero;
     }
+    public void CreateWall()
+    {
+        var newEntity = Instantiate(wall);
+        newEntity.transform.SetParent(this.gameObject.transform);
+        newEntity.transform.localPosition = new Vector3(0, 1f, 0);
+    }
+
 
 }

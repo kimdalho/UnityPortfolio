@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlaceableObject : MonoBehaviour
 {
-    private readonly String STR_PLAYER = "Player";
-
     public GameObject droppedItemPrefab; // 드롭될 아이템 프리팹
     public int maxHealth = 1; // 내구도
     private int currentHealth;
