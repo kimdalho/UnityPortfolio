@@ -64,4 +64,9 @@ public class LocalizationManager : MonoBehaviour
     {
         LoadCSV(newLang);
     }
+
+    public Language GetLanguage()
+    {
+        return currentLanguage;
+    }
 }

@@ -9,6 +9,7 @@ public class LobbySceneController : MonoBehaviour
     public Button BtnExit;
 
     public GameObject panel_Title;
+    public Panel_Setting panel_Setting;
     public Panel_CharacterSelect panel_CharacterSelect;
 
     private void Awake()
@@ -34,12 +35,13 @@ public class LobbySceneController : MonoBehaviour
     public void OnClickCharacterSelect()
     {
         panel_CharacterSelect.gameObject.SetActive(true);
-        panel_Title.gameObject.SetActive(false); 
+        panel_Title.gameObject.SetActive(false);
 
     }
 
     public void OnClickSettingButton()
     {
+        panel_Setting.gameObject.SetActive(true);
 
     }
     public void OnClickExitButton()
