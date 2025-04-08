@@ -30,7 +30,13 @@ public class AttackAbility : GameAbility
         Collider[] results = SphereDetector.DetectObjectsInSphere(spherePosition, 1, LayerMask.GetMask("Item"));
         foreach (var col in results)
         {
-            col.GetComponent<PlaceableObject>().TakeDamage(1);
+            //col.GetComponent<PlaceableObject>().TakeDamage(1);
+            AttributeEntity ae = col.GetComponent<AttributeEntity>();
+            if (ae != null) 
+            {      
+                var effect = new GameEffect(new DamageExecution());
+                effect.Apply(owner, ae);
+            }
 
             Debug.Log("Detected: " + col.name);
         }

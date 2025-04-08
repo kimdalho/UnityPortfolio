@@ -1,17 +1,27 @@
 using System;
 using UnityEngine;
 
-public class PlaceableObject : MonoBehaviour
+public class PlaceableObject : AttributeEntity
 {
     public GameObject droppedItemPrefab; // 드롭될 아이템 프리팹
-    public int maxHealth = 1; // 내구도
-    private int currentHealth;
+    
     public MeshRenderer meshRenderer;  // 모델의 렌더러
     public Texture texture;  //텍스처
 
+    private void Awake()
+    {
+        onHit += TakeDamage;
+    }
+
+    private void OnDestroy()
+    {
+        onHit -= TakeDamage;
+    }
+
     void Start()
     {
-        currentHealth = maxHealth;
+        attribute.MaxHart = 1;
+        attribute.CurHart = attribute.MaxHart;
 
         // 나무 모델의 텍스처 설정
         if (meshRenderer != null && texture != null)
@@ -20,12 +30,11 @@ public class PlaceableObject : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage()
     {
-        currentHealth -= damage;
-        Debug.Log($"오브젝트 체력: {currentHealth}/{maxHealth}");
+        Debug.Log($"오브젝트 체력: {attribute.CurHart}/{attribute.MaxHart}");
 
-        if (currentHealth <= 0)
+        if (attribute.CurHart <= 0)
         {
             DestroyObject();
         }
