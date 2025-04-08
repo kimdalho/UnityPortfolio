@@ -6,11 +6,13 @@ public class Panel_CharacterSelect : MonoBehaviour
 {
     [SerializeField]
     Panel_CharacterName panel_CharacterName;
-    public GameObject model;
+    public ModelController model;
 
     public Button btn_Back;
     public Button btn_GameAccess;
     public Button btn_DelectCharacter;
+    public Button btn_man;
+    public Button btn_girl;
 
     public Image img_Status;
     public Image img_Class;
@@ -53,6 +55,16 @@ public class Panel_CharacterSelect : MonoBehaviour
         btn_GameAccess.onClick.AddListener(() => 
         {
             SceneContainer.Instance.LoadScene(eSceneType.GameScene);
+        });
+
+        btn_man.onClick.AddListener(() =>
+        {
+            model.SelectMan();
+        });
+
+        btn_girl.onClick.AddListener(() =>
+        {
+            model.SelectGirl();
         });
     }
 
