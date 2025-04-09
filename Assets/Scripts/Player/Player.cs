@@ -5,18 +5,30 @@ using UnityEngine;
 
 public partial class Player : Character, IPlayerserveice
 {
-    private InputController inputController;
+    public float jumpHeight = 2f;
+    public float gravity = -9.81f;
 
-    public float moveSpeed = 5f;
-    public float rotationSpeed = 10f;
-    public Transform cameraTransform;
-    private CharacterController characterController;
-    private Vector3 moveDirection;
+    private bool isGrounded = false;
+    public LayerMask groundLayerMask;
+    public float groundCheckDistance = 0.3f;
+
+    public Vector3 calcVelocity;
+    readonly int moveHash = Animator.StringToHash("Move");
+    readonly int fallingHash = Animator.StringToHash("Falling");
 
     float hAxis;
     float vAxis;
+
+    private InputController inputController;
+    public List<ItemData> itemlist = new List<ItemData>();
+
+    public float rotationSpeed = 10f;
+    public Transform cameraTransform;
+    [SerializeField]
+    private CharacterController characterController;
+    private Vector3 moveDirection;
+
     Vector3 moveVec;
-    [SerializeField] private Rigidbody rb;
     [SerializeField] private PlayerInventory inventory;
     private Door door;
     [SerializeField] private Animator animator;
@@ -25,6 +37,8 @@ public partial class Player : Character, IPlayerserveice
 
     private void Start()
     {
+        attribute.speed = 5;
+
         abilitySystem = GameObject.Find("AbilitySystem")?.GetComponent<AbilitySystem>();
         if (abilitySystem == null)
         {
@@ -33,8 +47,6 @@ public partial class Player : Character, IPlayerserveice
         }
 
         gameObject.tag = "Player";
-        rb = GetComponent<Rigidbody>();
-        characterController = GetComponent<CharacterController>();
 
         inputController = InputController.Instance;
         if (inputController == null)
@@ -106,9 +118,31 @@ public partial class Player : Character, IPlayerserveice
         right.Normalize();
 
         moveDirection = forward * vAxis + right * hAxis;
-        moveDirection *= moveSpeed;
+        
+        moveDirection *= attribute.speed;     
+        isGrounded = characterController.isGrounded;
+        if (isGrounded && calcVelocity.y < 0)
+        {
+            calcVelocity.y = 0;
 
-        characterController.SimpleMove(moveDirection);
+        }
+
+        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            calcVelocity.y += Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+        }
+
+        calcVelocity.y += gravity * Time.deltaTime;
+
+        characterController.Move(moveDirection * Time.deltaTime);
+        characterController.Move(calcVelocity * Time.deltaTime);
+
+        bool ismove = (move != Vector3.zero);
+        animator.SetBool(moveHash, ismove);
+        animator.SetBool(fallingHash, !isGrounded);
+
     }
 
     void RotateToCameraDirection()
@@ -151,5 +185,6 @@ public partial class Player : Character, IPlayerserveice
         return inventory;
     }
 
-    public List<ItemData> itemlist = new List<ItemData>();
+  
 }
+

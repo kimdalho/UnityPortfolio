@@ -5,13 +5,11 @@ using UnityEngine.AI;
 public class ControllerCharacter : Character
 {
     public float jumpHeight = 2f;
-
     public float gravity = -9.81f;
 
-
     private CharacterController characterController;
-    private NavMeshAgent agent;
-
+    [SerializeField]
+    private Animator animator;
 
     private bool isGrounded = false;
     public LayerMask groundLayerMask;
@@ -20,17 +18,8 @@ public class ControllerCharacter : Character
 
     //저항력
     public Vector3 calcVelocity;
-
-    private void Start()
-    {
-        characterController = GetComponent<CharacterController>();
-        agent = GetComponent<NavMeshAgent>();
-        //에이전트의 이동기능을 막음
-        agent.updatePosition = false;
-        agent.updateRotation = false;
-
-        attribute.speed = 5;
-    }
+    readonly int moveHash = Animator.StringToHash("Move");
+    readonly int fallingHash = Animator.StringToHash("Falling");
 
     private void Update()
     {
@@ -38,10 +27,15 @@ public class ControllerCharacter : Character
         if(isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
+            
         }
+        
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         characterController.Move(move * Time.deltaTime * attribute.speed);
+
+     
+        
 
         // jump input
         if (Input.GetButtonDown("Jump") && isGrounded)
@@ -52,8 +46,10 @@ public class ControllerCharacter : Character
         //중력 프로그래스
         calcVelocity.y += gravity * Time.deltaTime;
 
-
         characterController.Move(calcVelocity * Time.deltaTime);
+        bool ismove = (move != Vector3.zero);
+        animator.SetBool(moveHash, ismove);
+        animator.SetBool(fallingHash, !isGrounded);
 
     }
 
