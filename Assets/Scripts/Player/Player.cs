@@ -16,6 +16,8 @@ public partial class Player : Character, IPlayerserveice
     readonly int moveHash = Animator.StringToHash("Move");
     readonly int fallingHash = Animator.StringToHash("Falling");
 
+    float hAxis;
+    float vAxis;
 
     private InputController inputController;
     public List<ItemData> itemlist = new List<ItemData>();
@@ -105,6 +107,9 @@ public partial class Player : Character, IPlayerserveice
 
     private void Move()
     {
+        hAxis = inputController.GetHorizontal();
+        vAxis = inputController.GetVertical();
+
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
         forward.y = 0;
@@ -112,6 +117,9 @@ public partial class Player : Character, IPlayerserveice
         forward.Normalize();
         right.Normalize();
 
+        moveDirection = forward * vAxis + right * hAxis;
+        
+        moveDirection *= attribute.speed;     
         isGrounded = characterController.isGrounded;
         if (isGrounded && calcVelocity.y < 0)
         {
@@ -120,7 +128,6 @@ public partial class Player : Character, IPlayerserveice
         }
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        characterController.Move(move * Time.deltaTime * attribute.speed);
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -129,7 +136,9 @@ public partial class Player : Character, IPlayerserveice
 
         calcVelocity.y += gravity * Time.deltaTime;
 
+        characterController.Move(moveDirection * Time.deltaTime);
         characterController.Move(calcVelocity * Time.deltaTime);
+
         bool ismove = (move != Vector3.zero);
         animator.SetBool(moveHash, ismove);
         animator.SetBool(fallingHash, !isGrounded);
@@ -178,3 +187,4 @@ public partial class Player : Character, IPlayerserveice
 
   
 }
+
