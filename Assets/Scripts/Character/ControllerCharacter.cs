@@ -1,26 +1,35 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class ControllerCharacter : MonoBehaviour
+public class ControllerCharacter : Character
 {
-    public float speed = 5f;
     public float jumpHeight = 2f;
 
     public float gravity = -9.81f;
 
 
     private CharacterController characterController;
+    private NavMeshAgent agent;
+
 
     private bool isGrounded = false;
+    public LayerMask groundLayerMask;
+    public float groundCheckDistance = 0.3f;
+
 
     //저항력
     public Vector3 calcVelocity;
 
-    private Vector3 inputDirection = Vector3.zero;
-
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
+        agent = GetComponent<NavMeshAgent>();
+        //에이전트의 이동기능을 막음
+        agent.updatePosition = false;
+        agent.updateRotation = false;
+
+        attribute.speed = 5;
     }
 
     private void Update()
@@ -32,12 +41,8 @@ public class ControllerCharacter : MonoBehaviour
         }
 
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        characterController.Move(move * Time.deltaTime * speed);
+        characterController.Move(move * Time.deltaTime * attribute.speed);
 
-        if(move != Vector3.zero)
-        {
-            transform.forward = inputDirection;
-        }
         // jump input
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
