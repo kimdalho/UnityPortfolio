@@ -1,32 +1,29 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using UnityEditor.Purchasing;
 using UnityEngine;
 
-public partial class Player : Character, IPlayerserveice
+public partial class Player : Character
 {
     float hAxis;
     float vAxis;
 
     private InputController inputController;
-    public List<ItemData> itemlist = new List<ItemData>();
-
     public float rotationSpeed = 10f;
     public Transform cameraTransform;
     private Vector3 moveDirection;
 
-    Vector3 moveVec;
-    [SerializeField] private PlayerInventory inventory;
+    [SerializeField]
+    private ModelController modelController;
     private Door door;
-
 
     AbilitySystem abilitySystem;
 
     private void Start()
     {
-        attribute.speed = 5;
-
-        abilitySystem = GameObject.Find("AbilitySystem")?.GetComponent<AbilitySystem>();
+        LoadData();
+        abilitySystem = GameManager.instance.abilitySystem;
         if (abilitySystem == null)
         {
             Debug.LogError("AbilitySystem을 찾을 수 없습니다!");
@@ -166,9 +163,20 @@ public partial class Player : Character, IPlayerserveice
         gameObject.transform.position = vec3;
     }
 
-    public PlayerInventory GetPlayerInventory()
+    private void LoadData()
     {
-        return inventory;
+        if (UserData.Instance == null)
+        {
+            attribute.speed = 7;
+            return;
+        }
+            
+
+        attribute = UserData.Instance.saveData.attribute;
+        modelController.DisableAllParts();
+        modelController.m_heads[UserData.Instance.saveData.headIndex].gameObject.SetActive(true);
+        modelController.m_bodys[UserData.Instance.saveData.bodyIndex].gameObject.SetActive(true);
+        modelController.m_weapons[UserData.Instance.saveData.weaponIndex].gameObject.SetActive(true);
     }
 
   

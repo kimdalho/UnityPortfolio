@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Resources;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ public class Panel_CharacterSelect : MonoBehaviour
 {
     [SerializeField]
     Panel_CharacterName panel_CharacterName;
-    public ModelController model;
+    public LobbyModelController model;
 
     public TextMeshProUGUI[] tmpStats;
 
@@ -82,15 +83,10 @@ public class Panel_CharacterSelect : MonoBehaviour
     {
         SaveData saveData = new SaveData();
         saveData.attribute = model.character.attribute;
-        saveData.playerType = model.playerType;
-        saveData.nickname = panel_CharacterName.GetNickName();
-        PlayerData.Instance.saveData = saveData;
+        saveData.bodyIndex = model.GetActiveBodyIndex();
+        saveData.headIndex = model.GetActiveHeadIndex();        
+        saveData.nickname = panel_CharacterName.GetNickName();             
+        UserData.Instance.saveData = saveData;
         SceneContainer.Instance.LoadScene(eSceneType.GameScene);
     }
-
-
-
-
-
-
 }

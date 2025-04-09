@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerData : MonoBehaviour 
+public class UserData : MonoBehaviour 
 {
     public SaveData saveData;
 
-    public static PlayerData Instance;
+    public static UserData Instance;
 
     private void Awake()
     {
@@ -26,5 +26,7 @@ public class SaveData
 {
     public string nickname;
     public GameAttribute attribute;
-    public ePlayerType playerType;
+    public int bodyIndex;
+    public int headIndex;
+    public int weaponIndex;
 }

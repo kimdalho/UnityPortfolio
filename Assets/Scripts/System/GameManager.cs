@@ -4,12 +4,15 @@ public class GameManager : MonoBehaviour
 {
     public Room currentRoom;
     public static GameManager instance;
+    public AbilitySystem abilitySystem;
+
     [SerializeField]
     Roomgenerator roomgenerator;
     //[SerializeField]
     //public GameObject playerPrefab;
     [SerializeField]
     private Player player;
+    [SerializeField]
 
     private void Awake()
     {
@@ -25,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+
+
         //마우스 커서 안보이게, 마우스 커서 고정
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;

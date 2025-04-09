@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem.XInput;
@@ -9,17 +10,24 @@ public class AttackAbility : GameAbility
     protected override IEnumerator ExecuteAbility()
     {
         Character character = owner.GetComponent<Character>();
-        Animator animator = character.GetComponent<Animator>();
+        Animator animator = character.GetAnimator();
+
+        if(animator == null)
+        {
+            Debug.LogWarning($"Not Found Animation {character.gameObject.name}");
+            yield break;
+        }
+
         character.GetAnimator().SetTrigger("Trg_Attack");
 
-        AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
-        float animationDuration = animationState.length;
-        if(animationDuration > Duration)
+        while(animator.GetCurrentAnimatorStateInfo(0).IsTag("AttackTag"))
         {
-            Duration = animationDuration;
+            Debug.Log("Attack 태그 상태가 재생 중입니다.");
+            yield return null;
         }
+
         CreateDetectObject();
-        yield return new WaitForSeconds(Duration);  // 지속 효과 처리
+        //yield return new WaitForSeconds(Duration);  // 지속 효과 처리
         EndAbility();
     }
 
