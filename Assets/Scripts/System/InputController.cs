@@ -38,7 +38,7 @@ public class InputController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F)) OnFKeyPressed.Invoke();
         if (Input.GetKeyDown(KeyCode.X)) OnXKeyPressed.Invoke();
-        if (Input.GetMouseButton(0)) OnLeftDown.Invoke();
+        if (Input.GetMouseButtonDown(0)) OnLeftDown.Invoke();
         if (Input.GetMouseButtonUp(0)) OnLeftUp.Invoke();
     }
 
