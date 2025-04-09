@@ -4,22 +4,6 @@ using UnityEngine.AI;
 
 public class ControllerCharacter : Character
 {
-    public float jumpHeight = 2f;
-    public float gravity = -9.81f;
-
-    private CharacterController characterController;
-    [SerializeField]
-    private Animator animator;
-
-    private bool isGrounded = false;
-    public LayerMask groundLayerMask;
-    public float groundCheckDistance = 0.3f;
-
-
-    //ÀúÇ×·Â
-    public Vector3 calcVelocity;
-    readonly int moveHash = Animator.StringToHash("Move");
-    readonly int fallingHash = Animator.StringToHash("Falling");
 
     private void Update()
     {
@@ -30,13 +14,9 @@ public class ControllerCharacter : Character
             
         }
         
-
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         characterController.Move(move * Time.deltaTime * attribute.speed);
-
-     
-        
-
+      
         // jump input
         if (Input.GetButtonDown("Jump") && isGrounded)
         {

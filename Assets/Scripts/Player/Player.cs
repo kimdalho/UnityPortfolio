@@ -5,17 +5,6 @@ using UnityEngine;
 
 public partial class Player : Character, IPlayerserveice
 {
-    public float jumpHeight = 2f;
-    public float gravity = -9.81f;
-
-    private bool isGrounded = false;
-    public LayerMask groundLayerMask;
-    public float groundCheckDistance = 0.3f;
-
-    public Vector3 calcVelocity;
-    readonly int moveHash = Animator.StringToHash("Move");
-    readonly int fallingHash = Animator.StringToHash("Falling");
-
     float hAxis;
     float vAxis;
 
@@ -24,14 +13,12 @@ public partial class Player : Character, IPlayerserveice
 
     public float rotationSpeed = 10f;
     public Transform cameraTransform;
-    [SerializeField]
-    private CharacterController characterController;
     private Vector3 moveDirection;
 
     Vector3 moveVec;
     [SerializeField] private PlayerInventory inventory;
     private Door door;
-    [SerializeField] private Animator animator;
+
 
     AbilitySystem abilitySystem;
 
@@ -117,17 +104,16 @@ public partial class Player : Character, IPlayerserveice
         forward.Normalize();
         right.Normalize();
 
-        moveDirection = forward * vAxis + right * hAxis;
-        
+        moveDirection = forward * vAxis + right * hAxis;        
         moveDirection *= attribute.speed;     
         isGrounded = characterController.isGrounded;
+
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
-
         }
 
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 move = new Vector3(hAxis, 0, vAxis);
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {

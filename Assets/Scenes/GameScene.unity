@@ -1293,14 +1293,19 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6462978079765270456, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462978079765270456, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 3545643549069682311}
-    m_RemovedComponents:
-    - {fileID: 8430753144037453964, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
-    - {fileID: 2975813945849410830, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
-    m_RemovedGameObjects:
-    - {fileID: 4596122054155892398, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
+    - target: {fileID: 6462978079765270456, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}
+      propertyPath: groundLayerMask.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4435ca00a4b7ed94ba6a732efa843ae2, type: 3}

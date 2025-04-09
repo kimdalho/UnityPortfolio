@@ -8,8 +8,9 @@ public class AttackAbility : GameAbility
 {
     protected override IEnumerator ExecuteAbility()
     {
-        Animator animator = owner.GetComponent<Animator>();
-        animator.SetTrigger("Trg_Attack");
+        Character character = owner.GetComponent<Character>();
+        Animator animator = character.GetComponent<Animator>();
+        character.GetAnimator().SetTrigger("Trg_Attack");
 
         AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
         float animationDuration = animationState.length;
