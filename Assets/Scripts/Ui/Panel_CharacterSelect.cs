@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class Panel_CharacterSelect : MonoBehaviour
     [SerializeField]
     Panel_CharacterName panel_CharacterName;
     public ModelController model;
+
+    public TextMeshProUGUI[] tmpStats;
 
     public Button btn_Back;
     public Button btn_GameAccess;
@@ -38,6 +41,7 @@ public class Panel_CharacterSelect : MonoBehaviour
                     img_Status.gameObject.SetActive(true);
                     img_Class.gameObject.SetActive(true);
                     model.gameObject.SetActive(true);
+                   
                 });
 
             });
@@ -52,20 +56,36 @@ public class Panel_CharacterSelect : MonoBehaviour
             LobbySceneController.Instance.panel_Title.gameObject.SetActive(true);
         });
 
-        btn_GameAccess.onClick.AddListener(() => 
-        {
-            SceneContainer.Instance.LoadScene(eSceneType.GameScene);
-        });
+        btn_GameAccess.onClick.AddListener(GameStart);
 
         btn_man.onClick.AddListener(() =>
         {
             model.SelectMan();
+            ChnageAttribute();
         });
 
         btn_girl.onClick.AddListener(() =>
         {
             model.SelectGirl();
+            ChnageAttribute();
         });
+    }
+
+    private void ChnageAttribute()
+    {
+        tmpStats[0].text = model.character.attribute.MaxHart.ToString();
+        tmpStats[1].text = model.character.attribute.atk.ToString();
+        tmpStats[2].text = model.character.attribute.speed.ToString();
+    }
+
+    public void GameStart()
+    {
+        SaveData saveData = new SaveData();
+        saveData.attribute = model.character.attribute;
+        saveData.playerType = model.playerType;
+        saveData.nickname = panel_CharacterName.GetNickName();
+        PlayerData.Instance.saveData = saveData;
+        SceneContainer.Instance.LoadScene(eSceneType.GameScene);
     }
 
 

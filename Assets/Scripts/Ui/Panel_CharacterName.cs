@@ -27,5 +27,9 @@ public class Panel_CharacterName : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public string GetNickName()
+    {
+        return tmp_InputField.text;
+    }
     
 }
