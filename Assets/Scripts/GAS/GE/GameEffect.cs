@@ -10,10 +10,9 @@ public enum eModifier
 /// <summary>
 /// 전투에서 발생되는 스탯 연산을 서비스해준다.
 /// </summary>
-public class GameEffect
+public class GameEffect : MonoBehaviour
 {
-    public SOGameAttributeData model;
-
+    public GameAttribute effect;
     //오퍼
     public eModifier modifierOp;
 
@@ -29,30 +28,35 @@ public class GameEffect
         switch(modifierOp)
         {
             case eModifier.Multiply:
-                source.attribute *= model.attribute;
+                source.attribute *= effect;
                 break;
             case eModifier.Add:
-                source.attribute += model.attribute;
+                source.attribute += effect;
+                break;
+            case eModifier.Equal:
+                source.attribute = effect;
                 break;
         }
     }
 
-    //나중에 위 코드로 바꾸자
-    public virtual void ApplyGameplayEffectToSelf(Character source, SOGameAttributeData effect)
+
+    
+    public virtual void ApplyGameplayEffectToSelf(Character source, ePartType type)
     {
         switch (modifierOp)
         {
             case eModifier.Multiply:
-                source.attribute *= effect.attribute;
+                source.attribute *= effect;
                 break;
             case eModifier.Add:
-                source.attribute += effect.attribute;
+                source.attribute += effect;
                 break;
             case eModifier.Equal:
-                source.attribute = effect.attribute;
+                source.attribute = effect;
                 break;
         }
     }
+    
     public GameEffect()
     {
     

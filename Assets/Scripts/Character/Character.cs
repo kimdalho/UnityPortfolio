@@ -18,10 +18,16 @@ public class Character : AttributeEntity
     public float groundCheckDistance = 0.3f;
 
     [SerializeField] protected Animator animator;
+    [SerializeField] protected ModelController controller;
 
     public Animator GetAnimator()
     {
         return animator;
+    }
+
+    public ModelController GetModelController()
+    {
+        return controller;
     }
 
 }

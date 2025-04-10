@@ -1,26 +1,32 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.Purchasing;
 using UnityEngine;
 
-public partial class Player : Character, IPlayerserveice
+public partial class Player : Character
 {
     float hAxis;
     float vAxis;
 
     private InputController inputController;
-    public List<ItemData> itemlist = new List<ItemData>();
 
     public float rotationSpeed = 10f;
     public Transform cameraTransform;
     private Vector3 moveDirection;
 
     Vector3 moveVec;
-    [SerializeField] private PlayerInventory inventory;
     private Door door;
 
 
-    AbilitySystem abilitySystem;
+    #region 아이템 설명창
+    public Color gizmoColor = Color.red;
+    public float scanRadius = 5f;
+    public LayerMask itemLayer;
+    private Collider[] buffer = new Collider[4]; // 미리 할당된 버퍼
+    public ItemdescriptionView itemdescriptionView;
+    #endregion
+
+
+    private AbilitySystem abilitySystem;
 
     private void Start()
     {
@@ -46,13 +52,22 @@ public partial class Player : Character, IPlayerserveice
         inputController.Subscribe(ref inputController.OnXKeyPressed, AbilitySkillX);
         inputController.Subscribe(ref inputController.OnLeftDown, AbilitySkillAttack);
         inputController.Subscribe(ref inputController.OnLeftUp, AbilitySkillAttackEnd);
+
+
+        
+
     }
 
     private void Update()
     {
-        Move();
+        Move();        
         RotateToCameraDirection();
+        //자석기능 없앨까 생각중
         DropItemUpdate();
+        //아이템 상태창
+        HasPickupablesNearby();
+
+
     }
 
     private void OnDestroy()
@@ -159,6 +174,14 @@ public partial class Player : Character, IPlayerserveice
             Debug.Log($"{other.gameObject.name}");
             nearbyItems.Add(item);
         }
+
+        IPickupable pickup = other.GetComponent<IPickupable>();
+        if (pickup != null)
+        {
+            Debug.Log("check1");
+
+            pickup.OnPickup(this,gameObject);
+        }
     }
 
     public void SetPos(Vector3 vec3)
@@ -166,11 +189,30 @@ public partial class Player : Character, IPlayerserveice
         gameObject.transform.position = vec3;
     }
 
-    public PlayerInventory GetPlayerInventory()
-    {
-        return inventory;
-    }
 
-  
+    #region 아이템 설명창
+    public void HasPickupablesNearby()
+    {
+        int count = Physics.OverlapSphereNonAlloc(transform.position, scanRadius, buffer, itemLayer);
+        if(count  == 0 )
+        {
+            itemdescriptionView.gameObject.SetActive(false);
+            return;
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            if (buffer[i] != null && buffer[i].TryGetComponent<IPickupable>(out var pickup))
+            {
+                itemdescriptionView.SetData(pickup);
+            }
+
+        }
+
+    }
+    #endregion
+
+
+
 }
 

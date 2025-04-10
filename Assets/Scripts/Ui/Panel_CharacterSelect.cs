@@ -60,13 +60,13 @@ public class Panel_CharacterSelect : MonoBehaviour
 
         btn_man.onClick.AddListener(() =>
         {
-            model.SelectMan();
+            
             ChnageAttribute();
         });
 
         btn_girl.onClick.AddListener(() =>
         {
-            model.SelectGirl();
+            
             ChnageAttribute();
         });
     }
@@ -81,8 +81,7 @@ public class Panel_CharacterSelect : MonoBehaviour
     public void GameStart()
     {
         SaveData saveData = new SaveData();
-        saveData.attribute = model.character.attribute;
-        saveData.playerType = model.playerType;
+        saveData.attribute = model.character.attribute;        
         saveData.nickname = panel_CharacterName.GetNickName();
         PlayerData.Instance.saveData = saveData;
         SceneContainer.Instance.LoadScene(eSceneType.GameScene);

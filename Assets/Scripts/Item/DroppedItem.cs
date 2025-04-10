@@ -10,11 +10,11 @@ public class DroppedItem : MonoBehaviour
     public MeshRenderer meshRenderer;
     public Texture itemTexture;
     
-    public static ItemData model = new ItemData("나무", "나무 이다", ItemData.eItemType.Resource, 1);
+    public static ItemData model = new ItemData("나무", "나무 이다", 1);
 
     private void Start()
     {
-        //model = new ItemData("나무", "나무 이다", ItemData.eItemType.Resource, 1);
+
     }
 
     void Update()
