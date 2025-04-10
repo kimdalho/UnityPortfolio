@@ -25,6 +25,5 @@ public class PlayerData : MonoBehaviour
 public class SaveData
 {
     public string nickname;
-    public GameAttribute attribute;
-    public ePlayerType playerType;
+    public GameAttribute attribute;    
 }

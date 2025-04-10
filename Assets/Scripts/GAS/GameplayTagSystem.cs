@@ -10,3 +10,4 @@ public class GameplayTagSystem
     public void RemoveTag(string tag) => tags.Remove(tag);
     public bool HasTag(string tag) => tags.Contains(tag);
 }
+
