@@ -6,7 +6,7 @@ public class GridRow : MonoBehaviour
 {
     //public List<>
     [SerializeField]
-    private List<GridNode> listGrid;
+    private List<GridNode> listGrid = new List<GridNode>();
 
     public List<GridNode> GetGrid()
     { 
@@ -47,7 +47,7 @@ public class GridRow : MonoBehaviour
     {
         foreach (GridNode node in listGrid)
         {
-            node.CreateWall();
+            node.gameObject.transform.localScale = new Vector3(1, 3, 1);
         }
     }
 }

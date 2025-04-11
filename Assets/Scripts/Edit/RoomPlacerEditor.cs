@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.IO;
 using System.Text;
 using UnityEditor;
@@ -112,3 +113,5 @@ public class RoomPlacerEditor : EditorWindow
         AssetDatabase.Refresh();
     }
 }
+
+#endif
