@@ -1,14 +1,22 @@
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class AssaultRifle : EquipmentItem
 {
     public override void OnPickup(Character source, GameObject picker)
     {
-        source.GetAnimator().runtimeAnimatorController = ResourceManager.Instance.dic[eWeaponType.Rifl];
-        source.GetModelController().m_weapons[0].gameObject.SetActive(true);
-        
+        ModelUpdate(source);
+
         modifierOp = eModifier.Add;
         ApplyGameplayEffectToSelf(source, partType);
         gameObject.SetActive(false);
-    } 
+    }
+
+    public void ModelUpdate(Character source)
+    {
+        source.GetAnimator().runtimeAnimatorController = ResourceManager.Instance.dic[eWeaponType.Rifl];
+        source.GetModelController().SetWeaponByIndex(eWeaponType.Rifl);
+    }
+
+
 }

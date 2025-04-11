@@ -100,17 +100,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e26719f3ff82c141b3fa2da7644af06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effect:
+    MaxHart: 1
+    CurHart: 0
+    atk: 2
+    speed: 3
+  modifierOp: 0
   itemData:
     itemName: "\uB77C\uC774\uD50C"
     description: 
     itemIcon: {fileID: 0}
-    itemType: 0
     itemValue: 0
-  gameAttribute:
-    MaxHart: 0
-    CurHart: 0
-    atk: 0
-    speed: 0
+  partType: 3
 --- !u!135 &6174658098138165160
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -126,7 +127,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
