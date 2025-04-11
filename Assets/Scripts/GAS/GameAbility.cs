@@ -21,7 +21,7 @@ public abstract class GameAbility : MonoBehaviour
 
     protected IEnumerator CoActivateAbility()
     {
-        if (isOnCooldown || tagSystem.HasTag("Character.Stunned"))
+        if (isOnCooldown || tagSystem.HasTag(eTagType.Stunned))
         {
             Debug.Log($"{AbilityName} 사용 불가!");
             yield break;

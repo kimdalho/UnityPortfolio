@@ -27,6 +27,7 @@ public partial class Player : Character
 
 
     private AbilitySystem abilitySystem;
+  
 
     private void Start()
     {
@@ -52,10 +53,6 @@ public partial class Player : Character
         inputController.Subscribe(ref inputController.OnXKeyPressed, AbilitySkillX);
         inputController.Subscribe(ref inputController.OnLeftDown, AbilitySkillAttack);
         inputController.Subscribe(ref inputController.OnLeftUp, AbilitySkillAttackEnd);
-
-
-        
-
     }
 
     private void Update()

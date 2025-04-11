@@ -37,7 +37,7 @@ public class AttackAbility : GameAbility
             //col.GetComponent<PlaceableObject>().TakeDamage(1);
             AttributeEntity ae = col.GetComponent<AttributeEntity>();
             if (ae != null) 
-            {      
+            {                   
                 var effect = new GameEffect(new DamageExecution());
                 effect.Apply(owner, ae);
             }

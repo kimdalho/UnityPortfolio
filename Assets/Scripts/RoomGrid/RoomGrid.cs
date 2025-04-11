@@ -19,6 +19,36 @@ public class RoomGrid : MonoBehaviour
         Debug.Log("자식 객체 위치 재배치 완료");
     }
 
+
+    private void Start()
+    {
+        CreateItem();
+    }
+
+    public void CreateItem() 
+    {
+        int index = 0;
+        foreach (GridRow row in grid)
+        {
+            foreach(GridNode node in row.GetGrid())
+            {                
+                if(index < 6)
+                {
+                    ResourceManager.Instance.CreateHeadItem(index, node.transform);
+                }
+                index++;
+
+                if(index >= 6 && index < 12)
+                {
+                    ResourceManager.Instance.CreateBodyItem(index - 6, node.transform);
+                }
+
+
+            }
+        }
+    }
+
+
     public void SetList()
     {
         grid.Clear();

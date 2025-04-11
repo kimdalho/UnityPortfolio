@@ -63,8 +63,6 @@ public class Roomgenerator : MonoBehaviour
  
         while (roomCount > 0)
         {
-
-
             str_tempRoom.x = LastRoom.GetX();
             str_tempRoom.y = LastRoom.GetY();
             var type = Random.Range(0, 4);
