@@ -12,8 +12,7 @@ public abstract class GameAbility : MonoBehaviour
 {
     public Character owner;
     public string AbilityTag;
-    public string AbilityName;
-    public float Cooldown;
+    public string AbilityName;    
     public float Duration;
     protected bool isOnCooldown = false;
 
@@ -32,8 +31,6 @@ public abstract class GameAbility : MonoBehaviour
         isOnCooldown = true;
 
         yield return StartCoroutine(ExecuteAbility());  // 능력 실행
-                                                        // 쿨다운 처리
-        yield return new WaitForSeconds(Cooldown);
         
         isOnCooldown = false;
     }

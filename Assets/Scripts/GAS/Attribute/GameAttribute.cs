@@ -5,6 +5,7 @@ public class GameAttribute
     public int MaxHart;
     public int CurHart;
     public int atk;
+    public int attackSpeed;
     public int speed;   
 
 

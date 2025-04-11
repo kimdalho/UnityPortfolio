@@ -24,7 +24,9 @@ public class AttributeView : MonoBehaviour
     {
         tmps[0].text = $"Hart {model.MaxHart} / {model.CurHart}";
         tmps[1].text = $"Atk {model.atk}";
-        tmps[2].text = $"Speed {model.speed}";
+        tmps[2].text = $"Atk Speed {model.attackSpeed}";
+        tmps[3].text = $"Speed {model.speed}";
+        
     }
 
 }

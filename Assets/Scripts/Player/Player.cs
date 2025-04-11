@@ -142,7 +142,7 @@ public partial class Player : Character
 
         bool ismove = (move != Vector3.zero);
         animator.SetBool(moveHash, ismove);
-        animator.SetBool(fallingHash, !isGrounded);
+        //animator.SetBool(fallingHash, !isGrounded);
 
     }
 

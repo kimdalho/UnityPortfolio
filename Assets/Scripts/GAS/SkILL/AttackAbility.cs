@@ -7,7 +7,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 public class AttackAbility : GameAbility
 {
     protected override IEnumerator ExecuteAbility()
-    {
+    { 
         Character character = owner.GetComponent<Character>();
         Animator animator = character.GetAnimator();
         character.GetAnimator().SetTrigger("Trg_Attack");
@@ -19,7 +19,10 @@ public class AttackAbility : GameAbility
             Duration = animationDuration;
         }
         CreateDetectObject();
-        yield return new WaitForSeconds(Duration);  // 지속 효과 처리
+       
+        float delay = Duration / Mathf.Max(character.attribute.attackSpeed, 0.01f); // 0으로 나누는 것 방지
+        Debug.Log($"Duration {Duration} , {delay}");
+        yield return new WaitForSeconds(delay);  // 지속 효과 처리
         EndAbility();
     }
 
