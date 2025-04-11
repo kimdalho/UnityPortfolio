@@ -1,0 +1,8 @@
+﻿RoomType,X,Z
+Room,50,0
+Room,0,-50
+Room,0,0
+Room,-50,0
+Room,-50,50
+Room,-50,100
+Room,-100,100
