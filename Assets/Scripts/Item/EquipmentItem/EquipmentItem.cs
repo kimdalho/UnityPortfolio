@@ -4,7 +4,7 @@ public abstract class EquipmentItem : GameEffect, IPickupable
 {    
     public ItemData itemData;
     //장비 아이템은 어느 파츠인지 타입을 가지고있다.
-    public ePartType partType;     
+    public eEuipmentType partType;     
     
     private Vector3 rotationSpeed = new Vector3(0, 30, 0);
 

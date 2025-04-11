@@ -41,7 +41,7 @@ public class GameEffect : MonoBehaviour
 
 
     
-    public virtual void ApplyGameplayEffectToSelf(Character source, ePartType type)
+    public virtual void ApplyGameplayEffectToSelf(Character source, eEuipmentType type)
     {
         switch (modifierOp)
         {

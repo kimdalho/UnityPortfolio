@@ -9,7 +9,7 @@ public class AttackAbility : GameAbility
     protected override IEnumerator ExecuteAbility()
     {
         Character character = owner.GetComponent<Character>();
-        Animator animator = character.GetComponent<Animator>();
+        Animator animator = character.GetAnimator();
         character.GetAnimator().SetTrigger("Trg_Attack");
 
         AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
