@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
+  AbilityTag: 
   AbilityName: Attack
-  Cooldown: 0
+  Cooldown: 3
   Duration: 0
-  attackAnimation: 

@@ -55,7 +55,7 @@ public class Roomgenerator : MonoBehaviour
         GameObject startObject = Instantiate(startRoomPrefab);       
         LastRoom = startObject.GetComponent<Room>();
         LastRoom.SetRoom("StartRoom",0, 0);
-        GameManager.instance.SetCurrentRoom(LastRoom);
+        //GameManager.instance.SetCurrentRoom(LastRoom);
         startObject.transform.position = new Vector3(StartPosX, StartPosY, StartPosZ);
         startroom = startObject.GetComponent<StartRoom>();
         SetGridValue(0, 0, LastRoom);
@@ -63,8 +63,6 @@ public class Roomgenerator : MonoBehaviour
  
         while (roomCount > 0)
         {
-
-
             str_tempRoom.x = LastRoom.GetX();
             str_tempRoom.y = LastRoom.GetY();
             var type = Random.Range(0, 4);

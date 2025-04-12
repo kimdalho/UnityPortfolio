@@ -8,4 +8,16 @@ AnimatorOverrideController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Bazooka
   m_Controller: {fileID: 9100000, guid: ddd667bde1791624b934575b2f8b545c, type: 2}
-  m_Clips: []
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: dceac7fe7aafbbc41b2ed8d86713b61e, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 5e84b408e98c85344948d09e214dbabe, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 9f50ab56fef35b341bad647b078f856e, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 6238b9fa24abd4b4aa7e62102d8c9042, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: a3bcd9250905f8f43a72745acff4b706, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 16dc34b0b1ca9bc4e8626c1c8b33bed0, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: e5d4cdbba55101241a1170352acbd90b, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 9e8edb27cfef19849b1be892a29e3d71, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 6dcf78f3f23761347a2f4e52d583b396, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 69c91ccc972a328499dce741ad68281b, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 87f6b03db62bc7244b49d79900424996, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 0dcd5140032a69945ba64787ac1a0ad0, type: 3}

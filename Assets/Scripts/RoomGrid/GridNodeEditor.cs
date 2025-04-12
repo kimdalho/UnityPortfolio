@@ -29,9 +29,10 @@ public class GridNodeEditor : Editor
             node.CreateEnemy();
         }
 
-        if (GUILayout.Button("기믹 생성", GUILayout.Height(30)))
+        if (GUILayout.Button("박스 크기 확장", GUILayout.Height(30)))
         {
-
+            GridNode node = (GridNode)target;
+            node.gameObject.transform.localScale = new Vector3(1, 3, 1);
         }
     }
 }

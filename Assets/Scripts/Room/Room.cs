@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 
 public enum eRoomType
@@ -22,6 +23,8 @@ public class Room : MonoBehaviour
 
     public Door nextFloorDoor;
     public List<Room> neighbor;
+    
+
 
     public void CreateRoom(eRoomType type, Vector3 position, StrRoom strPos)
     {
