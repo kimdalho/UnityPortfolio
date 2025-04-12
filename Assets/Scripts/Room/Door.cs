@@ -15,7 +15,7 @@ public class Door : MonoBehaviour
     
     [SerializeField]
     private Room ownerRoom;
-    private int myIndex;
+    public int myIndex;
 
     /// <summary>
     /// 살짝 잘못만든구조 계단 내려가는 문을 초기화하는 함수 이건 인덱스가 없어서 별개로 만듬
@@ -62,12 +62,9 @@ public class Door : MonoBehaviour
 
     private void OpenRoomNeighbor()
     {
-        GameManager GM = GameManager.instance;
-        //활성화 룸 선택  
         int otherSide = GetOtherSide(myIndex); 
         Room nextRoom = ownerRoom.neighbor[myIndex];
-        GM.SetCurrentRoom(nextRoom);
-        Player player = GM.GetPlayer();
+        Player player = GameObject.Find("Player").GetComponent<Player>();
         player.SetPos(nextRoom.doorlist[otherSide].transform.position);
 
     }
@@ -77,6 +74,8 @@ public class Door : MonoBehaviour
     /// </summary>
     private void OpenNextFloor()
     {
+        if(GameManager.instance != null)
+        GameManager.instance.GoToNextFloor();
         Debug.Log("GameEnd");
     }
 
