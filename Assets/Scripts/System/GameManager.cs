@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToNextFloor()
     {
-        player.transform.position = pos.position;
+        player.transform.position = Vector3.zero;
         roomlist[index].gameObject.SetActive(false);
         index++;
         roomlist[index].gameObject.SetActive(true);
