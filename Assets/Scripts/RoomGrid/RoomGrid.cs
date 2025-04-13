@@ -20,11 +20,11 @@ public class RoomGrid : MonoBehaviour
     }
 
 
-    private void Start()
-    {
-        CreateItem();
-    }
+    
 
+    /// <summary>
+    /// 아이템 테스트를 위해서 생성 스타트에서 GameScene에서 Start 함수로 사용
+    /// </summary>
     public void CreateItem() 
     {
         int index = 0;

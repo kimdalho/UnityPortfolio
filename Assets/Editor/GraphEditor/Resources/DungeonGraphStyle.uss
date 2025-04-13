@@ -1,0 +1,14 @@
+/* DungeonGraphStyle.uss */
+
+.node {
+    background-color: #333333;
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: #aaaaaa;
+}
+
+.unity-port {
+    background-color: #444;
+    color: white;
+    font-size: 12px;
+}

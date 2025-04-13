@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Room currentRoom;
     public static GameManager instance;
     [SerializeField]
     private Player player;
@@ -36,10 +35,6 @@ public class GameManager : MonoBehaviour
         roomlist[index].gameObject.SetActive(true);
     }
 
-    public void SetCurrentRoom(Room room)
-    {
-        this.currentRoom = room;
-    }
 
     public Player GetPlayer()
     {
