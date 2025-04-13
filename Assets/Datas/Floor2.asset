@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e791db119bff5934db2b24760ed285e6, type: 3}
+  m_Name: Floor2
+  m_EditorClassIdentifier: 
+  rooms:
+  - guid: 5f05a6f2-2a7e-4847-a4ea-bfd101c5ee1a
+    position: {x: -389, y: 482}
+    roomType: 0
+  - guid: 224d4b96-d494-4fe6-b1ec-978f3bd1ed63
+    position: {x: 390, y: 436}
+    roomType: 4
+  - guid: a9b39b03-b70a-432c-8071-3f35988ef3a3
+    position: {x: -915, y: -84}
+    roomType: 3
+  - guid: 772b65a1-a9ed-49e7-845c-ac934292a9ce
+    position: {x: 447, y: -136}
+    roomType: 0
+  - guid: cfa50f50-bc44-48a3-bf7b-c7fb6d95f1a4
+    position: {x: -1, y: -388}
+    roomType: 1
+  links:
+  - fromNodeGUID: 224d4b96-d494-4fe6-b1ec-978f3bd1ed63
+    toNodeGUID: 5f05a6f2-2a7e-4847-a4ea-bfd101c5ee1a
+    direction: Output Top
+  - fromNodeGUID: 5f05a6f2-2a7e-4847-a4ea-bfd101c5ee1a
+    toNodeGUID: 224d4b96-d494-4fe6-b1ec-978f3bd1ed63
+    direction: Output Bottom
+  - fromNodeGUID: 224d4b96-d494-4fe6-b1ec-978f3bd1ed63
+    toNodeGUID: a9b39b03-b70a-432c-8071-3f35988ef3a3
+    direction: Output Left
+  - fromNodeGUID: a9b39b03-b70a-432c-8071-3f35988ef3a3
+    toNodeGUID: 224d4b96-d494-4fe6-b1ec-978f3bd1ed63
+    direction: Output Right
+  - fromNodeGUID: a9b39b03-b70a-432c-8071-3f35988ef3a3
+    toNodeGUID: cfa50f50-bc44-48a3-bf7b-c7fb6d95f1a4
+    direction: Output Right
+  - fromNodeGUID: cfa50f50-bc44-48a3-bf7b-c7fb6d95f1a4
+    toNodeGUID: a9b39b03-b70a-432c-8071-3f35988ef3a3
+    direction: Output Left
+  - fromNodeGUID: 224d4b96-d494-4fe6-b1ec-978f3bd1ed63
+    toNodeGUID: 772b65a1-a9ed-49e7-845c-ac934292a9ce
+    direction: Output Bottom
+  - fromNodeGUID: 772b65a1-a9ed-49e7-845c-ac934292a9ce
+    toNodeGUID: 224d4b96-d494-4fe6-b1ec-978f3bd1ed63
+    direction: Output Top

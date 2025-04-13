@@ -20,8 +20,8 @@ public class RoomNode : Node
     public string roomID;
 
     public eRoomType RoomType;
-    public Port inputNorth, inputSouth, inputEast, inputWest;
-    public Port outputNorth, outputSouth, outputEast, outputWest;
+    //public Port inputNorth, inputSouth, inputEast, inputWest;
+    //public Port outputNorth, outputSouth, outputEast, outputWest;
 
     private Dictionary<string, Port> inputPorts = new Dictionary<string, Port>();
     private Dictionary<string, Port> outputPorts = new Dictionary<string, Port>();
@@ -36,15 +36,15 @@ public class RoomNode : Node
 
     public void Initialize()
     {
-        AddPort("Top", Direction.Input);
-        AddPort("Bottom", Direction.Input);
-        AddPort("Left", Direction.Input);
-        AddPort("Right", Direction.Input);
+        AddPort("Input Top", Direction.Input);
+        AddPort("Input Bottom", Direction.Input);
+        AddPort("Input Left", Direction.Input);
+        AddPort("Input Right", Direction.Input);
 
-        AddPort("Top", Direction.Output);
-        AddPort("Bottom", Direction.Output);
-        AddPort("Left", Direction.Output);
-        AddPort("Right", Direction.Output);
+        AddPort("Output Top", Direction.Output);
+        AddPort("Output Bottom", Direction.Output);
+        AddPort("Output Left", Direction.Output);
+        AddPort("Output Right", Direction.Output);
     }
 
     private void AddPort(string portName, Direction direction)

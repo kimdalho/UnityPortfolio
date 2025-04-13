@@ -91,13 +91,13 @@ public class DungeonGraphEditorWindow : EditorWindow
                 placedNodes.Add(newNode);
 
                 // 자동 연결
-                string fromPort = GetPortName(dir);              // 기준 노드의 방향
-                string toPort = GetPortName(-dir);               // 새 노드의 반대 방향
+                string fromPort = string.Format("Output {0}", GetPortName(dir));              // 기준 노드의 방향
+                string toPort = string.Format("Input {0}", GetPortName(-dir)) ;               // 새 노드의 반대 방향
 
                 LinkNodes(baseNode, fromPort, newNode, toPort);
 
-                string reverseFromPort = GetPortName(dir);       // newNode 방향 그대로
-                string reverseToPort = GetPortName(-dir);        // baseNode 반대방향
+                string reverseFromPort = string.Format("Output {0}", GetPortName(-dir));       // newNode 방향 그대로
+                string reverseToPort = string.Format("Input {0}", GetPortName(dir));        // baseNode 반대방향
                 LinkNodes(newNode, reverseFromPort, baseNode, reverseToPort);
 
                 placed = true;

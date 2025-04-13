@@ -83,7 +83,7 @@ public class DungeonGraphView : GraphView
         {
             if (edge.input.node is RoomNode toNode && edge.output.node is RoomNode fromNode)
             {
-                string direction = edge.output.portName; // ex: "N", "E", etc.
+                string direction = edge.output.portName; // ex: "N", "E", etc.                
                 dungeonData.links.Add(new RoomLinkData
                 {
                     fromNodeGUID = fromNode.roomID,

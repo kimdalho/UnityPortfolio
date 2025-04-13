@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField]
     private Player player;
-    public Transform pos;
     public List<GameObject> roomlist;
 
     int index = 0;
