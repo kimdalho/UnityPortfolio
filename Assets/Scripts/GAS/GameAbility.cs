@@ -12,8 +12,7 @@ public abstract class GameAbility : MonoBehaviour
 {
     public Character owner;
     public string AbilityTag;
-    public string AbilityName;
-    public float Cooldown;
+    public string AbilityName;    
     public float Duration;
     protected bool isOnCooldown = false;
 
@@ -22,7 +21,7 @@ public abstract class GameAbility : MonoBehaviour
 
     protected IEnumerator CoActivateAbility()
     {
-        if (isOnCooldown || tagSystem.HasTag("Character.Stunned"))
+        if (isOnCooldown || tagSystem.HasTag(eTagType.Stunned))
         {
             Debug.Log($"{AbilityName} 사용 불가!");
             yield break;
@@ -32,8 +31,6 @@ public abstract class GameAbility : MonoBehaviour
         isOnCooldown = true;
 
         yield return StartCoroutine(ExecuteAbility());  // 능력 실행
-                                                        // 쿨다운 처리
-        yield return new WaitForSeconds(Cooldown);
         
         isOnCooldown = false;
     }

@@ -11,10 +11,7 @@ public enum eEntityType
 /// </summary>
 public class GridNode : MonoBehaviour
 {
-    //테스트용 나중에 따로 빼야함
     public GameObject wall;
-    public GameObject boxItem;
-    public GameObject Enemy;
 
     /// <summary>
     /// 타입은 어떤 테이블데이터를 참조할지 알려준다
@@ -29,14 +26,14 @@ public class GridNode : MonoBehaviour
 
     public void CreateBox()
     {
-        var newEntity = Instantiate(boxItem);
+        var newEntity = Instantiate(wall);
         newEntity.transform.SetParent(this.gameObject.transform);
         newEntity.transform.localPosition = new Vector3(0, 1f, 0);
     }
 
     public void CreateEnemy()
     {
-        var newEntity = Instantiate(Enemy);
+        var newEntity = Instantiate(wall);
         newEntity.transform.localPosition = Vector3.zero;
     }
     public void CreateWall()

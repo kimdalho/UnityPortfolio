@@ -14,11 +14,8 @@ public class Panel_CharacterSelect : MonoBehaviour
     public Button btn_Back;
     public Button btn_GameAccess;
     public Button btn_DelectCharacter;
-    public Button btn_man;
-    public Button btn_girl;
 
     public Image img_Status;
-    public Image img_Class;
     
     public List<CreateCharacterSlot> slotList;
 
@@ -39,7 +36,6 @@ public class Panel_CharacterSelect : MonoBehaviour
                 panel_CharacterName.btn_Ok.onClick.AddListener(() => 
                 {
                     img_Status.gameObject.SetActive(true);
-                    img_Class.gameObject.SetActive(true);
                     model.gameObject.SetActive(true);
                    
                 });
@@ -48,7 +44,6 @@ public class Panel_CharacterSelect : MonoBehaviour
         }
 
         img_Status.gameObject.SetActive(false);
-        img_Class.gameObject.SetActive(false);
 
         btn_Back.onClick.AddListener(() =>
         {
@@ -57,26 +52,8 @@ public class Panel_CharacterSelect : MonoBehaviour
         });
 
         btn_GameAccess.onClick.AddListener(GameStart);
-
-        btn_man.onClick.AddListener(() =>
-        {
-            
-            ChnageAttribute();
-        });
-
-        btn_girl.onClick.AddListener(() =>
-        {
-            
-            ChnageAttribute();
-        });
     }
 
-    private void ChnageAttribute()
-    {
-        tmpStats[0].text = model.character.attribute.MaxHart.ToString();
-        tmpStats[1].text = model.character.attribute.atk.ToString();
-        tmpStats[2].text = model.character.attribute.speed.ToString();
-    }
 
     public void GameStart()
     {

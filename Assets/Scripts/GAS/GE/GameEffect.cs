@@ -36,7 +36,7 @@ public class GameEffect : MonoBehaviour
             case eModifier.Equal:
                 source.attribute = effect;
                 break;
-        }
+        } 
     }
 
 
