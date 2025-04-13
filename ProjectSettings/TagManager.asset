@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Door
   - Item
+  - Stairs
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Door
   - Player
   - Item
-  - 
+  - Stairs
   - 
   - 
   - 

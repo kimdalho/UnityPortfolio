@@ -14,7 +14,6 @@ public partial class Player : Character
     private Vector3 moveDirection;
 
     Vector3 moveVec;
-    private Door door;
 
 
     #region 아이템 설명창
@@ -79,8 +78,8 @@ public partial class Player : Character
 
     private void AbilitySkillF()
     {
-        if (door != null)
-            door.Open();
+        /*if (door != null)
+            door.Open();*/
     }
 
     private void AbilitySkillX()
@@ -162,11 +161,7 @@ public partial class Player : Character
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Door"))
-        {
-            door = other.GetComponent<Door>();
-        }
-        else if (other.TryGetComponent(out DroppedItem item))
+        if (other.TryGetComponent(out DroppedItem item))
         {
             Debug.Log($"{other.gameObject.name}");
             nearbyItems.Add(item);

@@ -7,6 +7,7 @@ public class GridRow : MonoBehaviour
     //public List<>
     [SerializeField]
     private List<GridNode> listGrid = new List<GridNode>();
+    public Vector3 offset;
 
     public List<GridNode> GetGrid()
     { 
@@ -19,7 +20,7 @@ public class GridRow : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             Transform child = transform.GetChild(i);
-            child.localPosition = new Vector3(i, 0, 0); // (0,0,0), (1,0,0), (2,0,0) ...
+            child.localPosition = new Vector3(i * offset.x, 0, 0); // (0,0,0), (1,0,0), (2,0,0) ...
         }
 
         Debug.Log("자식 객체 위치 재배치 완료");
