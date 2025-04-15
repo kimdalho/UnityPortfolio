@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,10 +43,16 @@ public class GameManager : MonoBehaviour
 
     public void GoToNextFloor()
     {
-        player.transform.position = Vector3.zero;
+        StartCoroutine(CoNextLevel());       
+    }
+
+    private IEnumerator CoNextLevel()
+    {
+        yield return null;
         roomlist[index].gameObject.SetActive(false);
         index++;
         roomlist[index].gameObject.SetActive(true);
+        player.transform.position = Vector3.zero;
     }
 
 }

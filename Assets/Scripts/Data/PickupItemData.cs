@@ -4,8 +4,6 @@ public enum eTagType
 {
     
     Stunned, //Ω∫≈œ
-
-
     ninjahead,
     alienhead,
     bearhead,
@@ -20,6 +18,7 @@ public enum eTagType
     Roostersbody,
     clowntorso,
     boxbody,
+    portalLock,
 }
 
 

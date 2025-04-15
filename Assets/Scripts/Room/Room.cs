@@ -27,6 +27,7 @@ public class Room : MonoBehaviour
     public void Init(RoomData model)
     {
         Guid = model.guid;
+        Debug.Log($"·ë Init {Guid}");
         string str_name = string.Format("{0},{1}", model.roomType.ToString(), this.Guid);
         gameObject.name = str_name;
         this.roomType = model.roomType;

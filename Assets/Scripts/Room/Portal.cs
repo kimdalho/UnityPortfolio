@@ -29,22 +29,40 @@ public class Portal : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" && this.tag == "Door")
+        var tagSystem = GameManager.instance.GetPlayer().gameplayTagSystem;
+        if (tagSystem.HasTag(eTagType.portalLock) == true)
+            return;
+
+        if (other.gameObject.tag == "Player" && 
+            this.tag == "Door")
         {
-            StartCoroutine(SetPlayerPositionNextFrame(toNodePos));
+            StartCoroutine(NextRoom());
+            StartCoroutine(SetPortalLock());
+            
         }
-        else if(other.gameObject.tag == "Player" && this.tag == "Stairs")
-        {
-            GameManager GM = GameManager.instance;
+        else if(other.gameObject.tag == "Player" 
+            && this.tag == "Stairs")
+        {            
+            var GM = GameManager.instance;
             GM.GoToNextFloor();
         }
 
     }
 
-    IEnumerator SetPlayerPositionNextFrame(Vector3 pos)
+    IEnumerator NextRoom()
     {
-        yield return null; // 다음 프레임까지 기다림
-        GameObject.Find("Player").transform.position = pos;
+        yield return null;
+        GameManager.instance.GetPlayer().transform.position = toNodePos;
+    }
+
+
+    IEnumerator SetPortalLock()
+    {        
+        var tagSystem = GameManager.instance.GetPlayer().gameplayTagSystem;
+        tagSystem.AddTag(eTagType.portalLock);       
+        yield return new WaitForSeconds(1f); 
+        tagSystem.RemoveTag(eTagType.portalLock);
+
     }
 
 }

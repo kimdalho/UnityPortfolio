@@ -109,17 +109,17 @@ MonoBehaviour:
     monsterLevel3Chance: 90
     minItems: 1
     maxItems: 2
-    itemTier1Chance: 60
+    itemTier1Chance: 10
     itemTier2Chance: 40
-    itemTier3Chance: 0
-  - dungeonLevel: 9
-    minMonsters: 2
-    maxMonsters: 3
-    monsterLevel1Chance: 40
-    monsterLevel2Chance: 40
-    monsterLevel3Chance: 20
-    minItems: 1
-    maxItems: 2
-    itemTier1Chance: 60
-    itemTier2Chance: 40
+    itemTier3Chance: 50
+  - dungeonLevel: 10
+    minMonsters: 1
+    maxMonsters: 1
+    monsterLevel1Chance: 0
+    monsterLevel2Chance: 0
+    monsterLevel3Chance: 100
+    minItems: 0
+    maxItems: 0
+    itemTier1Chance: 0
+    itemTier2Chance: 0
     itemTier3Chance: 0

@@ -26,52 +26,67 @@ public class DungeonMaker : MonoBehaviour
     private GameObject roomHolder;
     private GameObject monsterHolder;
 
+    //체크하면 리스트 전부 통째로 생성
+    public bool allBuild;
+    public List<DungeonData> DungeonDatas;
+    
 
 
 
 
-    public void Create()
+    public void Build()
     {
-        CreateHolder();
-        RoomBuild();
-        SetData();
+        dic = new Dictionary<string, Room>();
+        if (allBuild)
+        {
+            //10개 모두 빌드
+            AllBuild();
+        }
+        else
+        {
+            //단일 빌드
+            RoomBuild(roomData);
+            SetData(currentDungeonLevel);
+        }
+        
     }
 
-    private void CreateHolder()
+    private void CreateHolder(DungeonData model)
     {
         #region Create Holders
         dg = new GameObject();
-        dg.name = "Dungeon " + roomData.name;
+        dg.name = "Dungeon " + model.name;
 
         roomHolder = new GameObject();
-        roomHolder.name = "RoomHolder " + roomData.name;
+        roomHolder.name = "RoomHolder " + model.name;
         roomHolder.transform.SetParent(dg.transform);
 
         monsterHolder = new GameObject();
-        monsterHolder.name = "MonsterHolder " + roomData.name;
+        monsterHolder.name = "MonsterHolder " + model.name;
         monsterHolder.transform.SetParent(dg.transform);
 
         itemHolder = new GameObject();
-        itemHolder.name = "ItemHolder " + roomData.name;
+        itemHolder.name = "ItemHolder " + model.name;
         itemHolder.transform.SetParent(dg.transform);
         #endregion
     }
 
 
-    public void RoomBuild()
+    public void RoomBuild(DungeonData model)
     {
-        dic = new Dictionary<string, Room>();
-        foreach (var roomData in roomData.rooms)
+        CreateHolder(model);
+        foreach (var roomData in model.rooms)
         {
             var Obj_Room = Instantiate(roomprefab);
-            Room roomCopo = Obj_Room.GetComponent<Room>();
+            Room roomCompo = Obj_Room.GetComponent<Room>();
             Obj_Room.transform.SetParent(roomHolder.transform);
 
-            roomCopo.Init(roomData);
-            dic.Add(roomCopo.Guid, roomCopo);
+            roomCompo.Init(roomData);
+            dic.Add(roomCompo.Guid, roomCompo);
+           
         }
 
-        foreach (var linkData in roomData.links)
+        foreach (var linkData in model.links)
         {
             //시작점 
             var input = dic[linkData.fromNodeGUID];
@@ -86,15 +101,25 @@ public class DungeonMaker : MonoBehaviour
             portal.toNodePos = dic[linkData.toNodeGUID].transform.position;
             portal.gameObject.SetActive(true);
         }
+
+
     }
 
-
-
-
-
-    public void SetData()
+    public void AllBuild()
     {
-        DungeonRoomConfig config = dungeonConfig.GetConfigByLevel(currentDungeonLevel);
+        int i = 0;
+        foreach (var roomData in DungeonDatas)
+        {
+            RoomBuild(roomData);
+            SetData(i + 1);
+            i++;
+        }
+
+    }
+
+    public void SetData(int level)
+    {        
+        DungeonRoomConfig config = dungeonConfig.GetConfigByLevel(level);
         int itemCount = Random.Range(config.minItems, config.maxItems + 1);
         int monsterCount = Random.Range(config.minMonsters, config.maxMonsters + 1);
         foreach (var pair in dic)
@@ -116,15 +141,14 @@ public class DungeonMaker : MonoBehaviour
 
                     for(int i = 1; i <= monsterCount; i++)
                     {
-                        int level = RollLevel(config.monsterLevel1Chance, config.monsterLevel2Chance, config.monsterLevel3Chance);
-                        room.grid.CreateMonster(monsterHolder.transform, level);
-                        Debug.Log($"Spawn Monster Lv{level}");
+                        int rolllevel = RollLevel(config.monsterLevel1Chance, config.monsterLevel2Chance, config.monsterLevel3Chance);
+                        room.grid.CreateMonster(monsterHolder.transform, rolllevel);
+                        Debug.Log($"Spawn Monster Lv{rolllevel}");
                     }
                     break;
             }
 
         }
-     
     }
 
 
@@ -136,13 +160,6 @@ public class DungeonMaker : MonoBehaviour
         if (roll < chance1) return 1;
         else if (roll < chance1 + chance2) return 2;
         else return 3;
-    }
-
-    
-    void SpawnItem(int tier) => Debug.Log($"Spawn Item Tier{tier}");
-
-    
-
-
+    }   
 }
 #endif
