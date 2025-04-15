@@ -202,8 +202,6 @@ public class DungeonGraphEditorWindow : EditorWindow
         toolbar.Add(monster_inputField);
         toolbar.Add(temproom_inputField);
         toolbar.Add(button);
-
-        StartCoruten()
     }
 }
 
