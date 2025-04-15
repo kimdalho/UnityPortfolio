@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 871c604d6ddfedc44948b5d60323325b, type: 3}
-  m_Name: Bodytem 3
+  m_Name: BodyItem 8
   m_EditorClassIdentifier: 
   eEquipmentType: 2
   itemData:
@@ -18,8 +18,8 @@ MonoBehaviour:
     description: 
   modelIndex: 7
   objectIndex: 6
-  Rank: 0
-  tag: 8
+  Rank: 3
+  tag: 14
   attribute:
     MaxHart: 0
     CurHart: 0

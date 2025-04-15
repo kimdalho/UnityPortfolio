@@ -19,7 +19,7 @@ MonoBehaviour:
   modelIndex: 3
   objectIndex: 2
   Rank: 1
-  tag: 2
+  tag: 3
   attribute:
     MaxHart: 0
     CurHart: 0

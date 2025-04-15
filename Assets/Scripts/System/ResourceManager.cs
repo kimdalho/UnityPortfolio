@@ -115,6 +115,11 @@ public class ResourceManager : MonoBehaviour
 
     public GameObject CreateItemToTier(int tier, Transform parent)
     {
+        if(itemInfos == null)
+        {
+            ItemPrefabSetup();
+        }
+
         System.Random rand = new System.Random();
         var result = pickupItemDatas.Where(_ => _.Rank == tier)
         .OrderBy(x => rand.Next())
@@ -156,7 +161,6 @@ public class ResourceManager : MonoBehaviour
 
     public GameObject CreateMonster(int dataIndex, Transform parent)
     {       
-
         System.Random rnd = new System.Random();
 
         var targetMonster = monsters[rnd.Next(monsters.Count)];

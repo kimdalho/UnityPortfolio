@@ -34,7 +34,7 @@ public class RoomGrid : MonoBehaviour
     public void CreateMonster(Transform parent, int level)
     {
         GridNode node = GetRandomGridNode();
-        var newmon =  ResourceManager.Instance.CreateMonster(level,node.transform);
+        var newmon =  ResourceManager.Instance.CreateMonster(level, parent);
         newmon.transform.position = node.transform.position;
     }
 
@@ -49,8 +49,8 @@ public class RoomGrid : MonoBehaviour
     {
         GridNode node = GetRandomGridNode();
         var newItem = ResourceManager.Instance.CreateItemToTier(tier, parent);
-        newItem.transform.position = node.transform.position;
-        
+        newItem.transform.position = node.GetItemPos();
+
     }
 
     private void Start()

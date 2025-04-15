@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
 
 public abstract class EquipmentItem : GameEffect, IPickupable
 {    
     public ItemData itemData;
     //장비 아이템은 어느 파츠인지 타입을 가지고있다.
-    public eEuipmentType partType;     
-    
+    public eEuipmentType partType;
+    public eTagType skilltag;
+
     private Vector3 rotationSpeed = new Vector3(0, 30, 0);
 
     public (ItemData, GameAttribute) GetItemData() 
@@ -16,8 +18,11 @@ public abstract class EquipmentItem : GameEffect, IPickupable
 
     public virtual void OnPickup(Character source, GameObject picker) 
     {
-       
-            
+        source.gameplayTagSystem.AddTag(skilltag);
+        //modifierOp = eModifier.Add;
+        ApplyGameplayEffectToSelf(source, partType);       
+        gameObject.SetActive(false);
+
     }
 
     private void Update()
@@ -25,7 +30,10 @@ public abstract class EquipmentItem : GameEffect, IPickupable
         transform.Rotate(rotationSpeed * Time.deltaTime);
     }
 
-    public virtual void Init(PickupItemData data) {}
+    public virtual void Init(PickupItemData data) 
+    {
+    
+    }
 
 
 /// <summary>

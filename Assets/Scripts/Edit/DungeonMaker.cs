@@ -23,7 +23,7 @@ public class DungeonMaker : MonoBehaviour
     //È¦´õ
     private GameObject dg;
     private GameObject itemHolder;
-    private GameObject room;
+    private GameObject roomHolder;
     private GameObject monsterHolder;
 
 
@@ -33,7 +33,7 @@ public class DungeonMaker : MonoBehaviour
     public void Create()
     {
         CreateHolder();
-        Build();
+        RoomBuild();
         SetData();
     }
 
@@ -43,9 +43,9 @@ public class DungeonMaker : MonoBehaviour
         dg = new GameObject();
         dg.name = "Dungeon " + roomData.name;
 
-        room = new GameObject();
-        room.name = "RoomHolder " + roomData.name;
-        room.transform.SetParent(dg.transform);
+        roomHolder = new GameObject();
+        roomHolder.name = "RoomHolder " + roomData.name;
+        roomHolder.transform.SetParent(dg.transform);
 
         monsterHolder = new GameObject();
         monsterHolder.name = "MonsterHolder " + roomData.name;
@@ -58,14 +58,14 @@ public class DungeonMaker : MonoBehaviour
     }
 
 
-    public void Build()
+    public void RoomBuild()
     {
         dic = new Dictionary<string, Room>();
         foreach (var roomData in roomData.rooms)
         {
             var Obj_Room = Instantiate(roomprefab);
             Room roomCopo = Obj_Room.GetComponent<Room>();
-            Obj_Room.transform.SetParent(dg.transform);
+            Obj_Room.transform.SetParent(roomHolder.transform);
 
             roomCopo.Init(roomData);
             dic.Add(roomCopo.Guid, roomCopo);

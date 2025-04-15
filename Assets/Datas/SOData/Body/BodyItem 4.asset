@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 871c604d6ddfedc44948b5d60323325b, type: 3}
-  m_Name: Bodytem 6
+  m_Name: BodyItem 4
   m_EditorClassIdentifier: 
   eEquipmentType: 2
   itemData:
-    itemName: Condition_ItemHead8
+    itemName: Condition_ItemHead4
     description: 
-  modelIndex: 7
-  objectIndex: 6
-  Rank: 0
-  tag: 11
+  modelIndex: 3
+  objectIndex: 2
+  Rank: 1
+  tag: 10
   attribute:
     MaxHart: 0
     CurHart: 0

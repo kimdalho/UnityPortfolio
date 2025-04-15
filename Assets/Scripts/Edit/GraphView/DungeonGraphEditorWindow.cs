@@ -1,8 +1,10 @@
 
 #if UNITY_EDITOR
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Burst.CompilerServices;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -132,17 +134,13 @@ public class DungeonGraphEditorWindow : EditorWindow
             foreach (var roomNode in targetList)
             {
                 graphView.CreateRoomNode(roomNode, targetType);
-            }
-            
-
+            }           
         }
         else
         {
             Debug.Log("룸의 최대 갯수보다 선택대상의 갯수가 작다");
         }
     }
-
-
 
     private string GetPortName(Vector2 dir)
     {
@@ -184,20 +182,28 @@ public class DungeonGraphEditorWindow : EditorWindow
         var monster_inputField = new IntegerField("Monster Count");
         monster_inputField.value = 1;
 
+        var temproom_inputField = new IntegerField("Temp Count");
+        temproom_inputField.value = 2;
+
         //2 는 스타트와 엔드 룸으로 반드시 들어간다
-        int totalCount = 2 + item_inputField.value + monster_inputField.value;
+        int totalCount = 2 + item_inputField.value + monster_inputField.value + temproom_inputField.value;
 
 
 
         var button = new Button(() => {
-            int count = Mathf.Clamp(totalCount, 3, 10);
+            int count = Mathf.Clamp(totalCount, 3, 15);
             GenerateRandomNodes(count, item_inputField.value, monster_inputField.value);
+            
         })
+        
         { text = "랜덤 노드 자동 생성" };
 
         toolbar.Add(item_inputField);
         toolbar.Add(monster_inputField);
+        toolbar.Add(temproom_inputField);
         toolbar.Add(button);
+
+        StartCoruten()
     }
 }
 

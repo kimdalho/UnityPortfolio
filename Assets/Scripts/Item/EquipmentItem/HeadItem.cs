@@ -9,14 +9,14 @@ public class HeadItem : EquipmentItem
     {
         models[data.objectIndex].gameObject.SetActive(true);
         index = data.modelIndex;
+        partType = data.eEquipmentType;
+        effect = data.attribute;
+        skilltag = data.tag;
     }
 
     public override void OnPickup(Character source, GameObject picker)
     {        
-        modifierOp = eModifier.Add;
-        ApplyGameplayEffectToSelf(source, partType);
-        source.GetModelController().SetActiveExclusive(eEuipmentType.Head, index);
-
-        gameObject.SetActive(false);
+        base.OnPickup(source, picker);
+        source.GetModelController().SetActiveExclusive(partType, index);
     }
 }
