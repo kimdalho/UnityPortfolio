@@ -12,6 +12,10 @@
 ## SO 던전 데이터
 ![캡처_2025_04_16_00_43_00_851](https://github.com/user-attachments/assets/eef9f955-ee04-4f15-9d2d-1dd6df7b2c6d)
 
+Guid는 룸의 고유한 아이디 입니다 포탈을 통해서 다음 룸으로 이동할 시 서로를 링크하기위한 고유 넘버입니다.
+Links는 그래프 툴에서 연결된 링크 정보를 데이터화한것입니다. Front는 부모 룸 정보이며, To Node Guid는 링크된 룸 Guid를 의미합니다.
+
+
 ## 던전 인스턴싱
 
 ![녹화_2025_04_16_00_44_01_889](https://github.com/user-attachments/assets/d045a257-2d39-4202-a952-9b7f6cd46ed3)
