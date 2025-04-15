@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Player player;
     public List<GameObject> roomlist;
+    public DungeonMaker dungeonMaker;
 
     int index = 0;
 
@@ -32,7 +33,10 @@ public class GameManager : MonoBehaviour
         //마우스 커서 안보이게, 마우스 커서 고정
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        roomlist = dungeonMaker.Build();
         roomlist[index].gameObject.SetActive(true);
+
+        
     }
 
 
@@ -51,6 +55,12 @@ public class GameManager : MonoBehaviour
         yield return null;
         roomlist[index].gameObject.SetActive(false);
         index++;
+
+        if(index >= roomlist.Count)
+        {
+            Debug.LogWarning("크레딧");
+            yield break;
+        }
         roomlist[index].gameObject.SetActive(true);
         player.transform.position = Vector3.zero;
     }

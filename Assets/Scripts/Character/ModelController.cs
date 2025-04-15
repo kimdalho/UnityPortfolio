@@ -42,7 +42,7 @@ public class ModelController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"[{partType}] 파츠 목록이 비어있습니다.");
+                //Debug.LogWarning($"[{partType}] 파츠 목록이 비어있습니다.");
             }
         }
     }

@@ -34,7 +34,7 @@ public class DungeonMaker : MonoBehaviour
 
 
 
-    public void Build()
+    public List<GameObject> Build()
     {
         dic = new Dictionary<string, Room>();
         if (allBuild)
@@ -48,7 +48,8 @@ public class DungeonMaker : MonoBehaviour
             RoomBuild(roomData);
             SetData(currentDungeonLevel);
         }
-        
+
+        return data;
     }
 
     private void CreateHolder(DungeonData model)
@@ -68,12 +69,14 @@ public class DungeonMaker : MonoBehaviour
         itemHolder = new GameObject();
         itemHolder.name = "ItemHolder " + model.name;
         itemHolder.transform.SetParent(dg.transform);
+        data.Add(dg);
         #endregion
     }
 
 
     public void RoomBuild(DungeonData model)
     {
+        
         CreateHolder(model);
         foreach (var roomData in model.rooms)
         {
@@ -85,6 +88,7 @@ public class DungeonMaker : MonoBehaviour
             dic.Add(roomCompo.Guid, roomCompo);
            
         }
+        
 
         foreach (var linkData in model.links)
         {
@@ -102,12 +106,15 @@ public class DungeonMaker : MonoBehaviour
             portal.gameObject.SetActive(true);
         }
 
-
+        
     }
+
+    List<GameObject> data;
 
     public void AllBuild()
     {
         int i = 0;
+        data = new List<GameObject>();
         foreach (var roomData in DungeonDatas)
         {
             RoomBuild(roomData);
