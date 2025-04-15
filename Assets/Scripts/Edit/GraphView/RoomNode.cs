@@ -20,8 +20,7 @@ public class RoomNode : Node
     public string roomID;
 
     public eRoomType RoomType;
-    //public Port inputNorth, inputSouth, inputEast, inputWest;
-    //public Port outputNorth, outputSouth, outputEast, outputWest;
+    public Vector2 VirtualPos;
 
     private Dictionary<string, Port> inputPorts = new Dictionary<string, Port>();
     private Dictionary<string, Port> outputPorts = new Dictionary<string, Port>();
@@ -33,6 +32,15 @@ public class RoomNode : Node
         RoomType = eRoomType.Empty; // 기본값
         Initialize();
     }
+
+    public RoomNode(Vector2 position)
+    {
+        roomID = System.Guid.NewGuid().ToString();
+        RoomType = eRoomType.Empty; // 기본값
+        VirtualPos = position;
+        Initialize();
+    }
+
 
     public void Initialize()
     {

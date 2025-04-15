@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871c604d6ddfedc44948b5d60323325b, type: 3}
   m_Name: Bodytem 3
   m_EditorClassIdentifier: 
+  eEquipmentType: 2
   itemData:
     itemName: Condition_ItemHead8
     description: 

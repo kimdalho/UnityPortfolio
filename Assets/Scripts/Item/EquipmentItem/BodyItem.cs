@@ -9,7 +9,7 @@ public class BodyItem : EquipmentItem
     public List<GameObject> models;
     public int index;
     public eTagType tagtype;
-    public void Init(PickupItemData data)
+    public override void Init(PickupItemData data)
     {
         models[data.objectIndex].gameObject.SetActive(true);
         index = data.modelIndex;

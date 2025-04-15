@@ -52,7 +52,7 @@ public class DungeonGraphEditorWindow : EditorWindow
         AssetDatabase.SaveAssets();
     }
 
-    private void GenerateRandomNodes(int count)
+    private void GenerateRandomNodes(int count, int itemRoomCount, int MonsterRoomCount)
     {
         List<Vector2> placedPositions = new List<Vector2>();
         List<RoomNode> placedNodes = new List<RoomNode>();
@@ -60,7 +60,7 @@ public class DungeonGraphEditorWindow : EditorWindow
         Vector2 startPosition = Vector2.zero;
         placedPositions.Add(startPosition);
 
-        var firstNode = graphView.CreateRoomNode(startPosition, eRoomType.Monster);
+        var firstNode = graphView.CreateRoomNode(startPosition, eRoomType.Start);
         placedNodes.Add(firstNode);
 
         System.Random rand = new System.Random();
@@ -86,7 +86,8 @@ public class DungeonGraphEditorWindow : EditorWindow
                 Vector2 newPos = basePos + dir;
                 if (placedPositions.Contains(newPos)) continue;
 
-                var newNode = graphView.CreateRoomNode(newPos, eRoomType.Monster);
+                //var newNode = graphView.CreateRoomNode(newPos, eRoomType.Empty);
+                var newNode = new RoomNode(newPos);
                 placedPositions.Add(newPos);
                 placedNodes.Add(newNode);
 
@@ -106,7 +107,42 @@ public class DungeonGraphEditorWindow : EditorWindow
 
             if (!placed) continue;
         }
+
+        //첫번째와 마지막 요소는 스타트와 보스 타입이라 제외
+        var middle = placedNodes.Skip(1).Take(placedNodes.Count - 2).ToList();
+        SelectRandomAsRoomType(middle, itemRoomCount, eRoomType.Item);
+        SelectRandomAsRoomType(middle, MonsterRoomCount, eRoomType.Monster);
+        graphView.CreateRoomNode(placedNodes.Last(), eRoomType.Boss);
+
+
     }
+
+    private void SelectRandomAsRoomType(List<RoomNode> placedNodes,int count, eRoomType targetType)
+    {
+        var matched = placedNodes;
+        if (matched.Count >= count)
+        {
+            System.Random rand = new System.Random();
+            List<RoomNode> targetList = matched
+                .Where(x => x.RoomType == eRoomType.Empty) // 조건 필터링
+                .OrderBy(x => rand.Next())                // 랜덤 셔플
+                .Take(count)                              // 갯수 선택
+                .ToList();                                // 리스트로 변환
+
+            foreach (var roomNode in targetList)
+            {
+                graphView.CreateRoomNode(roomNode, targetType);
+            }
+            
+
+        }
+        else
+        {
+            Debug.Log("룸의 최대 갯수보다 선택대상의 갯수가 작다");
+        }
+    }
+
+
 
     private string GetPortName(Vector2 dir)
     {
@@ -142,16 +178,25 @@ public class DungeonGraphEditorWindow : EditorWindow
         Button saveButton = new Button(SaveAsset) { text = "Save Dungeon" };
         toolbar.Add(saveButton);
 
-        var inputField = new IntegerField("Node Count");
-        inputField.value = 5;
+        var item_inputField = new IntegerField("Item Count");
+        item_inputField.value = 1;
+
+        var monster_inputField = new IntegerField("Monster Count");
+        monster_inputField.value = 1;
+
+        //2 는 스타트와 엔드 룸으로 반드시 들어간다
+        int totalCount = 2 + item_inputField.value + monster_inputField.value;
+
+
 
         var button = new Button(() => {
-            int count = Mathf.Clamp(inputField.value, 3, 10);
-            GenerateRandomNodes(count);
+            int count = Mathf.Clamp(totalCount, 3, 10);
+            GenerateRandomNodes(count, item_inputField.value, monster_inputField.value);
         })
         { text = "랜덤 노드 자동 생성" };
 
-        toolbar.Add(inputField);
+        toolbar.Add(item_inputField);
+        toolbar.Add(monster_inputField);
         toolbar.Add(button);
     }
 }

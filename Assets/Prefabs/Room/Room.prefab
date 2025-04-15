@@ -662,6 +662,7 @@ MonoBehaviour:
   left: {fileID: 2618754231522627297}
   right: {fileID: 8964797427661071156}
   Next: {fileID: 5661179846698727983}
+  grid: {fileID: 983167192689640474}
 --- !u!64 &8233850056953869122
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1973,6 +1974,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 647764186539058022}
+  - component: {fileID: 983167192689640474}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -2002,6 +2004,26 @@ Transform:
   - {fileID: 5200664952459301161}
   m_Father: {fileID: 8164878618559594616}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &983167192689640474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2756917990122389987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfecb468328f3e64db156107e03588cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid:
+  - {fileID: 2693411799013598682}
+  - {fileID: 7487613542795682232}
+  - {fileID: 5364710989178812304}
+  - {fileID: 8792658636826291051}
+  - {fileID: 5127179883260357989}
+  - {fileID: 4040997710628672327}
+  - {fileID: 294753430482112291}
 --- !u!1 &3176796833114836406
 GameObject:
   m_ObjectHideFlags: 0

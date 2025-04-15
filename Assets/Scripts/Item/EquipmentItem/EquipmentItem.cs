@@ -25,6 +25,8 @@ public abstract class EquipmentItem : GameEffect, IPickupable
         transform.Rotate(rotationSpeed * Time.deltaTime);
     }
 
+    public virtual void Init(PickupItemData data) {}
+
 
 /// <summary>
 /// 장비 타입은 무기,머리,바디,파츠 상관없이 고유한 효과를 가지고있다.

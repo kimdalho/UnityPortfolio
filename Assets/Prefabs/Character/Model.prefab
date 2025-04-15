@@ -596,7 +596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2604378543765501929
 Transform:
   m_ObjectHideFlags: 0
@@ -3623,7 +3623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5345928255669903862
 Transform:
   m_ObjectHideFlags: 0
@@ -3714,9 +3714,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93005e4cac64995478b011a4506c7e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  models:
-  - {fileID: 11400000, guid: a36d1cd4e63835d4ca40e0c07f04d8bf, type: 2}
-  - {fileID: 11400000, guid: d67fbc96145d0944c8eeae48fe981263, type: 2}
+  m_heads: []
+  m_bodys: []
+  m_weapons: []
   character: {fileID: 4186884722368910970}
 --- !u!114 &4186884722368910970
 MonoBehaviour:
@@ -3734,7 +3734,18 @@ MonoBehaviour:
     MaxHart: 0
     CurHart: 0
     atk: 0
+    attackSpeed: 0
     speed: 0
+  calcVelocity: {x: 0, y: 0, z: 0}
+  characterController: {fileID: 0}
+  jumpHeight: 2
+  gravity: -9.81
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0.3
+  animator: {fileID: 0}
+  controller: {fileID: 0}
 --- !u!1 &4716039099327892747
 GameObject:
   m_ObjectHideFlags: 0
@@ -3814,7 +3825,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5254664465897375394
 Transform:
   m_ObjectHideFlags: 0
@@ -4168,7 +4179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1854140869594794640
 Transform:
   m_ObjectHideFlags: 0
@@ -6513,7 +6524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9121935171301189694
 Transform:
   m_ObjectHideFlags: 0

@@ -30,6 +30,8 @@ public enum eTagType
 [CreateAssetMenu(fileName = "NewItemData", menuName = "GameData/Item Data")]
 public class PickupItemData : ScriptableObject
 {
+    public eEuipmentType eEquipmentType;
+
     public ItemData itemData;
     //플레이어 인덱스
     public int modelIndex;

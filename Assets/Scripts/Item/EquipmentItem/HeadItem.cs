@@ -5,7 +5,7 @@ public class HeadItem : EquipmentItem
 {
     public List<GameObject> models;
     public int index;
-    public void Init(PickupItemData data)
+    public override void Init(PickupItemData data)
     {
         models[data.objectIndex].gameObject.SetActive(true);
         index = data.modelIndex;

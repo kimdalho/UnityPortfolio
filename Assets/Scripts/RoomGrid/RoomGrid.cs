@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 public class RoomGrid : MonoBehaviour
 {
@@ -19,31 +22,56 @@ public class RoomGrid : MonoBehaviour
         Debug.Log("자식 객체 위치 재배치 완료");
     }
 
+    private GridNode GetRandomGridNode()
+    {
+        System.Random rand1 = new System.Random();
+        System.Random rand2 = new System.Random();
+        GridRow selectRowGrid = grid[rand1.Next(grid.Count)];
+        List<GridNode> result  = selectRowGrid.GetGrid();
+        return result[rand2.Next(selectRowGrid.GetGrid().Count)];
+    }
+    
+    public void CreateMonster(Transform parent, int level)
+    {
+        GridNode node = GetRandomGridNode();
+        var newmon =  ResourceManager.Instance.CreateMonster(level,node.transform);
+        newmon.transform.position = node.transform.position;
+    }
+
+
 
     
 
     /// <summary>
     /// 아이템 테스트를 위해서 생성 스타트에서 GameScene에서 Start 함수로 사용
     /// </summary>
-    public void CreateItem() 
+    public void CreateItem(Transform parent, int tier) 
+    {
+        GridNode node = GetRandomGridNode();
+        var newItem = ResourceManager.Instance.CreateItemToTier(tier, parent);
+        newItem.transform.position = node.transform.position;
+        
+    }
+
+    private void Start()
+    {
+        ItemTest();
+    }
+
+    public void ItemTest()
     {
         int index = 0;
-        foreach (GridRow row in grid)
+        foreach (var rownode in grid)
         {
-            foreach(GridNode node in row.GetGrid())
-            {                
-                if(index < 6)
+            foreach (var node in rownode.GetGrid())
+            {
+                var newItem = ResourceManager.Instance.CreateItemToIndex(index, node.transform);
+                if(newItem == null)
                 {
-                    ResourceManager.Instance.CreateHeadItem(index, node.transform);
+                    return;
                 }
+                newItem.transform.position = node.GetItemPos();
                 index++;
-
-                if(index >= 6 && index < 12)
-                {
-                    ResourceManager.Instance.CreateBodyItem(index - 6, node.transform);
-                }
-
-
             }
         }
     }

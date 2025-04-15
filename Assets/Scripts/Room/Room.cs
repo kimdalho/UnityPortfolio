@@ -19,7 +19,11 @@ public class Room : MonoBehaviour
     public Dictionary<eDirection, Portal> keyValuePairs = new Dictionary<eDirection, Portal>();
     public Portal top, bottom, left, right;
     public Portal Next;
-   
+
+    
+    public RoomGrid grid;
+
+       
     public void Init(RoomData model)
     {
         Guid = model.guid;

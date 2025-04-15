@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 871c604d6ddfedc44948b5d60323325b, type: 3}
   m_Name: HeadItem 5
   m_EditorClassIdentifier: 
+  eEquipmentType: 1
   itemData:
     itemName: Condition_ItemHead5
     description: 
   modelIndex: 4
   objectIndex: 3
-  Rank: 0
+  Rank: 2
   tag: 3
   attribute:
     MaxHart: 0
