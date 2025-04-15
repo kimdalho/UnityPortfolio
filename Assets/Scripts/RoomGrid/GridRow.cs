@@ -51,4 +51,6 @@ public class GridRow : MonoBehaviour
             node.gameObject.transform.localScale = new Vector3(1, 3, 1);
         }
     }
+
+    
 }

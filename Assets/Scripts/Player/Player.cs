@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Player : Character
@@ -56,6 +54,10 @@ public partial class Player : Character
 
     private void Update()
     {
+        var tagSystem = GameManager.instance.GetPlayer().gameplayTagSystem;
+        if (tagSystem.HasTag(eTagType.portalLock) == true)
+            return;
+
         Move();        
         RotateToCameraDirection();
         //자석기능 없앨까 생각중

@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e791db119bff5934db2b24760ed285e6, type: 3}
+  m_Name: Lv2
+  m_EditorClassIdentifier: 
+  rooms:
+  - guid: 3c88e288-6c39-417d-938a-778eb6c02531
+    position: {x: -207, y: 0}
+    roomType: 3
+  - guid: a57665c9-81c0-4ab2-8059-efb9abe0eed6
+    position: {x: 489, y: -169}
+    roomType: 4
+  - guid: 1454bef0-29d2-4cb9-9118-deb8b761747f
+    position: {x: 437, y: 34}
+    roomType: 1
+  - guid: e5a0acf8-19d7-4ebb-ac91-1aac05720a4d
+    position: {x: 119, y: -135}
+    roomType: 0
+  - guid: 499bbee0-42ab-4a13-b093-26666214d289
+    position: {x: 152, y: 75}
+    roomType: 5
+  - guid: 0e5a093f-12d0-458b-b9c6-929d74d1dba0
+    position: {x: -66, y: 244}
+    roomType: 5
+  links:
+  - fromNodeGUID: 3c88e288-6c39-417d-938a-778eb6c02531
+    toNodeGUID: 0e5a093f-12d0-458b-b9c6-929d74d1dba0
+    direction: Output Top
+  - fromNodeGUID: 0e5a093f-12d0-458b-b9c6-929d74d1dba0
+    toNodeGUID: 3c88e288-6c39-417d-938a-778eb6c02531
+    direction: Output Bottom
+  - fromNodeGUID: 0e5a093f-12d0-458b-b9c6-929d74d1dba0
+    toNodeGUID: 499bbee0-42ab-4a13-b093-26666214d289
+    direction: Output Right
+  - fromNodeGUID: 499bbee0-42ab-4a13-b093-26666214d289
+    toNodeGUID: 0e5a093f-12d0-458b-b9c6-929d74d1dba0
+    direction: Output Left
+  - fromNodeGUID: 499bbee0-42ab-4a13-b093-26666214d289
+    toNodeGUID: e5a0acf8-19d7-4ebb-ac91-1aac05720a4d
+    direction: Output Bottom
+  - fromNodeGUID: e5a0acf8-19d7-4ebb-ac91-1aac05720a4d
+    toNodeGUID: 499bbee0-42ab-4a13-b093-26666214d289
+    direction: Output Top
+  - fromNodeGUID: e5a0acf8-19d7-4ebb-ac91-1aac05720a4d
+    toNodeGUID: 1454bef0-29d2-4cb9-9118-deb8b761747f
+    direction: Output Right
+  - fromNodeGUID: 1454bef0-29d2-4cb9-9118-deb8b761747f
+    toNodeGUID: e5a0acf8-19d7-4ebb-ac91-1aac05720a4d
+    direction: Output Left
+  - fromNodeGUID: 1454bef0-29d2-4cb9-9118-deb8b761747f
+    toNodeGUID: a57665c9-81c0-4ab2-8059-efb9abe0eed6
+    direction: Output Bottom
+  - fromNodeGUID: a57665c9-81c0-4ab2-8059-efb9abe0eed6
+    toNodeGUID: 1454bef0-29d2-4cb9-9118-deb8b761747f
+    direction: Output Top

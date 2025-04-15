@@ -42,6 +42,26 @@ public class DungeonGraphView : GraphView
         return node;
     }
 
+    public RoomNode CreateRoomNode(RoomNode node, eRoomType roomType)
+    {
+        node.title = roomType.ToString(); // 노드 상단에 타입 표시
+        node.RoomType = roomType;
+        node.SetPosition(new Rect(node.VirtualPos, new Vector2(200, 150)));
+
+        // RoomType 드롭다운 추가
+        var typeField = new EnumField(node.RoomType);
+        typeField.RegisterValueChangedCallback(evt =>
+        {
+            node.RoomType = (eRoomType)evt.newValue;
+            node.title = node.RoomType.ToString(); // 제목 동기화
+        });
+        node.mainContainer.Add(typeField);
+
+        AddElement(node);
+        return node;
+    }
+
+
 
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
     {

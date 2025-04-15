@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e791db119bff5934db2b24760ed285e6, type: 3}
+  m_Name: Lv8
+  m_EditorClassIdentifier: 
+  rooms:
+  - guid: e3cffd57-a495-4e5e-99ac-dd242eeb9dfb
+    position: {x: 0, y: 0}
+    roomType: 3
+  - guid: 2ae9ad44-f1f7-4314-abdd-42d60916f127
+    position: {x: 0, y: 100}
+    roomType: 0
+  - guid: d6626644-97a4-49b3-aa47-307a48c3018a
+    position: {x: 100, y: 100}
+    roomType: 1
+  - guid: 3ef63c05-9916-420b-9bb8-b50e0cef80f6
+    position: {x: 200, y: 100}
+    roomType: 0
+  - guid: 1851e434-6aeb-421a-839e-b218903914b3
+    position: {x: 200, y: 200}
+    roomType: 1
+  - guid: 9b1fbcf0-f8f7-482b-aa03-2f4e6facc5d5
+    position: {x: 100, y: 200}
+    roomType: 0
+  - guid: 3b4f9c53-b23c-4874-a04c-a8ab9c6b22a7
+    position: {x: 0, y: 200}
+    roomType: 1
+  - guid: cc9f79b1-c833-4964-8269-0ae2071610b7
+    position: {x: 0, y: 300}
+    roomType: 0
+  - guid: e06860d0-6dc6-44f2-b33d-1b01a57b6e14
+    position: {x: 0, y: 400}
+    roomType: 0
+  - guid: 6766f561-d3b4-43b9-aaa4-9f7bb012fa67
+    position: {x: -100, y: 400}
+    roomType: 0
+  - guid: c6a89e2e-3329-4749-97fc-b81e3277f0e0
+    position: {x: -200, y: 400}
+    roomType: 4
+  links:
+  - fromNodeGUID: e3cffd57-a495-4e5e-99ac-dd242eeb9dfb
+    toNodeGUID: 2ae9ad44-f1f7-4314-abdd-42d60916f127
+    direction: Output Top
+  - fromNodeGUID: 2ae9ad44-f1f7-4314-abdd-42d60916f127
+    toNodeGUID: e3cffd57-a495-4e5e-99ac-dd242eeb9dfb
+    direction: Output Bottom
+  - fromNodeGUID: 2ae9ad44-f1f7-4314-abdd-42d60916f127
+    toNodeGUID: d6626644-97a4-49b3-aa47-307a48c3018a
+    direction: Output Right
+  - fromNodeGUID: d6626644-97a4-49b3-aa47-307a48c3018a
+    toNodeGUID: 2ae9ad44-f1f7-4314-abdd-42d60916f127
+    direction: Output Left
+  - fromNodeGUID: d6626644-97a4-49b3-aa47-307a48c3018a
+    toNodeGUID: 3ef63c05-9916-420b-9bb8-b50e0cef80f6
+    direction: Output Right
+  - fromNodeGUID: 3ef63c05-9916-420b-9bb8-b50e0cef80f6
+    toNodeGUID: d6626644-97a4-49b3-aa47-307a48c3018a
+    direction: Output Left
+  - fromNodeGUID: 3ef63c05-9916-420b-9bb8-b50e0cef80f6
+    toNodeGUID: 1851e434-6aeb-421a-839e-b218903914b3
+    direction: Output Top
+  - fromNodeGUID: 1851e434-6aeb-421a-839e-b218903914b3
+    toNodeGUID: 3ef63c05-9916-420b-9bb8-b50e0cef80f6
+    direction: Output Bottom
+  - fromNodeGUID: 1851e434-6aeb-421a-839e-b218903914b3
+    toNodeGUID: 9b1fbcf0-f8f7-482b-aa03-2f4e6facc5d5
+    direction: Output Left
+  - fromNodeGUID: 9b1fbcf0-f8f7-482b-aa03-2f4e6facc5d5
+    toNodeGUID: 1851e434-6aeb-421a-839e-b218903914b3
+    direction: Output Right
+  - fromNodeGUID: 9b1fbcf0-f8f7-482b-aa03-2f4e6facc5d5
+    toNodeGUID: 3b4f9c53-b23c-4874-a04c-a8ab9c6b22a7
+    direction: Output Left
+  - fromNodeGUID: 3b4f9c53-b23c-4874-a04c-a8ab9c6b22a7
+    toNodeGUID: 9b1fbcf0-f8f7-482b-aa03-2f4e6facc5d5
+    direction: Output Right
+  - fromNodeGUID: 3b4f9c53-b23c-4874-a04c-a8ab9c6b22a7
+    toNodeGUID: cc9f79b1-c833-4964-8269-0ae2071610b7
+    direction: Output Top
+  - fromNodeGUID: cc9f79b1-c833-4964-8269-0ae2071610b7
+    toNodeGUID: 3b4f9c53-b23c-4874-a04c-a8ab9c6b22a7
+    direction: Output Bottom
+  - fromNodeGUID: cc9f79b1-c833-4964-8269-0ae2071610b7
+    toNodeGUID: e06860d0-6dc6-44f2-b33d-1b01a57b6e14
+    direction: Output Top
+  - fromNodeGUID: e06860d0-6dc6-44f2-b33d-1b01a57b6e14
+    toNodeGUID: cc9f79b1-c833-4964-8269-0ae2071610b7
+    direction: Output Bottom
+  - fromNodeGUID: e06860d0-6dc6-44f2-b33d-1b01a57b6e14
+    toNodeGUID: 6766f561-d3b4-43b9-aaa4-9f7bb012fa67
+    direction: Output Left
+  - fromNodeGUID: 6766f561-d3b4-43b9-aaa4-9f7bb012fa67
+    toNodeGUID: e06860d0-6dc6-44f2-b33d-1b01a57b6e14
+    direction: Output Right
+  - fromNodeGUID: 6766f561-d3b4-43b9-aaa4-9f7bb012fa67
+    toNodeGUID: c6a89e2e-3329-4749-97fc-b81e3277f0e0
+    direction: Output Left
+  - fromNodeGUID: c6a89e2e-3329-4749-97fc-b81e3277f0e0
+    toNodeGUID: 6766f561-d3b4-43b9-aaa4-9f7bb012fa67
+    direction: Output Right

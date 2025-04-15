@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda6db1093157214e882c182c961dea7, type: 3}
+  m_Name: DGLevel
+  m_EditorClassIdentifier: 
+  roomConfigs:
+  - dungeonLevel: 1
+    minMonsters: 1
+    maxMonsters: 1
+    monsterLevel1Chance: 100
+    monsterLevel2Chance: 0
+    monsterLevel3Chance: 0
+    minItems: 1
+    maxItems: 1
+    itemTier1Chance: 100
+    itemTier2Chance: 0
+    itemTier3Chance: 0
+  - dungeonLevel: 2
+    minMonsters: 1
+    maxMonsters: 2
+    monsterLevel1Chance: 80
+    monsterLevel2Chance: 20
+    monsterLevel3Chance: 0
+    minItems: 1
+    maxItems: 1
+    itemTier1Chance: 80
+    itemTier2Chance: 20
+    itemTier3Chance: 0
+  - dungeonLevel: 3
+    minMonsters: 2
+    maxMonsters: 3
+    monsterLevel1Chance: 60
+    monsterLevel2Chance: 30
+    monsterLevel3Chance: 10
+    minItems: 1
+    maxItems: 2
+    itemTier1Chance: 70
+    itemTier2Chance: 30
+    itemTier3Chance: 0
+  - dungeonLevel: 4
+    minMonsters: 2
+    maxMonsters: 3
+    monsterLevel1Chance: 40
+    monsterLevel2Chance: 40
+    monsterLevel3Chance: 20
+    minItems: 1
+    maxItems: 2
+    itemTier1Chance: 60
+    itemTier2Chance: 40
+    itemTier3Chance: 0
+  - dungeonLevel: 5
+    minMonsters: 2
+    maxMonsters: 3
+    monsterLevel1Chance: 40
+    monsterLevel2Chance: 40
+    monsterLevel3Chance: 20
+    minItems: 1
+    maxItems: 2
+    itemTier1Chance: 60
+    itemTier2Chance: 40
+    itemTier3Chance: 0
+  - dungeonLevel: 6
+    minMonsters: 2
+    maxMonsters: 4
+    monsterLevel1Chance: 20
+    monsterLevel2Chance: 30
+    monsterLevel3Chance: 50
+    minItems: 2
+    maxItems: 3
+    itemTier1Chance: 30
+    itemTier2Chance: 40
+    itemTier3Chance: 30
+  - dungeonLevel: 7
+    minMonsters: 2
+    maxMonsters: 3
+    monsterLevel1Chance: 10
+    monsterLevel2Chance: 30
+    monsterLevel3Chance: 60
+    minItems: 2
+    maxItems: 3
+    itemTier1Chance: 20
+    itemTier2Chance: 40
+    itemTier3Chance: 40
+  - dungeonLevel: 8
+    minMonsters: 3
+    maxMonsters: 4
+    monsterLevel1Chance: 5
+    monsterLevel2Chance: 20
+    monsterLevel3Chance: 75
+    minItems: 2
+    maxItems: 3
+    itemTier1Chance: 10
+    itemTier2Chance: 40
+    itemTier3Chance: 50
+  - dungeonLevel: 9
+    minMonsters: 3
+    maxMonsters: 4
+    monsterLevel1Chance: 0
+    monsterLevel2Chance: 10
+    monsterLevel3Chance: 90
+    minItems: 1
+    maxItems: 2
+    itemTier1Chance: 10
+    itemTier2Chance: 40
+    itemTier3Chance: 50
+  - dungeonLevel: 10
+    minMonsters: 1
+    maxMonsters: 1
+    monsterLevel1Chance: 0
+    monsterLevel2Chance: 0
+    monsterLevel3Chance: 100
+    minItems: 0
+    maxItems: 0
+    itemTier1Chance: 0
+    itemTier2Chance: 0
+    itemTier3Chance: 0

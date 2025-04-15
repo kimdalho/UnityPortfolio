@@ -14,7 +14,7 @@ public class DungeonMakerEditor : Editor
         if (GUILayout.Button("던전 생성", GUILayout.Height(30)))
         {
             DungeonMaker positioner = (DungeonMaker)target;
-            positioner.Create();
+            positioner.Build();
         }
     }
 }
