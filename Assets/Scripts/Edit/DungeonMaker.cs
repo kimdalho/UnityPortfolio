@@ -19,7 +19,7 @@ public class DungeonMaker : MonoBehaviour
     public void Create()
     {
         var temp = new GameObject();
-        temp.name = "Dungeon";
+        temp.name = "Dungeon " + roomData.name;
         
 
         dic = new Dictionary<string, Room>();

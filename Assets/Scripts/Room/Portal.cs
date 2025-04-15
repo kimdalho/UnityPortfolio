@@ -29,7 +29,7 @@ public class Portal : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && this.tag == "Door")
         {
             StartCoroutine(SetPlayerPositionNextFrame(toNodePos));
         }
