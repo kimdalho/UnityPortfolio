@@ -1,30 +1,16 @@
 using System.Collections;
 using UnityEngine;
 
-public class Samurai : Monster
+public class Samurai : BlackHood
 {
     private bool IsEvade = false;
     public float evadeRatio = 0.3f;
-
-    protected override void ExecuteAttack()
-    {
-        // Create Dectect Object
-        var _hits = SphereDetector.DetectObjectsInSphere(transform.position + transform.forward * attackRange, 1, LayerMask.GetMask("Player"));
-        if (_hits == null || _hits.Length.Equals(0)) return;
-
-        if (_hits[0].TryGetComponent<AttributeEntity>(out var _obj))
-        {
-            var _effect = new GameEffect(new DamageExecution());
-            _effect.Apply(this, _obj);
-        }
-    }
 
     protected override void TakeDamage()
     {
         // 공격을 맞았을 때 회피 판정을 받으면 백덤블링으로 캐릭터와 멀어지도록
         if (Random.Range(0f, 1f) <= evadeRatio && attribute.CurHart > 0)
         {
-            IsAtk = false;
             animator.SetTrigger("Evade");
             // 회피하는 동안은 피해를 입지 않음
             gameObject.layer = LayerMask.NameToLayer("Default");
@@ -42,7 +28,7 @@ public class Samurai : Monster
         }
     }
 
-    protected override void HitAction()
+    public override void HitAction()
     {
         if (IsEvade)
         {

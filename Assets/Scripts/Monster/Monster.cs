@@ -1,47 +1,31 @@
 using UnityEngine;
 
-public enum MonsterState
-{
-    Idle,
-    Patrol,
-    Chase,
-    Attack,
-    Reload,
-    Hit,
-    Dead
-}
-
 [RequireComponent(typeof(MonsterFSM))]
 public abstract class Monster : Character
 {
     #region Monster Stats
-
     private float rotSpeed = 10f;
     public float chaseRange;    // 추격 시작 범위
     public float attackRange;   // 공격 가능 범위
 
+    [SerializeField] protected AbilitySystem abilitySystem;
+
     [SerializeField] private int MaxBullet = -1;
     public int CurBullet { get; private set; }
-
-    public bool IsAtk { get; protected set; } = false;    // 애니메이션이 진행 중인지 확인
-    public bool IsAtkCool { get; protected set; } = false;    // 공격 쿨타임 상태 확인
-    public bool IsReLoad { get; protected set; } = false;
-    public bool IsHit { get; protected set; } = false;
+    public bool IsAtk { get; set; } = false;    // 애니메이션이 진행 중인지 확인
+    public bool IsAtkCool { get; set; } = false;    // 공격 쿨타임 상태 확인
+    public bool IsHit { get; set; } = false;
     public Transform chaseTarget { get; private set; } = null;  // 추적할 대상
-
     #endregion
 
-    #region 
-    [SerializeField] private float atkCoolTime = 2f;
-    [SerializeField] private float attackDelayRatio = 0.3f;
-    private float patrolTime = 2f;
+    #region Progress
 
-    private float coolElapsed = 0f;
+    public float patrolTime = 2f;
     private float patrolElapsed = 0f;
-    private float animElapsed = 0f;
-    public Vector3 patrolTargetPos = default(Vector3);
+    public float animElapsed { get; set; }
+    public Vector3 patrolTargetPos { get; set; } = default(Vector3);
 
-    public Transform roomGrid;
+    [SerializeField] private Transform roomGrid;
 
     protected bool IsAnimPlay(float addTime = 0f)
     {
@@ -56,13 +40,22 @@ public abstract class Monster : Character
 
         // Hit 상태로 변경될 수 있도록 구독
         onHit += TakeDamage;
+
+        // 상태 초기화
+        var _idle = StateFactory.GetState(MonsterState.Idle);
+        var _patrol = StateFactory.GetState(MonsterState.Patrol);
+        var _chase = StateFactory.GetState(MonsterState.Chase);
+        var _attack = StateFactory.GetState(MonsterState.Attack);
+        var _reLoad = StateFactory.GetState(MonsterState.Reload);
+        var _hit = StateFactory.GetState(MonsterState.Hit);
+        var _dead = StateFactory.GetState(MonsterState.Dead);
+
+        GetComponent<MonsterFSM>().Initialized(this, _dead, _hit, _reLoad, _attack, _chase, _patrol, _idle);
     }
 
     #region Action
-    private void IdleAction()
+    public void IdleAction()
     {
-        animator.SetBool(moveHash, false);
-
         // 추적할 상대가 있을 경우에는 대상을 향하도록 Rotate
         if (chaseTarget != null) RotateTowardTarget(chaseTarget.position - transform.position);
 
@@ -78,11 +71,9 @@ public abstract class Monster : Character
 
         // 이동
         characterController.Move(moveDir * speed * Time.deltaTime);
-
-        animator.SetBool(moveHash, true);
     }
 
-    private void PatrolAction()
+    public void PatrolAction()
     {
         var _moveDir = patrolTargetPos - transform.position;
         MoveAction(_moveDir.normalized, attribute.speed);
@@ -95,7 +86,7 @@ public abstract class Monster : Character
         }
     }
 
-    private void ChaseAction()
+    public void ChaseAction()
     {
         if (chaseTarget == null) return;
 
@@ -103,68 +94,45 @@ public abstract class Monster : Character
         MoveAction(_moveDir.normalized, attribute.speed * 2f);
     }
 
-    private void AttackAction()
+    public void AttackAction()
     {
-        if (!IsAtk) InitAttack();
-
-        var _animLength = animator.GetCurrentAnimatorStateInfo(0).length;
-        var _attackDelay = _animLength * attackDelayRatio;
-
-        animElapsed += Time.deltaTime;
-
-        if (animElapsed >= _attackDelay && !IsAtkCool)
-        {
-            IsAtkCool = true;
-            coolElapsed = 0f;
-            ExecuteAttack();
-        }
-
-        if (animElapsed < _animLength) return;
-
+        if (IsAnimPlay()) return;
         IsAtk = false;
     }
 
-    protected virtual void ReLoadAction()
+    public virtual void ReLoadAction()
     {
-        if (!IsReLoad)
-        {
-            IsReLoad = true;
-            animElapsed = 0f;
-            animator.SetTrigger("Trg_ReLoad");
-        }
-
         if (IsAnimPlay()) return;
-
-        IsReLoad = false;
         CurBullet = MaxBullet;
     }
 
-    protected virtual void HitAction()
+    public virtual void HitAction()
     {
         if (IsAnimPlay()) return;
-
         IsHit = false;
     }
 
-    private void DeadAction()
+    public void DeadAction()
     {
         if (IsAnimPlay(0.5f)) return;
-
         Destroy(gameObject);
     }
     #endregion
 
-    protected virtual void InitAttack()
+    #region State Init
+    public virtual void InitAttack()
     {
         IsAtk = true;
 
-        animator.SetBool(moveHash, false);
-        animator.SetTrigger("Trg_Attack");
-
-        animElapsed = 0f;
-
+        ExecuteAttack();
         if (MaxBullet > 0) CurBullet--;
     }
+
+    public virtual void InitReLoad()
+    {
+        animator.SetTrigger("Trg_ReLoad");
+    }
+    #endregion
 
     protected abstract void ExecuteAttack();
     
@@ -179,7 +147,6 @@ public abstract class Monster : Character
         var _randX = Random.Range(0, _gridTrans.GetChild(_randY).childCount);
 
         patrolTargetPos = roomGrid.GetChild(2).GetChild(_randY).GetChild(_randX).position;
-        //patrolTargetPos = transform.position + new Vector3(Random.Range(-5f, 5f), 0, Random.Range(-5f, 5f));
     }
 
     private void RotateTowardTarget(Vector3 dir)
@@ -197,18 +164,14 @@ public abstract class Monster : Character
 
     protected virtual void TakeDamage()
     {
-        IsAtk = false;
-        IsReLoad = false;
         animElapsed = 0f;
 
         if (attribute.CurHart <= 0)
         {
-            animator.SetTrigger("Trg_Dead");
             GetComponent<Collider>().enabled = false;
             return;
         }
         IsHit = true;
-        animator.SetTrigger("Trg_Hit");
     }
 
     protected void ApplyGravity()
@@ -228,21 +191,19 @@ public abstract class Monster : Character
     protected virtual void Start()
     {
         Initialized();
-        GetComponent<MonsterFSM>().Initialized(this, IdleAction, PatrolAction, ChaseAction, AttackAction, ReLoadAction, HitAction, DeadAction);
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, chaseRange);
     }
+#endif
 
     void Update()
     {
         SearchTarget();
         ApplyGravity();
-
-        var _atkCoolTime = atkCoolTime / Mathf.Max(attribute.attackSpeed, 0.01f);
-        IsAtkCool = (coolElapsed += Time.deltaTime) < _atkCoolTime;
     }
 }
