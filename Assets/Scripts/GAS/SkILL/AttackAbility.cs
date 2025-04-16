@@ -31,7 +31,7 @@ public class AttackAbility : GameAbility
     {
         Vector3 spherePosition = owner.transform.position + owner.transform.forward * 1f; // 정면에서 +3 이동
         int layerMask = LayerMask.GetMask("Item"); // "Enemy" 레이어만 감지
-        Collider[] results = SphereDetector.DetectObjectsInSphere(spherePosition, 1, LayerMask.GetMask("Item"));
+        Collider[] results = SphereDetector.DetectObjectsInSphere(spherePosition, 1, targetMask);
         foreach (var col in results)
         {
             //col.GetComponent<PlaceableObject>().TakeDamage(1);

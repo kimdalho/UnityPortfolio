@@ -12,6 +12,6 @@ public class DamageExecution : IGameEffectExecutionCalculation
         target.attribute.CurHart -= sourceATK;
         UnityEngine.Debug.Log($"Damage: {sourceATK} applied. Target HP: {target.attribute.CurHart}");
 
-        target.onHit.Invoke();
+        target.onHit?.Invoke();
     }
 }

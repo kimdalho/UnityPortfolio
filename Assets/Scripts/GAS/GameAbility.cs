@@ -14,25 +14,38 @@ public abstract class GameAbility : MonoBehaviour
     public string AbilityTag;
     public string AbilityName;    
     public float Duration;
+    public LayerMask targetMask;
     protected bool isOnCooldown = false;
+    protected bool IsOnCooldown
+    {
+        get => isOnCooldown;
+        set
+        {
+            isOnCooldown = value;
+            // Owner가 몬스터일 경우 AtkCool 설정
+            if (owner is Monster) (owner as Monster).IsAtkCool = value;
+        }
+    }
 
     //스킬에 구독할 태그
     protected GameplayTagSystem tagSystem = new GameplayTagSystem();
 
     protected IEnumerator CoActivateAbility()
     {
-        if (isOnCooldown || tagSystem.HasTag(eTagType.Stunned))
+        if (IsOnCooldown || tagSystem.HasTag(eTagType.Stunned))
         {
             Debug.Log($"{AbilityName} 사용 불가!");
             yield break;
         }
 
         Debug.Log($"{AbilityName} 발동!");
-        isOnCooldown = true;
+        IsOnCooldown = true;
 
-        yield return StartCoroutine(ExecuteAbility());  // 능력 실행
-        
-        isOnCooldown = false;
+        // StartCoroutine으로 호출 시 독립적인 로직으로 실행됨
+        //yield return StartCoroutine(ExecuteAbility());
+        yield return ExecuteAbility();  // 능력 실행
+
+        IsOnCooldown = false;
     }
 
     public void ActivateAbility(Character owner)
