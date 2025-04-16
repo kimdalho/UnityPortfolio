@@ -17,7 +17,10 @@ public enum eTagType
     Roostersbody, //적 처치 시 30%확률로 최대 체력 추가 획득
     clowntorso, // 	스킬 사용 시 다음 투사체가 관통 효과 추가
     boxbody, // 이동 후 첫 공격에 투사체 2개 추가 발사
-    portalLock, // 기본 공격 시 정면 부채꼴 투사체 5발 동시 발사
+
+    portalLock,//획득시 이동 불가
+    Attack,
+    FanShapeFire // 사무라이 몬스터 사용
 }
 
 

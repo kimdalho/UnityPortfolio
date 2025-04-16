@@ -7,10 +7,12 @@ using static UnityEngine.UI.GridLayoutGroup;
 public class AttackAbility : GameAbility
 {
     protected override IEnumerator ExecuteAbility()
-    { 
+    {         
         Character character = owner.GetComponent<Character>();
         Animator animator = character.GetAnimator();
         character.GetAnimator().SetTrigger("Trg_Attack");
+        owner.gameplayTagSystem.AddTag(eTagType.Attack);
+
 
         AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
         float animationDuration = animationState.length;
@@ -45,6 +47,11 @@ public class AttackAbility : GameAbility
 
             Debug.Log("Detected: " + col.name);
         }
+    }
+    
+    public override void EndAbility()
+    {
+        owner.gameplayTagSystem.RemoveTag(eTagType.Attack);
     }
 
 

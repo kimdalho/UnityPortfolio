@@ -91,12 +91,13 @@ public partial class Player : Character
 
     private void AbilitySkillX()
     {
-        abilitySystem.ActivateAbility("FireBall", this);
+        //테스트용
+        //abilitySystem.ActivateAbility(eTagType.Attack, this);
     }
 
     private void AbilitySkillAttack()
     {
-        abilitySystem.ActivateAbility("Attack", this);
+        abilitySystem.ActivateAbility(eTagType.Attack, this);
     }
 
     private void AbilitySkillAttackEnd()
@@ -107,7 +108,7 @@ public partial class Player : Character
             return;
         }
 
-        abilitySystem.DeactivateAbility("Attack");
+        abilitySystem.DeactivateAbility(eTagType.Attack);
     }
 
     private void Move()
