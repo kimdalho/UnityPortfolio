@@ -39,14 +39,4 @@ public class FXFactory : MonoBehaviour
     {
         return Instantiate(GetPrefab(abilityTag), pos, rot);
     }
-
-    public GameObject GetFX(eTagType abilityTag, Transform parent, bool isWorldPos = false)
-    {
-        return Instantiate(GetPrefab(abilityTag.ToString()), parent, isWorldPos);
-    }
-
-    public GameObject GetFX(eTagType abilityTag, Vector3 pos, Quaternion rot)
-    {
-        return Instantiate(GetPrefab(abilityTag.ToString()), pos, rot);
-    }
 }

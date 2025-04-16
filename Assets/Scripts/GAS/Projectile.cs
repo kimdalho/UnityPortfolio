@@ -17,7 +17,7 @@ public class Projectile : MonoBehaviour
 
     private Vector3 moveDirection;
     private float accumulateGravityValue = 0f;
-    protected eTagType abilityTag;
+    protected string abilityTag;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour
     /// <param name="dir">투사체 방향</param>
     /// <param name="targetLayer">대상 레이어</param>
     /// <param name="IsAtkSpeedAdd">투사체 이동 속도에 공격 속도 반영 여부</param>
-    public void Initialized(Character owner, Vector3 dir, LayerMask targetLayer, eTagType abilityTag, bool IsAtkSpeedAdd = false)
+    public void Initialized(Character owner, Vector3 dir, LayerMask targetLayer, string abilityTag, bool IsAtkSpeedAdd = false)
     {
         this.owner = owner;
         this.targetLayer = targetLayer;
