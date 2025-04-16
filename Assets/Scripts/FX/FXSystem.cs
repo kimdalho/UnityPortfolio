@@ -8,7 +8,7 @@ public class FXSystem : MonoBehaviour
     /// Ability Tag에 따른 FX 실행
     /// </summary>
     /// <param name="abilityTag"></param>
-    public void ExecuteFX(string abilityTag)
+    public void ExecuteFX(eTagType abilityTag)
     {
         // FX Object는 독립적인 오브젝트이다.
 
