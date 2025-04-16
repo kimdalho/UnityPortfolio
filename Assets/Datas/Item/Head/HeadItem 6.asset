@@ -15,7 +15,7 @@ MonoBehaviour:
   eEquipmentType: 1
   itemData:
     itemName: Condition_ItemHead6
-    description: 
+    description: Equip_Head_Description6
   modelIndex: 5
   objectIndex: 4
   Rank: 2
