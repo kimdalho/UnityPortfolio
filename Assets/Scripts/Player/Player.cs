@@ -50,13 +50,18 @@ public partial class Player : Character
         inputController.Subscribe(ref inputController.OnXKeyPressed, AbilitySkillX);
         inputController.Subscribe(ref inputController.OnLeftDown, AbilitySkillAttack);
         inputController.Subscribe(ref inputController.OnLeftUp, AbilitySkillAttackEnd);
+
+        
     }
 
     private void Update()
     {
-        var tagSystem = GameManager.instance.GetPlayer().gameplayTagSystem;
-        if (tagSystem.HasTag(eTagType.portalLock) == true)
-            return;
+        if(gameplayTagSystem != null)
+        {
+            var tagSystem = gameplayTagSystem;
+            if (tagSystem.HasTag(eTagType.portalLock) == true)
+                return;
+        }
 
         Move();        
         RotateToCameraDirection();
