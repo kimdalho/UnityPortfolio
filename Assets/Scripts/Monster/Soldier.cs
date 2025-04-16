@@ -13,6 +13,6 @@ public class Soldier : Monster
 
     protected override void ExecuteAttack()
     {
-        abilitySystem.ActivateAbility("FanShapeFire", this);
+        abilitySystem.ActivateAbility(eTagType.FanShapeFire, this);
     }
 }

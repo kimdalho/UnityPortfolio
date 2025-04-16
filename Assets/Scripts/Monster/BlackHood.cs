@@ -4,6 +4,6 @@ public class BlackHood : Monster
 {
     protected override void ExecuteAttack()
     {
-        abilitySystem.ActivateAbility("Attack", this);
+        abilitySystem.ActivateAbility(eTagType.Attack, this);
     }
 }
