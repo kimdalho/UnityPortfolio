@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eEquipmentType: 2
   itemData:
-    itemName: Condition_ItemHead2
-    description: 
+    itemName: Equip_BodyName2
+    description: Equip_Body_Description2
   modelIndex: 1
   objectIndex: 0
   Rank: 1
   tag: 8
   attribute:
-    MaxHart: 0
+    MaxHart: 1
     CurHart: 0
     atk: 0
-    attackSpeed: 0
-    speed: 0
+    attackSpeed: 1
+    speed: 1

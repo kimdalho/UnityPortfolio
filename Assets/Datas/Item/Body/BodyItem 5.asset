@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eEquipmentType: 2
   itemData:
-    itemName: Condition_ItemHead5
-    description: 
+    itemName: Equip_BodyName5
+    description: Equip_Body_Description5
   modelIndex: 4
   objectIndex: 3
   Rank: 2
@@ -23,6 +23,6 @@ MonoBehaviour:
   attribute:
     MaxHart: 0
     CurHart: 0
-    atk: 0
-    attackSpeed: 0
-    speed: 0
+    atk: 2
+    attackSpeed: 1
+    speed: 1
