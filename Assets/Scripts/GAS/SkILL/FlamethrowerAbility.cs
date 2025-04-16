@@ -8,8 +8,10 @@ public class FlamethrowerAbility : GameAbility
 
     protected override IEnumerator ExecuteAbility()
     {
+        // 임시 FX 위치
+        var _fxPos = owner.transform.position + Vector3.up * 0.6f + owner.transform.forward * 0.7f;
         // 화염 방사기 FX 생성
-        var _particle = FXFactory.Instance.GetFX("FlameThrower", owner.transform.position + Vector3.up * 0.5f, Quaternion.LookRotation(owner.transform.forward));
+        var _particle = FXFactory.Instance.GetFX("FlameThrower", _fxPos, Quaternion.LookRotation(owner.transform.forward));
 
         owner.GetAnimator().SetBool("LoopAttack", true);
 
@@ -38,10 +40,7 @@ public class FlamethrowerAbility : GameAbility
         _particle.GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
         owner.GetAnimator().SetBool("LoopAttack", false);
 
-        if (owner is Monster)
-        {
-            (owner as Monster).IsAtk = false;
-        }
+        if (owner is Monster) (owner as Monster).IsAtk = false;
 
         var _delay = Duration / Mathf.Max(owner.attribute.attackSpeed, 0.01f);
         yield return new WaitForSeconds(_delay);
