@@ -10,6 +10,9 @@ public abstract class EquipmentItem : GameEffect, IPickupable
 
     private Vector3 rotationSpeed = new Vector3(0, 30, 0);
 
+    
+
+
     public (ItemData, GameAttribute) GetItemData() 
     {
         return (itemData, effect);
@@ -19,7 +22,11 @@ public abstract class EquipmentItem : GameEffect, IPickupable
     public virtual void OnPickup(Character source, GameObject picker) 
     {
         source.gameplayTagSystem.AddTag(skilltag);
-        //modifierOp = eModifier.Add;
+        Player player = source.GetComponent<Player>();
+
+        var newSKill =  new GameObject();
+        var skillCompo = CreateSkill(skilltag, newSKill);     
+        player.GetAbilitySystem().Add(skilltag, skillCompo);
         ApplyGameplayEffectToSelf(source, partType);       
         gameObject.SetActive(false);
 
@@ -29,6 +36,54 @@ public abstract class EquipmentItem : GameEffect, IPickupable
     {
         transform.Rotate(rotationSpeed * Time.deltaTime);
     }
+    /// <summary>
+    /// 살짝 잘못짰다.. 에초에 웨폰이랑 아이템을 고유한 클래스로 만들었다면 이게 필요없는데..
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <returns></returns>
+    public GameAbility CreateSkill(eTagType tag,GameObject obj)
+    { 
+        switch(tag)
+        {
+            case eTagType.ninjahead:
+                return obj.AddComponent<GA_NinjaHead>();
+            case eTagType.alienhead:
+                return obj.AddComponent<GA_AlienHead>();
+            case eTagType.bearhead:
+                return obj.AddComponent<GA_BearHead>();
+            case eTagType.ninjabody:
+                return obj.AddComponent<GA_NinjaBody>();
+            case eTagType.grasshead:
+                return obj.AddComponent<GA_GrassHead>();
+            case eTagType.Roostershead:
+                return obj.AddComponent<GA_RoostersHead>();
+            case eTagType.clownhair:
+                return obj.AddComponent<GA_ClownHair>();
+            case eTagType.boxhead:
+                return obj.AddComponent<GA_BoxHead>();
+            case eTagType.alienbody:
+                return obj.AddComponent<GA_AlienBody>();
+            case eTagType.beartorso:
+                return obj.AddComponent<GA_BearTorso>();
+            case eTagType.grasstrunk:
+                return obj.AddComponent<GA_GrassTrunk>();
+            case eTagType.Roostersbody:
+                return obj.AddComponent<GA_RoostersBody>();
+            case eTagType.clowntorso:
+                return obj.AddComponent<GA_ClownTorso>();
+            case eTagType.boxbody:
+                return obj.AddComponent<GA_BoxBody>();
+            default:
+                break;
+               
+        }
+
+        return null;
+
+
+    }
+
+
 
     public virtual void Init(PickupItemData data) 
     {

@@ -30,4 +30,14 @@ public class AbilitySystem : MonoBehaviour
             ability.EndAbility();
         }
     }
+
+    public void Add(eTagType newtag, GameAbility newAbility)
+    {
+        if( abilities.TryAdd(newtag, newAbility))
+        {
+            newAbility.gameObject.transform.SetParent(transform);
+        }        
+    }
+
+    
 }

@@ -49,7 +49,7 @@ public class DungeonMaker : MonoBehaviour
             SetData(currentDungeonLevel);
         }
 
-        return data;
+        return dungeons;
     }
 
     private void CreateHolder(DungeonData model)
@@ -69,7 +69,7 @@ public class DungeonMaker : MonoBehaviour
         itemHolder = new GameObject();
         itemHolder.name = "ItemHolder " + model.name;
         itemHolder.transform.SetParent(dg.transform);
-        data.Add(dg);
+        dungeons.Add(dg);
         #endregion
     }
 
@@ -109,18 +109,29 @@ public class DungeonMaker : MonoBehaviour
         
     }
 
-    List<GameObject> data;
+    List<GameObject> dungeons;
 
     public void AllBuild()
     {
         int i = 0;
-        data = new List<GameObject>();
+        dungeons = new List<GameObject>();
         foreach (var roomData in DungeonDatas)
         {
             RoomBuild(roomData);
             SetData(i + 1);
             i++;
         }
+
+        i = 0;
+        foreach (var dungeon in dungeons)
+        {
+            if (i > 0)
+                dungeon.gameObject.SetActive(false);
+            i++;
+        }
+
+
+
 
     }
 

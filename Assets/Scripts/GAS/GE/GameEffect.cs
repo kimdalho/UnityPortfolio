@@ -18,28 +18,6 @@ public class GameEffect : MonoBehaviour
 
     protected IGameEffectExecutionCalculation execution;
 
-
-    /// <summary>
-    /// 시전자에게 effect를 시전
-    /// 버프나 디버프 등
-    /// </summary>
-    public virtual void ApplyGameplayEffectToSelf(Character source)
-    {
-        switch(modifierOp)
-        {
-            case eModifier.Multiply:
-                source.attribute *= effect;
-                break;
-            case eModifier.Add:
-                source.attribute += effect;
-                break;
-            case eModifier.Equal:
-                source.attribute = effect;
-                break;
-        } 
-    }
-
-
     
     public virtual void ApplyGameplayEffectToSelf(Character source, eEuipmentType type)
     {
@@ -55,6 +33,8 @@ public class GameEffect : MonoBehaviour
                 source.attribute = effect;
                 break;
         }
+
+        Debug.Log($"{source.attribute.CurHart} {source.attribute.atk} {source.attribute.speed} {source.attribute.attackSpeed}");
     }
     
     public GameEffect()

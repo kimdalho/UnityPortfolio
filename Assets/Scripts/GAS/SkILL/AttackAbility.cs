@@ -49,7 +49,7 @@ public class AttackAbility : GameAbility
     }
     
     public override void EndAbility()
-    {
+    {        
         owner.gameplayTagSystem.RemoveTag(eTagType.Attack);
     }
 
