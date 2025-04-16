@@ -14,6 +14,5 @@ public class NinjaStars : Projectile
     {
         base.Update();
         RotateObject();
-        base.Update();
     }
 }
