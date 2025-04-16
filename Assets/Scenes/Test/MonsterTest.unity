@@ -1825,7 +1825,7 @@ PrefabInstance:
       objectReference: {fileID: 209201244}
     - target: {fileID: 7485987335185388544, guid: f8e4df7d6b62c5f47969da49fc96ae21, type: 3}
       propertyPath: AbilityTag
-      value: 16
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8764912323861991978, guid: f8e4df7d6b62c5f47969da49fc96ae21, type: 3}
       propertyPath: m_Name

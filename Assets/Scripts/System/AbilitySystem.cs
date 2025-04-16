@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using UnityEditor.Playables;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class AbilitySystem : MonoBehaviour
 {
@@ -31,11 +33,18 @@ public class AbilitySystem : MonoBehaviour
         }
     }
 
-    public void Add(eTagType newtag, GameAbility newAbility)
+    /// <summary>
+    /// 새로운 어빌리티를 획득하고 즉시 발동한다.
+    /// </summary>
+    /// <param name="newtag"></param>
+    /// <param name="newAbility"></param>
+    /// <param name="owner"></param>
+    public void AddAndActivateAbility(eTagType newtag, GameAbility newAbility, Character owner)
     {
         if( abilities.TryAdd(newtag, newAbility))
         {
             newAbility.gameObject.transform.SetParent(transform);
+            newAbility.ActivateAbility(owner);
         }        
     }
 

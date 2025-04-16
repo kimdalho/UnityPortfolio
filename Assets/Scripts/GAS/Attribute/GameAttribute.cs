@@ -6,16 +6,23 @@ public class GameAttribute
     public int CurHart;
     public int atk;
     public int attackSpeed;
-    public int speed;   
+    public int speed;
 
+    //모든 스탯의 최대 수치값
+    public int MaxValue = 15;
+
+    public GameAttribute()
+    {
+
+    }
 
     public GameAttribute(int MaxHart, int CurHart, int atk, int attackSpeed, int speed)
     {
-        this.MaxHart = MaxHart;
-        this.CurHart = CurHart;
-        this.atk = atk;
-        this.attackSpeed = attackSpeed;
-        this.speed = speed;
+        this.MaxHart = Mathf.Clamp(MaxHart,0, MaxValue);
+        this.CurHart = Mathf.Clamp(CurHart, 0, MaxHart);
+        this.atk = Mathf.Clamp(atk, 0, MaxValue);
+        this.attackSpeed = Mathf.Clamp(attackSpeed, 0, MaxValue);
+        this.speed = Mathf.Clamp(speed, 0, MaxValue);
     }
 
     public static GameAttribute operator +(GameAttribute a, GameAttribute b)

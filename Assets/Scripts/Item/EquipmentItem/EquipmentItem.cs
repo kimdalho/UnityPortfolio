@@ -7,7 +7,7 @@ public abstract class EquipmentItem : GameEffect, IPickupable
     //장비 아이템은 어느 파츠인지 타입을 가지고있다.
     public eEuipmentType partType;
     public eTagType skilltag;
-
+    public GameObject ability;
     private Vector3 rotationSpeed = new Vector3(0, 30, 0);
 
     
@@ -21,14 +21,25 @@ public abstract class EquipmentItem : GameEffect, IPickupable
 
     public virtual void OnPickup(Character source, GameObject picker) 
     {
-        source.gameplayTagSystem.AddTag(skilltag);
+        
         Player player = source.GetComponent<Player>();
 
-        var newSKill =  new GameObject();
-        var skillCompo = CreateSkill(skilltag, newSKill);     
-        player.GetAbilitySystem().Add(skilltag, skillCompo);
-        ApplyGameplayEffectToSelf(source, partType);       
+        if (ability != null)
+        {
+            var newskill = Instantiate(ability);
+            var skillCompo = newskill.GetComponent<GameAbility>();
+            player.GetAbilitySystem().AddAndActivateAbility(skilltag, skillCompo,source);
+        }
+        else
+        {
+            var newSKill = new GameObject();
+            var skillCompo = CreateSkill(skilltag, newSKill);
+            player.GetAbilitySystem().AddAndActivateAbility(skilltag, skillCompo, source);                      
+        }
+
+        ApplyGameplayEffectToSelf(source, partType);
         gameObject.SetActive(false);
+
 
     }
 
@@ -61,8 +72,6 @@ public abstract class EquipmentItem : GameEffect, IPickupable
                 return obj.AddComponent<GA_ClownHair>();
             case eTagType.boxhead:
                 return obj.AddComponent<GA_BoxHead>();
-            case eTagType.alienbody:
-                return obj.AddComponent<GA_AlienBody>();
             case eTagType.beartorso:
                 return obj.AddComponent<GA_BearTorso>();
             case eTagType.grasstrunk:

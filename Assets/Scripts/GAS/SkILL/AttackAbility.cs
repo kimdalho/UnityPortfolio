@@ -49,8 +49,9 @@ public class AttackAbility : GameAbility
     }
     
     public override void EndAbility()
-    {        
-        owner.gameplayTagSystem.RemoveTag(eTagType.Attack);
+    {       
+        if(owner.gameplayTagSystem.HasTag(eTagType.Attack))       
+            owner.gameplayTagSystem.RemoveTag(eTagType.Attack);
     }
 
 

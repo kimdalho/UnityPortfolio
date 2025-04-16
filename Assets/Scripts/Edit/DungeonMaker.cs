@@ -25,32 +25,23 @@ public class DungeonMaker : MonoBehaviour
     private GameObject itemHolder;
     private GameObject roomHolder;
     private GameObject monsterHolder;
-
-    //체크하면 리스트 전부 통째로 생성
-    public bool allBuild;
+    List<GameObject> dungeons;
     public List<DungeonData> DungeonDatas;
     
-
-
-
 
     public List<GameObject> Build()
     {
         dic = new Dictionary<string, Room>();
-        if (allBuild)
-        {
             //10개 모두 빌드
             AllBuild();
-        }
-        else
-        {
-            //단일 빌드
-            RoomBuild(roomData);
-            SetData(currentDungeonLevel);
-        }
-
         return dungeons;
     }
+    public List<GameObject> Build(int index)
+    {                 
+         AllBuild();     
+        return dungeons;
+    }
+
 
     private void CreateHolder(DungeonData model)
     {
@@ -109,7 +100,7 @@ public class DungeonMaker : MonoBehaviour
         
     }
 
-    List<GameObject> dungeons;
+
 
     public void AllBuild()
     {
@@ -129,10 +120,6 @@ public class DungeonMaker : MonoBehaviour
                 dungeon.gameObject.SetActive(false);
             i++;
         }
-
-
-
-
     }
 
     public void SetData(int level)
