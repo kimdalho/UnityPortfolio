@@ -15,14 +15,14 @@ MonoBehaviour:
   eEquipmentType: 1
   itemData:
     itemName: Condition_ItemHead8
-    description: 
+    description: Equip_Head_Description8
   modelIndex: 7
   objectIndex: 6
   Rank: 3
   tag: 7
   attribute:
-    MaxHart: 0
-    CurHart: 0
-    atk: 0
-    attackSpeed: 0
-    speed: 0
+    MaxHart: 2
+    CurHart: 2
+    atk: 2
+    attackSpeed: 2
+    speed: 2
