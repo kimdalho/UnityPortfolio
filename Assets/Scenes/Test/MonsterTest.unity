@@ -169,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356645583240906301, guid: 9ae65118ce443194991762c737e875a4, type: 3}
       propertyPath: AbilityTag
-      value: FireBall
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7079138422186737321, guid: 9ae65118ce443194991762c737e875a4, type: 3}
       propertyPath: m_Name
@@ -1124,7 +1124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
       propertyPath: AbilityTag
-      value: Attack
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
       propertyPath: AbilityName
@@ -1535,7 +1535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
       propertyPath: AbilityTag
-      value: Attack
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
       propertyPath: targetMask.m_Bits
