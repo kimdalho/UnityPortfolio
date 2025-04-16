@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class AbilitySystem : MonoBehaviour
 {
-    private Dictionary<string, GameAbility> abilities = new Dictionary<string, GameAbility>();
+    private Dictionary<eTagType, GameAbility> abilities = new Dictionary<eTagType, GameAbility>();
 
     void Start()
     {
@@ -15,7 +15,7 @@ public class AbilitySystem : MonoBehaviour
         }
     }
 
-    public void ActivateAbility(string tag, Character owner)
+    public void ActivateAbility(eTagType tag, Character owner)
     {
         if (abilities.TryGetValue(tag, out GameAbility ability))
         {
@@ -23,7 +23,7 @@ public class AbilitySystem : MonoBehaviour
         }
     }
 
-    public void DeactivateAbility(string tag)
+    public void DeactivateAbility(eTagType tag)
     {
         if (abilities.TryGetValue(tag, out GameAbility ability))
         {

@@ -1,6 +1,7 @@
 
 using System.Collections;
 using UnityEngine;
+/// <summary>
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 /// <summary>
@@ -11,10 +12,11 @@ using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 public abstract class GameAbility : MonoBehaviour
 {
     public Character owner;
-    public string AbilityTag;
+    public eTagType AbilityTag;
     public string AbilityName;    
     public float Duration;
     public LayerMask targetMask;
+
     protected bool isOnCooldown = false;
     protected bool IsOnCooldown
     {
@@ -56,7 +58,7 @@ public abstract class GameAbility : MonoBehaviour
 
     protected abstract IEnumerator ExecuteAbility();
 
-    public void EndAbility()
+    public virtual void EndAbility()
     {
         
     }
