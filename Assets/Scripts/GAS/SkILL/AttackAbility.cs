@@ -40,6 +40,7 @@ public class AttackAbility : GameAbility
             {                   
                 var effect = new GameEffect(new DamageExecution());
                 effect.Apply(owner, ae);
+                (ae as Character)?.fxSystem?.ExecuteFX(AbilityTag);
             }
 
             Debug.Log("Detected: " + col.name);

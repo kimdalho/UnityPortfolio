@@ -23,6 +23,8 @@ public class Character : AttributeEntity
     [SerializeField] protected Animator animator;
     [SerializeField] protected ModelController controller;
 
+    public FXSystem fxSystem;
+
     public Animator GetAnimator()
     {
         return animator;
