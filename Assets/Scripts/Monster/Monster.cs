@@ -94,7 +94,7 @@ public abstract class Monster : Character
         MoveAction(_moveDir.normalized, attribute.speed * 2f);
     }
 
-    public void AttackAction()
+    public virtual void AttackAction()
     {
         if (IsAnimPlay()) return;
         IsAtk = false;
