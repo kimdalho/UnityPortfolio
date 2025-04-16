@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Player : Character
@@ -12,7 +13,8 @@ public partial class Player : Character
     private Vector3 moveDirection;
 
     Vector3 moveVec;
-
+    
+    private HashSet<Collider> detectedItems = new HashSet<Collider>();
 
     #region 아이템 설명창
     public Color gizmoColor = Color.red;
@@ -169,6 +171,9 @@ public partial class Player : Character
 
     private void OnTriggerEnter(Collider other)
     {
+        if (detectedItems.Contains(other)) return;
+        detectedItems.Add(other);
+
         if (other.TryGetComponent(out DroppedItem item))
         {
             Debug.Log($"{other.gameObject.name}");
@@ -177,9 +182,7 @@ public partial class Player : Character
 
         IPickupable pickup = other.GetComponent<IPickupable>();
         if (pickup != null)
-        {
-            Debug.Log("check1");
-
+        {            
             pickup.OnPickup(this,gameObject);
         }
     }
@@ -212,7 +215,10 @@ public partial class Player : Character
     }
     #endregion
 
-
+    public AbilitySystem GetAbilitySystem()
+    {
+        return abilitySystem;
+    }
 
 }
 

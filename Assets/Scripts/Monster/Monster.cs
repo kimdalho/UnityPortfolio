@@ -146,7 +146,8 @@ public abstract class Monster : Character
         var _randY = Random.Range(0, _gridTrans.childCount);
         var _randX = Random.Range(0, _gridTrans.GetChild(_randY).childCount);
 
-        patrolTargetPos = roomGrid.GetChild(2).GetChild(_randY).GetChild(_randX).position;
+        //patrolTargetPos = roomGrid.GetChild(2).GetChild(_randY).GetChild(_randX).position;
+        patrolTargetPos = roomGrid.GetChild(_randY).GetChild(_randX).position;
     }
 
     private void RotateTowardTarget(Vector3 dir)
@@ -206,4 +207,10 @@ public abstract class Monster : Character
         SearchTarget();
         ApplyGravity();
     }
+
+    public void SetRoomGrid(Transform grid)
+    {
+        roomGrid = grid;
+    }
+
 }

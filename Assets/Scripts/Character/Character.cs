@@ -33,4 +33,9 @@ public class Character : AttributeEntity
         return controller;
     }
 
+    public void OnHit(IGameEffect effect)
+    {
+        effect.ApplyGameplayEffectToSelf(this);
+    }
+
 }
