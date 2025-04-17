@@ -34,7 +34,7 @@ public class FanShapeFireAbility : GameAbility
             var _dir = Vector3.Lerp(_startDir, _endDir, (i + 1) / (float)fireCount);
 
             var _projectile = ProjectileFactory.Instance.GetProjectile(projectileType, _armTrans.position, Quaternion.identity);
-            _projectile.Initialized(owner, _dir.normalized, targetMask, true);
+            _projectile.Initialized(owner, _dir.normalized, targetMask, AbilityTag, true);
 
             // 한번 에 발사하므로 다음 프레임때 실행되지 않도록
             // yield return null;

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 355589838402576648}
   - component: {fileID: 6940413212348406184}
   - component: {fileID: 764802606740835985}
+  - component: {fileID: -8783207560054830842}
   m_Layer: 10
   m_Name: BlackHood
   m_TagString: Monster
@@ -55,6 +56,7 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
+    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 764802606740835985}
   jumpHeight: 2
@@ -65,6 +67,7 @@ MonoBehaviour:
   groundCheckDistance: 0.3
   animator: {fileID: 8904112648037604784}
   controller: {fileID: 2758657109547335978}
+  fxSystem: {fileID: -8783207560054830842}
   chaseRange: 5
   attackRange: 1.5
   abilitySystem: {fileID: 758250089743701821}
@@ -108,6 +111,19 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-8783207560054830842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2566851810599489288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82086ece39dc9774b9b2dda665b01ee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyTrans: {fileID: 8904112648636308370}
 --- !u!1 &5356763198514145130
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
       propertyPath: AbilityTag
-      value: Attack
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
       propertyPath: targetMask.m_Bits
@@ -616,6 +632,11 @@ Transform:
 --- !u!95 &8904112648037604784 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5565561978727053204, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+  m_PrefabInstance: {fileID: 3939834277883685412}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8904112648636308370 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5565561979192324534, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 3939834277883685412}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8904112649319775132 stripped
