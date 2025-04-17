@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5582010176628933906}
   - component: {fileID: 2563671461830074345}
   - component: {fileID: 7238699780026430288}
+  - component: {fileID: -770563901117985350}
   m_Layer: 10
   m_Name: Burner
   m_TagString: Monster
@@ -55,6 +56,7 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
+    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 7238699780026430288}
   jumpHeight: 2
@@ -65,7 +67,7 @@ MonoBehaviour:
   groundCheckDistance: 0.3
   animator: {fileID: 1064726689573047387}
   controller: {fileID: 5989734767020855489}
-  fxSystem: {fileID: 0}
+  fxSystem: {fileID: -770563901117985350}
   chaseRange: 10
   attackRange: 3
   abilitySystem: {fileID: 7643396454371422051}
@@ -109,6 +111,19 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-770563901117985350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767471184257895783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82086ece39dc9774b9b2dda665b01ee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyTrans: {fileID: 1064726689101023865}
 --- !u!1 &1739743593540926330
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,6 +575,11 @@ GameObject:
 --- !u!1 &1064726688694102647 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5565561977460117944, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+  m_PrefabInstance: {fileID: 4898353343230065615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1064726689101023865 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5565561979192324534, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 4898353343230065615}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1064726689573047364 stripped
