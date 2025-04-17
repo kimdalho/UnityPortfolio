@@ -10,8 +10,9 @@ public class NinjaStars : Projectile
     }
 
     // Update is called once per frame
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         RotateObject();
     }
 }
