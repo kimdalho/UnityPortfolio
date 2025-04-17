@@ -5,15 +5,6 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 
-public enum eRoomType
-{
-    Monster, //몬스터가 나오는방
-    Item,
-    Sacrifice,
-    Start,
-    Boss,
-    Empty
-}
 
 public class RoomNode : Node
 {
