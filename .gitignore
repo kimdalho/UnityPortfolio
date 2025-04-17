@@ -68,6 +68,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
 # Packed Firebase
+Assets/UnInclude/*
 !Assets/UnInclude/
 
 # Temporary auto-generated Android Assets
