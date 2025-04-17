@@ -5,6 +5,7 @@ public enum ProjectileType
 {
     Bullet,
     NinjaStars,
+    BazookaMissile,
     ALL // 모든 투사체 중 랜덤으로 뽑을 때 사용
 }
 

@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 4253737156996786081}
   - component: {fileID: 7836095756557533361}
   - component: {fileID: 4793144639647665465}
+  - component: {fileID: 5696247204516319646}
   m_Layer: 10
   m_Name: Ninja
   m_TagString: Monster
@@ -131,6 +132,7 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
+    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 4793144639647665465}
   jumpHeight: 2
@@ -141,6 +143,7 @@ MonoBehaviour:
   groundCheckDistance: 0.3
   animator: {fileID: 5467925109308273892}
   controller: {fileID: 1601174441402230910}
+  fxSystem: {fileID: 5696247204516319646}
   chaseRange: 10
   attackRange: 7
   abilitySystem: {fileID: 5314433099697966927}
@@ -187,6 +190,19 @@ CharacterController:
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &5696247204516319646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8764912323861991978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82086ece39dc9774b9b2dda665b01ee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyTrans: {fileID: 5467925108701901510}
 --- !u!1001 &494588691649397616
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -565,6 +581,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93005e4cac64995478b011a4506c7e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &5467925108701901510 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5565561979192324534, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+  m_PrefabInstance: {fileID: 494588691649397616}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &5467925109308273892 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5565561978727053204, guid: 446f9ff17434e8749a54822318712f49, type: 3}
@@ -608,7 +629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
       propertyPath: AbilityTag
-      value: FanShapeFire
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
       propertyPath: AbilityName
