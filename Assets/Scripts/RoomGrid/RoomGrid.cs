@@ -35,7 +35,9 @@ public class RoomGrid : MonoBehaviour
     {
         GridNode node = GetRandomGridNode();
         var newmon =  ResourceManager.Instance.CreateMonster(level, parent);
+        newmon.GetComponent<Monster>().SetRoomGrid(transform);
         newmon.transform.position = node.transform.position;
+
     }
 
 

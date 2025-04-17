@@ -35,6 +35,7 @@ public class ResourceManager : MonoBehaviour
     public GameObject HeadItemPrefab;
     public GameObject BodyItemPrefab;
     public List<GameObject> monsters;
+    public GameObject FlyPrefab;
 
     private Dictionary<eEuipmentType, boxInfo> itemInfos;
 
@@ -112,7 +113,6 @@ public class ResourceManager : MonoBehaviour
         ItemPrefabSetup();
     }
 
-
     public GameObject CreateItemToTier(int tier, Transform parent)
     {
         if(itemInfos == null)
@@ -172,16 +172,10 @@ public class ResourceManager : MonoBehaviour
         return model;
     }
 
-    public GameObject CreateHeadItem(int index, Transform parent)
+    public Fly CreateEntity()
     {
-        PickupItemData data = pickupItemDatas[index];
-        GameObject item = Instantiate(HeadItemPrefab);
-        item.transform.SetParent(parent);
-        item.transform.localPosition = new Vector3(0, 2, 0);
-        item.transform.localScale = Vector3.one;
-        var itemCompo = item.GetComponent<HeadItem>();
-        itemCompo.Init(pickupItemDatas[index]);
-        return item;
+        GameObject Fly = Instantiate(FlyPrefab);
+        return Fly.GetComponent<Fly>();
     }
 
 }

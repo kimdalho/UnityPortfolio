@@ -8,8 +8,4 @@ public class AttributeEntity : MonoBehaviour
     public OnHitdelegate onHit;
 
     public GameAttribute attribute;
-
-
-    
-
 }
