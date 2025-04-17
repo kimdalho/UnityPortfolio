@@ -44,5 +44,7 @@ public class PickupItemData : ScriptableObject
 
     public eTagType tag;
     public GameAttribute attribute;
+    //발동될 스킬
+    public GameObject gameAbility;
 
 }

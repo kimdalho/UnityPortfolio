@@ -8,6 +8,7 @@ TagManager:
   - Item
   - Stairs
   - Monster
+  - Projectile
   layers:
   - Default
   - TransparentFX

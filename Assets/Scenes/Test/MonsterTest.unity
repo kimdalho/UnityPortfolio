@@ -169,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1356645583240906301, guid: 9ae65118ce443194991762c737e875a4, type: 3}
       propertyPath: AbilityTag
-      value: 0
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7079138422186737321, guid: 9ae65118ce443194991762c737e875a4, type: 3}
       propertyPath: m_Name
@@ -974,7 +974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
       propertyPath: AbilityTag
-      value: 0
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
       propertyPath: AbilityName
@@ -1409,7 +1409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
       propertyPath: AbilityTag
-      value: 0
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 7079138422186737321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
       propertyPath: m_Name
@@ -1823,13 +1823,17 @@ PrefabInstance:
       propertyPath: roomGrid
       value: 
       objectReference: {fileID: 209201244}
+    - target: {fileID: 7485987335185388544, guid: f8e4df7d6b62c5f47969da49fc96ae21, type: 3}
+      propertyPath: AbilityTag
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 8764912323861991978, guid: f8e4df7d6b62c5f47969da49fc96ae21, type: 3}
       propertyPath: m_Name
       value: Ninja
       objectReference: {fileID: 0}
     - target: {fileID: 8764912323861991978, guid: f8e4df7d6b62c5f47969da49fc96ae21, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9174997020723743992, guid: f8e4df7d6b62c5f47969da49fc96ae21, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1939,6 +1943,10 @@ PrefabInstance:
     - target: {fileID: 2566851810599489288, guid: e737e796c547a834084adec1957ce9c5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3715425612432049018, guid: e737e796c547a834084adec1957ce9c5, type: 3}
+      propertyPath: AbilityTag
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2252,6 +2260,10 @@ PrefabInstance:
     - target: {fileID: 5370123446938557922, guid: 188f7ae028d352e4aa4ab64200ff5717, type: 3}
       propertyPath: attribute.attackSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5482242918978628819, guid: 188f7ae028d352e4aa4ab64200ff5717, type: 3}
+      propertyPath: AbilityTag
+      value: 17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3336558749150300831}
   - component: {fileID: 2977982904409444606}
   - component: {fileID: 3187416252096268955}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Body08
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2706248242434218006}
   - component: {fileID: 5891217306665749867}
   - component: {fileID: 4296077062393529758}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Body07
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 4452762524744197240}
   - component: {fileID: 4691870018679997503}
   - component: {fileID: 362785681785623578}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Body05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 4784925506783837054}
   - component: {fileID: 4587795841974689480}
   - component: {fileID: 3402381696203848499}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Body06
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,6 +407,7 @@ MonoBehaviour:
     itemName: 
     description: 
   partType: 0
+  skilltag: 0
   models:
   - {fileID: 5481301976777106138}
   - {fileID: 5573330949887942277}
@@ -448,7 +449,7 @@ GameObject:
   - component: {fileID: 7943674220107566936}
   - component: {fileID: 7196423977273347881}
   - component: {fileID: 2344364993948027532}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Body02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -534,7 +535,7 @@ GameObject:
   - component: {fileID: 4611191038568760450}
   - component: {fileID: 800067758915168371}
   - component: {fileID: 630228914595004250}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Body03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -620,7 +621,7 @@ GameObject:
   - component: {fileID: 8913656988788993372}
   - component: {fileID: 2940477577283805855}
   - component: {fileID: 2201006267940490698}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Body04
   m_TagString: Untagged
   m_Icon: {fileID: 0}

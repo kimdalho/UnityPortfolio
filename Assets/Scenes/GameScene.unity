@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 59573b088aaea0442bf29e0a0e9d1339, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: cb1b5f7c418132f429e60075e1a4914b, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -735,7 +735,6 @@ MonoBehaviour:
   offsetY: 10
   dungeonConfig: {fileID: 11400000, guid: a35d5158a85b08343b485dc1622a016d, type: 2}
   currentDungeonLevel: 5
-  allBuild: 1
   DungeonDatas:
   - {fileID: 11400000, guid: 03400c27eea4ebc4d876cdef2c42d91e, type: 2}
   - {fileID: 11400000, guid: b3fce4d7b219c6d40ba62d8633654b03, type: 2}
@@ -1188,12 +1187,11 @@ MonoBehaviour:
   HeadItemPrefab: {fileID: 4409540416937846297, guid: 4c59d2e7b7792c841b1b2e6cb281d6a4, type: 3}
   BodyItemPrefab: {fileID: 4409540416937846297, guid: 339261d251b3bab4a9bd9c314623e809, type: 3}
   monsters:
-  - {fileID: 1304607928574117237, guid: 3823dae87f404f143971ec267e015e64, type: 3}
-  - {fileID: 1304607928574117237, guid: a78d85fc8e96b9343b17955ac16a801b, type: 3}
-  - {fileID: 1304607928574117237, guid: 7db15d6a16125d34689d99c8e66f0c4b, type: 3}
-  - {fileID: 1304607928574117237, guid: 6ddb868ebac944e4b921ad871d7823d0, type: 3}
-  - {fileID: 1304607928574117237, guid: 8376754c105a6dd4caf82a57776ddebb, type: 3}
-  - {fileID: 1304607928574117237, guid: 55dae7e12b8fb264381d95e16055ad4f, type: 3}
+  - {fileID: 2566851810599489288, guid: e737e796c547a834084adec1957ce9c5, type: 3}
+  - {fileID: 8764912323861991978, guid: f8e4df7d6b62c5f47969da49fc96ae21, type: 3}
+  - {fileID: 2566851810599489288, guid: 188f7ae028d352e4aa4ab64200ff5717, type: 3}
+  - {fileID: 2566851810599489288, guid: be01314eda525734092413cf89d125ba, type: 3}
+  FlyPrefab: {fileID: 5742945659696886225, guid: fae6eb0ec72f8364591ec179b35082d9, type: 3}
 --- !u!1001 &1022431421
 PrefabInstance:
   m_ObjectHideFlags: 0
