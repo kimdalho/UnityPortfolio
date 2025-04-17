@@ -1,6 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum eRoomType
+{
+    Monster, //몬스터가 나오는방
+    Item,
+    Sacrifice,
+    Start,
+    Boss,
+    Empty
+}
+
+
 [CreateAssetMenu(menuName = "Dungeon/Graph Data")]
 public class DungeonData : ScriptableObject
 {

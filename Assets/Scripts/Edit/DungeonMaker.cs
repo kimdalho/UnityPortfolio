@@ -1,11 +1,5 @@
-#if UNITY_EDITOR
-
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static Cinemachine.DocumentationSortingAttribute;
-using static UnityEngine.Rendering.STP;
 
 public class DungeonMaker : MonoBehaviour
 {
@@ -167,4 +161,3 @@ public class DungeonMaker : MonoBehaviour
         else return 3;
     }   
 }
-#endif
