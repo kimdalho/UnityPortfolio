@@ -5,7 +5,7 @@ using UnityEngine;
 /// 부채꼴 모양으로 발사하는 스킬
 /// Normal과 Multiple Fire 모두 대응
 /// </summary>
-public class FanShapeFireAbility : GameAbility
+public class MultipleFireAbility : GameAbility
 {
     [SerializeField] private int fireCount = 1; // 발사 횟수
     [SerializeField] private float fireAngleRange = 20f;
