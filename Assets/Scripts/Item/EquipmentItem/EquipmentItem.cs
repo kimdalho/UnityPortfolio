@@ -96,7 +96,9 @@ public abstract class EquipmentItem : GameEffect, IPickupable
 
     public virtual void Init(PickupItemData data) 
     {
-    
+        itemData.itemName = data.itemData.itemName;
+        itemData.description = data.itemData.description;
+        effect = data.attribute;
     }
 
 

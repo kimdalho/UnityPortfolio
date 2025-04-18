@@ -240,9 +240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5beb680e9e8a54e8f5254381851118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  existCharacter: 0
+  index: 0
   tmp_Nickname: {fileID: 5079969035676640778}
-  Panel_CharacterNamePrefab: {fileID: 8649966244051878740, guid: 2c0ac90ad68d71a4b89bb3c93ead745c, type: 3}
-  BtnCreate: {fileID: 759141499560791430}
+  BtnSelectCharacter: {fileID: 759141499560791430}
 --- !u!1 &7373408722850283785
 GameObject:
   m_ObjectHideFlags: 0

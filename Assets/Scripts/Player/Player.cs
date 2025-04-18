@@ -26,11 +26,12 @@ public partial class Player : Character
 
 
     private AbilitySystem abilitySystem;
+
+
   
 
     private void Start()
     {
-        attribute.speed = 5;
 
         abilitySystem = GameObject.Find("AbilitySystem")?.GetComponent<AbilitySystem>();
         if (abilitySystem == null)
@@ -203,14 +204,11 @@ public partial class Player : Character
             return;
         }
 
-        for (int i = 0; i < count; i++)
+        if (buffer[0] != null && buffer[0].TryGetComponent<IPickupable>(out var pickup))
         {
-            if (buffer[i] != null && buffer[i].TryGetComponent<IPickupable>(out var pickup))
-            {
-                itemdescriptionView.SetData(pickup);
-            }
-
+            itemdescriptionView.SetData(pickup);
         }
+
 
     }
     #endregion

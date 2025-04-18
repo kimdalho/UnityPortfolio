@@ -19,3 +19,27 @@ Condition_17,한국어,korean,韓国語
 Condition_18,영어,english,英語
 Condition_19,일본어,Japanese,日本語
 Condition_OK,확인,OK,確認
+Condition_Atk,공격력을 {0} 증가합니다.,Increases attack power by {0}.,攻撃力を{0}増加させます。
+Condition_AtkSpeed,공격속도가 {0} 증가합니다.,Attack speed increases by {0}.,攻撃速度が{0}増加します。
+Condition_MaxHeart,최대체력이 {0} 증가합니다.,Maximum health increases by {0}.,最大体力が{0}増加します。
+Condition_ItemHead2,닌자 머리,ninja head,忍者の頭
+Condition_ItemHead3,외계인 머리,alien head,エイリアンの頭
+Condition_ItemHead4,곰머리,bear head,クマの頭
+Condition_ItemHead5,잔디머리,grass head,草の頭
+Condition_ItemHead6,수탉님 머리,Rooster's head,コックヘッド
+Condition_ItemHead7,광대머리,clown hair,ピエロの頭
+Condition_ItemHead8,상자머리,box head,ボックスヘッド
+Condition_ItemBody2,닌자 슈트,ninja suit,忍者スーツ
+Condition_ItemBody3,외계인 슈트,alien suit,エイリアンスーツ
+Condition_ItemBody4,곰 슈트,bear suit,クマスーツ
+Condition_ItemBody5,잔디 슈트,grass chute,草スーツ
+Condition_ItemBody6,수탉님 슈트,Rooster's suit,コックスーツ
+Condition_ItemBody7,광대 슈트,clown suit,ピエロスーツ
+Condition_ItemBody8,상자 슈트,box suit,ボックススーツ
+Condition_ItemBody9,아무거나,anything,何でも
+Condition_ItemBody10,아이작,Isaac,アイザック
+Attribute_Atk,공격력 {0},Attack power {0},攻撃力 {0}
+Attribute_AtkSpeed,공격속도 {0},Attack Speed ​​{0},攻撃速度{0}
+Attribute_Speed,이동속도 {0},Movement speed {0},移動速度{0}
+Attribute_Hp,최대 하트{0} / 현재 하트{1} ,Maximum Hearts{0} / Current Hearts{1} ,最大ハート{0} /現在のハート{1} 
+Attribute_Floow,계층 {0},Tier {0},階層{0}

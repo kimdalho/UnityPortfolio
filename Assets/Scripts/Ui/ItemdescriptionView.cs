@@ -5,14 +5,11 @@ using System.Runtime.CompilerServices;
 public class ItemdescriptionView : MonoBehaviour
 {
     public Player player;
-    public List<TextMeshProUGUI> list;
-
-
-
+    public List<LocalizedText> list;
 
     private void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
+        player = GameManager.instance.GetPlayer();
         gameObject.SetActive(false);
     }
 
@@ -24,10 +21,11 @@ public class ItemdescriptionView : MonoBehaviour
         ItemData itemdata =  pairdata.Item1;
         GameAttribute attribute = pairdata.Item2;
 
-        list[0].text = $"{itemdata.itemName}";
-        list[1].text = $"Attack Up 1 {attribute.atk}";
-        list[2].text = $"Speed 1 {attribute.speed}";
-        list[3].text = $"Max Heart Up 1 {attribute.MaxHart}";
-        list[4].text = "투사체가 라이플로 바뀝니다.";
+        list[0].SetLocalizationID(itemdata.itemName);
+        list[1].UpdateLocalizedText(attribute.MaxHart);
+        list[2].UpdateLocalizedText(attribute.atk);        
+        list[3].UpdateLocalizedText(attribute.attackSpeed);
+        list[4].UpdateLocalizedText(attribute.speed);
+        
     }
 }
