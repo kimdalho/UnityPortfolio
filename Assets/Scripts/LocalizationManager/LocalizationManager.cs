@@ -1,34 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalizationManager : MonoBehaviour
+public class LocalizationManager 
 {
-    public static LocalizationManager Instance;
-
+    public static LocalizationManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new LocalizationManager();
+                LoadCSV(currentLanguage);
+            }
+            return instance;
+        }
+    }
+    private static LocalizationManager instance;
     public enum Language { KO, EN, JP }
 
     public delegate void LanguageChanged();
     public static event LanguageChanged OnLanguageChanged;
 
-    private Dictionary<string, string> localizedText;
+    private static Dictionary<string, string> localizedText;
     [SerializeField]
-    private Language currentLanguage = Language.EN;
+    private static Language currentLanguage = Language.KO;
 
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            LoadCSV(currentLanguage);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
-    public void LoadCSV(Language language)
+    public static void LoadCSV(Language language)
     {
         currentLanguage = language;
         localizedText = new Dictionary<string, string>();
