@@ -43,3 +43,18 @@ Attribute_AtkSpeed,공격속도 {0},Attack Speed ​​{0},攻撃速度{0}
 Attribute_Speed,이동속도 {0},Movement speed {0},移動速度{0}
 Attribute_Hp,최대 하트{0} / 현재 하트{1} ,Maximum Hearts{0} / Current Hearts{1} ,最大ハート{0} /現在のハート{1} 
 Attribute_Flow,계층 {0},Tier {0},階層{0}
+Condition_Speed,이동속도가 {0} 증가합니다.,Movement speed increases by {0}.,移動速度が{0}増加します。
+Equip_Head_Description2,피격 시 15% 확률로 1초간 무적,15% chance to become invincible for 1 second when attacked,被撃時15％の確率で1秒間無敵
+Equip_Head_Description3,적 처치 시 20% 확률로 최대체력 1증가,"When killing an enemy, there is a 20% chance that maximum health increases by 1.",敵を倒すと20％の確率で最大体力1増加
+Equip_Head_Description4,적 4명 처치 시 체력 1 회복,Recover 1 stamina when killing 4 enemies,敵4人を倒すと体力1回復
+Equip_Head_Description5,공격 시 10% 확률로 피해 1 추가,10% chance to add 1 damage when attacking,攻撃時に10%の確率でダメージ1を追加
+Equip_Head_Description6,투사체가 적중 시 독 피해 1 추가,Adds 1 poison damage when projectile hits,投射体がヒットすると毒ダメージ1を追加
+Equip_Head_Description7,투사체 3개 발사,Fires 3 projectiles,投射体3発射
+Equip_Head_Description8,3초마다 자동으로 투사체 1개 발사,Automatically fires 1 projectile every 3 seconds,3秒ごとに自動的に投射体1個発射
+Equip_Body_Description2,적 처치 시 30초간 공속 30% 증가,"When killing an enemy, attack speed increases by 30% for 30 seconds.",敵処置時30秒間空速30%増加
+Equip_Body_Description3,25초 마다 90% 확률로 위성 생성,90% chance to create a satellite every 25 seconds,25秒ごとに90％の確率で衛星を生成
+Equip_Body_Description4,공격 시 60% 확률로 투사체 2개 좌우로 추가 발사,"When attacking, there is a 60% chance to fire 2 additional projectiles to the left and right.",攻撃時60%の確率で投射体2個左右に追加発射
+Equip_Body_Description5,현제 공격력 1.5배 증가,Current attack power increased by 1.5 times,現制攻撃力1.5倍増加
+Equip_Body_Description6,적 처치 시 30%확률로 최대 체력 추가 획득,30% chance to gain additional maximum health when killing an enemy,敵を倒すと30%の確率で最大体力追加獲得
+Equip_Body_Description7,스킬 사용 시 다음 투사체가 관통 효과 추가,"When using a skill, the next projectile adds a piercing effect",スキル使用時、次の投射体が貫通効果を追加
+Equip_Body_Description8,이동 후 첫 공격에 투사체 2개 추가 발사,Fires 2 additional projectiles on the first attack after moving,移動後初攻撃に投射体2個追加発射

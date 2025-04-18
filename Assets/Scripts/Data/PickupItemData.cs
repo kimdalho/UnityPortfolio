@@ -21,7 +21,8 @@ public enum eTagType
     portalLock,//획득시 이동 불가
     Attack,
     FanShapeFire, // 투사체 발사 (Ninja, Soldier 사용)
-    FlameThrower  // 일정 시간동안 화염 방사 (Burner 사용)
+    FlameThrower,  // 일정 시간동안 화염 방사 (Burner 사용)
+    invincible,
 }
 
 

@@ -22,7 +22,7 @@ public class GameEffect : MonoBehaviour ,IGameEffect
     
     public virtual void ApplyGameplayEffectToSelf(Character source, eEuipmentType type)
     {
-        GetFinalAttribute(source.attribute);
+        source.attribute = GetFinalAttribute(source.attribute);
 
         Debug.Log($"{source.attribute.CurHart} {source.attribute.atk} {source.attribute.speed} {source.attribute.attackSpeed}");
     }

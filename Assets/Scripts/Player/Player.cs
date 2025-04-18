@@ -203,13 +203,11 @@ public partial class Player : Character
             itemdescriptionView.gameObject.SetActive(false);
             return;
         }
-
+        
         if (buffer[0] != null && buffer[0].TryGetComponent<IPickupable>(out var pickup))
-        {
+        {             
             itemdescriptionView.SetData(pickup);
         }
-
-
     }
     #endregion
 
