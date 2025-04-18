@@ -9,11 +9,15 @@ public class GameAttribute
     public int speed;
 
     //모든 스탯의 최대 수치값
-    public int MaxValue = 15;
+    private static int MaxValue = 30;
 
     public GameAttribute()
     {
-
+        MaxHart = 0;
+        CurHart = 0;
+        atk = 0;
+        attackSpeed = 0;
+        speed = 0;
     }
 
     public GameAttribute(int MaxHart, int CurHart, int atk, int attackSpeed, int speed)

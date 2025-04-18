@@ -34,7 +34,7 @@ public class ResourceManager : MonoBehaviour
     public GameObject BodyItemPrefab;
     public List<GameObject> monsters;
     public GameObject FlyPrefab;
-
+    
     private Dictionary<eEuipmentType, boxInfo> itemInfos;
 
     public Dictionary<eWeaponType, RuntimeAnimatorController> dic = new Dictionary<eWeaponType, RuntimeAnimatorController>();

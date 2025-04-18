@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttributeView : MonoBehaviour
 {
-    public List<TextMeshProUGUI> tmps;
+    public List<LocalizedText> localized;
 
     public Player player;
     public void Start()
@@ -12,21 +12,15 @@ public class AttributeView : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
     }
 
-
     public void Update()
     {
         ShowData(player.attribute);
     }
 
-
-
     public void ShowData(GameAttribute model)
     {
-        tmps[0].text = $"Hart {model.MaxHart} / {model.CurHart}";
-        tmps[1].text = $"Atk {model.atk}";
-        tmps[2].text = $"Atk Speed {model.attackSpeed}";
-        tmps[3].text = $"Speed {model.speed}";
-        
+        localized[0].UpdateLocalizedText(model.atk);
+        localized[1].UpdateLocalizedText(model.attackSpeed);
+        localized[2].UpdateLocalizedText(model.speed);
     }
-
 }

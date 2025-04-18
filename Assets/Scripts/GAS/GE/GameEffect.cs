@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public enum eModifier
 {
@@ -12,54 +14,51 @@ public enum eModifier
 /// </summary>
 public class GameEffect : MonoBehaviour ,IGameEffect
 {
-    public GameAttribute effect;
+    public GameAttribute effect = new GameAttribute();
     //¿ÀÆÛ
-    public eModifier modifierOp;
+    public eModifier modifierOp = eModifier.Add;
 
     protected IGameEffectExecutionCalculation execution;
     
     public virtual void ApplyGameplayEffectToSelf(Character source, eEuipmentType type)
     {
-        switch (modifierOp)
-        {
-            case eModifier.Multiply:
-                source.attribute *= effect;
-                break;
-            case eModifier.Add:
-                source.attribute += effect;
-                break;
-            case eModifier.Equal:
-                source.attribute = effect;
-                break;
-        }
+        GetFinalAttribute(source.attribute);
 
         Debug.Log($"{source.attribute.CurHart} {source.attribute.atk} {source.attribute.speed} {source.attribute.attackSpeed}");
     }
 
     public virtual void ApplyGameplayEffectToSelf(Character source)
     {
-        switch (modifierOp)
-        {
-            case eModifier.Multiply:
-                source.attribute *= effect;
-                break;
-            case eModifier.Add:
-                source.attribute += effect;
-                break;
-            case eModifier.Equal:
-                source.attribute = effect;
-                break;
-        }
-
+        GetFinalAttribute(source.attribute);
         Debug.Log($"{source.attribute.CurHart} {source.attribute.atk} {source.attribute.speed} {source.attribute.attackSpeed}");
     }
 
+    public virtual GameAttribute ApplyGameplayEffectToSelf(GameAttribute attribute)
+    {
+       return GetFinalAttribute(attribute);
+    }
+
+    private GameAttribute GetFinalAttribute(GameAttribute attribute)
+    {
+        switch (modifierOp)
+        {
+            case eModifier.Multiply:
+                attribute *= effect;
+                break;
+            case eModifier.Add:
+                attribute += effect;
+                break;
+            case eModifier.Equal:
+                attribute = effect;
+                break;
+        }
+        return attribute;
+    }
 
     public GameEffect(eModifier eModifier = eModifier.Add)
     {
         modifierOp = eModifier;
     }
-
     public GameEffect(IGameEffectExecutionCalculation execution)
     {
         this.execution = execution;
