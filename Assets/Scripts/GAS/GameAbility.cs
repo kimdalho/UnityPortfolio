@@ -16,15 +16,10 @@ public abstract class GameAbility : MonoBehaviour
     public LayerMask targetMask;
 
     protected bool isOnCooldown = false;
-    protected bool IsOnCooldown
+    protected virtual bool IsOnCooldown
     {
         get => isOnCooldown;
-        set
-        {
-            isOnCooldown = value;
-            // Owner가 몬스터일 경우 AtkCool 설정
-            if (owner is Monster) (owner as Monster).IsAtkCool = value;
-        }
+        set => isOnCooldown = value;
     }
 
     //스킬에 구독할 태그
@@ -58,7 +53,8 @@ public abstract class GameAbility : MonoBehaviour
 
     public virtual void EndAbility()
     {
-        
+        if (!owner.gameplayTagSystem.HasTag(AbilityTag)) return;
+        owner.gameplayTagSystem.RemoveTag(AbilityTag);
     }
 
 

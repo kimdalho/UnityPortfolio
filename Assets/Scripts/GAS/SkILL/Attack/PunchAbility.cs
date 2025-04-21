@@ -1,10 +1,7 @@
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.InputSystem.XInput;
-using static UnityEngine.UI.GridLayoutGroup;
 
-public class AttackAbility : GameAbility
+public class PunchAbility : GameAbility
 {
     protected override IEnumerator ExecuteAbility()
     {         

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class FlamethrowerAbility : GameAbility
+public class FlamethrowerAbility : AttackAbility
 {
     // 임시 확인
     private float applyPerSecond = 5f;

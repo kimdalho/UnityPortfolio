@@ -2,22 +2,24 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// 부채꼴 모양으로 발사하는 스킬
-/// Normal과 Multiple Fire 모두 대응
+/// 다수의 투사체를 발사하는 스킬
+/// 다수의 투사체는 딜레이 없이 부채꼴 형태로 즉시 발사된다.
 /// </summary>
-public class MultipleFireAbility : GameAbility
+public class MultipleFireAbility : FireAbility
 {
-    [SerializeField] private int fireCount = 1; // 발사 횟수
     [SerializeField] private float fireAngleRange = 20f;
-    [SerializeField] private ProjectileType projectileType;
-    [SerializeField] private float delayAtkTime = 0.3f;
 
     protected override IEnumerator ExecuteAbility()
     {
-        owner.GetAnimator().SetTrigger("Trg_Attack");
+        yield return base.ExecuteAbility();
+        // 어빌리티 태그 적용
+        yield return ApplyTag();
+
+        //owner.GetAnimator().SetTrigger("Trg_Attack");
+        owner.GetAnimator().Play("Attack", -1, 0f);
 
         // 발사 횟수가 1인 경우에는 정면으로 발사
-        var _range = fireCount.Equals(1) ? 0f : fireAngleRange;
+        var _range = FireCount.Equals(1) ? 0f : fireAngleRange;
 
         var _startDir = Quaternion.AngleAxis(-_range, Vector3.up) * owner.transform.forward;
         var _endDir = Quaternion.AngleAxis(_range, Vector3.up) * owner.transform.forward;
@@ -29,16 +31,16 @@ public class MultipleFireAbility : GameAbility
         // Detect 혹은 Projectile이 생성되기까지 Delay되는 시간
         yield return new WaitForSeconds(delayAtkTime);
 
-        for (int i = 0; i < fireCount; i++)
-        {
-            var _dir = Vector3.Lerp(_startDir, _endDir, (i + 1) / (float)fireCount);
+        FanShapeFire(_armTrans, projectileType, fireAngleRange, FireCount);
 
-            var _projectile = ProjectileFactory.Instance.GetProjectile(projectileType, _armTrans.position, Quaternion.identity);
-            _projectile.Initialized(owner, _dir.normalized, targetMask, AbilityTag, true);
+        //for (int i = 0; i < FireCount; i++)
+        //{
+        //    var _dir = Vector3.Lerp(_startDir, _endDir, (i + 1) / (float)FireCount);
 
-            // 한번 에 발사하므로 다음 프레임때 실행되지 않도록
-            // yield return null;
-        }
+        //    InitProjectile(_armTrans, projectileType, _dir, true);
+        //    // 한번 에 발사하므로 한 프레임에 모두 생성되도록
+        //    // yield return null;
+        //}
 
         // Apply Delay
         var _animLength = owner.GetAnimator().GetCurrentAnimatorStateInfo(0).length;
@@ -49,6 +51,4 @@ public class MultipleFireAbility : GameAbility
         yield return new WaitForSeconds(_delay);
         EndAbility();
     }
-
-    public void ChangeProjectileType(ProjectileType newType) => projectileType = newType;
 }

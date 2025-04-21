@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 834927088867336716}
-  - component: {fileID: 2251704862427300321}
+  - component: {fileID: 6638532526655507361}
   m_Layer: 0
-  m_Name: SkillAttack 2
+  m_Name: GA_ClownHair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2251704862427300321
+--- !u!114 &6638532526655507361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,11 +41,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7079138422186737321}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a5d62fbc178a804a9577f4b24d97ea7, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fb17cfe00d8e9842841e23ef5c0a52d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  AbilityTag: 
-  AbilityName: Attack
-  Cooldown: 3
+  AbilityTag: 6
+  AbilityName: 
   Duration: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0

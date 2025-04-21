@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1015730315210352836}
   - component: {fileID: 436414465282009857}
   m_Layer: 0
-  m_Name: FanShapeFireSkill
+  m_Name: MutipleFireSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
