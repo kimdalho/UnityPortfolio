@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 
 /// <summary>
 /// 무기 열거타입에 오해가 있으면안된다.
@@ -36,7 +34,7 @@ public class ResourceManager : MonoBehaviour
     public GameObject BodyItemPrefab;
     public List<GameObject> monsters;
     public GameObject FlyPrefab;
-
+    
     private Dictionary<eEuipmentType, boxInfo> itemInfos;
 
     public Dictionary<eWeaponType, RuntimeAnimatorController> dic = new Dictionary<eWeaponType, RuntimeAnimatorController>();

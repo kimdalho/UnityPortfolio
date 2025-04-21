@@ -8,9 +8,9 @@ using UnityEngine;
 public class LocalizedText : MonoBehaviour
 {
     [SerializeField]
-    private string localizationID;
+    protected string localizationID;
 
-    private TMP_Text textComponent;
+    protected TMP_Text textComponent;
 
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class LocalizedText : MonoBehaviour
         }
     }
 
-    public void UpdateLocalizedText()
+    public virtual void UpdateLocalizedText()
     {
         if (string.IsNullOrEmpty(localizationID))
         {
@@ -44,6 +44,38 @@ public class LocalizedText : MonoBehaviour
             return;
 
         string localizedText = LocalizationManager.Instance.GetText(localizationID);
+        textComponent.text = localizedText;
+    }
+
+    public void UpdateLocalizedText(int value)
+    {
+        if (string.IsNullOrEmpty(localizationID))
+        {
+            Debug.LogWarning($"[{name}] Localization ID is empty.");
+            return;
+        }
+
+        if (LocalizationManager.Instance == null)
+            return;
+
+        string localizedText = LocalizationManager.Instance.GetText(localizationID);
+        localizedText = string.Format(localizedText, value);
+        textComponent.text = localizedText;
+    }
+
+    public void UpdateLocalizedText(int value1, int value2)
+    {
+        if (string.IsNullOrEmpty(localizationID))
+        {
+            Debug.LogWarning($"[{name}] Localization ID is empty.");
+            return;
+        }
+
+        if (LocalizationManager.Instance == null)
+            return;
+
+        string localizedText = LocalizationManager.Instance.GetText(localizationID);
+        localizedText = string.Format(localizedText, value1, value2);
         textComponent.text = localizedText;
     }
 

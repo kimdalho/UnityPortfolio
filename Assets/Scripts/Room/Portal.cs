@@ -1,9 +1,6 @@
-using System;
+
 using System.Collections;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Windows;
-using static UnityEditor.PlayerSettings;
 
 /// <summary>
 /// 문
@@ -65,23 +62,4 @@ public class Portal : MonoBehaviour
 
     }
 
-}
-
-
-
-[CustomEditor(typeof(Portal))]
-public class PortalEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-
-        GUILayout.Space(10);
-
-        if (GUILayout.Button("던전 생성", GUILayout.Height(30)))
-        {
-            Portal positioner = (Portal)target;
-            positioner.Test();
-        }
-    }
 }
