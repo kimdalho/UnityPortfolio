@@ -1,4 +1,4 @@
-using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField]
     private Player player;
-    public List<GameObject> roomlist;
+    private GameObject dungeon;
     public DungeonMaker dungeonMaker;
-
-    int index = 0;
 
     private void Awake()
     {
@@ -23,20 +21,40 @@ public class GameManager : MonoBehaviour
         {
            Destroy(this.gameObject);
         }
-
-        
     }
+
+    private void Setup()
+    {
+        #region 마우스 셋업
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        #endregion
+
+        if (UserData.Instance == null)
+        {
+            var obj   = new GameObject("UserData");
+            var userdata =  obj.AddComponent<UserData>();
+            userdata.CurIndex = 0;
+            userdata.CreateNewCharacter("nameless", userdata.CurIndex);
+
+        }
+
+        var loadplayerdata = UserData.Instance.LoadData();
+        #region 플레이어 셋업
+        player.attribute = loadplayerdata.playerAttribute;
+        #endregion
+
+        #region 던전 셋업
+        dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);      
+        #endregion
+    }
+
 
 
     private void Start()
     {
-        //마우스 커서 안보이게, 마우스 커서 고정
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        roomlist = dungeonMaker.Build();
-        roomlist[index].gameObject.SetActive(true);
+        Setup();
 
-        
     }
 
 
@@ -53,15 +71,12 @@ public class GameManager : MonoBehaviour
     private IEnumerator CoNextLevel()
     {
         yield return null;
-        roomlist[index].gameObject.SetActive(false);
-        index++;
+        var loadplayerdata = UserData.Instance.LoadData();
+        loadplayerdata.dungeonLevel++;
 
-        if(index >= roomlist.Count)
-        {
-            Debug.LogWarning("크레딧");
-            yield break;
-        }
-        roomlist[index].gameObject.SetActive(true);
+        Destroy(dungeon);
+        dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
+
         player.transform.position = Vector3.zero;
     }
 

@@ -1,20 +1,19 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System;
 /// <summary>
-/// CreateCharacterSlot 버튼이 눌리면 활성화
+/// 새로운 캐릭터를 생성한다.
+/// 캐릭터의 기본 어트리뷰트와 계층이 셋업되고 세이브한다.
 /// </summary>
-public class Panel_CharacterName : MonoBehaviour
+public class Panel_CreatePlayer : MonoBehaviour
 {
-
     [SerializeField]
     private TMP_InputField tmp_InputField;
     [SerializeField]
     public Button btn_Ok;
-    CreateCharacterSlot slot;
+    CharacterSlot slot;
 
-    public void SetData(CreateCharacterSlot slot)
+    public void SetData(CharacterSlot slot)
     {
         this.slot = slot;
         btn_Ok.onClick.AddListener(OnClickOkButton);
@@ -24,7 +23,8 @@ public class Panel_CharacterName : MonoBehaviour
     public void OnClickOkButton()
     {
         slot.SetNickName(tmp_InputField.text);
-        gameObject.SetActive(false);
+        UserData.Instance.CreateNewCharacter(tmp_InputField.text,slot.index);
+        gameObject.SetActive(false);        
     }
 
     public string GetNickName()

@@ -2,8 +2,6 @@
 using System.Collections;
 using UnityEngine;
 /// <summary>
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
-
 /// <summary>
 /// 원래는 객체가 비활성화 되어도 사용가능한 테스크로 만들었으나
 /// 게임에 사용되는 오브젝트이니 코루틴으로 사용되는게 맞다고 판단

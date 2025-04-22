@@ -10,10 +10,10 @@ public class BodyItem : EquipmentItem
     public int index;
     public override void Init(PickupItemData data)
     {
+        base.Init(data);
         models[data.objectIndex].gameObject.SetActive(true);
         index = data.modelIndex;
-        partType = data.eEquipmentType;
-        effect = data.attribute;
+        partType = data.eEquipmentType;      
         skilltag = data.tag;
         ability = data.gameAbility;
     }

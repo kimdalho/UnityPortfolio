@@ -7,5 +7,6 @@ public interface IPickupable
     void OnPickup(Character character, GameObject picker);
 
     (ItemData, GameAttribute) GetItemData();
-    
+
+    //(ItemData, GameAttribute) SetItemData(ItemData, GameAttribute);
 }

@@ -1,11 +1,5 @@
-#if UNITY_EDITOR
-
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static Cinemachine.DocumentationSortingAttribute;
-using static UnityEngine.Rendering.STP;
 
 public class DungeonMaker : MonoBehaviour
 {
@@ -14,7 +8,7 @@ public class DungeonMaker : MonoBehaviour
     public int offsetX;
     public int offsetY;
 
-    public Dictionary<string, Room> dic;
+    public Dictionary<string, Room> dic = new Dictionary<string, Room>();
 
     //던전 데이터
     public DungeonConfigSO dungeonConfig;
@@ -25,21 +19,20 @@ public class DungeonMaker : MonoBehaviour
     private GameObject itemHolder;
     private GameObject roomHolder;
     private GameObject monsterHolder;
-    List<GameObject> dungeons;
+    List<GameObject> dungeons = new List<GameObject>();
     public List<DungeonData> DungeonDatas;
     
 
     public List<GameObject> Build()
-    {
-        dic = new Dictionary<string, Room>();
+    {     
             //10개 모두 빌드
             AllBuild();
         return dungeons;
     }
-    public List<GameObject> Build(int index)
-    {                 
-         AllBuild();     
-        return dungeons;
+    public GameObject Build(int index)
+    {
+        BuildToFlow(index);
+        return dungeons[0];
     }
 
 
@@ -64,7 +57,10 @@ public class DungeonMaker : MonoBehaviour
         #endregion
     }
 
-
+    /// <summary>
+    /// 던전을 인스턴스합니다.
+    /// </summary>
+    /// <param name="model"></param>
     public void RoomBuild(DungeonData model)
     {
         
@@ -100,12 +96,17 @@ public class DungeonMaker : MonoBehaviour
         
     }
 
+    public void BuildToFlow(int curflow)
+    {
+        RoomBuild(DungeonDatas[curflow - 1]);
+        SetData(curflow);
+    }
+
 
 
     public void AllBuild()
     {
-        int i = 0;
-        dungeons = new List<GameObject>();
+        int i = 0;        
         foreach (var roomData in DungeonDatas)
         {
             RoomBuild(roomData);
@@ -121,7 +122,10 @@ public class DungeonMaker : MonoBehaviour
             i++;
         }
     }
-
+    /// <summary>
+    /// 던전에 아이템과 몬스터를 인스턴스합니다.
+    /// </summary>
+    /// <param name="level"></param>
     public void SetData(int level)
     {        
         DungeonRoomConfig config = dungeonConfig.GetConfigByLevel(level);
@@ -167,4 +171,3 @@ public class DungeonMaker : MonoBehaviour
         else return 3;
     }   
 }
-#endif
