@@ -71,6 +71,13 @@ crashlytics-build.properties
 Assets/UnInclude/*
 !Assets/UnInclude/
 
+Editor Default Resources/*
+!Editor Default Resources
+
+ExternalDependencyManager/*
+!ExternalDependencyManager
+
+
 Assets/UnInclude/*
 !Assets/UnInclude/
 
