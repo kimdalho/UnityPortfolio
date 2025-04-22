@@ -71,6 +71,14 @@ crashlytics-build.properties
 Assets/UnInclude/*
 !Assets/UnInclude/
 
+Assets/UnInclude/*
+!Assets/UnInclude/
+
+Assets/Firebase/*
+!Assets/Firebase/
+
+
+
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
