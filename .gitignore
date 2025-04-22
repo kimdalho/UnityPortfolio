@@ -72,10 +72,10 @@ Assets/UnInclude/*
 !Assets/UnInclude/
 
 Editor Default Resources/*
-!Editor Default Resources
+!Editor Default Resources/
 
 ExternalDependencyManager/*
-!ExternalDependencyManager
+!ExternalDependencyManager/
 
 
 Assets/UnInclude/*
@@ -84,6 +84,11 @@ Assets/UnInclude/*
 Assets/Firebase/*
 !Assets/Firebase/
 
+Assets/GeneratedLocalRepo/*
+!Assets/GeneratedLocalRepo/
+
+Assets/Plugins/*
+!Assets/Plugins/
 
 
 # Temporary auto-generated Android Assets
