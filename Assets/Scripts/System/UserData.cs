@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class UserData : MonoBehaviour 
 {
+    public string userId;
     public List<GameData> slots;
 
     public int CurIndex;
