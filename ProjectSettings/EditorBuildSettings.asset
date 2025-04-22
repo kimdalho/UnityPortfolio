@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/UnInclude/FirebaseContents/LoginScene.unity
+    guid: 43d2ed0569cc6cc43aed4785488845cf
+  - enabled: 1
     path: Assets/Scenes/LobbyScene.unity
     guid: dfb4faf173ea42e499394b2b4e76ad89
   - enabled: 1
