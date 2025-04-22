@@ -5,7 +5,9 @@ public class UserData : MonoBehaviour
 {
     public string userId;
     public List<GameData> slots;
-
+    /// <summary>
+    /// 선택된 현제 플레이어 인덱스 0~3까지 존재 -1이면 선택되지않음
+    /// </summary>
     public int CurIndex;
 
 
@@ -17,6 +19,7 @@ public class UserData : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            CurIndex = -1;
             DontDestroyOnLoad(gameObject);
             slots = new List<GameData>();
             slots.AddRange(new GameData[4]);
@@ -52,7 +55,7 @@ public class UserData : MonoBehaviour
         newSaveData.playerAttribute = defaultGE.ApplyGameplayEffectToSelf(newSaveData.playerAttribute);
         newSaveData.headIndex = 1;
         newSaveData.bodyIndex = 1;
-        slots[index] =  newSaveData;
+        slots[index] = newSaveData;
     }
 
     public GameData LoadData()

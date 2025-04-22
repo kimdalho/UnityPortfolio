@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         #endregion
 
+        //이건 테스트 코드 게임씬에서 바로 시작했을때 동작
+#if UNITY_EDITOR
         if (UserData.Instance == null)
         {
             var obj   = new GameObject("UserData");
@@ -37,7 +39,7 @@ public class GameManager : MonoBehaviour
             userdata.CreateNewCharacter("nameless", userdata.CurIndex);
 
         }
-
+#endif
         var loadplayerdata = UserData.Instance.LoadData();
         #region 플레이어 셋업
         player.attribute = loadplayerdata.playerAttribute;

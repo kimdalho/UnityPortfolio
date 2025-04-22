@@ -34,18 +34,30 @@ public class Panel_CharacterSelect : MonoBehaviour
                 //해당 슬롯에 캐릭터가 이미 존재하는경우
                 if(slot.existCharacter)
                 {
-                    
+                    img_Status.gameObject.SetActive(true);
+                    model.gameObject.SetActive(true);
+
+                    var data = UserData.Instance.slots[slot.index];
+                    tmpStats[0].UpdateLocalizedText(data.dungeonLevel);
+                    tmpStats[1].UpdateLocalizedText(data.playerAttribute.MaxHart, data.playerAttribute.CurHart);
+                    tmpStats[2].UpdateLocalizedText(data.playerAttribute.atk);
+                    tmpStats[3].UpdateLocalizedText(data.playerAttribute.attackSpeed);
+                    tmpStats[4].UpdateLocalizedText(data.playerAttribute.speed);
                 }
                 else
                 {
                     panel_CharacterName.gameObject.SetActive(true);
                     panel_CharacterName.SetData(slot);
+
+                    //신규 캐릭터 생성 로직
                     panel_CharacterName.btn_Ok.onClick.AddListener(() =>
                     {
+                        //생성 플러그
                         slot.existCharacter = true;
                         //새로운 플레이어를 생성 또는 기존 플레이어 캐릭터 선택완료
                         img_Status.gameObject.SetActive(true);
                         model.gameObject.SetActive(true);
+
                         var data = UserData.Instance.slots[slot.index];
                         tmpStats[0].UpdateLocalizedText(data.dungeonLevel);
                         tmpStats[1].UpdateLocalizedText(data.playerAttribute.MaxHart, data.playerAttribute.CurHart);
@@ -54,7 +66,7 @@ public class Panel_CharacterSelect : MonoBehaviour
                         tmpStats[4].UpdateLocalizedText(data.playerAttribute.speed);
                     });
 
-                }
+                }                
                 UserData.Instance.CurIndex = slot.index;
             });
         }
@@ -73,11 +85,12 @@ public class Panel_CharacterSelect : MonoBehaviour
 
     public void GameStart()
     {
-        //SaveData saveData = new SaveData();
-        //saveData.attribute = model.character.attribute;
-        //saveData.floow = 1;
-        //saveData.nickname = panel_CharacterName.GetNickName();
-        //UserData.Instance.saveData = saveData;
+        if(UserData.Instance.CurIndex < 0)
+        {
+            Debug.Log("선택된 캐릭터가 없다");
+            return;
+        }
+            
         SceneContainer.Instance.LoadScene(eSceneType.GameScene);
     }
 

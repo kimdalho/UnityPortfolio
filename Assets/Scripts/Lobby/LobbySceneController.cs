@@ -26,6 +26,17 @@ public class LobbySceneController : MonoBehaviour
 
     private void Start()
     {
+        //로그인씬이 아닌 테스트로 로비씬에서 바로 시작했을 시
+        if(UserData.Instance == null)
+        {
+            var obj = new GameObject();
+            var userdata = obj.AddComponent<UserData>() as UserData;            
+        }
+        else
+        {
+            //여기서는 스토리지 로드가 필요
+        }
+
         BtnNew.GetComponent<Button>().onClick.AddListener(OnClickCharacterSelect);        
         BtnSetting.GetComponent<Button>().onClick.AddListener(OnClickSettingButton);
         BtnExit.GetComponent<Button>().onClick.AddListener(OnClickExitButton);
