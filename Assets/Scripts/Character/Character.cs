@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class Character : AttributeEntity
 {
+
     //ÀúÇ×·Â
     public Vector3 calcVelocity;
     protected readonly int moveHash = Animator.StringToHash("Move");

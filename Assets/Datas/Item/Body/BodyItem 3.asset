@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eEquipmentType: 2
   itemData:
-    itemName: Equip_BodyName3
+    itemName: Condition_ItemBody3
     description: Equip_Body_Description3
   modelIndex: 2
   objectIndex: 1

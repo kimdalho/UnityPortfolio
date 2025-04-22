@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eEquipmentType: 2
   itemData:
-    itemName: Equip_BodyName4
+    itemName: Condition_ItemBody4
     description: Equip_Body_Description4
   modelIndex: 3
   objectIndex: 2
@@ -26,3 +26,4 @@ MonoBehaviour:
     atk: 2
     attackSpeed: 1
     speed: 1
+  gameAbility: {fileID: 0}

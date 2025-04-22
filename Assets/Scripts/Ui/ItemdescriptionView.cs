@@ -16,16 +16,31 @@ public class ItemdescriptionView : MonoBehaviour
 
     public void SetData(IPickupable model)
     {
-        gameObject.SetActive(true);
         var pairdata = model.GetItemData();
-        ItemData itemdata =  pairdata.Item1;
+        ItemData itemdata = pairdata.Item1;
         GameAttribute attribute = pairdata.Item2;
 
+        if (itemdata == null || attribute == null)
+            return;
+
+        gameObject.SetActive(true);
+
+
         list[0].SetLocalizationID(itemdata.itemName);
-        list[1].UpdateLocalizedText(attribute.MaxHart);
-        list[2].UpdateLocalizedText(attribute.atk);        
-        list[3].UpdateLocalizedText(attribute.attackSpeed);
-        list[4].UpdateLocalizedText(attribute.speed);
         
+        EnableCheck(list[1], attribute.MaxHart);
+        EnableCheck(list[2], attribute.atk);
+        EnableCheck(list[3], attribute.attackSpeed);
+        EnableCheck(list[4], attribute.speed);
+        
+        list[5].SetLocalizationID(itemdata.description);
+
     }
+
+    private void EnableCheck(LocalizedText tmp, int value)
+    {
+        tmp.gameObject.SetActive(value > 0);
+        tmp.UpdateLocalizedText(value);
+    }
+
 }
