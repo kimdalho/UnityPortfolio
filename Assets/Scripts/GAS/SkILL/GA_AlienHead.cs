@@ -41,7 +41,7 @@ public class GA_AlienHead : GameAbility
             }
 
             // 최대 체력 증가 FX 실행
-            var _fx = FXFactory.Instance.GetFX(_tag, owner.transform.position, UnityEngine.Quaternion.identity);
+            owner.fxSystem.ExecuteFX(_tag);
 
         }
 

@@ -21,7 +21,7 @@ public class GA_NinjaBody : GameAbility
         if (_chance >= condtionper) return;
 
         // 공속 증가 FX 실행
-        var _fx = FXFactory.Instance.GetFX(AbilityTag, owner.transform.position, Quaternion.identity);
+        owner.fxSystem.ExecuteFX(AbilityTag);
 
         // 이미 실행 중이라면 
         if (owner.gameplayTagSystem.HasTag(AbilityTag))
