@@ -17,6 +17,11 @@ public class AttributeView : MonoBehaviour
         ShowData(player.attribute);
     }
 
+    public void ShowHart(GameAttribute model)
+    {       
+       // model.CurHart;
+    }
+
     public void ShowData(GameAttribute model)
     {
         localized[0].UpdateLocalizedText(model.atk);
