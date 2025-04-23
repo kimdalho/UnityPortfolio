@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using UnityEngine.InputSystem.XInput;
 using static UnityEngine.UI.GridLayoutGroup;
 
@@ -42,7 +43,16 @@ public class AttackAbility : GameAbility
             {                   
                 var effect = new GameEffect(new DamageExecution());
                 effect.Apply(owner, ae);
-                (ae as Character)?.fxSystem?.ExecuteFX(AbilityTag);
+
+                var character = ae as Character;
+                if (character != null && character.fxSystem != null)
+                {
+                    //character.fxSystem?.ExecuteFX(AbilityTag);
+                }
+                else
+                {
+                    Debug.LogWarning("맞은 대상 FX가 없다");
+                }
             }
 
             Debug.Log("Detected: " + col.name);
