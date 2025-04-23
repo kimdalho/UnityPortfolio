@@ -41,11 +41,16 @@ public class GA_AlienHead : GameAbility
             }
 
             // 최대 체력 증가 FX 실행
-            owner.fxSystem.ExecuteFX(_tag);
+            owner.fxSystem?.ExecuteFX(_tag);
 
         }
 
         EndAbility();
         yield break;
+    }
+
+    private void Update()
+    {
+        if (UnityEngine.Input.GetKeyDown(UnityEngine.KeyCode.J)) owner.onKill.Invoke();
     }
 }

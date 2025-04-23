@@ -28,7 +28,7 @@ public class GA_BearHead : GameAbility
         if (_isTrig)
         {
             // 회복 FX 실행
-            owner.fxSystem.ExecuteFX(AbilityTag);
+            owner.fxSystem?.ExecuteFX(AbilityTag);
 
             // 4킬마다 체력 1회복
             var _ge = new GameEffectSelf();
