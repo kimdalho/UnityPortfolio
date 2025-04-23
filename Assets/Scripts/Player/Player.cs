@@ -1,16 +1,18 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Player : Character
 {
-    float hAxis;
-    float vAxis;
-
+    
+    [SerializeField]
     private InputController inputController;
-
     public float rotationSpeed = 10f;
     public Transform cameraTransform;
     private Vector3 moveDirection;
+
+    [SerializeField]
+    private ScanForTargets scanForTargets;
 
     Vector3 moveVec;
     
@@ -20,20 +22,17 @@ public partial class Player : Character
     public Color gizmoColor = Color.red;
     public float scanRadius = 5f;
     public LayerMask itemLayer;
+    public LayerMask monsterLayer;
+
     private Collider[] buffer = new Collider[4]; // 미리 할당된 버퍼
     public ItemdescriptionView itemdescriptionView;
     #endregion
 
-
+    [SerializeField]
     private AbilitySystem abilitySystem;
-
-
-  
-
+ 
     private void Start()
-    {
-
-        abilitySystem = GameObject.Find("AbilitySystem")?.GetComponent<AbilitySystem>();
+    {        
         if (abilitySystem == null)
         {
             Debug.LogError("AbilitySystem을 찾을 수 없습니다!");
@@ -42,19 +41,11 @@ public partial class Player : Character
 
         gameObject.tag = "Player";
 
-        inputController = InputController.Instance;
         if (inputController == null)
         {
             Debug.LogError("InputController를 찾을 수 없습니다!");
             return;
-        }
-
-        inputController.Subscribe(ref inputController.OnFKeyPressed, AbilitySkillF);
-        inputController.Subscribe(ref inputController.OnXKeyPressed, AbilitySkillX);
-        inputController.Subscribe(ref inputController.OnLeftDown, AbilitySkillAttack);
-        inputController.Subscribe(ref inputController.OnLeftUp, AbilitySkillAttackEnd);
-
-        
+        }        
     }
 
     private void Update()
@@ -66,38 +57,24 @@ public partial class Player : Character
                 return;
         }
 
-        Move();        
+        Move();
+
         RotateToCameraDirection();
-        //자석기능 없앨까 생각중
+        //자석기능 없앨까 생각중        
         DropItemUpdate();
         //아이템 상태창
         HasPickupablesNearby();
-
-
+        //
+        AutoAttack();
     }
 
     private void OnDestroy()
     {
         if (inputController == null) return;
-
-        inputController.Unsubscribe(ref inputController.OnFKeyPressed, AbilitySkillF);
-        inputController.Unsubscribe(ref inputController.OnXKeyPressed, AbilitySkillX);
-        inputController.Unsubscribe(ref inputController.OnLeftDown, AbilitySkillAttack);
-        inputController.Unsubscribe(ref inputController.OnLeftUp, AbilitySkillAttackEnd);
     }
 
-    private void AbilitySkillF()
-    {
-        /*if (door != null)
-            door.Open();*/
-    }
 
-    private void AbilitySkillX()
-    {
-        //테스트용
-        //abilitySystem.ActivateAbility(eTagType.Attack, this);
-    }
-
+    bool isAttack;
     private void AbilitySkillAttack()
     {
         abilitySystem.ActivateAbility(eTagType.Attack, this);
@@ -116,8 +93,10 @@ public partial class Player : Character
 
     private void Move()
     {
-        hAxis = inputController.GetHorizontal();
-        vAxis = inputController.GetVertical();
+        float hAxis = inputController.InputDirection.x;
+        float vAxis = inputController.InputDirection.y;
+        Vector3 move = new Vector3(hAxis, 0, vAxis);
+        //moveDirection = attribute.speed * move;
 
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -126,8 +105,9 @@ public partial class Player : Character
         forward.Normalize();
         right.Normalize();
 
-        moveDirection = forward * vAxis + right * hAxis;        
-        moveDirection *= attribute.speed;     
+        moveDirection = forward * vAxis + right * hAxis;
+        moveDirection *= attribute.speed;
+
         isGrounded = characterController.isGrounded;
 
         if (isGrounded && calcVelocity.y < 0)
@@ -135,7 +115,6 @@ public partial class Player : Character
             calcVelocity.y = 0;
         }
 
-        Vector3 move = new Vector3(hAxis, 0, vAxis);
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -149,18 +128,47 @@ public partial class Player : Character
 
         bool ismove = (move != Vector3.zero);
         animator.SetBool(moveHash, ismove);
-        //animator.SetBool(fallingHash, !isGrounded);
-
     }
 
     void RotateToCameraDirection()
-    {
-        if (moveDirection.sqrMagnitude > 0.1f)
+    {   
+        if(scanForTargets.lookatMonster != null)
+        {
+            Vector3 direction = scanForTargets.lookatMonster.position - transform.position;
+            if (direction != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+        }
+        else if (moveDirection.sqrMagnitude > 0.1f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
+
+    void AutoAttack()
+    {
+        Debug.Log(moveDirection);
+        if (scanForTargets.lookatMonster != null && moveDirection == Vector3.zero && isAttack == false)
+        {
+            isAttack = true;
+          
+        }
+        else if((scanForTargets.lookatMonster == null || moveDirection != Vector3.zero) && isAttack == true)
+        {
+            isAttack = false;
+            AbilitySkillAttackEnd();
+        }
+
+        if(isAttack == true)
+        {
+            AbilitySkillAttack();
+        }
+       
+    }
+
 
     private void OnTriggerExit(Collider other)
     {
@@ -211,9 +219,28 @@ public partial class Player : Character
     }
     #endregion
 
+
     public AbilitySystem GetAbilitySystem()
     {
         return abilitySystem;
+    }
+
+    /// <summary>
+    /// 카메라 방향으로 플레이어 이동 방향 정하기
+    /// 이렇게 하면 엘든링이나 몬헌처럼 카메라로 플레이어의 정면을 볼수있다.
+    /// </summary>
+    /// <param name="vAxis"></param>
+    /// <param name="hAxis"></param>
+    private void SetPlayerMoveDirectionToCameraDirection(float vAxis, float hAxis)
+    {
+        Vector3 forward = cameraTransform.forward;
+        Vector3 right = cameraTransform.right;
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+
+        moveDirection = forward * vAxis + right * hAxis;
     }
 
 }

@@ -24,10 +24,6 @@ public class GameManager : MonoBehaviour
 
     private void Setup()
     {
-        #region 마우스 셋업
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        #endregion
 
         if (UserData.Instance == null)
         {

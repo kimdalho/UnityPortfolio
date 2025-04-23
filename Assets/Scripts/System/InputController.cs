@@ -1,51 +1,95 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// 추후 인풋시스템으로 업데이트 할 수도 있다. 이식성을 위해 입력 이벤트를 관리하는 컨트롤러
 /// </summary>
 public class InputController : MonoBehaviour
 {
-    [SerializeField] private float hAxis;
-    [SerializeField] private float vAxis;
 
-    public  Action OnFKeyPressed = () => { };
-    public  Action OnXKeyPressed = () => { };
-    public  Action OnLeftDown = () => { };
-    public  Action OnLeftUp = () => { };
+    [Header("UI References")]
+    public RectTransform joystickBG;
+    public RectTransform joystickHandle;
 
-    public static InputController Instance { get; private set; }
+    [Header("Input Action Asset")]
+    public InputActionAsset inputActions;
+    private InputAction pointerAction;
 
-    private void Awake()
+    private Vector2 inputVector;
+    public Vector2 InputDirection => inputVector;
+
+    private bool isDragging = false;
+
+    private readonly string ActionMap_Joystick = "Joystick";
+    private readonly string Action_Pointer = "Pointer";
+
+
+    private void OnEnable()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
+        pointerAction = inputActions.FindActionMap("Joystick").FindAction("Pointer");
+        pointerAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        pointerAction.Disable();
     }
 
     private void Update()
     {
-        hAxis = Input.GetAxis("Horizontal");
-        vAxis = Input.GetAxis("Vertical");
+        if (Touchscreen.current != null)
+        {
+            isDragging = Touchscreen.current.primaryTouch.press.isPressed;
+        }
+        else
+        {
+            isDragging = Mouse.current.leftButton.isPressed;
+        }
+
+        if (isDragging)
+        {
+            Vector2 screenPos = pointerAction.ReadValue<Vector2>();
+            UpdateJoystick(screenPos);
+        }
+        else
+        {
+            ResetJoystick();
+        }
     }
 
-    private void FixedUpdate()
+    void UpdateJoystick(Vector2 screenPosition)
     {
-        if (Input.GetKeyDown(KeyCode.F)) OnFKeyPressed.Invoke();
-        if (Input.GetKeyDown(KeyCode.X)) OnXKeyPressed.Invoke();
-        if (Input.GetMouseButton(0)) OnLeftDown.Invoke();
-        if (Input.GetMouseButtonUp(0)) OnLeftUp.Invoke();
+        Vector2 localPoint;
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            joystickBG, screenPosition, null, out localPoint))
+        {
+            Vector2 normalized = new Vector2(
+                (localPoint.x / joystickBG.sizeDelta.x) * 2,
+                (localPoint.y / joystickBG.sizeDelta.y) * 2);
+
+            inputVector = normalized.magnitude > 1 ? normalized.normalized : normalized;
+
+
+            joystickHandle.anchoredPosition = new Vector2(
+                inputVector.x * joystickBG.sizeDelta.x / 2,
+                inputVector.y * joystickBG.sizeDelta.y / 2);
+        }
     }
 
-    public float GetHorizontal() => hAxis;
-    public float GetVertical() => vAxis;
+    void ResetJoystick()
+    {
+        inputVector = Vector2.zero;
+        joystickHandle.anchoredPosition = Vector2.zero;
+    }
 
-    // ✅ 제네릭을 활용한 Subscribe / Unsubscribe 통합
-    public void Subscribe(ref Action eventAction, Action callback) => eventAction += callback;
-    public void Unsubscribe(ref Action eventAction, Action callback) => eventAction -= callback;
+
+    public void Keyboard()
+    {
+        #region 마우스 셋업
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        #endregion
+    }
+
 }
