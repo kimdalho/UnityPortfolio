@@ -19,6 +19,8 @@ public class Projectile : MonoBehaviour
     private float accumulateGravityValue = 0f;
     protected eTagType abilityTag;
 
+    protected bool IsPoison => owner.gameplayTagSystem.HasTag(eTagType.Roostershead);
+
     private void Awake()
     {
         rig = GetComponent<Rigidbody>();
@@ -58,15 +60,29 @@ public class Projectile : MonoBehaviour
         {
             if (_hit.TryGetComponent<AttributeEntity>(out var _ae))
             {
-                var _effect = new GameEffect(new DamageExecution());
-                _effect.Apply(owner, _ae);
-                (_ae as Character)?.fxSystem?.ExecuteFX(abilityTag);
+                ApplyDamage(_ae);
 
                 if (--PenetrateCnt > 0) return;
 
                 if (gameObject == null) return;
                 ReleaseProjectile();
             }
+        }
+    }
+
+    protected virtual void ApplyDamage(AttributeEntity ae)
+    {
+        var _de = new DamageExecution();
+        var _effect = new GameEffect(_de);
+        _effect.Apply(owner, ae);
+
+        (ae as Character)?.fxSystem?.ExecuteFX(abilityTag);
+
+        if (IsPoison)
+        {
+            var _selfEffect = new GameEffectSelf();
+            _selfEffect.effect.CurHart -= 1;
+            (ae as Character)?.OnHit(_selfEffect);
         }
     }
 
