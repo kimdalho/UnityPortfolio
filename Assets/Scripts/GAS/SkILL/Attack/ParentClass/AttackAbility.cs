@@ -17,9 +17,6 @@ public abstract class AttackAbility : GameAbility
 
     protected override IEnumerator ExecuteAbility()
     {
-        // Roostershead 태그가 활성화 되어 있다면 투사체에 독 적용 (투사체 외의 공격도 독 데미지 적용을 할 가능성이 있으므로 여기서 적용)
-        IsPoison = owner.gameplayTagSystem.HasTag(eTagType.Roostershead);
-
         if (owner.gameplayTagSystem.HasTag(eTagType.beartorso) && GA_BearTorso.ReturnSuccessResult())
         {
             FanShapeFire(owner.transform, ProjectileType.Bullet, 40f, 2);
