@@ -71,6 +71,26 @@ crashlytics-build.properties
 Assets/UnInclude/*
 !Assets/UnInclude/
 
+Assets/Editor Default Resources/*
+!Assets/Editor Default Resources/
+
+Assets/ExternalDependencyManager/*
+!Assets/ExternalDependencyManager/
+
+
+Assets/UnInclude/*
+!Assets/UnInclude/
+
+Assets/Firebase/*
+!Assets/Firebase/
+
+Assets/GeneratedLocalRepo/*
+!Assets/GeneratedLocalRepo/
+
+Assets/Plugins/*
+!Assets/Plugins/
+
+
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
