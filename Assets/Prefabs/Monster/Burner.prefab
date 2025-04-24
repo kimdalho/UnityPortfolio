@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2563671461830074345}
   - component: {fileID: 7238699780026430288}
   - component: {fileID: -770563901117985350}
+  - component: {fileID: 5676113721691788328}
   m_Layer: 10
   m_Name: Burner
   m_TagString: Monster
@@ -123,6 +124,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyTrans: {fileID: 1064726689101023865}
+--- !u!114 &5676113721691788328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767471184257895783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59790aa17df26e44bb60e60b260d7e46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handL: {fileID: 1064726688426327910}
+  handR: {fileID: 1064726688633112437}
+  currentWeapon: {fileID: 8527829639693918688}
 --- !u!1 &1739743593540926330
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,6 +587,16 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5565561977870252108, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 4898353343230065615}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1064726688426327910 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5565561977714263209, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+  m_PrefabInstance: {fileID: 4898353343230065615}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1064726688633112437 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5565561977516457146, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+  m_PrefabInstance: {fileID: 4898353343230065615}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1064726688694102647 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5565561977460117944, guid: 446f9ff17434e8749a54822318712f49, type: 3}
@@ -602,6 +628,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93005e4cac64995478b011a4506c7e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8527829639693918688 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3864824836397455919, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+  m_PrefabInstance: {fileID: 4898353343230065615}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9186462508342145084
 PrefabInstance:
   m_ObjectHideFlags: 0

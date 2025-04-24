@@ -13,6 +13,7 @@ public class FXFactory : MonoBehaviour
         fxPrefabs.Add("FanShapeFire", prefabs[1]);
         fxPrefabs.Add("Explosion", prefabs[2]);
         fxPrefabs.Add("FlameThrower", prefabs[3]);
+        fxPrefabs.Add("Shot", prefabs[4]);
     }
     #endregion
 

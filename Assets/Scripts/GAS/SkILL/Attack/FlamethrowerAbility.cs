@@ -9,9 +9,10 @@ public class FlamethrowerAbility : AttackAbility
     protected override IEnumerator ExecuteAbility()
     {
         // 임시 FX 위치
-        var _fxPos = owner.transform.position + Vector3.up * 0.6f + owner.transform.forward * 0.7f;
+        //var _fxPos = owner.transform.position + Vector3.up * 0.6f + owner.transform.forward * 0.7f;
+        var _fxPos = owner.weapon.currentWeapon.GetChild(0);
         // 화염 방사기 FX 생성
-        var _particle = FXFactory.Instance.GetFX("FlameThrower", _fxPos, Quaternion.LookRotation(owner.transform.forward));
+        var _particle = FXFactory.Instance.GetFX("FlameThrower", _fxPos);
 
         owner.GetAnimator().SetBool("LoopAttack", true);
 
@@ -36,6 +37,7 @@ public class FlamethrowerAbility : AttackAbility
             yield return new WaitForSeconds(_waitTime);
         }
 
+        _particle.transform.SetParent(null);
         // 화염 방사기 FX 자연스럽게 삭제
         _particle.GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
         owner.GetAnimator().SetBool("LoopAttack", false);

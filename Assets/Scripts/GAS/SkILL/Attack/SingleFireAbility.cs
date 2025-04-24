@@ -16,8 +16,8 @@ public class SingleFireAbility : FireAbility
         var _dir = owner.transform.forward;
 
         // OwnerÀÇ Hand Transform Å½»ö
-        var _armTrans = owner.transform.GetChild(0).GetChild(owner.transform.GetChild(0).childCount - 1);
-        for (int i = 0; i < 8; i++) _armTrans = _armTrans.GetChild(0);
+        var _muzzleTrans = owner.transform.GetChild(0).GetChild(owner.transform.GetChild(0).childCount - 1);
+        for (int i = 0; i < 8; i++) _muzzleTrans = _muzzleTrans.GetChild(0);
 
         float _fireDelay = 0f;
 
@@ -28,9 +28,15 @@ public class SingleFireAbility : FireAbility
             owner.GetAnimator().Play("Attack", -1, 0f);
             _fireDelay = owner.GetAnimator().GetCurrentAnimatorStateInfo(0).length / _atkSpeed;
 
-            //yield return new WaitForSeconds(delayAtkTime);
+            yield return new WaitForSeconds(0.1f);
 
-            InitProjectile(_armTrans, projectileType, _dir, true);
+            if (owner.weapon != null)
+            {
+                _muzzleTrans = owner.weapon.currentWeapon.GetChild(0);
+                FXFactory.Instance.GetFX("Shot", _muzzleTrans.position, Quaternion.LookRotation(_muzzleTrans.forward));
+            }
+
+            InitProjectile(_muzzleTrans, projectileType, _dir, true);
 
             yield return new WaitForSeconds(_fireDelay);
         }

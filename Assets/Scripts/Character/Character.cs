@@ -26,6 +26,7 @@ public class Character : AttributeEntity
     [SerializeField] protected ModelController controller;
 
     public FXSystem fxSystem;
+    public Weapon weapon;
 
     public Animator GetAnimator()
     {
