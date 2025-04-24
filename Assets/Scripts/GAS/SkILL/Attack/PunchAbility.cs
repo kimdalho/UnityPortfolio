@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PunchAbility : GameAbility
+public class PunchAbility : AttackAbility
 {
     protected override IEnumerator ExecuteAbility()
     {         
@@ -29,17 +29,21 @@ public class PunchAbility : GameAbility
     private void CreateDetectObject()
     {
         Vector3 spherePosition = owner.transform.position + owner.transform.forward * 1f; // 정면에서 +3 이동
-        int layerMask = LayerMask.GetMask("Item"); // "Enemy" 레이어만 감지
         Collider[] results = SphereDetector.DetectObjectsInSphere(spherePosition, 1, targetMask);
         foreach (var col in results)
         {
-            //col.GetComponent<PlaceableObject>().TakeDamage(1);
             AttributeEntity ae = col.GetComponent<AttributeEntity>();
             if (ae != null) 
             {                   
                 var effect = new GameEffect(new DamageExecution());
                 effect.Apply(owner, ae);
                 (ae as Character)?.fxSystem?.ExecuteFX(AbilityTag);
+
+                // 처치 이벤트
+                if (ae.attribute.CurHart <= 0)
+                {
+                    owner.onKill?.Invoke();
+                }
             }
 
             Debug.Log("Detected: " + col.name);

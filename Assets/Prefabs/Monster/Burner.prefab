@@ -56,7 +56,6 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
-    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 7238699780026430288}
   jumpHeight: 2
@@ -166,7 +165,7 @@ GameObject:
   - component: {fileID: 7294813416530633959}
   - component: {fileID: 7643396454371422051}
   m_Layer: 0
-  m_Name: AbilitySystem
+  m_Name: AbilitySystems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

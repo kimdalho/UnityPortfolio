@@ -56,7 +56,6 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
-    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 764802606740835985}
   jumpHeight: 2
@@ -620,7 +619,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
       propertyPath: AbilityTag
-      value: 0
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
       propertyPath: AbilityName
@@ -678,11 +677,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: FanShapeFireSkill
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5421088086271864787, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2248706850214901569}
   m_SourcePrefab: {fileID: 100100000, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
+--- !u!1 &1917049817082006247 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5421088086271864787, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
+  m_PrefabInstance: {fileID: 5882026855438001460}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2248706850214901569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917049817082006247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e741c5a1d721a4a8207280c9041893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  AbilityTag: 17
+  AbilityName: 
+  Duration: 1
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  baseFireCount: 1
+  projectileType: 0
+  delayAtkTime: 0.3
 --- !u!4 &6897739010933116400 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1015730315210352836, guid: 7beeb9962f9268849b5be83937564f31, type: 3}

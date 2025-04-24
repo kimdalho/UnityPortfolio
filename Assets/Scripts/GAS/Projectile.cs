@@ -5,25 +5,25 @@ public class Projectile : MonoBehaviour
     #region Base Stats
     [SerializeField] private float groundCheckDistance = 0.2f;
     [SerializeField] private float baseSpeed = 100f;    // 투사체 기본 속도
-    [SerializeField] private float PenetrateCnt = 1;    // -1은 무제한 관통
+    [SerializeField] private int penetrateCnt = 1;    // -1은 무제한 관통
     [SerializeField] private float detectSize = 0.5f;   // Detect Object 크기
     [SerializeField] private float gravity = 0f;
     [SerializeField] private float retentionTime = 3f;
     #endregion
 
-    [SerializeField] private Rigidbody rig;
     protected Character owner;
     protected LayerMask targetLayer;
 
-    private Vector3 moveDirection;
+    protected Vector3 moveDirection = Vector3.zero;
     private float accumulateGravityValue = 0f;
     protected eTagType abilityTag;
 
-    protected bool IsPoison => owner.gameplayTagSystem.HasTag(eTagType.Roostershead);
 
-    private void Awake()
+    protected virtual bool IsPoison => owner.gameplayTagSystem.HasTag(eTagType.Roostershead);
+    protected int PenetrateCnt
     {
-        rig = GetComponent<Rigidbody>();
+        get => owner.gameplayTagSystem.HasTag(eTagType.clowntorso) ? -1 : penetrateCnt;
+        set => penetrateCnt = value;
     }
 
     /// <summary>
@@ -33,15 +33,15 @@ public class Projectile : MonoBehaviour
     /// <param name="dir">투사체 방향</param>
     /// <param name="targetLayer">대상 레이어</param>
     /// <param name="IsAtkSpeedAdd">투사체 이동 속도에 공격 속도 반영 여부</param>
-    public void Initialized(Character owner, Vector3 dir, LayerMask targetLayer, eTagType abilityTag, bool IsAtkSpeedAdd = false)
+    public virtual void Initialized(Character owner, Vector3 dir, LayerMask targetLayer, eTagType abilityTag, bool IsAtkSpeedAdd = false)
     {
         this.owner = owner;
         this.targetLayer = targetLayer;
         this.abilityTag = abilityTag;
 
-        baseSpeed *= IsAtkSpeedAdd ? owner.attribute.attackSpeed : 1f;
+        //baseSpeed *= IsAtkSpeedAdd ? owner.attribute.attackSpeed : 1f;
 
-        moveDirection = dir;
+        moveDirection = (dir + moveDirection).normalized;
 
         var _eulerAngle = Quaternion.LookRotation(moveDirection).eulerAngles;
         transform.rotation = Quaternion.Euler(_eulerAngle.x, _eulerAngle.y, 0f);
@@ -62,10 +62,11 @@ public class Projectile : MonoBehaviour
             {
                 ApplyDamage(_ae);
 
-                if (--PenetrateCnt > 0) return;
-
-                if (gameObject == null) return;
-                ReleaseProjectile();
+                if (--PenetrateCnt == 0)
+                {
+                    if (gameObject == null) return;
+                    ReleaseProjectile();
+                }
             }
         }
     }
@@ -83,6 +84,12 @@ public class Projectile : MonoBehaviour
             var _selfEffect = new GameEffectSelf();
             _selfEffect.effect.CurHart -= 1;
             (ae as Character)?.OnHit(_selfEffect);
+        }
+
+        // 처치 이벤트
+        if (ae.attribute.CurHart <= 0)
+        {
+            owner.onKill?.Invoke();
         }
     }
 

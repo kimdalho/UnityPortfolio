@@ -277,8 +277,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckDistance: 0.2
-  baseSpeed: 10
-  PenetrateCnt: 1
+  baseSpeed: 18
+  penetrateCnt: 1
   detectSize: 0.2
   gravity: 0
-  rig: {fileID: 0}
+  retentionTime: 3

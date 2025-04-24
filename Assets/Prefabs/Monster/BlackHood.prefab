@@ -56,7 +56,6 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
-    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 764802606740835985}
   jumpHeight: 2
@@ -135,7 +134,7 @@ GameObject:
   - component: {fileID: 8341230479772298803}
   - component: {fileID: 758250089743701821}
   m_Layer: 0
-  m_Name: AbilitySystem
+  m_Name: AbilitySystems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,7 +253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
       propertyPath: AbilityTag
-      value: 0
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
       propertyPath: targetMask.m_Bits

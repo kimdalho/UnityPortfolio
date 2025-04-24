@@ -50,7 +50,7 @@ public class GA_BoxHead : GameAbility
 
     private void InitProjectile(Transform bodyTrans, Vector3 dir, bool isAtkSpeedAdd = false)
     {
-        var _return = ProjectileFactory.Instance.GetProjectile(projectileType, bodyTrans.position, Quaternion.identity);
+        var _return = ProjectileFactory.Instance.GetProjectile(projectileType, bodyTrans.position + Vector3.up * 0.3f, Quaternion.identity);
         _return.Initialized(owner, dir.normalized, targetMask, AbilityTag, isAtkSpeedAdd);
     }
 }
