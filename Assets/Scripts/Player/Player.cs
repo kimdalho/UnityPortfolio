@@ -1,21 +1,30 @@
 
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public partial class Player : Character
 {
-    
+    #region 이동 컨트롤러
     [SerializeField]
     private InputController inputController;
     public float rotationSpeed = 10f;
     public Transform cameraTransform;
     private Vector3 moveDirection;
+    private Vector3 moveVec;
+    #endregion
+
+    #region 룩엣
 
     [SerializeField]
     private ScanForTargets scanForTargets;
+    [SerializeField]
+    private CinemachineCamera lookatCam;
+    #endregion
 
-    Vector3 moveVec;
-    
+
+
+
     private HashSet<Collider> detectedItems = new HashSet<Collider>();
 
     #region 아이템 설명창
@@ -93,24 +102,10 @@ public partial class Player : Character
 
     private void Move()
     {
-        float hAxis = inputController.InputDirection.y;
-        float vAxis = inputController.InputDirection.x;
-        Vector3 move = new Vector3(vAxis, 0, hAxis);
-        Debug.Log("hAxis " + hAxis + "vAxis " + vAxis);
-
-        //moveDirection = attribute.speed * move;
-
-        Vector3 forward = gameObject.transform.forward;
-        Vector3 right = gameObject.transform.right;
-        forward.y = 0;
-        right.y = 0;
-        forward.Normalize();
-        right.Normalize();
-
-        moveDirection = forward * hAxis + right * vAxis;
-        Debug.Log("moveDirection " + moveDirection);
-        moveDirection *= attribute.speed;
-
+        float hAxis = inputController.InputDirection.x;
+        float vAxis = inputController.InputDirection.y;
+        Vector3 move = new Vector3(hAxis, 0, vAxis);
+        SetPlayerMoveDirectionToCameraDirection(vAxis, hAxis);
 
         isGrounded = characterController.isGrounded;
 
@@ -138,6 +133,7 @@ public partial class Player : Character
     {   
         if(scanForTargets.lookatMonster != null)
         {
+            lookatCam.Priority = 2;
             Vector3 direction = scanForTargets.lookatMonster.position - transform.position;
             if (direction != Vector3.zero)
             {
@@ -147,6 +143,7 @@ public partial class Player : Character
         }
         else if (moveDirection.sqrMagnitude > 0.1f)
         {
+            lookatCam.Priority = 0;
             Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
