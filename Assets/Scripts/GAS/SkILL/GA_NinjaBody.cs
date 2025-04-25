@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GA_NinjaBody : GameAbility
 {
-
     public GameEffect GE_NinjaBodyspeedUp;
 
     public eTagType state = eTagType.NinjaBody_State_SpeedUp;
@@ -15,21 +14,10 @@ public class GA_NinjaBody : GameAbility
         yield return null;
     }
 
-
     private void StartAbility()
     {
         owner.gameplayTagSystem.AddTag(AbilityTag);
         owner.Onkill += Onkill;
-    }
-
-    public void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            Debug.Log("킬 테스트");
-            owner.Onkill.Invoke();
-        }
-
     }
 
     private void Onkill()

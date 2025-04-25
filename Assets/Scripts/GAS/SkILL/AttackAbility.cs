@@ -37,12 +37,11 @@ public class AttackAbility : GameAbility
         Collider[] results = SphereDetector.DetectObjectsInSphere(spherePosition, 1, targetMask);
         foreach (var col in results)
         {
-            //col.GetComponent<PlaceableObject>().TakeDamage(1);
             AttributeEntity ae = col.GetComponent<AttributeEntity>();
             if (ae != null) 
-            {                   
-                var effect = new GameEffect(new DamageExecution());
-                effect.Apply(owner, ae);
+            {
+                var effect = new DamageExecution();                
+                effect.Execute(owner, ae);
 
                 var character = ae as Character;
                 if (character != null && character.fxSystem != null)

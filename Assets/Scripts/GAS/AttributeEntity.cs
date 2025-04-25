@@ -12,7 +12,7 @@ public class AttributeEntity : MonoBehaviour , IOnKillEvent
 {
     public delegate void OnHitdelegate();
     
-    public OnHitdelegate onHit;
+    public OnHitdelegate OnHit;
 
     public GameAttribute attribute;
 

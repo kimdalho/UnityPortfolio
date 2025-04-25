@@ -121,6 +121,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c9437e2c112034a9de7d48b5a5a33c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attribute:
+    MaxHart: 0
+    CurHart: 0
+    atk: 1
+    attackSpeed: 0
+    speed: 0
+  calcVelocity: {x: 0, y: 0, z: 0}
+  characterController: {fileID: 0}
+  jumpHeight: 2
+  gravity: -9.81
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  groundCheckDistance: 0.3
+  animator: {fileID: 0}
+  controller: {fileID: 0}
+  fxSystem: {fileID: 0}
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 0
