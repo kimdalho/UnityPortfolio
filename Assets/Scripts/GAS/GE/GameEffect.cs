@@ -6,7 +6,10 @@ public enum eModifier
 {
     Add = 0,
     Multiply = 1,
-    Equal,
+    Equal = 2,
+    Division = 3,
+    Minus = 4,
+
 }
 
 /// <summary>
@@ -29,8 +32,7 @@ public class GameEffect : MonoBehaviour ,IGameEffect
 
     public virtual void ApplyGameplayEffectToSelf(Character source)
     {
-        GetFinalAttribute(source.attribute);
-        Debug.Log($"{source.attribute.CurHart} {source.attribute.atk} {source.attribute.speed} {source.attribute.attackSpeed}");
+        source.attribute = GetFinalAttribute(source.attribute);
     }
 
     public virtual GameAttribute ApplyGameplayEffectToSelf(GameAttribute attribute)
@@ -51,6 +53,15 @@ public class GameEffect : MonoBehaviour ,IGameEffect
             case eModifier.Equal:
                 attribute = effect;
                 break;
+            case eModifier.Division:
+                attribute /= effect;
+                break;
+            case eModifier.Minus:
+                attribute -= effect;
+                break;
+            default:
+                Debug.LogWarning("사실상 버그임");
+                break;
         }
         return attribute;
     }
@@ -59,6 +70,7 @@ public class GameEffect : MonoBehaviour ,IGameEffect
     {
         modifierOp = eModifier;
     }
+
     public GameEffect(IGameEffectExecutionCalculation execution)
     {
         this.execution = execution;

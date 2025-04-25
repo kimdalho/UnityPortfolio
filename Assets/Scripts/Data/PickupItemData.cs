@@ -3,8 +3,8 @@ using UnityEngine;
 public enum eTagType
 {   
     Stunned, //스턴
-    ninjahead, ///// 피격 시 10% 확률로 1초간 무적
-    alienhead, /// 	피격 시 10% 확률로 1초간 무적
+    ninjahead, ///// 
+    alienhead, ///
     bearhead, /// 적 10명 처치 시 체력 1 회복
     grasshead, // 공격 시 10% 확률로 피해 1 추가
     Roostershead, // 투사체가 적중 시 독 피해 1 추가
@@ -23,6 +23,8 @@ public enum eTagType
     FanShapeFire, // 투사체 발사 (Ninja, Soldier 사용)
     FlameThrower,  // 일정 시간동안 화염 방사 (Burner 사용)
     invincible,
+
+    NinjaBody_State_SpeedUp,// 닌자바디 스테이트
 }
 
 

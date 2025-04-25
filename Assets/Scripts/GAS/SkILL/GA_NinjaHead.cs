@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+
 //피격 시 15% 확률로 1초간 무적
 /// </summary>
 public class GA_NinjaHead : GameAbility
@@ -12,7 +13,8 @@ public class GA_NinjaHead : GameAbility
     //액티브되면 해당 태그가 플레이어에게 1초동안 추가됨
     private void Start()
     {
-		AbilityTag = eTagType.ninjahead;
+        Debug.Log(owner.gameObject.name);
+        AbilityTag = eTagType.ninjahead;
         owner.onHit += StartAbility;
         owner.gameplayTagSystem.AddTag(AbilityTag);
     }
