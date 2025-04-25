@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class Fly : MonoBehaviour
-{
+public class Fly : Character
+{    
+
     private Transform target;       
     private float radius = 2f;      // 중심에서의 거리
     private float speed = 50f;
@@ -40,9 +41,11 @@ public class Fly : MonoBehaviour
         {
             // 몬스터에게 피격 -1
             var target = other.GetComponent<Character>();
-            GameEffectSelf ge = new GameEffectSelf();
-            ge.effect.CurHart = -1;
-            target.OnHit(ge);
+            DamageExecution ge = new DamageExecution();
+            ge.Execute(this, target);
+            
+
+            
 
             Destroy(gameObject);
         }

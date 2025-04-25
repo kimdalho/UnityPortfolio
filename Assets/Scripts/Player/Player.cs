@@ -131,7 +131,7 @@ public partial class Player : Character
 
     void RotateToCameraDirection()
     {   
-        if(scanForTargets.lookatMonster != null)
+        if(scanForTargets.m_TargetGroup.Targets.Count >= 2)
         {
             lookatCam.Priority = 2;
             Vector3 direction = scanForTargets.lookatMonster.position - transform.position;

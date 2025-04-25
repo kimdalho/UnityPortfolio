@@ -22,7 +22,7 @@ public enum eTagType
     Attack,
     FanShapeFire, // 투사체 발사 (Ninja, Soldier 사용)
     FlameThrower,  // 일정 시간동안 화염 방사 (Burner 사용)
-    invincible,
+    NinjaHead_State_Invincible, //
 
     NinjaBody_State_SpeedUp,// 닌자바디 스테이트
 }

@@ -39,7 +39,7 @@ public abstract class Monster : Character
         CurBullet = MaxBullet;
 
         // Hit 상태로 변경될 수 있도록 구독
-        onHit += TakeDamage;
+        OnHit += TakeDamage;
 
         // 상태 초기화
         var _idle = StateFactory.GetState(MonsterState.Idle);
@@ -177,9 +177,10 @@ public abstract class Monster : Character
 
     protected void ApplyGravity()
     {
+        GroundChck();
         if (attribute.CurHart <= 0) return;
 
-        isGrounded = characterController.isGrounded;
+        //isGrounded = characterController.isGrounded;
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
@@ -212,5 +213,17 @@ public abstract class Monster : Character
     {
         roomGrid = grid;
     }
+
+    RaycastHit hit;
+    private void GroundChck()
+    {
+        Debug.DrawRay(transform.position, transform.up * -3, Color.blue, 0.3f);
+        if(Physics.Raycast(transform.position, transform.up * -1,out hit,3, groundLayerMask))
+        {
+            isGrounded = true;
+        }
+           
+    }
+
 
 }

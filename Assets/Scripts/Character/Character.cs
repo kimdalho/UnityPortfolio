@@ -44,10 +44,6 @@ public class Character : AttributeEntity , IcanGetHead
         return controller;
     }
 
-    public void OnHit(IGameEffect effect)
-    {
-        effect.ApplyGameplayEffectToSelf(this);
-    }
 
     public virtual Transform GetHead()
     {

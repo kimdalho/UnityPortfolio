@@ -2962,11 +2962,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251704862427300321, guid: 63998f5f7f6740f45a2652a1be8e3395, type: 3}
       propertyPath: AbilityTag
-      value: 16
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7079138422186737321, guid: 63998f5f7f6740f45a2652a1be8e3395, type: 3}
       propertyPath: m_Name
       value: SkillAttack 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7079138422186737321, guid: 63998f5f7f6740f45a2652a1be8e3395, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
