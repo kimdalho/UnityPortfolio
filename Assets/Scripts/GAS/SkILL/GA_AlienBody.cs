@@ -55,7 +55,6 @@ public class GA_AlienBody : GameAbility
                 yield return new WaitForSeconds(3f);
 
             deltime += Time.deltaTime;
-            Debug.Log($"deltime {deltime}");
             if (deltime > conditionSec)
             {
                 Debug.Log("타임 조건성공");

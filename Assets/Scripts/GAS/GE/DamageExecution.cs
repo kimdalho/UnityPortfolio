@@ -8,10 +8,27 @@ public class DamageExecution : IGameEffectExecutionCalculation
 {
     public void Execute(Character source, AttributeEntity target)
     {        
-        int sourceATK = source.attribute.atk;
+        float sourceATK = source.attribute.atk;
         target.attribute.CurHart -= sourceATK;
-        UnityEngine.Debug.Log($"Damage: {sourceATK} applied. Target HP: {target.attribute.CurHart}");        
+        UnityEngine.Debug.Log($"Damage: {sourceATK} applied. Target HP: {target.attribute.CurHart}");
+
+
+        //맞은 대상이 죽은경우
+        if(target.attribute.CurHart <= 0)
+        {
+            IOnKillEvent killer = source.GetComponent<IOnKillEvent>();
+            if (killer != null)
+            {
+                killer.OnKill();
+            }
+        }
+
 
         target.onHit?.Invoke();
+
+
+
     }
+
+
 }

@@ -93,20 +93,24 @@ public partial class Player : Character
 
     private void Move()
     {
-        float hAxis = inputController.InputDirection.x;
-        float vAxis = inputController.InputDirection.y;
-        Vector3 move = new Vector3(hAxis, 0, vAxis);
+        float hAxis = inputController.InputDirection.y;
+        float vAxis = inputController.InputDirection.x;
+        Vector3 move = new Vector3(vAxis, 0, hAxis);
+        Debug.Log("hAxis " + hAxis + "vAxis " + vAxis);
+
         //moveDirection = attribute.speed * move;
 
-        Vector3 forward = cameraTransform.forward;
-        Vector3 right = cameraTransform.right;
+        Vector3 forward = gameObject.transform.forward;
+        Vector3 right = gameObject.transform.right;
         forward.y = 0;
         right.y = 0;
         forward.Normalize();
         right.Normalize();
 
-        moveDirection = forward * vAxis + right * hAxis;
+        moveDirection = forward * hAxis + right * vAxis;
+        Debug.Log("moveDirection " + moveDirection);
         moveDirection *= attribute.speed;
+
 
         isGrounded = characterController.isGrounded;
 
@@ -150,7 +154,7 @@ public partial class Player : Character
 
     void AutoAttack()
     {
-        Debug.Log(moveDirection);
+        //Debug.Log(moveDirection);
         if (scanForTargets.lookatMonster != null && moveDirection == Vector3.zero && isAttack == false)
         {
             isAttack = true;
@@ -241,6 +245,7 @@ public partial class Player : Character
         right.Normalize();
 
         moveDirection = forward * vAxis + right * hAxis;
+        moveDirection *= attribute.speed;
     }
 
 }

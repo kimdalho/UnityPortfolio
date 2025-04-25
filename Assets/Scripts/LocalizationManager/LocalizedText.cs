@@ -47,7 +47,7 @@ public class LocalizedText : MonoBehaviour
         textComponent.text = localizedText;
     }
 
-    public void UpdateLocalizedText(int value)
+    public void UpdateLocalizedText(float value)
     {
         if (string.IsNullOrEmpty(localizationID))
         {
@@ -63,7 +63,7 @@ public class LocalizedText : MonoBehaviour
         textComponent.text = localizedText;
     }
 
-    public void UpdateLocalizedText(int value1, int value2)
+    public void UpdateLocalizedText(float value1, float value2)
     {
         if (string.IsNullOrEmpty(localizationID))
         {

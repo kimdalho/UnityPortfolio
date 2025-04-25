@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 834927088867336716}
-  - component: {fileID: 2251704862427300321}
+  - component: {fileID: -3130318395277182494}
   m_Layer: 0
-  m_Name: SkillAttack
+  m_Name: GA_Ninjahead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2251704862427300321
+--- !u!114 &-3130318395277182494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  AbilityTag: 
-  AbilityName: Attack
-  Cooldown: 3
+  AbilityTag: 16
+  AbilityName: 
   Duration: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 1024
