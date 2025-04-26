@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public partial class Player : Character
+public interface ICanGameOver
+{
+    public void OnGameOver();
+    
+}
+
+
+public partial class Player : Character , ICanGameOver
 {
     #region 이동 컨트롤러
     [SerializeField]
@@ -243,6 +250,11 @@ public partial class Player : Character
 
         moveDirection = forward * vAxis + right * hAxis;
         moveDirection *= attribute.speed;
+    }
+
+    public void OnGameOver()
+    {
+        GameManager.instance.GameOver();
     }
 
 }
