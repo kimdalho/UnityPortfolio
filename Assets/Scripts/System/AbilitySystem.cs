@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Playables;
 using UnityEngine;
 
 public class AbilitySystem : MonoBehaviour
@@ -46,5 +47,10 @@ public class AbilitySystem : MonoBehaviour
         }        
     }
 
-    
+    public void AttackChange(AttackAbility attackAbility)
+    {
+        abilities[eTagType.Attack].EndAbility();
+        Destroy(abilities[eTagType.Attack].gameObject);
+        abilities[eTagType.Attack] = attackAbility;
+    }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5421088086271864787
+--- !u!1 &9102344022872372180
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1015730315210352836}
-  - component: {fileID: 436414465282009857}
+  - component: {fileID: 6011174126566997613}
+  - component: {fileID: 8005795573586393356}
   m_Layer: 0
-  m_Name: FanShapeFireSkill
+  m_Name: Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1015730315210352836
+--- !u!4 &6011174126566997613
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5421088086271864787}
+  m_GameObject: {fileID: 9102344022872372180}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000000029802322}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &436414465282009857
+--- !u!114 &8005795573586393356
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5421088086271864787}
+  m_GameObject: {fileID: 9102344022872372180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9457919cac86bf041a426baafc0b3c2c, type: 3}
+  m_Script: {fileID: 11500000, guid: bb1f6b4ce50d01646980ae1b1121b9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  AbilityTag: 18
-  AbilityName: 
-  Duration: 0
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 128
-  fireCount: 1
-  fireAngleRange: 20
-  projectileType: 2
-  delayAtkTime: 0.3
+  projectilePrefabs:
+  - {fileID: 8330350943485095958, guid: 6dcbaadfc2e19724292dcc7c68107d9a, type: 3}
+  - {fileID: 429075340263493928, guid: 91d744c21a07d864ebe624dabfdf4dce, type: 3}
+  - {fileID: 4338814232113304611, guid: 3880592181c29bb4fb4ea7ece6727d43, type: 3}

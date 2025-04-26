@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.InputSystem.XInput;
-using static UnityEngine.UI.GridLayoutGroup;
+using UnityEngine.Android;
 
 public class AttackAbility : GameAbility
 {
+    public eWeaponType eWeaponType;
+
+    protected eTagType stateTagType = eTagType.Attacking;
+    
     protected override IEnumerator ExecuteAbility()
     {         
         Character character = owner.GetComponent<Character>();
         Animator animator = character.GetAnimator();
         character.GetAnimator().SetTrigger("Trg_Attack");
-        owner.gameplayTagSystem.AddTag(eTagType.Attack);
+        owner.gameplayTagSystem.AddTag(stateTagType);
 
 
         AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
@@ -60,8 +62,8 @@ public class AttackAbility : GameAbility
     
     public override void EndAbility()
     {       
-        if(owner.gameplayTagSystem.HasTag(eTagType.Attack))       
-            owner.gameplayTagSystem.RemoveTag(eTagType.Attack);
+        if(owner.gameplayTagSystem.HasTag(stateTagType))       
+            owner.gameplayTagSystem.RemoveTag(stateTagType);
     }
 
 

@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
         #endregion
         yield return new WaitForEndOfFrame();
 
+        if(SoundManager.instance != null)
         SoundManager.instance.PlayBGM(eBGMType.GameSoundTrack);
     }
 

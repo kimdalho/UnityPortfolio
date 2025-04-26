@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public enum eWeaponType
 {
-    None = 0, 
+    Punch = 0, 
     Rifl = 1,
     Bazooka = 2,
     Handgun = 3,
