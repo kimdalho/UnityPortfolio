@@ -20,16 +20,23 @@ public class DamageExecution : IGameEffectExecutionCalculation
             }
         }
         
-
-
         float sourceATK = source.attribute.atk;
         target.attribute.CurHart -= sourceATK;
+        target.attribute.CurHart = Mathf.Clamp(target.attribute.CurHart, 0, target.attribute.MaxHart);
+
         UnityEngine.Debug.Log($"Damage: {sourceATK} applied. Target HP: {target.attribute.CurHart}");
 
         
         //맞은 대상이 죽은경우
         if (target.attribute.CurHart <= 0)
         {
+            ICanGameOver player = target.GetComponent<ICanGameOver>();
+            if (player != null)
+            {
+                player.OnGameOver();
+            }
+
+
             IOnKillEvent killer = source.GetComponent<IOnKillEvent>();
             if (killer != null)
             {
