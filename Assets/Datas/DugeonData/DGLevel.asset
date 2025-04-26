@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomConfigs:
   - dungeonLevel: 1
-    minMonsters: 1
-    maxMonsters: 1
+    minMonsters: 2
+    maxMonsters: 3
     monsterLevel1Chance: 100
     monsterLevel2Chance: 0
     monsterLevel3Chance: 0
@@ -25,8 +25,8 @@ MonoBehaviour:
     itemTier2Chance: 0
     itemTier3Chance: 0
   - dungeonLevel: 2
-    minMonsters: 1
-    maxMonsters: 2
+    minMonsters: 2
+    maxMonsters: 3
     monsterLevel1Chance: 80
     monsterLevel2Chance: 20
     monsterLevel3Chance: 0
