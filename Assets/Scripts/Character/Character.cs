@@ -1,7 +1,14 @@
 using System;
 using UnityEngine;
+/// <summary>
+/// 나중에 만들어야함 몬스터 플레이어 모두 머리 룩엣 좌표 필요
+/// </summary>
+public interface IcanGetHead
+{
+    public Transform GetHead();
+}
 
-public class Character : AttributeEntity
+public class Character : AttributeEntity , IcanGetHead
 {
 
     //저항력
@@ -38,9 +45,10 @@ public class Character : AttributeEntity
         return controller;
     }
 
-    public void OnHit(IGameEffect effect)
+
+    public virtual Transform GetHead()
     {
-        effect.ApplyGameplayEffectToSelf(this);
+        return gameObject.transform;
     }
 
 }

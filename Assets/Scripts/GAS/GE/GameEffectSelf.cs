@@ -28,22 +28,4 @@ public class GameEffectSelf : IGameEffect
 
         Debug.Log($"{source.attribute.CurHart} {source.attribute.atk} {source.attribute.speed} {source.attribute.attackSpeed}");
     }
-
-
-    public GameEffectSelf(eModifier eModifier = eModifier.Add)
-    {
-        modifierOp = eModifier;
-        effect = new GameAttribute();
-
-    }
-
-    public GameEffectSelf(IGameEffectExecutionCalculation execution)
-    {
-        this.execution = execution;
-    }
-
-    public void Apply(Character source, AttributeEntity target)
-    {
-        execution.Execute(source, target);
-    }
 }

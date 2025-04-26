@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -24,10 +25,6 @@ public class GameManager : MonoBehaviour
 
     private void Setup()
     {
-        #region 마우스 셋업
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        #endregion
 
         if (UserData.Instance == null)
         {
@@ -38,15 +35,24 @@ public class GameManager : MonoBehaviour
 
         }
 
+        StartCoroutine(CoGameStartSetup());
+    }
+
+    private IEnumerator CoGameStartSetup()
+    {
         var loadplayerdata = UserData.Instance.LoadData();
         #region 플레이어 셋업
         player.attribute = loadplayerdata.playerAttribute;
         #endregion
 
         #region 던전 셋업
-        dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);      
+        dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
         #endregion
+        yield return new WaitForEndOfFrame();
+
+        SoundManager.instance.PlayBGM(eBGMType.GameSoundTrack);
     }
+
 
 
 
@@ -77,6 +83,11 @@ public class GameManager : MonoBehaviour
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
 
         player.transform.position = Vector3.zero;
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("TODO: GameOver");
     }
 
 }

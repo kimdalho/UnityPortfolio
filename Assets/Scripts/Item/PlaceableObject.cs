@@ -10,12 +10,12 @@ public class PlaceableObject : AttributeEntity
 
     private void Awake()
     {
-        onHit += TakeDamage;
+        OnHit += TakeDamage;
     }
 
     private void OnDestroy()
     {
-        onHit -= TakeDamage;
+        OnHit -= TakeDamage;
     }
 
     void Start()

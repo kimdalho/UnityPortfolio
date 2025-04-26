@@ -23,13 +23,36 @@ public class Panel_Setting : MonoBehaviour
     [SerializeField]
     private Button btn_Ok;
 
+    [SerializeField]
+    private float effectVolume;
+
     private void Awake()
     {
         btn_Ko.onClick.AddListener(OnClickKoButton);
         btn_En.onClick.AddListener(OnClickEnButton);
         btn_Jp.onClick.AddListener(OnClickJpButton);
         btn_Ok.onClick.AddListener(OnClickOkButton);
+
+        sliderBGM.value =  PlayerPrefs.GetFloat("Prf_BGM", 1f);
+        sliderSoundEffect.value = PlayerPrefs.GetFloat("Prf_effect",1f);
+
+
+        sliderBGM.onValueChanged.AddListener(delegate { OnChangeBGMValue(); });
+        sliderSoundEffect.onValueChanged.AddListener(delegate { OnChangeEffectValue(); });
     }
+
+   
+
+    void OnChangeBGMValue()
+    {
+        SoundManager.instance.audioSource.volume = sliderBGM.value;
+    }
+
+    void OnChangeEffectValue()
+    {
+        SoundManager.instance.effectSoundVol = sliderSoundEffect.value;
+    }
+
 
 
     private void OnEnable()
@@ -78,6 +101,8 @@ public class Panel_Setting : MonoBehaviour
 
     private void OnClickOkButton()
     {
+        PlayerPrefs.SetFloat("Prf_BGM", sliderBGM.value);
+        PlayerPrefs.SetFloat("Prf_effect", sliderSoundEffect.value);
         gameObject.SetActive(false);
     }
 

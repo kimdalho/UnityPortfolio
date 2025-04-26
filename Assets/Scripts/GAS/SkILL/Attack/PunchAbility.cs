@@ -1,5 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
+using UnityEngine.InputSystem.XInput;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class PunchAbility : AttackAbility
 {
@@ -19,30 +22,33 @@ public class PunchAbility : AttackAbility
         }
         CreateDetectObject();
        
-        float delay = Duration / Mathf.Max(character.attribute.attackSpeed, 0.01f); // 0À¸·Î ³ª´©´Â °Í ¹æÁö
+        float delay = Duration / Mathf.Max(character.attribute.attackSpeed, 0.01f); // 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Debug.Log($"Duration {Duration} , {delay}");
-        yield return new WaitForSeconds(delay);  // Áö¼Ó È¿°ú Ã³¸®
+        yield return new WaitForSeconds(delay);  // ï¿½ï¿½ï¿½ï¿½ È¿ï¿½ï¿½ Ã³ï¿½ï¿½
         EndAbility();
     }
 
 
     private void CreateDetectObject()
     {
-        Vector3 spherePosition = owner.transform.position + owner.transform.forward * 1f; // Á¤¸é¿¡¼­ +3 ÀÌµ¿
+        Vector3 spherePosition = owner.transform.position + owner.transform.forward * 1f; // ï¿½ï¿½ï¿½é¿¡ï¿½ï¿½ +3 ï¿½Ìµï¿½
         Collider[] results = SphereDetector.DetectObjectsInSphere(spherePosition, 1, targetMask);
         foreach (var col in results)
         {
             AttributeEntity ae = col.GetComponent<AttributeEntity>();
             if (ae != null) 
-            {                   
-                var effect = new GameEffect(new DamageExecution());
-                effect.Apply(owner, ae);
-                (ae as Character)?.fxSystem?.ExecuteFX(AbilityTag);
+            {
+                var effect = new DamageExecution();                
+                effect.Execute(owner, ae);
 
-                // Ã³Ä¡ ÀÌº¥Æ®
-                if (ae.attribute.CurHart <= 0)
+                var character = ae as Character;
+                if (character != null && character.fxSystem != null)
                 {
-                    owner.onKill?.Invoke();
+                    //character.fxSystem?.ExecuteFX(AbilityTag);
+                }
+                else
+                {
+                    Debug.LogWarning("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ FXï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 }
             }
 

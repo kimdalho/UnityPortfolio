@@ -1,12 +1,25 @@
 
+using System;
 using UnityEngine;
 
-public class AttributeEntity : MonoBehaviour
+public interface IOnKillEvent
+{
+   public void OnKill();
+}
+
+
+public class AttributeEntity : MonoBehaviour , IOnKillEvent
 {
     public delegate void OnHitdelegate();
     
-    public OnHitdelegate onHit;
-    public System.Action onKill;
+    public OnHitdelegate OnHit;
 
     public GameAttribute attribute;
+
+    public Action Onkill;
+
+    public void OnKill()
+    {
+        Onkill?.Invoke();
+    }
 }

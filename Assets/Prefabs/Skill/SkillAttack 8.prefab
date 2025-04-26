@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  AbilityTag: 
+  AbilityTag: 0
   AbilityName: Attack
-  Cooldown: 3
   Duration: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 1024

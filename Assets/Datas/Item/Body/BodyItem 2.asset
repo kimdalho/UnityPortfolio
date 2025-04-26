@@ -26,4 +26,4 @@ MonoBehaviour:
     atk: 0
     attackSpeed: 1
     speed: 1
-  gameAbility: {fileID: 0}
+  gameAbility: {fileID: 7079138422186737321, guid: 51b61ebfe51a8264baca25fd28afcda0, type: 3}

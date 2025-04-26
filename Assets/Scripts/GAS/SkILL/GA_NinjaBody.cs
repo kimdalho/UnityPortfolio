@@ -1,50 +1,62 @@
 using System.Collections;
 using UnityEngine;
 
+
 public class GA_NinjaBody : GameAbility
 {
-    //ninjabody, // 적 처치 시 30초간 공속 30% 증가
-    public float condtionper = 0.3f;
+    public GameEffect GE_NinjaBodyspeedUp;
 
-    private void Awake()
-    {
-        AbilityTag = eTagType.ninjabody;
-        Duration = 5f;
-    }
-
-    private void Start()
-    {
-        owner.onKill += () => { ActivateAbility(owner); };
-    }
+    public eTagType state = eTagType.NinjaBody_State_SpeedUp;
 
     protected override IEnumerator ExecuteAbility()
     {
-        var _chance = Random.value; // 0.0 ~ 1.0
+        StartAbility();
+        yield return null;
+    }
 
-        if (_chance <= condtionper)
-        {
-            Debug.Log("능력 실행");
-            // 공속 증가 FX 실행
-            owner.fxSystem?.ExecuteFX(AbilityTag);
+    private void StartAbility()
+    {
+        owner.gameplayTagSystem.AddTag(AbilityTag);
+        owner.Onkill += Onkill;
+    }
 
-            owner.gameplayTagSystem.AddTag(AbilityTag);
+    private void Onkill()
+    {
+        GE_NinjaBodyspeedUp.modifierOp = eModifier.Multiply;
 
-            // 증가값
-            // int형 이므로 반올림하여 증가
-            var _increaseValue = Mathf.RoundToInt(owner.attribute.attackSpeed * 0.3f);
+        GE_NinjaBodyspeedUp.ApplyGameplayEffectToSelf(owner);
+        StartCoroutine(OnkillProcess());
+    }
 
-            var _ge = new GameEffectSelf();
+    private IEnumerator OnkillProcess()
+    {
+        if (owner.gameplayTagSystem.HasTag(state) == true)
+            yield break;
+        owner.gameplayTagSystem.AddTag(state);
 
-            _ge.effect.attackSpeed = _increaseValue;
-            _ge.ApplyGameplayEffectToSelf(owner);
+        Debug.Log("atk speed" + owner.attribute.attackSpeed);
 
-            // 30초 동안 유지
-            yield return new WaitForSeconds(Duration);
 
-            _ge.effect.attackSpeed = -_increaseValue;
-            _ge.ApplyGameplayEffectToSelf(owner);
-        }
+        yield return new WaitForSeconds(Duration);
+        EndOnkillProcess();
+    }
 
-        EndAbility();
+    private void EndOnkillProcess()
+    {
+        GE_NinjaBodyspeedUp.modifierOp = eModifier.Division;
+        GE_NinjaBodyspeedUp.ApplyGameplayEffectToSelf(owner);
+        owner.gameplayTagSystem.RemoveTag(state);
+    }
+
+
+
+
+    
+    public override void EndAbility()
+    {
+        base.EndAbility();
+        GE_NinjaBodyspeedUp.modifierOp = eModifier.Division;
+
+
     }
 }
