@@ -30,9 +30,9 @@ public class SingleFireAbility : FireAbility
 
             yield return new WaitForSeconds(0.1f);
 
-            if (owner.weapon != null)
+            if (owner.curWeaponTrans != null)
             {
-                _muzzleTrans = owner.weapon.currentWeapon.GetChild(0);
+                _muzzleTrans = owner.curWeaponTrans.GetChild(0);
                 FXFactory.Instance.GetFX("Shot", _muzzleTrans.position, Quaternion.LookRotation(_muzzleTrans.forward));
             }
 

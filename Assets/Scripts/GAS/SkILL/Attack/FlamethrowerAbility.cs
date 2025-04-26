@@ -10,7 +10,7 @@ public class FlamethrowerAbility : AttackAbility
     {
         // 임시 FX 위치
         //var _fxPos = owner.transform.position + Vector3.up * 0.6f + owner.transform.forward * 0.7f;
-        var _fxPos = owner.weapon.currentWeapon.GetChild(0);
+        var _fxPos = owner.curWeaponTrans.GetChild(0);
         // 화염 방사기 FX 생성
         var _particle = FXFactory.Instance.GetFX("FlameThrower", _fxPos);
 

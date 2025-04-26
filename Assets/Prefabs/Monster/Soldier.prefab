@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6940413212348406184}
   - component: {fileID: 764802606740835985}
   - component: {fileID: 7337048175519719326}
-  - component: {fileID: 7757250256762784147}
   m_Layer: 10
   m_Name: Soldier
   m_TagString: Monster
@@ -68,6 +67,7 @@ MonoBehaviour:
   animator: {fileID: 8904112648037604784}
   controller: {fileID: 2758657109547335978}
   fxSystem: {fileID: 7337048175519719326}
+  curWeaponTrans: {fileID: 1555058468039031767}
   chaseRange: 7
   attackRange: 5
   abilitySystem: {fileID: 2043262270310123978}
@@ -126,21 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyTrans: {fileID: 8904112648636308370}
---- !u!114 &7757250256762784147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2566851810599489288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59790aa17df26e44bb60e60b260d7e46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  handL: {fileID: 8904112649579425421}
-  handR: {fileID: 8904112649246332574}
-  currentWeapon: {fileID: 1555058468039031767}
 --- !u!1 &3344271232652987086
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,11 +678,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5565561979192324534, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 3939834277883685412}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8904112649246332574 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5565561977516457146, guid: 446f9ff17434e8749a54822318712f49, type: 3}
-  m_PrefabInstance: {fileID: 3939834277883685412}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8904112649319775132 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5565561977460117944, guid: 446f9ff17434e8749a54822318712f49, type: 3}
@@ -706,10 +686,5 @@ GameObject:
 --- !u!1 &8904112649429209704 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5565561977870252108, guid: 446f9ff17434e8749a54822318712f49, type: 3}
-  m_PrefabInstance: {fileID: 3939834277883685412}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8904112649579425421 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5565561977714263209, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 3939834277883685412}
   m_PrefabAsset: {fileID: 0}
