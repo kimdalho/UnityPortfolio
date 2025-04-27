@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public enum eWeaponType
 {
-    None = 0, 
+    Punch = 0, 
     Rifl = 1,
     Bazooka = 2,
     Handgun = 3,
@@ -28,10 +28,14 @@ public class ResourceManager : MonoBehaviour
 
     //0에서5까지는 머리 아이템
     //6부터 끝까지 바디아이템
+    
     public List<PickupItemData> pickupItemDatas = new List<PickupItemData>();
-
+    public List<PickupWeaponItemData> weaponPickupItemDatas = new List<PickupWeaponItemData>();
+    [Header("모델 오브젝트")]
     public GameObject HeadItemPrefab;
     public GameObject BodyItemPrefab;
+    public List<GameObject> WeaponItemPrefab;
+
     public List<GameObject> monsters;
     public GameObject FlyPrefab;
     
@@ -141,7 +145,6 @@ public class ResourceManager : MonoBehaviour
         if (index > pickupItemDatas.Count - 1)
             return null;    
 
-        System.Random rand = new System.Random();
         var result = pickupItemDatas[index];
 
         var data = itemInfos[result.eEquipmentType];
@@ -155,6 +158,24 @@ public class ResourceManager : MonoBehaviour
         return item;
     }
 
+
+
+    public GameObject CreateweaponItemToIndex(int index, Transform parent)
+    {
+        if (index > pickupItemDatas.Count - 1)
+            return null;
+
+        var result = weaponPickupItemDatas[index];
+        var reuslt1 = WeaponItemPrefab[index];
+        GameObject NewWeapon = Instantiate(reuslt1);
+
+        NewWeapon.transform.SetParent(parent);
+        NewWeapon.transform.localScale = Vector3.one;
+
+        var itemCompo = NewWeapon.GetComponent<EquipmentItem>();
+        itemCompo.Init(result);
+        return NewWeapon;
+    }
 
 
     public GameObject CreateMonster(int dataIndex, Transform parent)

@@ -55,9 +55,10 @@ public class RoomGrid : MonoBehaviour
 
     private void Start()
     {
-        ItemTest();
+        //ItemTest();
+        WeaponTest();
     }
-
+    
     public void ItemTest()
     {
         int index = 0;
@@ -67,6 +68,24 @@ public class RoomGrid : MonoBehaviour
             {
                 var newItem = ResourceManager.Instance.CreateItemToIndex(index, node.transform);
                 if(newItem == null)
+                {
+                    return;
+                }
+                newItem.transform.position = node.GetItemPos();
+                index++;
+            }
+        }
+    }
+
+    public void WeaponTest()
+    {
+        int index = 0;
+        foreach (var rownode in grid)
+        {
+            foreach (var node in rownode.GetGrid())
+            {
+                var newItem = ResourceManager.Instance.CreateweaponItemToIndex(index, node.transform);
+                if (newItem == null)
                 {
                     return;
                 }

@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  AbilityTag: 
+  AbilityTag: 18
   AbilityName: 
   Duration: 0
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   fireCount: 1
   fireAngleRange: 20
-  projectileType: 0
+  projectileType: 2
+  delayAtkTime: 0.3

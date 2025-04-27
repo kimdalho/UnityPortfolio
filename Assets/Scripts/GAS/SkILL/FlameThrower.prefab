@@ -45,10 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  AbilityTag: 
+  AbilityTag: 19
   AbilityName: 
   Duration: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 0
-  particle: {fileID: 0}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550bd8f3bac295341b9fabfaf8d4b2af, type: 3}
+  m_Name: 3.Bazooka
+  m_EditorClassIdentifier: Assembly-CSharp::PickupWeaponItemDataBase
+  eEquipmentType: 3
+  itemData:
+    itemName: Condition_Weapon_Name3
+    description: Condition_Weapon_Desc3
+  tag: 16
+  gameAbility: {fileID: 6940110220222642711, guid: 13b93979d5c461e498dd653d188a5cb6, type: 3}
+  type: 2
+  runtimeAnimatorController: {fileID: 22100000, guid: c3a1d6297cbd2bb40b211b20c855b52c, type: 2}

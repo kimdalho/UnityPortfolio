@@ -20,11 +20,18 @@ public enum eTagType
 
     portalLock,//획득시 이동 불가
     Attack,
+    Attacking, //공격중
     FanShapeFire, // 투사체 발사 (Ninja, Soldier 사용)
     FlameThrower,  // 일정 시간동안 화염 방사 (Burner 사용)
     NinjaHead_State_Invincible, //
 
     NinjaBody_State_SpeedUp,// 닌자바디 스테이트
+
+    Equip_Weapon_State_default, //플레이어가 장착한 아이템 타입 체크
+    Equip_Weapon_State_Rifl, //플레이어가 장착한 아이템 타입 체크
+    Equip_Weapon_State_Bazooka, //플레이어가 장착한 아이템 타입 체크
+    Equip_Weapon_State_Handgun, //플레이어가 장착한 아이템 타입 체크
+
 }
 
 
@@ -33,21 +40,16 @@ public enum eTagType
 /// 머리와 바디 아이템만을 취급한다.
 /// </summary>
 [CreateAssetMenu(fileName = "NewItemData", menuName = "GameData/Item Data")]
-public class PickupItemData : ScriptableObject
+public class PickupItemData : PickupItemDataBase
 {
-    public eEuipmentType eEquipmentType;
-
-    public ItemData itemData;
     //플레이어 인덱스
     public int modelIndex;
+
+    public GameAttribute attribute;
+
     //오브젝트 인덱스
     public int objectIndex;
-    //아이템 등급 높은 템일수록 상위 층에서만 드랍되는게 조건
+    //아이템 등급 높은 템일수록 상위 층에서만 드랍되는게 조건    
     public int Rank;
-
-    public eTagType tag;
-    public GameAttribute attribute;
-    //발동될 스킬
-    public GameObject gameAbility;
-
 }
+

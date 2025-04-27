@@ -34,6 +34,15 @@ public class Character : AttributeEntity , IcanGetHead
 
     public FXSystem fxSystem;
 
+    [SerializeField]
+    protected AbilitySystem abilitySystem;
+
+    private void Awake()
+    {
+        abilitySystem = GetComponentInChildren<AbilitySystem>();
+    }
+
+
     public Animator GetAnimator()
     {
         return animator;
@@ -49,5 +58,7 @@ public class Character : AttributeEntity , IcanGetHead
     {
         return gameObject.transform;
     }
+
+    public AbilitySystem GetAbilitySystem(){ return abilitySystem; }   
 
 }

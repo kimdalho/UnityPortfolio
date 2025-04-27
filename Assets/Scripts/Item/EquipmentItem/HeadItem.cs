@@ -10,9 +10,6 @@ public class HeadItem : EquipmentItem
         base.Init(data);
         models[data.objectIndex].gameObject.SetActive(true);
         index = data.modelIndex;
-        partType = data.eEquipmentType;        
-        skilltag = data.tag;
-        ability = data.gameAbility;
     }
 
     public override void OnPickup(Character source, GameObject picker)

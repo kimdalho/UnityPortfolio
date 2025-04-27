@@ -41,14 +41,12 @@ public abstract class GameAbility : MonoBehaviour
         Debug.Log($"{AbilityName} 발동!");
         IsOnCooldown = true;
 
-        // StartCoroutine으로 호출 시 독립적인 로직으로 실행됨
-        //yield return StartCoroutine(ExecuteAbility());
         yield return ExecuteAbility();  // 능력 실행
 
         IsOnCooldown = false;
     }
 
-    public void ActivateAbility(Character owner)
+    public virtual void ActivateAbility(Character owner)
     {
         this.owner = owner;
         StartCoroutine(CoActivateAbility());

@@ -44,8 +44,6 @@ public partial class Player : Character , ICanGameOver
     public ItemdescriptionView itemdescriptionView;
     #endregion
 
-    [SerializeField]
-    private AbilitySystem abilitySystem;
  
     private void Start()
     {        

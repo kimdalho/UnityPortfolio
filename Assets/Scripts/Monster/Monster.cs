@@ -8,8 +8,6 @@ public abstract class Monster : Character
     public float chaseRange;    // 추격 시작 범위
     public float attackRange;   // 공격 가능 범위
 
-    [SerializeField] protected AbilitySystem abilitySystem;
-
     [SerializeField] private int MaxBullet = -1;
     public int CurBullet { get; private set; }
     public bool IsAtk { get; set; } = false;    // 애니메이션이 진행 중인지 확인
