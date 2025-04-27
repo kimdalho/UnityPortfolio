@@ -1,16 +1,14 @@
 using UnityEngine;
 
-public class AssaultRifle : EquipmentItem
+public class Bazooka : EquipmentItem
 {
-
-    protected eWeaponType eWeaponType;
+    public eWeaponType eWeaponType;
 
     public override void Init(PickupWeaponItemData data)
     {
         base.Init(data);
         eWeaponType = data.type;
     }
-
 
     public override void OnPickup(Character source, GameObject picker)
     {

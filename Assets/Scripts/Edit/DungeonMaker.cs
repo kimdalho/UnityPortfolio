@@ -25,8 +25,8 @@ public class DungeonMaker : MonoBehaviour
 
     public List<GameObject> Build()
     {     
-            //10°³ ¸ðµÎ ºôµå
-            AllBuild();
+        //10°³ ¸ðµÎ ºôµå
+        AllBuild();
         return dungeons;
     }
     public GameObject Build(int index)

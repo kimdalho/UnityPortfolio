@@ -47,10 +47,10 @@ public class AbilitySystem : MonoBehaviour
         }        
     }
 
-    public void AttackChange(AttackAbility attackAbility)
+    public void AttackChange(eTagType newtag, GameAbility attackAbility)
     {
-        abilities[eTagType.Attack].EndAbility();
-        Destroy(abilities[eTagType.Attack].gameObject);
-        abilities[eTagType.Attack] = attackAbility;
+        //abilities[newtag].EndAbility();
+        Destroy(abilities[newtag].gameObject);
+        abilities[newtag] = attackAbility;
     }
 }

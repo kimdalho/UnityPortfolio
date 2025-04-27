@@ -1,17 +1,17 @@
+using NUnit.Framework.Interfaces;
 using System;
 using UnityEngine;
 
 public abstract class EquipmentItem : GameEffect, IPickupable
-{    
+{
     public ItemData itemData;
     //장비 아이템은 어느 파츠인지 타입을 가지고있다.
     public eEuipmentType partType;
     public eTagType skilltag;
     public GameObject ability;
     private Vector3 rotationSpeed = new Vector3(0, 30, 0);
-
-    
-
+    //애니메이션 정보
+    public RuntimeAnimatorController itemAnim;
 
     public (ItemData, GameAttribute) GetItemData() 
     {
@@ -20,8 +20,7 @@ public abstract class EquipmentItem : GameEffect, IPickupable
     
 
     public virtual void OnPickup(Character source, GameObject picker) 
-    {
-        
+    {        
         Player player = source.GetComponent<Player>();
 
         if (ability != null)
@@ -39,9 +38,10 @@ public abstract class EquipmentItem : GameEffect, IPickupable
 
         ApplyGameplayEffectToSelf(source, partType);
         gameObject.SetActive(false);
-
-
     }
+
+
+
 
     private void Update()
     {
@@ -93,12 +93,24 @@ public abstract class EquipmentItem : GameEffect, IPickupable
     }
 
 
-
     public virtual void Init(PickupItemData data) 
     {
+        ability = data.gameAbility;
         itemData.itemName = data.itemData.itemName;
         itemData.description = data.itemData.description;
         effect = data.attribute;
+        partType = data.eEquipmentType;
+        skilltag = data.tag;
+    }
+
+    public virtual void Init(PickupWeaponItemData data)
+    {
+        ability = data.gameAbility;
+        itemData.itemName = data.itemData.itemName;
+        itemData.description = data.itemData.description;
+        itemAnim = data.runtimeAnimatorController;        
+        partType = data.eEquipmentType;
+        skilltag = data.tag;
     }
 
 

@@ -15,7 +15,6 @@ public class BodyItem : EquipmentItem
         index = data.modelIndex;
         partType = data.eEquipmentType;      
         skilltag = data.tag;
-        ability = data.gameAbility;
     }
 
     public override void OnPickup(Character source, GameObject picker)

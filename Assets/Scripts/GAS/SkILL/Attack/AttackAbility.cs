@@ -1,12 +1,21 @@
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Android;
 
+/// <summary>
+/// 1.플레이어 몬스터 모두 Attack어빌리티를 가지고있다
+/// 2.플레이어 몬스터 모두 tagAttack을 가지고있다.
+/// 3.플레이어의 경우 다양한 무기를 장착할수있다.
+/// 4.플레이어가 무기를 교체할경우 기존에 tag된 Ability를 삭제한다.
+/// 5.플레이어는 Equip_state_Tag로 현제 장착된 무기타입을 gameplayTagSystem에 알려준다.
+/// 
+/// </summary>
 public class AttackAbility : GameAbility
 {
     public eWeaponType eWeaponType;
-
+    
+    public eTagType Equip_state_Tag = eTagType.Equip_Weapon_State_default;
+    
+    //공격중일때
     protected eTagType stateTagType = eTagType.Attacking;
     
     protected override IEnumerator ExecuteAbility()
@@ -15,8 +24,6 @@ public class AttackAbility : GameAbility
         Animator animator = character.GetAnimator();
         character.GetAnimator().SetTrigger("Trg_Attack");
         owner.gameplayTagSystem.AddTag(stateTagType);
-
-
         AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
         float animationDuration = animationState.length;
         if(animationDuration > Duration)

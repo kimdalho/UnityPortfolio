@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class GA_Attack_Rifle : AttackAbility
+public class GA_Attack_Bazooka : AttackAbility
 {
     [SerializeField] private int fireCount = 1; // ¹ß»ç È½¼ö
     [SerializeField] private float fireAngleRange = 20f;
@@ -44,5 +44,4 @@ public class GA_Attack_Rifle : AttackAbility
         yield return new WaitForSeconds(_delay);
         EndAbility();
     }
-
 }
