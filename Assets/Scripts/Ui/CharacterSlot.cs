@@ -13,6 +13,7 @@ public class CharacterSlot : MonoBehaviour
     public int index;
     public TextMeshProUGUI tmp_Nickname;
     public Button BtnSelectCharacter;
+    public Image imgbutton;
 
     public void SetNickName(string text)
     {
