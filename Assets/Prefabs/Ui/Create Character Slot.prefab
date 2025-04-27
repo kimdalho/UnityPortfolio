@@ -244,6 +244,7 @@ MonoBehaviour:
   index: 0
   tmp_Nickname: {fileID: 5079969035676640778}
   BtnSelectCharacter: {fileID: 759141499560791430}
+  imgbutton: {fileID: 3685870861080789864}
 --- !u!1 &7373408722850283785
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,8 +280,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 61.3914, y: 0.000047684}
-  m_SizeDelta: {x: 122.7829, y: 126.05}
+  m_AnchoredPosition: {x: 70.29, y: -1}
+  m_SizeDelta: {x: 125, y: 125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6042545064257546115
 CanvasRenderer:

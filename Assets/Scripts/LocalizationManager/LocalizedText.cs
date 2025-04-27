@@ -18,6 +18,11 @@ public class LocalizedText : MonoBehaviour
         LocalizationManager.OnLanguageChanged += UpdateLocalizedText;
     }
 
+    public void UnUpdate()
+    {
+        localizationID = string.Empty;
+    }
+
     private void OnDestroy()
     {
         LocalizationManager.OnLanguageChanged -= UpdateLocalizedText;
