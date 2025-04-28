@@ -29,12 +29,14 @@ public class RoomGrid : MonoBehaviour
         return result[rand2.Next(selectRowGrid.GetGrid().Count)];
     }
     
-    public void CreateMonster(Transform parent, int level)
+    public Monster CreateMonster(Transform parent, int level)
     {
         GridNode node = GetRandomGridNode();
         var newmon =  ResourceManager.Instance.CreateMonster(level, parent);
-        newmon.GetComponent<Monster>().SetRoomGrid(transform);
         newmon.transform.position = node.transform.position;
+        Monster newMonsterCompo = newmon.GetComponent<Monster>();
+        newMonsterCompo.SetRoomGrid(transform);       
+        return newMonsterCompo;
 
     }
 
@@ -45,12 +47,12 @@ public class RoomGrid : MonoBehaviour
     /// <summary>
     /// 아이템 테스트를 위해서 생성 스타트에서 GameScene에서 Start 함수로 사용
     /// </summary>
-    public void CreateItem(Transform parent, int tier) 
+    public GameObject CreateItem(Transform parent, int tier) 
     {
         GridNode node = GetRandomGridNode();
-        var newItem = ResourceManager.Instance.CreateItemToTier(tier, parent);
+        GameObject newItem = ResourceManager.Instance.CreateItemToTier(tier, parent);
         newItem.transform.position = node.GetItemPos();
-
+        return newItem;
     }
 
     private void Start()

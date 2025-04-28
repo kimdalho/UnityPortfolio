@@ -14,28 +14,25 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
+    public Room toNextRoom;
     public string fromNodeGUID;
     public string toNodeGUID;
+    public JumpPoint toNextPoint;
+    public JumpPoint PortalPoint;
+    public PlayerTraversal traversal;
 
-    public Vector3 toNodePos;
-
-    public void Test()
-    {
-        GameObject.Find("Player").transform.position = toNodePos;
-    }
 
     public void OnTriggerEnter(Collider other)
     {
         var tagSystem = GameManager.instance.GetPlayer().gameplayTagSystem;
-        if (tagSystem.HasTag(eTagType.portalLock) == true)
+        if (tagSystem.HasTag(eTagType.Player_State_IgnorePortal) == true)
             return;
 
         if (other.gameObject.tag == "Player" && 
             this.tag == "Door")
         {
-            StartCoroutine(NextRoom());
-            StartCoroutine(SetPortalLock());
-            
+            Player player = other.GetComponent<Player>();
+            traversal.StartPlayerTraversal(player, this);
         }
         else if(other.gameObject.tag == "Player" 
             && this.tag == "Stairs")
@@ -43,23 +40,5 @@ public class Portal : MonoBehaviour
             var GM = GameManager.instance;
             GM.GoToNextFloor();
         }
-
     }
-
-    IEnumerator NextRoom()
-    {
-        yield return null;
-        GameManager.instance.GetPlayer().transform.position = toNodePos;
-    }
-
-
-    IEnumerator SetPortalLock()
-    {        
-        var tagSystem = GameManager.instance.GetPlayer().gameplayTagSystem;
-        tagSystem.AddTag(eTagType.portalLock);       
-        yield return new WaitForSeconds(1f); 
-        tagSystem.RemoveTag(eTagType.portalLock);
-
-    }
-
 }

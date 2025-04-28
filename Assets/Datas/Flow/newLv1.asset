@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e791db119bff5934db2b24760ed285e6, type: 3}
+  m_Name: newLv1
+  m_EditorClassIdentifier: 
+  rooms:
+  - guid: 4afe98cb-66d8-4b50-ab99-e0c367716c55
+    position: {x: -100, y: -100}
+    roomType: 4
+  - guid: 5cdb0b44-62c3-4b3b-9f1d-98b16b311676
+    position: {x: -100, y: 100}
+    roomType: 1
+  - guid: d8f633bc-29ef-4f20-8b09-ea48e8f69afb
+    position: {x: 0, y: 0}
+    roomType: 3
+  - guid: 41e1268d-583a-4c19-96f3-3251d6ac09ae
+    position: {x: -100, y: 0}
+    roomType: 0
+  - guid: 134ae19d-1d88-4060-8589-d570d6e2ef1d
+    position: {x: 0, y: 100}
+    roomType: 0
+  links:
+  - fromNodeGUID: d8f633bc-29ef-4f20-8b09-ea48e8f69afb
+    toNodeGUID: 134ae19d-1d88-4060-8589-d570d6e2ef1d
+    direction: Output Top
+  - fromNodeGUID: 134ae19d-1d88-4060-8589-d570d6e2ef1d
+    toNodeGUID: d8f633bc-29ef-4f20-8b09-ea48e8f69afb
+    direction: Output Bottom
+  - fromNodeGUID: 134ae19d-1d88-4060-8589-d570d6e2ef1d
+    toNodeGUID: 5cdb0b44-62c3-4b3b-9f1d-98b16b311676
+    direction: Output Left
+  - fromNodeGUID: 5cdb0b44-62c3-4b3b-9f1d-98b16b311676
+    toNodeGUID: 134ae19d-1d88-4060-8589-d570d6e2ef1d
+    direction: Output Right
+  - fromNodeGUID: 5cdb0b44-62c3-4b3b-9f1d-98b16b311676
+    toNodeGUID: 41e1268d-583a-4c19-96f3-3251d6ac09ae
+    direction: Output Bottom
+  - fromNodeGUID: 41e1268d-583a-4c19-96f3-3251d6ac09ae
+    toNodeGUID: 5cdb0b44-62c3-4b3b-9f1d-98b16b311676
+    direction: Output Top
+  - fromNodeGUID: 41e1268d-583a-4c19-96f3-3251d6ac09ae
+    toNodeGUID: 4afe98cb-66d8-4b50-ab99-e0c367716c55
+    direction: Output Bottom
+  - fromNodeGUID: 4afe98cb-66d8-4b50-ab99-e0c367716c55
+    toNodeGUID: 41e1268d-583a-4c19-96f3-3251d6ac09ae
+    direction: Output Top
