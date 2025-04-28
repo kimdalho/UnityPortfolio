@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AttributeView : MonoBehaviour
 {
     public List<LocalizedText> localized;
+
+    public List<HeartIcon> hearts;
 
     public Player player;
     public void Start()
@@ -14,12 +17,21 @@ public class AttributeView : MonoBehaviour
 
     public void Update()
     {
+        ShowHart(player.attribute);
         ShowData(player.attribute);
     }
 
     public void ShowHart(GameAttribute model)
     {       
-       // model.CurHart;
+       for (int i = 0; i < hearts.Count; i++) 
+       {
+            hearts[i].ShowMaxHeart(model.MaxHart > i);
+       }
+
+        for (int i = 0; i < model.MaxHart; i++)
+        {
+            hearts[i].ShowCurrentHeart(model.CurHart > i);            
+        }
     }
 
     public void ShowData(GameAttribute model)
