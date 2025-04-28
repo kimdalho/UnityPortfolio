@@ -19,6 +19,7 @@ public partial class Player : Character , ICanGameOver
     public float rotationSpeed = 10f;
     public Transform cameraTransform;
     private Vector3 moveDirection;
+    private readonly float moveThresholdSqr = 0.01f;
     #endregion
 
     #region 룩엣
@@ -144,29 +145,38 @@ public partial class Player : Character , ICanGameOver
         animator.SetBool(moveHash, ismove);
     }
 
+    
+
     void RotateToCameraDirection()
-    {   
-        if(scanForTargets.m_TargetGroup.Targets.Count >= 2)
+    {
+        bool hasMultipleTargets = scanForTargets.m_TargetGroup.Targets.Count >= 2;
+        bool isMoving = moveDirection.sqrMagnitude > moveThresholdSqr; // moveThresholdSqr = 0.01f 정도 미리 정의
+
+        if (hasMultipleTargets)
         {
             lookatCam.Priority = 2;
-            Vector3 direction = scanForTargets.lookatMonster.position - transform.position;
-            if (direction != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            }
+            RotateTowardsHorizontal(scanForTargets.lookatMonster.position - transform.position);
         }
-        else if (moveDirection.sqrMagnitude > 0.1f)
+        else if (isMoving)
         {
             lookatCam.Priority = 0;
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            RotateTowardsHorizontal(moveDirection);
         }
+    }
+
+    void RotateTowardsHorizontal(Vector3 direction)
+    {
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.001f) // 거의 0에 가까우면 무시
+            return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
     void AutoAttack()
     {
-        //Debug.Log(moveDirection);
         if (scanForTargets.lookatMonster != null && moveDirection == Vector3.zero && isAttack == false)
         {
             isAttack = true;

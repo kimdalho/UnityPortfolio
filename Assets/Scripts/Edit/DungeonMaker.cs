@@ -74,6 +74,7 @@ public class DungeonMaker : MonoBehaviour
     {
         //·ë »ý¼º
         DungeonController dc = CreateHolder(model);
+        dic.Clear();
         foreach (var roomData in model.rooms)
         {
             var Obj_Room = Instantiate(roomprefab);

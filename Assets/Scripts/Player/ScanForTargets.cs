@@ -32,20 +32,30 @@ public class ScanForTargets : MonoBehaviour
     {
         int count = Physics.OverlapSphereNonAlloc(transform.position, scanRadius, buffer, targetLayer);
 
+        // 현재 감지된 타겟 새로 수집
         HashSet<IcanGetHead> newTargets = new HashSet<IcanGetHead>();
 
         for (int i = 0; i < count; i++)
         {
             IcanGetHead head = buffer[i].GetComponent<IcanGetHead>();
+            if (head == null) continue;
+
             newTargets.Add(head);
 
             if (!currentTargets.Contains(head))
             {
-                currentTargets.Add(head);                                                           
+                currentTargets.Add(head);
+
+                Transform headTransform = head.GetHead();
+                if (m_TargetGroup.FindMember(headTransform) == -1 && m_TargetGroup.Targets.Count < 3)
+                {
+                    m_TargetGroup.AddMember(headTransform, 1f, 0.5f);
+                    lookatMonster = headTransform;
+                }
             }
         }
 
-        // 리스트에서 사라진 애들 처리
+        // currentTargets에서 사라진 애들 제거
         List<IcanGetHead> toRemove = new List<IcanGetHead>();
 
         foreach (var target in currentTargets)
@@ -53,35 +63,19 @@ public class ScanForTargets : MonoBehaviour
             if (!newTargets.Contains(target))
             {
                 toRemove.Add(target);
-
             }
         }
 
-        for (int i = 0; i < toRemove.Count; i++)
+        foreach (var target in toRemove)
         {
-            Transform target = currentTargets[i].GetHead();
-            if (m_TargetGroup.FindMember(target) > 0)
+            Transform headTransform = target.GetHead();
+            if (m_TargetGroup.FindMember(headTransform) >= 0)
             {
-                m_TargetGroup.RemoveMember(target);
-                target = null;
+                m_TargetGroup.RemoveMember(headTransform);
             }
-        }
 
-        // 제거
-        foreach (var col in toRemove)
-        {
-            currentTargets.Remove(col);
+            currentTargets.Remove(target);
         }
-
-        for(int i = 0; i < currentTargets.Count; i++)
-        {
-            Transform target =  currentTargets[i].GetHead();
-            if (m_TargetGroup.FindMember(target) == -1 && m_TargetGroup.Targets.Count < 3)
-            {
-               lookatMonster = target; 
-                m_TargetGroup.AddMember(target, 1f, 0.5f);
-            }
-        }       
     }
 
     private void OnDrawGizmos()
