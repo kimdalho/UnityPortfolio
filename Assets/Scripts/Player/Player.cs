@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -18,7 +19,6 @@ public partial class Player : Character , ICanGameOver
     public float rotationSpeed = 10f;
     public Transform cameraTransform;
     private Vector3 moveDirection;
-    private Vector3 moveVec;
     #endregion
 
     #region ·è¿§
@@ -64,13 +64,6 @@ public partial class Player : Character , ICanGameOver
 
     private void Update()
     {
-        if(gameplayTagSystem != null)
-        {
-            var tagSystem = gameplayTagSystem;
-            if (tagSystem.HasTag(eTagType.portalLock) == true)
-                return;
-        }
-
         Move();
 
         RotateToCameraDirection();
@@ -105,24 +98,41 @@ public partial class Player : Character , ICanGameOver
         abilitySystem.DeactivateAbility(eTagType.Attack);
     }
 
-    private void Move()
+    public void OnMove()
     {
-        float hAxis = inputController.InputDirection.x;
-        float vAxis = inputController.InputDirection.y;
-        Vector3 move = new Vector3(hAxis, 0, vAxis);
-        SetPlayerMoveDirectionToCameraDirection(vAxis, hAxis);
-
-        isGrounded = characterController.isGrounded;
-
+        GroundCheck();
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
         }
-
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        else
         {
-            calcVelocity.y += Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+            animator.SetBool(fallingHash, true);
+        }
+
+        animator.SetBool(moveHash, true);
+    }
+
+
+    private void Move()
+    {
+        if (gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput))
+            return;
+
+        float hAxis = inputController.InputDirection.x;
+        float vAxis = inputController.InputDirection.y;
+        Vector3 move = new Vector3(hAxis, 0, vAxis);
+        SetPlayerMoveDirectionToCameraDirection(hAxis, vAxis);
+
+        GroundCheck();
+        if (isGrounded && calcVelocity.y < 0)
+        {
+            calcVelocity.y = 0;
+            animator.SetBool(fallingHash, false);
+        }
+        else if(!isGrounded && calcVelocity.y > 0)
+        {
+            animator.SetBool(fallingHash, true);
         }
 
         calcVelocity.y += gravity * Time.deltaTime;
@@ -237,7 +247,7 @@ public partial class Player : Character , ICanGameOver
     /// </summary>
     /// <param name="vAxis"></param>
     /// <param name="hAxis"></param>
-    private void SetPlayerMoveDirectionToCameraDirection(float vAxis, float hAxis)
+    private void SetPlayerMoveDirectionToCameraDirection(float hAxis,float vAxis)
     {
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -253,6 +263,25 @@ public partial class Player : Character , ICanGameOver
     public void OnGameOver()
     {
         GameManager.instance.GameOver();
+    }
+
+    public const float delay = 5.0f;
+
+    public void PortalDelay()
+    {
+        StartCoroutine(CoPortalDelay());
+    }
+
+    private IEnumerator CoPortalDelay()
+    {
+        gameplayTagSystem.AddTag(eTagType.Player_State_IgnorePortal);
+        float deltime = 0f;
+        while(deltime < delay)
+        {
+            deltime += Time.deltaTime;
+            yield return null;
+        }
+        gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnorePortal);
     }
 
 }

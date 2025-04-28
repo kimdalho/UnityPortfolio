@@ -37,6 +37,9 @@ public class Character : AttributeEntity , IcanGetHead
     [SerializeField]
     protected AbilitySystem abilitySystem;
 
+    //그라운드
+    protected RaycastHit groundhit;
+
     private void Awake()
     {
         abilitySystem = GetComponentInChildren<AbilitySystem>();
@@ -59,6 +62,14 @@ public class Character : AttributeEntity , IcanGetHead
         return gameObject.transform;
     }
 
-    public AbilitySystem GetAbilitySystem(){ return abilitySystem; }   
+    
+    protected void GroundCheck()
+    {
+        Debug.DrawRay(transform.position, transform.up * -1 * groundCheckDistance, Color.blue, 0.3f);
+        if (Physics.Raycast(transform.position, transform.up * -1, out groundhit, groundCheckDistance, groundLayerMask))
+        {
+            isGrounded = true;
+        }
 
+    }
 }

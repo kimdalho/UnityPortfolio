@@ -18,7 +18,6 @@ public enum eTagType
     clowntorso, // 	스킬 사용 시 다음 투사체가 관통 효과 추가
     boxbody, // 이동 후 첫 공격에 투사체 2개 추가 발사
 
-    portalLock,//획득시 이동 불가
     Attack,
     Attacking, //공격중
     FanShapeFire, // 투사체 발사 (Ninja, Soldier 사용)
@@ -31,6 +30,9 @@ public enum eTagType
     Equip_Weapon_State_Rifl, //플레이어가 장착한 아이템 타입 체크
     Equip_Weapon_State_Bazooka, //플레이어가 장착한 아이템 타입 체크
     Equip_Weapon_State_Handgun, //플레이어가 장착한 아이템 타입 체크
+
+    Player_State_IgnoreInput, // 브릿지 타고있는중 이때는 입력받지않음
+    Player_State_IgnorePortal, // 브릿지 타고있는중 이때는 입력받지않음
 
 }
 

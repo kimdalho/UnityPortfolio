@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(MonsterFSM))]
@@ -7,6 +8,9 @@ public abstract class Monster : Character
     private float rotSpeed = 10f;
     public float chaseRange;    // 추격 시작 범위
     public float attackRange;   // 공격 가능 범위
+
+    public bool isDead = false;
+    public event Action<Monster> OnDeath;
 
     [SerializeField] private int MaxBullet = -1;
     public int CurBullet { get; private set; }
@@ -109,11 +113,14 @@ public abstract class Monster : Character
         if (IsAnimPlay()) return;
         IsHit = false;
     }
-
+    
     public void DeadAction()
     {
         if (IsAnimPlay(0.5f)) return;
-        Destroy(gameObject);
+        isDead = true;
+        OnDeath?.Invoke(this);
+        gameObject.SetActive(false);
+        //Destroy(gameObject);
     }
     #endregion
 
@@ -141,8 +148,8 @@ public abstract class Monster : Character
         // 맵에 배치 되어 있는 grid를 기준으로 patrol 진행
         var _gridTrans = roomGrid.GetChild(2);
 
-        var _randY = Random.Range(0, _gridTrans.childCount);
-        var _randX = Random.Range(0, _gridTrans.GetChild(_randY).childCount);
+        var _randY = UnityEngine.Random.Range(0, _gridTrans.childCount);
+        var _randX = UnityEngine.Random.Range(0, _gridTrans.GetChild(_randY).childCount);
 
         //patrolTargetPos = roomGrid.GetChild(2).GetChild(_randY).GetChild(_randX).position;
         patrolTargetPos = roomGrid.GetChild(_randY).GetChild(_randX).position;
@@ -175,10 +182,9 @@ public abstract class Monster : Character
 
     protected void ApplyGravity()
     {
-        GroundChck();
+        GroundCheck();
         if (attribute.CurHart <= 0) return;
 
-        //isGrounded = characterController.isGrounded;
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
@@ -210,17 +216,6 @@ public abstract class Monster : Character
     public void SetRoomGrid(Transform grid)
     {
         roomGrid = grid;
-    }
-
-    RaycastHit hit;
-    private void GroundChck()
-    {
-        Debug.DrawRay(transform.position, transform.up * -3, Color.blue, 0.3f);
-        if(Physics.Raycast(transform.position, transform.up * -1,out hit,3, groundLayerMask))
-        {
-            isGrounded = true;
-        }
-           
     }
 
 

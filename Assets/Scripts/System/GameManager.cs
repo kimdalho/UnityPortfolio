@@ -1,5 +1,4 @@
 
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,8 +7,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField]
     private Player player;
-    private GameObject dungeon;
+    [SerializeField]
+    private DungeonController dungeon;
     public DungeonMaker dungeonMaker;
+
+    //플레이어가 있는 현재 룸
+    public Room curRoom;
 
     private void Awake()
     {
@@ -25,7 +28,6 @@ public class GameManager : MonoBehaviour
 
     private void Setup()
     {
-
         if (UserData.Instance == null)
         {
             var obj   = new GameObject("UserData");
@@ -47,11 +49,30 @@ public class GameManager : MonoBehaviour
 
         #region 던전 셋업
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
+        dungeon.Setup();
+        Room startRoom = dungeon.FindRoombyType(eRoomType.Start);        
+        ChangeCurrentRoom(startRoom);
         #endregion
         yield return new WaitForEndOfFrame();
 
         if(SoundManager.instance != null)
         SoundManager.instance.PlayBGM(eBGMType.GameSoundTrack);
+    }
+
+    public void ChangeCurrentRoom(Room newCurrentRoom)
+    {
+        //올드 룸
+        if(curRoom != null)
+        {
+            curRoom.DisableRoom();
+        }
+
+        if (newCurrentRoom != null)
+        {
+            newCurrentRoom.EnableRoom();
+        }
+
+        curRoom = newCurrentRoom;
     }
 
 
@@ -82,6 +103,9 @@ public class GameManager : MonoBehaviour
 
         Destroy(dungeon);
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
+        dungeon.Setup();
+        Room startRoom = dungeon.FindRoombyType(eRoomType.Start);
+        ChangeCurrentRoom(startRoom);
 
         player.transform.position = Vector3.zero;
     }
