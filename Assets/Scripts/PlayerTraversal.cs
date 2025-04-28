@@ -12,6 +12,7 @@ public class PlayerTraversal : MonoBehaviour
     {
         jumpPoints.Last().nextPoint = potal.toNextPoint;
         nextRoom = potal.toNextRoom;
+        player.MoveAnimStop();
         player.gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
         StartCoroutine(TraverseTo(player, jumpPoints[0]));
     }
@@ -23,7 +24,8 @@ public class PlayerTraversal : MonoBehaviour
         float height = 2f; // 포물선 최고 높이
         float duration = 1.5f;
         float time = 0f;
-
+        player.OnJumpStart();
+        yield return new WaitForSeconds(0.4f);
         while (time < duration)
         {
             float t = time / duration;
@@ -35,8 +37,8 @@ public class PlayerTraversal : MonoBehaviour
             float y = Mathf.Lerp(start.y, end.y, t) + height * Mathf.Sin(Mathf.PI * t);
             
             player.transform.position = new Vector3(horizontal.x, y, horizontal.z);
-            //player.Move(pos.x, pos.y, pos.z);
-            player.OnMove();
+            player.OnFalling();
+           
             time += Time.deltaTime;
             yield return null;
         }
@@ -46,6 +48,8 @@ public class PlayerTraversal : MonoBehaviour
         // 착지 후 다음으로 이동
         if (target.nextPoint != null)
         {
+            player.OnEndJump();
+            yield return new WaitForSeconds(0.3f);
             StartCoroutine(TraverseTo(player,target.nextPoint));
         }
         else

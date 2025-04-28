@@ -99,21 +99,20 @@ public partial class Player : Character , ICanGameOver
         abilitySystem.DeactivateAbility(eTagType.Attack);
     }
 
-    public void OnMove()
+    public void OnJumpStart()
     {
-        GroundCheck();
-        if (isGrounded && calcVelocity.y < 0)
-        {
-            calcVelocity.y = 0;
-        }
-        else
-        {
-            animator.SetBool(fallingHash, true);
-        }
-
-        animator.SetBool(moveHash, true);
+        animator.SetTrigger("Trg_JumpStart");
     }
 
+    public void OnFalling()
+    {
+        animator.SetBool(FallingHash, true);
+    }
+
+    public void OnEndJump()
+    {
+        animator.SetBool(FallingHash, false);
+    }
 
     private void Move()
     {
@@ -129,11 +128,11 @@ public partial class Player : Character , ICanGameOver
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
-            animator.SetBool(fallingHash, false);
+            animator.SetBool(FallingHash, false);
         }
         else if(!isGrounded && calcVelocity.y > 0)
         {
-            animator.SetBool(fallingHash, true);
+            animator.SetBool(FallingHash, true);
         }
 
         calcVelocity.y += gravity * Time.deltaTime;
@@ -143,6 +142,11 @@ public partial class Player : Character , ICanGameOver
 
         bool ismove = (move != Vector3.zero);
         animator.SetBool(moveHash, ismove);
+    }
+
+    public void MoveAnimStop()
+    {
+        animator.SetBool(moveHash, false);
     }
 
     
