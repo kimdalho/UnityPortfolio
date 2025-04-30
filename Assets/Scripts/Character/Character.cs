@@ -14,7 +14,7 @@ public class Character : AttributeEntity , IcanGetHead
     //저항력
     public Vector3 calcVelocity;
     protected readonly int moveHash = Animator.StringToHash("Move");
-    protected readonly int fallingHash = Animator.StringToHash("Falling");
+    protected readonly int FallingHash = Animator.StringToHash("Falling");
 
     //플레이어가 획득한 상태효과
     public GameplayTagSystem gameplayTagSystem = new GameplayTagSystem();

@@ -29,7 +29,7 @@ public class ControllerCharacter : Character
         characterController.Move(calcVelocity * Time.deltaTime);
         bool ismove = (move != Vector3.zero);
         animator.SetBool(moveHash, ismove);
-        animator.SetBool(fallingHash, !isGrounded);
+        animator.SetBool(FallingHash, !isGrounded);
 
     }
 

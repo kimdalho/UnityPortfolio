@@ -3633,6 +3633,50 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: DungeonDatas.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 77dbb9d2b59443b49a32fe06dc82a666, type: 2}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 16a512f037f67894abaf13463b003094, type: 2}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8aeed7b99d19634448b1848509e26ce9, type: 2}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a47a93724d370744a9c705be4c53e0a0, type: 2}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 985ac7f3cfe2e6d4393d68476af1c81f, type: 2}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 826df9af606912c418d28d482b061005, type: 2}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[6]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 03a991345ed213146a58cb58732cb055, type: 2}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[7]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c577e6c167dd3c94f8becefd7c530f64, type: 2}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[8]'
+      value: 
+      objectReference: {fileID: 11400000, guid: e43eada5e9b426e45a6cece5f3ea938a, type: 2}
+    - target: {fileID: 48656915701471544, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
+      propertyPath: 'DungeonDatas.Array.data[9]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 242ee80a72afd5544923d05a6616f6e1, type: 2}
     - target: {fileID: 2273127656600762665, guid: c1b3eeb41e369b547830dc5c9cf3c4ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.6695008
