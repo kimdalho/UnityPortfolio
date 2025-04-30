@@ -8,14 +8,16 @@ public abstract class Monster : Character
     private float rotSpeed = 10f;
     public float chaseRange;    // 추격 시작 범위
     public float attackRange;   // 공격 가능 범위
-
     public bool isDead = false;
     public event Action<Monster> OnDeath;
 
-    [SerializeField] private int MaxBullet = -1;
+    [SerializeField] protected int MaxBullet = -1;
     public int CurBullet { get; private set; }
     public bool IsAtk { get; set; } = false;    // 애니메이션이 진행 중인지 확인
     public bool IsAtkCool { get; set; } = false;    // 공격 쿨타임 상태 확인
+
+    public bool IsReloading { get; set; } = false;    // 로딩 상태 확인
+
     public bool IsHit { get; set; } = false;
     public Transform chaseTarget { get; private set; } = null;  // 추적할 대상
     #endregion
@@ -35,6 +37,13 @@ public abstract class Monster : Character
         return (animElapsed += Time.deltaTime) < _animLength;
     }
     #endregion
+
+    public void SetData(MonsterLevelDataSO model)
+    {
+        GameEffectSelf effect = new GameEffectSelf(model.attribute);
+        effect.modifierOp = eModifier.Add;
+        effect.ApplyGameplayEffectToSelf(this);
+    }
 
     protected virtual void Initialized()
     {
@@ -75,7 +84,7 @@ public abstract class Monster : Character
         characterController.Move(moveDir * speed * Time.deltaTime);
     }
 
-    public void PatrolAction()
+    public virtual void PatrolAction()
     {
         var _moveDir = patrolTargetPos - transform.position;
         MoveAction(_moveDir.normalized, attribute.speed);
@@ -88,8 +97,8 @@ public abstract class Monster : Character
         }
     }
 
-    public void ChaseAction()
-    {
+    public virtual void ChaseAction()
+    {       
         if (chaseTarget == null) return;
 
         var _moveDir = chaseTarget.transform.position - transform.position;
@@ -100,12 +109,14 @@ public abstract class Monster : Character
     {
         if (IsAnimPlay()) return;
         IsAtk = false;
+        IsReloading = true;
     }
 
     public virtual void ReLoadAction()
     {
         if (IsAnimPlay()) return;
         CurBullet = MaxBullet;
+        IsReloading = false;
     }
 
     public virtual void HitAction()

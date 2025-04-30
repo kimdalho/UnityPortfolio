@@ -10,10 +10,14 @@ public class DungeonMaker : MonoBehaviour
 
     public Dictionary<string, Room> dic = new Dictionary<string, Room>();
 
+    //몬스터 데이터
+    public MonsterLevelDataSO[] monsterLevel;
+
+    public Dictionary<int, List<MonsterLevelDataSO>> monsterLvDatas;
+
     //던전 데이터
     public DungeonConfigSO dungeonConfig;
     public int currentDungeonLevel = 5;
-
     //홀더
         
     public GameObject dungeonControllerPrfab;
@@ -26,6 +30,7 @@ public class DungeonMaker : MonoBehaviour
     public List<DungeonData> DungeonDatas;
     
 
+   
     public List<GameObject> Build()
     {     
         //10개 모두 빌드
@@ -45,6 +50,19 @@ public class DungeonMaker : MonoBehaviour
     /// <param name="model"></param>
     private DungeonController CreateHolder(DungeonData model)
     {
+        if(monsterLvDatas == null)
+        {
+            monsterLvDatas = new Dictionary<int, List<MonsterLevelDataSO>>();            
+            foreach(var data in monsterLevel)
+            {
+                if (monsterLvDatas.ContainsKey(data.level) == false)
+                    monsterLvDatas.Add(data.level, new List<MonsterLevelDataSO>());
+
+                monsterLvDatas[data.level].Add(data);
+            }
+        }
+
+
         #region Create Holders
         dungeonController  = Instantiate(dungeonControllerPrfab);
         dungeonController.name = "Dungeon " + model.name;
@@ -188,8 +206,13 @@ public class DungeonMaker : MonoBehaviour
                     for(int i = 1; i <= monsterCount; i++)
                     {
                         int rolllevel = RollLevel(config.monsterLevel1Chance, config.monsterLevel2Chance, config.monsterLevel3Chance);
-                        Monster createdMonster = room.grid.CreateMonster(monsterHolder.transform, rolllevel);
-                        Debug.Log($"Spawn Monster Lv{rolllevel}");
+                        int rollData = Random.Range(1, 3);                        
+                        MonsterLevelDataSO  modelData = monsterLvDatas[rolllevel][rollData];
+                        Monster createdMonster = room.grid.CreateMonster(monsterHolder.transform);
+
+                        createdMonster.transform.localScale *= modelData.size;
+                        createdMonster.SetData(modelData);
+
                         room.roomMonsters.Add(createdMonster);
                         dc.monsters.Add(createdMonster);
                         createdMonster.OnDeath += room.OnMonsterDeath;

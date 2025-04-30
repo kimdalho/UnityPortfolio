@@ -10,7 +10,7 @@ public class GA_Attack_Rifle : AttackAbility
 
     private void Awake()
     {
-        Duration = 5;
+        Duration = 4;
     }
 
     protected override IEnumerator ExecuteAbility()

@@ -72,6 +72,10 @@ public class Character : AttributeEntity , IcanGetHead
         {
             isGrounded = true;
         }
+        else
+        {
+            isGrounded = false;
+        }
 
     }
 
