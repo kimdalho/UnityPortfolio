@@ -71,10 +71,10 @@ public class GameEffect : MonoBehaviour ,IGameEffect
         modifierOp = eModifier;
     }
 
-    public GameEffect(IGameEffectExecutionCalculation execution)
-    {
-        this.execution = execution;
-    }
+    //public GameEffect(IGameEffectExecutionCalculation execution)
+    //{
+    //    this.execution = execution;
+    //}
 
     public void Apply(Character source, AttributeEntity target)
     {

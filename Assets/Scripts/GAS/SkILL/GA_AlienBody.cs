@@ -63,7 +63,7 @@ public class GA_AlienBody : GameAbility
                 if (chance < condtionper) //0.3 이면 30퍼센트 성공
                 {
                     deltime = 0;
-                    Fly fly =  ResourceManager.Instance.CreateEntity();
+                    Fly fly =  ResourceManager.Instance.CreateFly();
                     fly.gameObject.transform.SetParent(owner.transform);
                     fly.SetData(this,owner.transform);
 

@@ -8,40 +8,50 @@ public class GA_Attack_Rifle : AttackAbility
     [SerializeField] private ProjectileType projectileType;
     [SerializeField] private float delayAtkTime = 0.3f;
 
-
+    private void Awake()
+    {
+        Duration = 5;
+    }
 
     protected override IEnumerator ExecuteAbility()
     {
+        bool condition = owner.gameplayTagSystem.HasTag(eTagType.Attacking);
+        if (condition)
+            yield break;
+
+        owner.gameplayTagSystem.AddTag(eTagType.Attacking);
         owner.GetAnimator().SetTrigger("Trg_Attack");
 
-        // 발사 횟수가 1인 경우에는 정면으로 발사
-        var _range = fireCount.Equals(1) ? 0f : fireAngleRange;
+        float angleRange = (fireCount == 1) ? 0f : fireAngleRange;
+        Vector3 forward = owner.transform.forward;
+        Vector3 startDir = Quaternion.AngleAxis(-angleRange, Vector3.up) * forward;
+        Vector3 endDir = Quaternion.AngleAxis(angleRange, Vector3.up) * forward;
 
-        var _startDir = Quaternion.AngleAxis(-_range, Vector3.up) * owner.transform.forward;
-        var _endDir = Quaternion.AngleAxis(_range, Vector3.up) * owner.transform.forward;
+        // 손(Arm) 위치 탐색 (자식 → 자식으로 8단계 탐색)
+        Transform armTransform = owner.transform.GetChild(0).GetChild(owner.transform.GetChild(0).childCount - 1);
+        for (int i = 0; i < 8; i++)
+            armTransform = armTransform.GetChild(0);
 
-        // Owner의 Hand Transform 탐색
-        var _armTrans = owner.transform.GetChild(0).GetChild(owner.transform.GetChild(0).childCount - 1);
-        for (int i = 0; i < 8; i++) _armTrans = _armTrans.GetChild(0);
-
-        // Detect 혹은 Projectile이 생성되기까지 Delay되는 시간
+        // 발사 전 딜레이
         yield return new WaitForSeconds(delayAtkTime);
 
+        // 탄환 생성
         for (int i = 0; i < fireCount; i++)
         {
-            var _dir = Vector3.Lerp(_startDir, _endDir, (i + 1) / (float)fireCount);
+            float t = (i + 1) / (float)fireCount;
+            Vector3 direction = Vector3.Lerp(startDir, endDir, t).normalized;
 
-            var _projectile = ProjectileFactory.Instance.GetProjectile(projectileType, _armTrans.position, Quaternion.identity);
-            _projectile.Initialized(owner, _dir.normalized, targetMask, AbilityTag, true);
+            var projectile = ProjectileFactory.Instance.GetProjectile(projectileType, armTransform.position, Quaternion.identity);
+            projectile.Initialized(owner, direction, targetMask, AbilityTag, true);
         }
 
-        // Apply Delay
-        var _animLength = owner.GetAnimator().GetCurrentAnimatorStateInfo(0).length;
-        var _duration = _animLength > Duration ? _animLength : Duration;
+        // 애니메이션 지속 시간 기반 딜레이
+        //float animLength = owner.GetAnimator().GetCurrentAnimatorStateInfo(0).length;
+        //float duration = Mathf.Max(Duration);
+        float delay = Duration / Mathf.Max(owner.attribute.attackSpeed, 0.01f); // 어택 스피드가 0인경우는 없지만 혹시 모르니
 
-        var _delay = _duration / Mathf.Max(owner.attribute.attackSpeed, 0.01f); // 0으로 나누는 것 방지
+        yield return new WaitForSeconds(delay);
 
-        yield return new WaitForSeconds(_delay);
         EndAbility();
     }
 

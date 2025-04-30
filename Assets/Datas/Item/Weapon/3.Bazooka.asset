@@ -16,7 +16,7 @@ MonoBehaviour:
   itemData:
     itemName: Condition_Weapon_Name3
     description: Condition_Weapon_Desc3
-  tag: 16
+  tag: 15
   gameAbility: {fileID: 6940110220222642711, guid: 13b93979d5c461e498dd653d188a5cb6, type: 3}
   type: 2
   runtimeAnimatorController: {fileID: 22100000, guid: c3a1d6297cbd2bb40b211b20c855b52c, type: 2}

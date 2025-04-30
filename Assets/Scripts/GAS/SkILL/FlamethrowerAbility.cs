@@ -27,8 +27,8 @@ public class FlamethrowerAbility : GameAbility
             {
                 if (_hit.TryGetComponent<AttributeEntity>(out var _ae))
                 {
-                    var _effect = new GameEffect(new DamageExecution());
-                    _effect.Apply(owner, _ae);
+                    var _effect = new DamageExecution();
+                    _effect.Execute(owner, _ae);
                     // FX Àû¿ë
                 }
             }

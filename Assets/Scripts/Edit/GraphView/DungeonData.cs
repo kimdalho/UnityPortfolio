@@ -11,7 +11,6 @@ public enum eRoomType
     Empty
 }
 
-
 [CreateAssetMenu(menuName = "Dungeon/Graph Data")]
 public class DungeonData : ScriptableObject
 {

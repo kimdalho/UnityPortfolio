@@ -33,6 +33,7 @@ public enum eTagType
 
     Player_State_IgnoreInput, // 브릿지 타고있는중 이때는 입력받지않음
     Player_State_IgnorePortal, // 브릿지 타고있는중 이때는 입력받지않음
+    Player_State_HasAttackTarget // 공격 대상이 존재한다.
 
 }
 

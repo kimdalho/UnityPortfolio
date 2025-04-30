@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  AbilityTag: 0
+  AbilityTag: 15
   AbilityName: 
   Duration: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 0
   condtionper: 0.15
-  abilityDuration: 0
+  state: 19

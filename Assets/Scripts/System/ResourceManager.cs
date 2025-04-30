@@ -162,7 +162,7 @@ public class ResourceManager : MonoBehaviour
 
     public GameObject CreateweaponItemToIndex(int index, Transform parent)
     {
-        if (index > pickupItemDatas.Count - 1)
+        if (index > weaponPickupItemDatas.Count-1)
             return null;
 
         var result = weaponPickupItemDatas[index];
@@ -191,7 +191,7 @@ public class ResourceManager : MonoBehaviour
         return model;
     }
 
-    public Fly CreateEntity()
+    public Fly CreateFly()
     {
         GameObject Fly = Instantiate(FlyPrefab);
         return Fly.GetComponent<Fly>();
