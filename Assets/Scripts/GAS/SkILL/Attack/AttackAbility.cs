@@ -68,12 +68,14 @@ public class AttackAbility : GameAbility
     }
     
     public override void EndAbility()
-    {       
+    {
+        base.EndAbility();
+        if (owner == null)
+            return;
+        
         if(owner.gameplayTagSystem.HasTag(stateTagType))       
             owner.gameplayTagSystem.RemoveTag(stateTagType);
     }
-
-
 
 }
     

@@ -73,7 +73,7 @@ public partial class Player : Character , ICanGameOver
         //아이템 상태창
         HasPickupablesNearby();
         //
-        AutoAttack();
+        ActivateAbilityAttack();
     }
 
     private void OnDestroy()
@@ -81,10 +81,15 @@ public partial class Player : Character , ICanGameOver
         if (inputController == null) return;
     }
 
-
-    bool isAttack;
-    private void AbilitySkillAttack()
+    private void ActivateAbilityAttack()
     {
+        if (gameplayTagSystem.HasTag(eTagType.Attacking) || gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget) is false)
+        {
+            abilitySystem.DeactivateAbility(eTagType.Attack);
+            return;
+        }
+            
+
         abilitySystem.ActivateAbility(eTagType.Attack, this);
     }
 
@@ -181,22 +186,9 @@ public partial class Player : Character , ICanGameOver
 
     void AutoAttack()
     {
-        if (scanForTargets.lookatMonster != null && moveDirection == Vector3.zero && isAttack == false)
-        {
-            isAttack = true;
-          
-        }
-        else if((scanForTargets.lookatMonster == null || moveDirection != Vector3.zero) && isAttack == true)
-        {
-            isAttack = false;
-            AbilitySkillAttackEnd();
-        }
+        
+    
 
-        if(isAttack == true)
-        {
-            AbilitySkillAttack();
-        }
-       
     }
 
 

@@ -18,13 +18,18 @@ public class ScanForTargets : MonoBehaviour
     private List<IcanGetHead> currentTargets  = new List<IcanGetHead>();
     public Transform lookatMonster;
 
+    private void Start()
+    {
+        player = GameManager.instance.GetPlayer();
+    }
+
     void Update()
     {
         timer += Time.deltaTime;
         if (timer >= scanInterval)
         {
             timer = 0f;
-            Scan();
+            Scan();           
         }
     }
 
@@ -49,6 +54,7 @@ public class ScanForTargets : MonoBehaviour
                 Transform headTransform = head.GetHead();
                 if (m_TargetGroup.FindMember(headTransform) == -1 && m_TargetGroup.Targets.Count < 3)
                 {
+                    player.gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
                     m_TargetGroup.AddMember(headTransform, 1f, 0.5f);
                     lookatMonster = headTransform;
                 }
@@ -72,6 +78,7 @@ public class ScanForTargets : MonoBehaviour
             if (m_TargetGroup.FindMember(headTransform) >= 0)
             {
                 m_TargetGroup.RemoveMember(headTransform);
+                player.gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
             }
 
             currentTargets.Remove(target);

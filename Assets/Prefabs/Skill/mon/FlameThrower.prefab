@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  AbilityTag: 19
+  AbilityTag: 17
   AbilityName: 
   Duration: 0
   targetMask:

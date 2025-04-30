@@ -162,7 +162,7 @@ public class ResourceManager : MonoBehaviour
 
     public GameObject CreateweaponItemToIndex(int index, Transform parent)
     {
-        if (index > pickupItemDatas.Count - 1)
+        if (index > weaponPickupItemDatas.Count-1)
             return null;
 
         var result = weaponPickupItemDatas[index];

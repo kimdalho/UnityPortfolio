@@ -8,6 +8,7 @@ public class AssaultRifle : EquipmentItem
     public override void Init(PickupWeaponItemData data)
     {
         base.Init(data);
+        skilltag = eTagType.Attack;
         eWeaponType = data.type;
     }
 

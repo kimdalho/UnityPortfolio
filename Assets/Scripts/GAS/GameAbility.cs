@@ -56,7 +56,7 @@ public abstract class GameAbility : MonoBehaviour
 
     public virtual void EndAbility()
     {
-        
+        IsOnCooldown = false;
     }
 
 
