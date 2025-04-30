@@ -30,10 +30,10 @@ public class DamageExecution : IGameEffectExecutionCalculation
         //맞은 대상이 죽은경우
         if (target.attribute.CurHart <= 0)
         {
-            ICanGameOver player = target.GetComponent<ICanGameOver>();
+            IOnGameOver player = target.GetComponent<IOnGameOver>();
             if (player != null)
             {
-                player.OnGameOver();
+                GameManager.instance.GameOver();
             }
 
 

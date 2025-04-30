@@ -7,6 +7,9 @@ public class Soldier : Monster
 
     public override void InitReLoad()
     {
+        GameEffectSelf reloadEffect =  new GameEffectSelf();
+        //reloadEffect
+
         attribute.attackSpeed = attribute.attackSpeed % 3 + 1;
         base.InitReLoad();
     }

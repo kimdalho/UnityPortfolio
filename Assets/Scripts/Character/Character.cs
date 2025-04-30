@@ -6,6 +6,7 @@ using UnityEngine;
 public interface IcanGetHead
 {
     public Transform GetHead();
+    public bool GetDead();
 }
 
 public class Character : AttributeEntity , IcanGetHead
@@ -15,6 +16,7 @@ public class Character : AttributeEntity , IcanGetHead
     public Vector3 calcVelocity;
     protected readonly int moveHash = Animator.StringToHash("Move");
     protected readonly int FallingHash = Animator.StringToHash("Falling");
+    protected readonly int DeadHash = Animator.StringToHash("Dead");
 
     //플레이어가 획득한 상태효과
     public GameplayTagSystem gameplayTagSystem = new GameplayTagSystem();
@@ -71,5 +73,10 @@ public class Character : AttributeEntity , IcanGetHead
             isGrounded = true;
         }
 
+    }
+
+    public virtual bool GetDead()
+    {
+        return false;
     }
 }

@@ -6,6 +6,16 @@ public class GameAttribute
     public float CurHart;
     public float atk;
     public float attackSpeed;
+    //{
+    //    get
+    //    {
+    //        return Mathf.Min(attackSpeed, MaxValue);
+    //    }
+    //    private set
+    //    {
+    //        value = Mathf.Max(value, MaxValue);
+    //    }
+    //}
     public float speed;
 
     //모든 스탯의 최대 수치값

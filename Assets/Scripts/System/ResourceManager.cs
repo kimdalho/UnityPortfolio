@@ -191,7 +191,7 @@ public class ResourceManager : MonoBehaviour
         return model;
     }
 
-    public Fly CreateEntity()
+    public Fly CreateFly()
     {
         GameObject Fly = Instantiate(FlyPrefab);
         return Fly.GetComponent<Fly>();

@@ -2,16 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public interface ICanGameOver
+public interface IOnGameOver
 {
     public void OnGameOver();
     
 }
 
 
-public partial class Player : Character , ICanGameOver
+public partial class Player : Character , IOnGameOver ,IOnNextFlow
 {
     #region 이동 컨트롤러
     [SerializeField]
@@ -31,8 +32,6 @@ public partial class Player : Character , ICanGameOver
     #endregion
 
 
-
-
     private HashSet<Collider> detectedItems = new HashSet<Collider>();
 
     #region 아이템 설명창
@@ -45,7 +44,21 @@ public partial class Player : Character , ICanGameOver
     public ItemdescriptionView itemdescriptionView;
     #endregion
 
- 
+    private void Awake()
+    {
+        GameManager.OnGameOver += OnGameOver;
+        GameManager.OnNextFlow += OnNextFlow;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnGameOver -= OnGameOver;
+        GameManager.OnNextFlow -= OnNextFlow;
+    }
+
+
+
+
     private void Start()
     {        
         if (abilitySystem == null)
@@ -76,31 +89,19 @@ public partial class Player : Character , ICanGameOver
         ActivateAbilityAttack();
     }
 
-    private void OnDestroy()
-    {
-        if (inputController == null) return;
-    }
 
     private void ActivateAbilityAttack()
     {
-        if (gameplayTagSystem.HasTag(eTagType.Attacking) || gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget) is false)
-        {
-            abilitySystem.DeactivateAbility(eTagType.Attack);
+        if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget) is false)
+        {            
             return;
-        }
-            
+        }            
 
         abilitySystem.ActivateAbility(eTagType.Attack, this);
     }
 
-    private void AbilitySkillAttackEnd()
+    public void AbilitySkillAttackEnd()
     {
-        if (abilitySystem == null)
-        {
-            Debug.LogError("AbilitySystem이 존재하지 않아 AbilitySkillAttackEnd() 실행 불가!");
-            return;
-        }
-
         abilitySystem.DeactivateAbility(eTagType.Attack);
     }
 
@@ -158,14 +159,17 @@ public partial class Player : Character , ICanGameOver
 
     void RotateToCameraDirection()
     {
-        bool hasMultipleTargets = scanForTargets.m_TargetGroup.Targets.Count >= 2;
         bool isMoving = moveDirection.sqrMagnitude > moveThresholdSqr; // moveThresholdSqr = 0.01f 정도 미리 정의
-
-        if (hasMultipleTargets)
+        if (scanForTargets.lookatMonster != null)
         {
-            lookatCam.Priority = 2;
-            RotateTowardsHorizontal(scanForTargets.lookatMonster.position - transform.position);
-        }
+            bool hasMultipleTargets = scanForTargets.m_TargetGroup.Targets.Count >= 2;
+            if (hasMultipleTargets)
+            {
+                lookatCam.Priority = 2;
+                RotateTowardsHorizontal(scanForTargets.lookatMonster.position - transform.position);
+            }
+            return;
+        }       
         else if (isMoving)
         {
             lookatCam.Priority = 0;
@@ -183,14 +187,6 @@ public partial class Player : Character , ICanGameOver
         Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
-
-    void AutoAttack()
-    {
-        
-    
-
-    }
-
 
     private void OnTriggerExit(Collider other)
     {
@@ -268,7 +264,7 @@ public partial class Player : Character , ICanGameOver
 
     public void OnGameOver()
     {
-        GameManager.instance.GameOver();
+        animator.SetTrigger(DeadHash);
     }
 
     public const float delay = 5.0f;
@@ -290,5 +286,24 @@ public partial class Player : Character , ICanGameOver
         gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnorePortal);
     }
 
+    public void OnNextFlow()
+    {     
+        gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
+        StartCoroutine(CoOnNextFlow());
+    
+    }
+
+    private IEnumerator CoOnNextFlow()
+    {
+        gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);      
+        yield return new WaitForSeconds(0.6f);
+        transform.position = Vector3.zero;
+
+        while (GameManager.Leveling)
+        {
+            yield return null;
+        }
+        gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
+    }
 }
 

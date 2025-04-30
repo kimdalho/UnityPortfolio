@@ -58,8 +58,8 @@ public class Projectile : MonoBehaviour
         {
             if (_hit.TryGetComponent<AttributeEntity>(out var _ae))
             {
-                var _effect = new GameEffect(new DamageExecution());
-                _effect.Apply(owner, _ae);
+                var _effect = new DamageExecution();
+                _effect.Execute(owner, _ae);
                 (_ae as Character)?.fxSystem?.ExecuteFX(abilityTag);
 
                 if (--PenetrateCnt > 0) return;

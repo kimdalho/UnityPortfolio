@@ -218,5 +218,10 @@ public abstract class Monster : Character
         roomGrid = grid;
     }
 
+    public override bool GetDead()
+    {
+        return isDead;
+    }
+
 
 }

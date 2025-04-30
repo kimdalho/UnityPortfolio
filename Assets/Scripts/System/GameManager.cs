@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     private DungeonController dungeon;
     public DungeonMaker dungeonMaker;
 
+    public static event Action OnNextFlow;
+
     //플레이어가 있는 현재 룸
     public Room curRoom;
 
@@ -18,12 +21,13 @@ public class GameManager : MonoBehaviour
     {
         if (instance == null)
         {
-            instance = this;
+            instance = this;           
         }
         else
         {
            Destroy(this.gameObject);
         }
+        Application.targetFrameRate = 90;
     }
 
     private void Setup()
@@ -94,25 +98,32 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(CoNextLevel());       
     }
-
+    [HideInInspector]
+    static public bool Leveling = false;
     private IEnumerator CoNextLevel()
     {
         yield return null;
+        Leveling = true;
+        OnNextFlow?.Invoke();
         var loadplayerdata = UserData.Instance.LoadData();
         loadplayerdata.dungeonLevel++;
-
         Destroy(dungeon);
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
         dungeon.Setup();
         Room startRoom = dungeon.FindRoombyType(eRoomType.Start);
         ChangeCurrentRoom(startRoom);
+        yield return new WaitForSeconds(1f);
+        Leveling = false;
 
-        player.transform.position = Vector3.zero;
     }
+   
+
+    public static event Action OnGameOver;
 
     public void GameOver()
     {
         Debug.Log("TODO: GameOver");
+        OnGameOver?.Invoke();
     }
 
 }

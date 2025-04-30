@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScanForTargets : MonoBehaviour
@@ -16,7 +18,18 @@ public class ScanForTargets : MonoBehaviour
     private float timer;
     private Collider[] buffer = new Collider[20]; // 최대 20개까지 감지
     private List<IcanGetHead> currentTargets  = new List<IcanGetHead>();
-    public Transform lookatMonster;
+    public Transform lookatMonster
+    {
+        get
+        {
+            if(_lookatMonster == null || _lookatMonster.GetDead() )
+                return null;
+            return _lookatMonster.GetHead();
+        }
+    }
+
+    private IcanGetHead _lookatMonster;
+
 
     private void Start()
     {
@@ -42,35 +55,39 @@ public class ScanForTargets : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            IcanGetHead head = buffer[i].GetComponent<IcanGetHead>();
-            if (head == null) continue;
+            IcanGetHead targetHead = buffer[i].GetComponent<IcanGetHead>();
+            if (targetHead == null) continue;
 
-            newTargets.Add(head);
+            if(!player.gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget))
+                player.gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
 
-            if (!currentTargets.Contains(head))
+            newTargets.Add(targetHead);
+
+            if (!currentTargets.Contains(targetHead))
             {
-                currentTargets.Add(head);
+                currentTargets.Add(targetHead);
 
-                Transform headTransform = head.GetHead();
+                Transform headTransform = targetHead.GetHead();
                 if (m_TargetGroup.FindMember(headTransform) == -1 && m_TargetGroup.Targets.Count < 3)
-                {
-                    player.gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
+                {                    
                     m_TargetGroup.AddMember(headTransform, 1f, 0.5f);
-                    lookatMonster = headTransform;
+                    _lookatMonster = targetHead;
                 }
             }
         }
 
-        // currentTargets에서 사라진 애들 제거
+        // currentTargets에서 사라진 애들 + 죽은대상 제거
         List<IcanGetHead> toRemove = new List<IcanGetHead>();
 
         foreach (var target in currentTargets)
         {
-            if (!newTargets.Contains(target))
+            if (!newTargets.Contains(target) || target.GetDead())
             {
                 toRemove.Add(target);
             }
         }
+
+
 
         foreach (var target in toRemove)
         {
@@ -90,6 +107,5 @@ public class ScanForTargets : MonoBehaviour
         Gizmos.color = new Color(0f, 1f, 0f, 0.25f); 
         Gizmos.DrawSphere(transform.position, scanRadius);
     }
-
 }
 
