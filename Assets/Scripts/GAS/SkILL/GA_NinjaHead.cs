@@ -12,7 +12,9 @@ public class GA_NinjaHead : GameAbility
 
     protected override IEnumerator ExecuteAbility()
     {
+
         StartAbility();
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill);
         yield return null;
     }
 
@@ -24,6 +26,7 @@ public class GA_NinjaHead : GameAbility
     private void OnHit()
     {     
         StartCoroutine(OnHitProcess());
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill);
     }
 
     private IEnumerator OnHitProcess()

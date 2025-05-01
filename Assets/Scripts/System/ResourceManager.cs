@@ -178,7 +178,7 @@ public class ResourceManager : MonoBehaviour
     }
 
 
-    public GameObject CreateMonster(int dataIndex, Transform parent)
+    public GameObject CreateMonster(Transform parent)
     {       
         System.Random rnd = new System.Random();
 

@@ -156,12 +156,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TargetGroup: {fileID: 5825741382810516601}
   player: {fileID: 0}
-  scanRadius: 6.6
+  scanRadius: 9.99
   targetLayer:
     serializedVersion: 2
     m_Bits: 1024
-  scanInterval: 0.43
-  lookatMonster: {fileID: 0}
+  scanInterval: 0.59
 --- !u!1 &5427188757696776923
 GameObject:
   m_ObjectHideFlags: 0

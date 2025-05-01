@@ -67,9 +67,10 @@ MonoBehaviour:
   animator: {fileID: 8904112648037604784}
   controller: {fileID: 2758657109547335978}
   fxSystem: {fileID: -8783207560054830842}
+  abilitySystem: {fileID: 758250089743701821}
   chaseRange: 5
   attackRange: 1.5
-  abilitySystem: {fileID: 758250089743701821}
+  isDead: 0
   MaxBullet: -1
   patrolTime: 2
   roomGrid: {fileID: 0}
@@ -213,12 +214,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  AbilityTag: 16
+  AbilityTag: 15
   AbilityName: 
   Duration: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 128
+  eWeaponType: 0
+  Equip_state_Tag: 21
 --- !u!1 &5838591459782860879
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,10 +29,10 @@ public class RoomGrid : MonoBehaviour
         return result[rand2.Next(selectRowGrid.GetGrid().Count)];
     }
     
-    public Monster CreateMonster(Transform parent, int level)
+    public Monster CreateMonster(Transform parent)
     {
         GridNode node = GetRandomGridNode();
-        var newmon =  ResourceManager.Instance.CreateMonster(level, parent);
+        var newmon =  ResourceManager.Instance.CreateMonster(parent);
         newmon.transform.position = node.transform.position;
         Monster newMonsterCompo = newmon.GetComponent<Monster>();
         newMonsterCompo.SetRoomGrid(transform);       

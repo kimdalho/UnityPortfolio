@@ -11,6 +11,11 @@ public class GameEffectSelf : IGameEffect
 
     protected IGameEffectExecutionCalculation execution;
 
+    public GameEffectSelf(GameAttribute attribute)
+    {
+        effect = attribute;
+    }
+
     public virtual void ApplyGameplayEffectToSelf(Character source)
     {
         switch (modifierOp)

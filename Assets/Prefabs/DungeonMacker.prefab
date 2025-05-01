@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98f44f6136495e249abbb31441e01c80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomData: {fileID: 11400000, guid: 03400c27eea4ebc4d876cdef2c42d91e, type: 2}
+  roomData: {fileID: 0}
   roomprefab: {fileID: 8356782459759718623, guid: 208164d420ed3a64ab551f4cc92f5727, type: 3}
   offsetX: 10
   offsetY: 10
@@ -53,13 +53,13 @@ MonoBehaviour:
   dungeonControllerPrfab: {fileID: 5922409987601910099, guid: b81b1e4732e392c499dd26e9a4eff4cd, type: 3}
   dungeonController: {fileID: 0}
   DungeonDatas:
-  - {fileID: 11400000, guid: 7eeeedaa3d9fc494fa88282c359f90c7, type: 2}
-  - {fileID: 11400000, guid: b3fce4d7b219c6d40ba62d8633654b03, type: 2}
-  - {fileID: 11400000, guid: 4181d862b6691744bac840de04b38941, type: 2}
-  - {fileID: 11400000, guid: 12babbabbab7d6e42a59954147b6b6cf, type: 2}
-  - {fileID: 11400000, guid: 2e6ab39a457a4f64484bc7ce3b537d62, type: 2}
-  - {fileID: 11400000, guid: 57d991060ca32f0459d2c456509534bf, type: 2}
-  - {fileID: 11400000, guid: b53cd5df62fe16849b0ab6329ef1199e, type: 2}
-  - {fileID: 11400000, guid: fac2c07c9b4ece04ebab0f9f7db0513c, type: 2}
-  - {fileID: 11400000, guid: cd23c10fbb32329418f1fc060b43f0ea, type: 2}
-  - {fileID: 11400000, guid: fe5f0a199de8c82429e8f6dce91b7fe5, type: 2}
+  - {fileID: 11400000, guid: 77dbb9d2b59443b49a32fe06dc82a666, type: 2}
+  - {fileID: 11400000, guid: 16a512f037f67894abaf13463b003094, type: 2}
+  - {fileID: 11400000, guid: 8aeed7b99d19634448b1848509e26ce9, type: 2}
+  - {fileID: 11400000, guid: a47a93724d370744a9c705be4c53e0a0, type: 2}
+  - {fileID: 11400000, guid: 985ac7f3cfe2e6d4393d68476af1c81f, type: 2}
+  - {fileID: 11400000, guid: 826df9af606912c418d28d482b061005, type: 2}
+  - {fileID: 11400000, guid: 03a991345ed213146a58cb58732cb055, type: 2}
+  - {fileID: 11400000, guid: c577e6c167dd3c94f8becefd7c530f64, type: 2}
+  - {fileID: 11400000, guid: e43eada5e9b426e45a6cece5f3ea938a, type: 2}
+  - {fileID: 11400000, guid: 242ee80a72afd5544923d05a6616f6e1, type: 2}

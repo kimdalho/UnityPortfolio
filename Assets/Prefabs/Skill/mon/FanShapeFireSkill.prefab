@@ -45,13 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
-  AbilityTag: 18
-  AbilityName: 
-  Duration: 0
+  AbilityTag: 15
+  AbilityName: FanShapeFire
+  Duration: 3
   targetMask:
     serializedVersion: 2
     m_Bits: 128
-  fireCount: 1
+  fireCount: 3
   fireAngleRange: 20
-  projectileType: 2
+  projectileType: 1
   delayAtkTime: 0.3
