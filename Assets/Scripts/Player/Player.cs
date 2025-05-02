@@ -267,7 +267,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         animator.SetTrigger(DeadHash);
     }
 
-    public const float delay = 5.0f;
+    public const float portalDelay = 5.0f;
 
     public void PortalDelay()
     {
@@ -278,7 +278,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     {
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnorePortal);
         float deltime = 0f;
-        while(deltime < delay)
+        while(deltime < portalDelay)
         {
             deltime += Time.deltaTime;
             yield return null;
