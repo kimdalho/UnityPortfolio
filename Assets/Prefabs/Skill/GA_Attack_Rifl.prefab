@@ -53,7 +53,7 @@ MonoBehaviour:
     m_Bits: 1024
   eWeaponType: 0
   Equip_state_Tag: 21
-  fireCount: 1
+  fireCount: 3
   fireAngleRange: 20
   projectileType: 0
   delayAtkTime: 0.3

@@ -19,8 +19,7 @@ public class GA_Attack_Rifle : AttackAbility
         if (condition)
             yield break;
 
-        owner.gameplayTagSystem.AddTag(eTagType.Attacking);
-        owner.GetAnimator().SetTrigger("Trg_Attack");
+        owner.gameplayTagSystem.AddTag(eTagType.Attacking);        
 
         float angleRange = (fireCount == 1) ? 0f : fireAngleRange;
         Vector3 forward = owner.transform.forward;
@@ -32,9 +31,6 @@ public class GA_Attack_Rifle : AttackAbility
         for (int i = 0; i < 8; i++)
             armTransform = armTransform.GetChild(0);
 
-        // 발사 전 딜레이
-        yield return new WaitForSeconds(delayAtkTime);
-
         // 탄환 생성
         for (int i = 0; i < fireCount; i++)
         {
@@ -43,6 +39,9 @@ public class GA_Attack_Rifle : AttackAbility
 
             var projectile = ProjectileFactory.Instance.GetProjectile(projectileType, armTransform.position, Quaternion.identity);
             projectile.Initialized(owner, direction, targetMask, AbilityTag, true);
+            // 발사 전 딜레이
+            owner.GetAnimator().SetTrigger("Trg_Attack");
+            yield return new WaitForSeconds(delayAtkTime);
         }
 
         // 애니메이션 지속 시간 기반 딜레이
