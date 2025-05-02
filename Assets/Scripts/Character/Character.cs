@@ -18,6 +18,8 @@ public class Character : AttributeEntity , IcanGetHead
     protected readonly int FallingHash = Animator.StringToHash("Falling");
     protected readonly int DeadHash = Animator.StringToHash("Dead");
 
+    public Transform HeadPos;
+
     //플레이어가 획득한 상태효과
     public GameplayTagSystem gameplayTagSystem = new GameplayTagSystem();
 
@@ -44,7 +46,7 @@ public class Character : AttributeEntity , IcanGetHead
 
     private void Awake()
     {
-        abilitySystem = GetComponentInChildren<AbilitySystem>();
+        abilitySystem = GetComponentInChildren<AbilitySystem>();        
     }
 
 
@@ -60,8 +62,8 @@ public class Character : AttributeEntity , IcanGetHead
 
 
     public virtual Transform GetHead()
-    {
-        return gameObject.transform;
+    {          
+            return HeadPos;
     }
 
     
@@ -80,7 +82,7 @@ public class Character : AttributeEntity , IcanGetHead
     }
 
     public virtual bool GetDead()
-    {
+    {       
         return false;
     }
 }

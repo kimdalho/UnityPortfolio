@@ -56,8 +56,8 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
-    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
+  HeadPos: {fileID: 2244628936161019808}
   characterController: {fileID: 7238699780026430288}
   jumpHeight: 2
   gravity: -9.81
@@ -68,9 +68,10 @@ MonoBehaviour:
   animator: {fileID: 1064726689573047387}
   controller: {fileID: 5989734767020855489}
   fxSystem: {fileID: -770563901117985350}
+  abilitySystem: {fileID: 7643396454371422051}
   chaseRange: 10
   attackRange: 3
-  abilitySystem: {fileID: 7643396454371422051}
+  isDead: 0
   MaxBullet: -1
   patrolTime: 2
   roomGrid: {fileID: 0}
@@ -149,7 +150,7 @@ Transform:
   m_GameObject: {fileID: 1739743593540926330}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.305, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

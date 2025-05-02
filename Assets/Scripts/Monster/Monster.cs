@@ -10,6 +10,7 @@ public abstract class Monster : Character
     public float attackRange;   // 공격 가능 범위
     public bool isDead = false;
     public event Action<Monster> OnDeath;
+    
 
     [SerializeField] protected int MaxBullet = -1;
     public int CurBullet { get; private set; }

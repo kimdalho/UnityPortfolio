@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GA_Attack_Rifle : AttackAbility
 {
-    [SerializeField] private int fireCount = 1; // 발사 횟수
+    [SerializeField] private int fireCount = 3; // 발사 횟수
     [SerializeField] private float fireAngleRange = 20f;
     [SerializeField] private ProjectileType projectileType;
     [SerializeField] private float delayAtkTime = 0.3f;
@@ -20,7 +20,7 @@ public class GA_Attack_Rifle : AttackAbility
             yield break;
 
         owner.gameplayTagSystem.AddTag(eTagType.Attacking);
-        owner.GetAnimator().SetTrigger("Trg_Attack");
+       
 
         float angleRange = (fireCount == 1) ? 0f : fireAngleRange;
         Vector3 forward = owner.transform.forward;
@@ -32,18 +32,34 @@ public class GA_Attack_Rifle : AttackAbility
         for (int i = 0; i < 8; i++)
             armTransform = armTransform.GetChild(0);
 
-        // 발사 전 딜레이
-        yield return new WaitForSeconds(delayAtkTime);
+
+
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+        Vector3 targetPoint;
+
+        if (Physics.Raycast(ray, out var hit))
+            targetPoint = hit.point;
+        else
+            targetPoint = ray.origin + ray.direction * 100f;
+
+        Vector3 direction = (targetPoint - armTransform.position).normalized;
 
         // 탄환 생성
         for (int i = 0; i < fireCount; i++)
         {
+            owner.GetAnimator().SetTrigger("Trg_Attack");
             float t = (i + 1) / (float)fireCount;
-            Vector3 direction = Vector3.Lerp(startDir, endDir, t).normalized;
+            //반동 일단 비활성화
+            //Vector3 direction = Vector3.Lerp(startDir, endDir, t).normalized;
 
             var projectile = ProjectileFactory.Instance.GetProjectile(projectileType, armTransform.position, Quaternion.identity);
             projectile.Initialized(owner, direction, targetMask, AbilityTag, true);
+            // 발사 전 딜레이
+            yield return new WaitForSeconds(delayAtkTime);
         }
+
+   
+
 
         // 애니메이션 지속 시간 기반 딜레이
         //float animLength = owner.GetAnimator().GetCurrentAnimatorStateInfo(0).length;

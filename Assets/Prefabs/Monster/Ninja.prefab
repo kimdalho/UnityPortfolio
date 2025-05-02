@@ -70,7 +70,7 @@ Transform:
   m_GameObject: {fileID: 6716899554153203299}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -133,6 +133,7 @@ MonoBehaviour:
     attackSpeed: 1
     speed: 1
   calcVelocity: {x: 0, y: 0, z: 0}
+  HeadPos: {fileID: 4842731197954921687}
   characterController: {fileID: 4793144639647665465}
   jumpHeight: 2
   gravity: -9.81
@@ -151,7 +152,6 @@ MonoBehaviour:
   patrolTime: 2
   roomGrid: {fileID: 0}
   evadeRatio: 0.3
-  throwCount: 5
   armTrans: {fileID: 5467925110715598809}
 --- !u!114 &7836095756557533361
 MonoBehaviour:

@@ -90,19 +90,20 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     }
 
 
+    private bool GetisMove()
+    {
+        return moveDirection.sqrMagnitude > moveThresholdSqr; // moveThresholdSqr = 0.01f 정도 미리 정의
+    }
+
     private void ActivateAbilityAttack()
     {
-        if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget) is false)
+        bool isMoving = GetisMove(); // moveThresholdSqr = 0.01f 정도 미리 정의
+        if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget) is false || isMoving)
         {            
             return;
         }            
 
         abilitySystem.ActivateAbility(eTagType.Attack, this);
-    }
-
-    public void AbilitySkillAttackEnd()
-    {
-        abilitySystem.DeactivateAbility(eTagType.Attack);
     }
 
     public void OnJumpStart()
@@ -159,22 +160,19 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
 
     void RotateToCameraDirection()
     {
-        bool isMoving = moveDirection.sqrMagnitude > moveThresholdSqr; // moveThresholdSqr = 0.01f 정도 미리 정의
-        if (scanForTargets.lookatMonster != null)
+        bool isMoving = GetisMove();
+
+        if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget) && isMoving is false)
         {
-            bool hasMultipleTargets = scanForTargets.m_TargetGroup.Targets.Count >= 2;
-            if (hasMultipleTargets)
-            {
-                lookatCam.Priority = 2;
-                RotateTowardsHorizontal(scanForTargets.lookatMonster.position - transform.position);
-            }
+            lookatCam.Priority = 2;
+            RotateTowardsHorizontal(scanForTargets.lookatMonster.position - transform.position);
             return;
-        }       
-        else if (isMoving)
-        {
-            lookatCam.Priority = 0;
-            RotateTowardsHorizontal(moveDirection);
         }
+       
+       
+        lookatCam.Priority = 0;
+        RotateTowardsHorizontal(moveDirection);
+
     }
 
     void RotateTowardsHorizontal(Vector3 direction)

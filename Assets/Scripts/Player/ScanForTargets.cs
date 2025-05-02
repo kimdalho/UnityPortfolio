@@ -56,7 +56,7 @@ public class ScanForTargets : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             IcanGetHead targetHead = buffer[i].GetComponent<IcanGetHead>();
-            if (targetHead == null) continue;
+            if (targetHead == null || targetHead.GetDead()) continue;
 
             if(!player.gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget))
                 player.gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
@@ -68,7 +68,8 @@ public class ScanForTargets : MonoBehaviour
                 currentTargets.Add(targetHead);
 
                 Transform headTransform = targetHead.GetHead();
-                if (m_TargetGroup.FindMember(headTransform) == -1 && m_TargetGroup.Targets.Count < 3)
+                                        
+                if (m_TargetGroup.FindMember(headTransform) == -1 && !GetLockOn())
                 {                    
                     m_TargetGroup.AddMember(headTransform, 1f, 0.5f);
                     _lookatMonster = targetHead;
@@ -106,6 +107,11 @@ public class ScanForTargets : MonoBehaviour
     {
         Gizmos.color = new Color(0f, 1f, 0f, 0.25f); 
         Gizmos.DrawSphere(transform.position, scanRadius);
+    }
+
+    public bool GetLockOn()
+    {
+        return m_TargetGroup.Targets.Count > 0;
     }
 }
 

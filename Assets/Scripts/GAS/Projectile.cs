@@ -72,9 +72,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void Move()
     {
-        transform.Translate(moveDirection * baseSpeed * Time.deltaTime, Space.World);
-
-        
+        transform.Translate(moveDirection * baseSpeed * Time.deltaTime, Space.World);        
     }
 
     private void ApplyGravity()
