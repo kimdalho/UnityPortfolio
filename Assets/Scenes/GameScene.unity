@@ -396,7 +396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &144422248
 RectTransform:
   m_ObjectHideFlags: 0
@@ -495,6 +495,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeController: {fileID: 144422251}
+  Tmp_Score: {fileID: 770556555}
+  reStart: {fileID: 26910624}
 --- !u!1001 &150054493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1990,8 +1992,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -341}
-  m_SizeDelta: {x: 432.4812, y: 118.8833}
+  m_AnchoredPosition: {x: 112.176025, y: -318.56482}
+  m_SizeDelta: {x: 656.8333, y: 74.0129}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770556555
 MonoBehaviour:

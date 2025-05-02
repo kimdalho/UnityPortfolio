@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum eBGMType
@@ -19,12 +20,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource audioSource;
 
     public float effectSoundVol;
-
-
-    
-
-        
-
+       
     private void Awake()
     {
         if (instance == null)
@@ -41,6 +37,7 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        
         Setup();
     }
 

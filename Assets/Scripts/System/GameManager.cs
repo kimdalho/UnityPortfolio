@@ -126,6 +126,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         OnGameOver?.Invoke();
+        SoundManager.instance.audioSource.Pause();
     }
 
 }

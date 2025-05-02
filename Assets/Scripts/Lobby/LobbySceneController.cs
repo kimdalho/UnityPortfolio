@@ -25,6 +25,7 @@ public class LobbySceneController : MonoBehaviour
 
     private void Start()
     {
+        SoundManager.instance.PlayBGM(eBGMType.LobbySoundTrack);
         BtnNew.GetComponent<Button>().onClick.AddListener(OnClickCharacterSelect);        
         BtnSetting.GetComponent<Button>().onClick.AddListener(OnClickSettingButton);
         BtnExit.GetComponent<Button>().onClick.AddListener(OnClickExitButton);

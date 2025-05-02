@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,13 @@ public class Panel_GameOver : MonoBehaviour ,IOnGameOver
     {
         gameObject.SetActive(false);
         reStart.gameObject.SetActive(false);
+        reStart.onClick.AddListener(OnClickRestartButton);
         GameManager.OnGameOver += OnGameOver;
+    }
+
+    private void OnClickRestartButton()
+    {
+        SceneContainer.Instance.LoadScene(eSceneType.LobbyScene);
     }
 
     public void OnGameOver()
