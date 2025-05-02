@@ -87,8 +87,6 @@ public class ScanForTargets : MonoBehaviour
             }
         }
 
-
-
         foreach (var target in toRemove)
         {
             Transform headTransform = target.GetHead();
