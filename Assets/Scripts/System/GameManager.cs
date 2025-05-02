@@ -1,6 +1,8 @@
 
+using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -11,11 +13,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private DungeonController dungeon;
     public DungeonMaker dungeonMaker;
-
+    public static event Action OnGameOver;
     public static event Action OnNextFlow;
-
+  
     //플레이어가 있는 현재 룸
     public Room curRoom;
+
+    public Panel_GameOver gameOver;
+
 
     private void Awake()
     {
@@ -38,8 +43,10 @@ public class GameManager : MonoBehaviour
             var userdata =  obj.AddComponent<UserData>();
             userdata.CurIndex = 0;
             userdata.CreateNewCharacter("nameless", userdata.CurIndex);
-
+            
         }
+
+        gameOver.SetData();
 
         StartCoroutine(CoGameStartSetup());
     }
@@ -79,13 +86,9 @@ public class GameManager : MonoBehaviour
         curRoom = newCurrentRoom;
     }
 
-
-
-
     private void Start()
     {
         Setup();
-
     }
 
 
@@ -107,7 +110,7 @@ public class GameManager : MonoBehaviour
         OnNextFlow?.Invoke();
         var loadplayerdata = UserData.Instance.LoadData();
         loadplayerdata.dungeonLevel++;
-        Destroy(dungeon);
+        Destroy(dungeon.gameObject);
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
         dungeon.Setup();
         Room startRoom = dungeon.FindRoombyType(eRoomType.Start);
@@ -118,11 +121,10 @@ public class GameManager : MonoBehaviour
     }
    
 
-    public static event Action OnGameOver;
+
 
     public void GameOver()
     {
-        Debug.Log("TODO: GameOver");
         OnGameOver?.Invoke();
     }
 

@@ -16,13 +16,14 @@ MonoBehaviour:
   itemData:
     itemName: Condition_ItemHead5
     description: Equip_Head_Description5
-  modelIndex: 4
-  objectIndex: 3
-  Rank: 2
   tag: 4
+  gameAbility: {fileID: 0}
+  modelIndex: 4
   attribute:
     MaxHart: 0
     CurHart: 1
-    atk: 2
+    atk: 1
     attackSpeed: 0
-    speed: 1
+    speed: 0.3
+  objectIndex: 3
+  Rank: 2

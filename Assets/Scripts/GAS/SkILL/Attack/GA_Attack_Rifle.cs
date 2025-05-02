@@ -1,7 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class GA_Attack_Rifle : AttackAbility
+public interface IProjectileCountModifiable
+{
+    public void SetFireMultypleCount(eModifier type, int count);
+}
+
+public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
 {
     //포워드 방향 카운트
     [SerializeField] private int fireCount = 1; // 발사 횟수
@@ -69,8 +74,13 @@ public class GA_Attack_Rifle : AttackAbility
         }
     }
 
-
-
-
-
+    public void SetFireMultypleCount(eModifier type, int count)
+    {
+        switch(type)
+        {
+            case eModifier.Add:
+                fireMultypleCount += count;
+                break;
+        }
+    }
 }

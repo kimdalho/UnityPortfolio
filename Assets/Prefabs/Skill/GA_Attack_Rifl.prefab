@@ -54,6 +54,7 @@ MonoBehaviour:
   eWeaponType: 0
   Equip_state_Tag: 21
   fireCount: 3
-  fireAngleRange: 20
+  fireMultypleAngleRange: 20
+  fireMultypleCount: 1
   projectileType: 0
   delayAtkTime: 0.3

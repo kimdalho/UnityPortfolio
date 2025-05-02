@@ -16,13 +16,14 @@ MonoBehaviour:
   itemData:
     itemName: Condition_ItemHead3
     description: Equip_Head_Description3
+  tag: 2
+  gameAbility: {fileID: 7079138422186737321, guid: 56bafbb384dd0c1429f8fdb976678ba0, type: 3}
   modelIndex: 2
+  attribute:
+    MaxHart: 0
+    CurHart: 1
+    atk: 0.3
+    attackSpeed: 1
+    speed: 0
   objectIndex: 1
   Rank: 1
-  tag: 2
-  attribute:
-    MaxHart: 1
-    CurHart: 1
-    atk: 1
-    attackSpeed: 1
-    speed: 1

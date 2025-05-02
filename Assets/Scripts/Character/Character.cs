@@ -16,7 +16,7 @@ public class Character : AttributeEntity , IcanGetHead
     public Vector3 calcVelocity;
     protected readonly int moveHash = Animator.StringToHash("Move");
     protected readonly int FallingHash = Animator.StringToHash("Falling");
-    protected readonly int DeadHash = Animator.StringToHash("Dead");
+    protected readonly int DeadHash = Animator.StringToHash("Die");
 
     //플레이어가 획득한 상태효과
     public GameplayTagSystem gameplayTagSystem = new GameplayTagSystem();
@@ -82,5 +82,10 @@ public class Character : AttributeEntity , IcanGetHead
     public virtual bool GetDead()
     {
         return false;
+    }
+
+    public AbilitySystem GetAbilitySystem()
+    {
+        return abilitySystem;
     }
 }
