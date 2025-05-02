@@ -53,4 +53,11 @@ public class AbilitySystem : MonoBehaviour
         Destroy(abilities[newtag].gameObject);
         abilities[newtag] = attackAbility;
     }
+
+    public GameAbility GetGameAbility(eTagType findtag)
+    {
+        return abilities[findtag];
+    }
+
+
 }

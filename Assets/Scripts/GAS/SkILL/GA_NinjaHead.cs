@@ -14,7 +14,7 @@ public class GA_NinjaHead : GameAbility
     {
 
         StartAbility();
-        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill);
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill,owner.transform);
         yield return null;
     }
 
@@ -26,7 +26,7 @@ public class GA_NinjaHead : GameAbility
     private void OnHit()
     {     
         StartCoroutine(OnHitProcess());
-        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill);
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
     }
 
     private IEnumerator OnHitProcess()

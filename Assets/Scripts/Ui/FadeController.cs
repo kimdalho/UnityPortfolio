@@ -50,7 +50,7 @@ public class FadeController : MonoBehaviour , IOnNextFlow
         StartCoroutine(CoStartFadeIn());
     }
 
-    private IEnumerator CoStartFadeIn()
+    public IEnumerator CoStartFadeIn()
     {
         float deltime = 0f;
        

@@ -8,6 +8,7 @@ using UnityEngine;
 public interface IOnGameOver
 {
     public void OnGameOver();
+
     
 }
 
@@ -22,6 +23,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     private Vector3 moveDirection;
     private readonly float moveThresholdSqr = 0.01f;
     #endregion
+    private bool isDead;
 
     #region 룩엣
 
@@ -78,6 +80,9 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
 
     private void Update()
     {
+        if (GetDead())
+            return;
+
         Move();
 
         RotateToCameraDirection();
@@ -87,6 +92,8 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         HasPickupablesNearby();
         //
         ActivateAbilityAttack();
+
+        FallDeathCheck();
     }
 
 
@@ -153,6 +160,14 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     public void MoveAnimStop()
     {
         animator.SetBool(moveHash, false);
+    }
+
+    public void FallDeathCheck()
+    {
+        if(transform.position.y < -4f)
+        {
+            GameManager.instance.GameOver();
+        }
     }
 
     
@@ -238,11 +253,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     #endregion
 
 
-    public AbilitySystem GetAbilitySystem()
-    {
-        return abilitySystem;
-    }
-
     /// <summary>
     /// 카메라 방향으로 플레이어 이동 방향 정하기
     /// 이렇게 하면 엘든링이나 몬헌처럼 카메라로 플레이어의 정면을 볼수있다.
@@ -264,10 +274,12 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
 
     public void OnGameOver()
     {
-        animator.SetTrigger(DeadHash);
+        isDead = true;
+        gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
+        animator.Play(DeadHash);
     }
 
-    public const float delay = 5.0f;
+    public const float portalDelay = 5.0f;
 
     public void PortalDelay()
     {
@@ -278,7 +290,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     {
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnorePortal);
         float deltime = 0f;
-        while(deltime < delay)
+        while(deltime < portalDelay)
         {
             deltime += Time.deltaTime;
             yield return null;
@@ -304,6 +316,11 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
             yield return null;
         }
         gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
+    }
+
+    public override bool GetDead()
+    {
+        return isDead;
     }
 }
 

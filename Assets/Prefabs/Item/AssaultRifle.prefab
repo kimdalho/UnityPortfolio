@@ -103,17 +103,17 @@ MonoBehaviour:
   effect:
     MaxHart: 1
     CurHart: 0
-    atk: 2
+    atk: 0
     attackSpeed: 0
-    speed: 3
+    speed: 0
   modifierOp: 0
   itemData:
     itemName: "\uB77C\uC774\uD50C"
     description: 
   partType: 3
+  skilltag: 0
   ability: {fileID: 0}
   itemAnim: {fileID: 0}
-  eWeaponType: 1
 --- !u!135 &6174658098138165160
 SphereCollider:
   m_ObjectHideFlags: 0

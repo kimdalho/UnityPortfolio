@@ -48,6 +48,12 @@ public class ScanForTargets : MonoBehaviour
 
     void Scan()
     {
+        bool IgnoreInput =  player.gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput);
+
+        if (IgnoreInput)
+            return;
+
+
         int count = Physics.OverlapSphereNonAlloc(transform.position, scanRadius, buffer, targetLayer);
 
         // 현재 감지된 타겟 새로 수집
@@ -86,8 +92,6 @@ public class ScanForTargets : MonoBehaviour
                 toRemove.Add(target);
             }
         }
-
-
 
         foreach (var target in toRemove)
         {

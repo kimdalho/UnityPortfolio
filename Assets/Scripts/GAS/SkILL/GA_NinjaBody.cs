@@ -11,7 +11,7 @@ public class GA_NinjaBody : GameAbility
     protected override IEnumerator ExecuteAbility()
     {
         StartAbility();
-        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill);
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
         yield return null;
     }
 
@@ -34,7 +34,7 @@ public class GA_NinjaBody : GameAbility
         if (owner.gameplayTagSystem.HasTag(state) == true)
             yield break;
         owner.gameplayTagSystem.AddTag(state);
-        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill);
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
         Debug.Log("atk speed" + owner.attribute.attackSpeed);
 
 
