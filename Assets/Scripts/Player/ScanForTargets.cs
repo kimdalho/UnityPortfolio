@@ -100,6 +100,7 @@ public class ScanForTargets : MonoBehaviour
             {
                 m_TargetGroup.RemoveMember(headTransform);
                 player.gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
+                _lookatMonster = null;
             }
 
             currentTargets.Remove(target);

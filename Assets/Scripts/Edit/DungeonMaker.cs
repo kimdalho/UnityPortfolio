@@ -209,7 +209,7 @@ public class DungeonMaker : MonoBehaviour
                         int rollData = Random.Range(1, 3);                        
                         MonsterLevelDataSO  modelData = monsterLvDatas[rolllevel][rollData];
                         Monster createdMonster = room.grid.CreateMonster(monsterHolder.transform);
-
+                        createdMonster.name = room.name + room.grid;
                         createdMonster.transform.localScale *= modelData.size;
                         createdMonster.SetData(modelData);
 

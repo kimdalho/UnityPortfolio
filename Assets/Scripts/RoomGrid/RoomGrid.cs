@@ -30,10 +30,10 @@ public class RoomGrid : MonoBehaviour
     }
     
     public Monster CreateMonster(Transform parent)
-    {
+    {        
         GridNode node = GetRandomGridNode();
         var newmon =  ResourceManager.Instance.CreateMonster(parent);
-        newmon.transform.position = node.transform.position;
+        newmon.transform.position = node.GetItemPos();
         Monster newMonsterCompo = newmon.GetComponent<Monster>();
         newMonsterCompo.SetRoomGrid(transform);       
         return newMonsterCompo;
@@ -50,6 +50,7 @@ public class RoomGrid : MonoBehaviour
     public GameObject CreateItem(Transform parent, int tier) 
     {
         GridNode node = GetRandomGridNode();
+        node.exist = true;
         GameObject newItem = ResourceManager.Instance.CreateItemToTier(tier, parent);
         newItem.transform.position = node.GetItemPos();
         return newItem;

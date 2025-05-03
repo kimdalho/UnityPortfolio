@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   attribute:
-    MaxHart: 4
-    CurHart: 4
+    MaxHart: 2
+    CurHart: 2
     atk: 0
-    attackSpeed: 1.2
-    speed: 2
+    attackSpeed: 0
+    speed: 1
   attackRange: 4
   size: 1

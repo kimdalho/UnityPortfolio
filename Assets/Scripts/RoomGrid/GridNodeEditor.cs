@@ -25,8 +25,7 @@ public class GridNodeEditor : Editor
 
         if (GUILayout.Button("몬스터 생성", GUILayout.Height(30)))
         {
-            GridNode node = (GridNode)target;
-            node.CreateEnemy();
+            GridNode node = (GridNode)target;            
         }
 
         if (GUILayout.Button("박스 크기 확장", GUILayout.Height(30)))
