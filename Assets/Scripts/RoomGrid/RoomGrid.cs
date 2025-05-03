@@ -33,10 +33,9 @@ public class RoomGrid : MonoBehaviour
     {        
         GridNode node = GetRandomGridNode();
         GameObject newmon =  ResourceManager.Instance.CreateMonster(parent);
-        newmon.transform.position = node.GetItemPos();
-        Debug.LogWarning("몬스터 생성 좌표" + node.transform.position);
         node.gameObject.name = "XX1";
         Monster newMonsterCompo = newmon.GetComponent<Monster>();
+        newMonsterCompo.startNode = node;
         newMonsterCompo.SetRoomGrid(transform);       
         return newMonsterCompo;
 

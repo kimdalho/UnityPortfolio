@@ -1,5 +1,7 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.Arm;
 
 [RequireComponent(typeof(MonsterFSM))]
 public abstract class Monster : Character
@@ -29,6 +31,7 @@ public abstract class Monster : Character
     public float animElapsed { get; set; }
     public Vector3 patrolTargetPos { get; set; } = default(Vector3);
 
+    public GridNode startNode;
     [SerializeField] private Transform roomGrid;
 
     protected bool IsAnimPlay(float addTime = 0f)
@@ -43,6 +46,7 @@ public abstract class Monster : Character
         GameEffectSelf effect = new GameEffectSelf(model.attribute);
         effect.modifierOp = eModifier.Add;
         effect.ApplyGameplayEffectToSelf(this);
+        transform.position = startNode.GetItemPos();
     }
 
     protected virtual void Initialized()

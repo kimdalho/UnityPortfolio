@@ -177,14 +177,13 @@ public class ResourceManager : MonoBehaviour
         return NewWeapon;
     }
 
+
     public GameObject CreateMonster(Transform parent)
     {       
         System.Random rnd = new System.Random();
 
         var targetMonster = monsters[rnd.Next(monsters.Count)];
         GameObject model = Instantiate(targetMonster);
-        model.transform.SetParent(parent);
-        
         return model;
     }
 
