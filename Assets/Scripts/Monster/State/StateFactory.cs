@@ -9,7 +9,7 @@ public enum MonsterState
     Attack,
     Reload,
     Hit,
-    Dead
+    Dead,
 }
 
 public class StateFactory
@@ -26,7 +26,7 @@ public class StateFactory
         {
             MonsterState.Idle => new IdleState(),
             MonsterState.Patrol => new PatrolState(),
-            MonsterState.Chase => new ChaseState(),
+            MonsterState.Chase => new ChaseState(),            
             MonsterState.Attack => new AttackState(),
             MonsterState.Reload => new ReLoadState(),
             MonsterState.Hit => new HitState(),
@@ -39,4 +39,5 @@ public class StateFactory
         }
         return newState;
     }
+
 }

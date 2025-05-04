@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,11 +8,44 @@ using UnityEngine;
 public class DamageExecution : IGameEffectExecutionCalculation 
 {
     public void Execute(Character source, AttributeEntity target)
-    {        
-        int sourceATK = source.attribute.atk;
-        target.attribute.CurHart -= sourceATK;
-        UnityEngine.Debug.Log($"Damage: {sourceATK} applied. Target HP: {target.attribute.CurHart}");        
+    {
 
-        target.onHit?.Invoke();
+        Character targetCharacter = target as Character;
+        if(targetCharacter != null)
+        {
+            bool onInvincible = targetCharacter.gameplayTagSystem.HasTag(eTagType.NinjaHead_State_Invincible);
+            if(onInvincible)
+            {
+                return;
+            }
+        }
+        
+        float sourceATK = source.attribute.atk;
+        target.attribute.CurHart -= sourceATK;
+        target.attribute.CurHart = Mathf.Clamp(target.attribute.CurHart, 0, target.attribute.MaxHart);
+
+        UnityEngine.Debug.Log($"Damage: {sourceATK} applied. Target HP: {target.attribute.CurHart}");
+
+        
+        //맞은 대상이 죽은경우
+        if (target.attribute.CurHart <= 0)
+        {
+            IOnGameOver player = target.GetComponent<IOnGameOver>();
+            if (player != null)
+            {
+                GameManager.instance.GameOver();
+            }
+
+
+            IOnKillEvent killer = source.GetComponent<IOnKillEvent>();
+            if (killer != null)
+            {
+                killer.OnKill();
+            }
+        }
+
+        target.OnHit?.Invoke();
     }
+
+
 }

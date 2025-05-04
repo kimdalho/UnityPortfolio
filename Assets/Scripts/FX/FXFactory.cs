@@ -13,6 +13,7 @@ public class FXFactory : MonoBehaviour
         fxPrefabs.Add("FanShapeFire", prefabs[1]);
         fxPrefabs.Add("Explosion", prefabs[2]);
         fxPrefabs.Add("FlameThrower", prefabs[3]);
+        fxPrefabs.Add("Effect_NinjaSkill", prefabs[4]);
     }
     #endregion
 
@@ -34,7 +35,7 @@ public class FXFactory : MonoBehaviour
     {
         return Instantiate(GetPrefab(abilityTag), parent, isWorldPos);
     }
-
+    
     public GameObject GetFX(string abilityTag, Vector3 pos, Quaternion rot)
     {
         return Instantiate(GetPrefab(abilityTag), pos, rot);

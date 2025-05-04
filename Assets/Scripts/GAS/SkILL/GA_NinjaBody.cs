@@ -1,13 +1,63 @@
 using System.Collections;
+using UnityEngine;
+
 
 public class GA_NinjaBody : GameAbility
 {
-    //ninjabody, // 적 처치 시 30초간 공속 30% 증가
-    public float condtionper = 30f;
+    public GameEffect GE_NinjaBodyspeedUp;
 
-   
+    public eTagType state = eTagType.NinjaBody_State_SpeedUp;
+
     protected override IEnumerator ExecuteAbility()
     {
-        throw new System.NotImplementedException();
+        StartAbility();
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
+        yield return null;
+    }
+
+    private void StartAbility()
+    {
+        owner.gameplayTagSystem.AddTag(AbilityTag);
+        owner.Onkill += Onkill;
+    }
+
+    private void Onkill()
+    {
+        GE_NinjaBodyspeedUp.modifierOp = eModifier.Multiply;
+
+        GE_NinjaBodyspeedUp.ApplyGameplayEffectToSelf(owner);
+        StartCoroutine(OnkillProcess());
+    }
+
+    private IEnumerator OnkillProcess()
+    {
+        if (owner.gameplayTagSystem.HasTag(state) == true)
+            yield break;
+        owner.gameplayTagSystem.AddTag(state);
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
+        Debug.Log("atk speed" + owner.attribute.attackSpeed);
+
+
+        yield return new WaitForSeconds(Duration);
+        EndOnkillProcess();
+    }
+
+    private void EndOnkillProcess()
+    {
+        GE_NinjaBodyspeedUp.modifierOp = eModifier.Division;
+        GE_NinjaBodyspeedUp.ApplyGameplayEffectToSelf(owner);
+        owner.gameplayTagSystem.RemoveTag(state);
+    }
+
+
+
+
+    
+    public override void EndAbility()
+    {
+        base.EndAbility();
+        GE_NinjaBodyspeedUp.modifierOp = eModifier.Division;
+
+
     }
 }

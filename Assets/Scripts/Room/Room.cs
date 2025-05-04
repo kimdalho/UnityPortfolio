@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 public enum eDirection
 {
     Top,
@@ -15,11 +16,17 @@ public class Room : MonoBehaviour
 
     public Dictionary<eDirection, Portal> keyValuePairs = new Dictionary<eDirection, Portal>();
     public Portal top, bottom, left, right;
-    public Portal Next;
-
-    
+    public Portal Next;    
     public RoomGrid grid;
 
+    public List<PlayerTraversal> traversals;
+
+    public List<Monster> roomMonsters;
+
+    public bool isClear = false;
+
+    //런타임중에 사용되는 포탈들
+    public List<Portal> enablePortal;
        
     public void Init(RoomData model)
     {
@@ -40,7 +47,27 @@ public class Room : MonoBehaviour
         keyValuePairs.Add(eDirection.Left, left);
         keyValuePairs.Add(eDirection.Bottom, bottom);
 
-        SetDatatoType();
+        SetDatatoType();        
+    }
+
+    //몬스터가 죽을때마다 해당 룸에서 클리어인지 체크한다.
+    public void OnMonsterDeath(Monster deadMonster)
+    {
+        if (IsAllDead())
+        {
+            EnableRoom();
+        }
+    }
+
+    private bool IsAllDead()
+    {
+        foreach (var monster in roomMonsters)
+        {
+            if (!monster.isDead)
+                return false;
+        }
+        isClear = true;
+        return true;
     }
 
     public void SetDatatoType()
@@ -59,6 +86,35 @@ public class Room : MonoBehaviour
         }
     }
 
+    public void DisableRoom()
+    {
+        foreach (Portal portal in enablePortal)
+        {
+            portal.gameObject.SetActive(false);
+        }
 
+        foreach (PlayerTraversal traversal in traversals)
+        {
+            traversal.gameObject.SetActive(false);
+        }
+    }
+    public void EnableRoom()
+    {
+        if (!isClear)
+            return;
+
+        foreach (Portal portal in enablePortal)
+        {
+            portal.gameObject.SetActive(true);
+        }        
+
+
+        foreach (PlayerTraversal traversal in traversals)
+        {
+            traversal.gameObject.SetActive(true);
+        }
+    }
+
+    
 
 }

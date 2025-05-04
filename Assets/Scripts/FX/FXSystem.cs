@@ -15,4 +15,13 @@ public class FXSystem : MonoBehaviour
         var _fx = FXFactory.Instance.GetFX(abilityTag, bodyTrans.position, Quaternion.identity);
         // FX 초기화
     }
+
+    public void ExecuteFX(eTagType abilityTag, Transform parent)
+    {
+        // FX Object는 독립적인 오브젝트이다.
+
+        var _fx = FXFactory.Instance.GetFX(abilityTag, bodyTrans.position, Quaternion.identity);
+        _fx.transform.SetParent(parent);
+        // FX 초기화
+    }
 }

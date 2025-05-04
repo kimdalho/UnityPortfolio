@@ -29,12 +29,15 @@ public class RoomGrid : MonoBehaviour
         return result[rand2.Next(selectRowGrid.GetGrid().Count)];
     }
     
-    public void CreateMonster(Transform parent, int level)
-    {
+    public Monster CreateMonster(Transform parent)
+    {        
         GridNode node = GetRandomGridNode();
-        var newmon =  ResourceManager.Instance.CreateMonster(level, parent);
-        newmon.GetComponent<Monster>().SetRoomGrid(transform);
-        newmon.transform.position = node.transform.position;
+        GameObject newmon =  ResourceManager.Instance.CreateMonster(parent);
+        node.gameObject.name = "XX1";
+        Monster newMonsterCompo = newmon.GetComponent<Monster>();
+        newMonsterCompo.startNode = node;
+        newMonsterCompo.SetRoomGrid(transform);       
+        return newMonsterCompo;
 
     }
 
@@ -45,19 +48,21 @@ public class RoomGrid : MonoBehaviour
     /// <summary>
     /// 아이템 테스트를 위해서 생성 스타트에서 GameScene에서 Start 함수로 사용
     /// </summary>
-    public void CreateItem(Transform parent, int tier) 
+    public GameObject CreateItem(Transform parent, int tier) 
     {
         GridNode node = GetRandomGridNode();
-        var newItem = ResourceManager.Instance.CreateItemToTier(tier, parent);
+        node.exist = true;
+        GameObject newItem = ResourceManager.Instance.CreateItemToTier(tier, parent);
         newItem.transform.position = node.GetItemPos();
-
+        return newItem;
     }
 
     private void Start()
     {
-        ItemTest();
+        //ItemTest();
+        WeaponTest();
     }
-
+    
     public void ItemTest()
     {
         int index = 0;
@@ -67,6 +72,24 @@ public class RoomGrid : MonoBehaviour
             {
                 var newItem = ResourceManager.Instance.CreateItemToIndex(index, node.transform);
                 if(newItem == null)
+                {
+                    return;
+                }
+                newItem.transform.position = node.GetItemPos();
+                index++;
+            }
+        }
+    }
+
+    public void WeaponTest()
+    {
+        int index = 0;
+        foreach (var rownode in grid)
+        {
+            foreach (var node in rownode.GetGrid())
+            {
+                var newItem = ResourceManager.Instance.CreateweaponItemToIndex(index, node.transform);
+                if (newItem == null)
                 {
                     return;
                 }

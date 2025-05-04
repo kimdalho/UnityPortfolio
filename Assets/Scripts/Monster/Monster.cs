@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(MonsterFSM))]
@@ -7,13 +8,16 @@ public abstract class Monster : Character
     private float rotSpeed = 10f;
     public float chaseRange;    // 추격 시작 범위
     public float attackRange;   // 공격 가능 범위
+    public bool isDead = false;
+    public event Action<Monster> OnDeath;
 
-    [SerializeField] protected AbilitySystem abilitySystem;
-
-    [SerializeField] private int MaxBullet = -1;
+    [SerializeField] protected int MaxBullet = -1;
     public int CurBullet { get; private set; }
     public bool IsAtk { get; set; } = false;    // 애니메이션이 진행 중인지 확인
     public bool IsAtkCool { get; set; } = false;    // 공격 쿨타임 상태 확인
+
+    public bool IsReloading { get; set; } = false;    // 로딩 상태 확인
+
     public bool IsHit { get; set; } = false;
     public Transform chaseTarget { get; private set; } = null;  // 추적할 대상
     #endregion
@@ -25,6 +29,7 @@ public abstract class Monster : Character
     public float animElapsed { get; set; }
     public Vector3 patrolTargetPos { get; set; } = default(Vector3);
 
+    public GridNode startNode;
     [SerializeField] private Transform roomGrid;
 
     protected bool IsAnimPlay(float addTime = 0f)
@@ -34,12 +39,25 @@ public abstract class Monster : Character
     }
     #endregion
 
+    public void SetData(MonsterLevelDataSO model)
+    {
+        GameEffectSelf effect = new GameEffectSelf(model.attribute);
+        effect.modifierOp = eModifier.Add;
+        effect.ApplyGameplayEffectToSelf(this);
+        transform.position = startNode.GetItemPos();
+        /*_rigidbody = GetComponent<Rigidbody>();
+        if(_rigidbody == null)
+        {
+            _rigidbody = this.gameObject.AddComponent<Rigidbody>();
+        }*/
+    }
+
     protected virtual void Initialized()
     {
         CurBullet = MaxBullet;
 
         // Hit 상태로 변경될 수 있도록 구독
-        onHit += TakeDamage;
+        OnHit += TakeDamage;
 
         // 상태 초기화
         var _idle = StateFactory.GetState(MonsterState.Idle);
@@ -73,7 +91,7 @@ public abstract class Monster : Character
         characterController.Move(moveDir * speed * Time.deltaTime);
     }
 
-    public void PatrolAction()
+    public virtual void PatrolAction()
     {
         var _moveDir = patrolTargetPos - transform.position;
         MoveAction(_moveDir.normalized, attribute.speed);
@@ -86,8 +104,8 @@ public abstract class Monster : Character
         }
     }
 
-    public void ChaseAction()
-    {
+    public virtual void ChaseAction()
+    {       
         if (chaseTarget == null) return;
 
         var _moveDir = chaseTarget.transform.position - transform.position;
@@ -98,12 +116,14 @@ public abstract class Monster : Character
     {
         if (IsAnimPlay()) return;
         IsAtk = false;
+        IsReloading = true;
     }
 
     public virtual void ReLoadAction()
     {
         if (IsAnimPlay()) return;
         CurBullet = MaxBullet;
+        IsReloading = false;
     }
 
     public virtual void HitAction()
@@ -111,11 +131,15 @@ public abstract class Monster : Character
         if (IsAnimPlay()) return;
         IsHit = false;
     }
-
+    
     public void DeadAction()
     {
         if (IsAnimPlay(0.5f)) return;
-        Destroy(gameObject);
+        isDead = true;
+        OnDeath?.Invoke(this);
+        gameObject.SetActive(false);
+        SoundManager.instance.PlayEffect(eEffectType.oop);
+        //Destroy(gameObject);
     }
     #endregion
 
@@ -143,8 +167,8 @@ public abstract class Monster : Character
         // 맵에 배치 되어 있는 grid를 기준으로 patrol 진행
         var _gridTrans = roomGrid.GetChild(2);
 
-        var _randY = Random.Range(0, _gridTrans.childCount);
-        var _randX = Random.Range(0, _gridTrans.GetChild(_randY).childCount);
+        var _randY = UnityEngine.Random.Range(0, _gridTrans.childCount);
+        var _randX = UnityEngine.Random.Range(0, _gridTrans.GetChild(_randY).childCount);
 
         //patrolTargetPos = roomGrid.GetChild(2).GetChild(_randY).GetChild(_randX).position;
         patrolTargetPos = roomGrid.GetChild(_randY).GetChild(_randX).position;
@@ -177,9 +201,9 @@ public abstract class Monster : Character
 
     protected void ApplyGravity()
     {
+        GroundCheck();
         if (attribute.CurHart <= 0) return;
 
-        isGrounded = characterController.isGrounded;
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
@@ -212,5 +236,11 @@ public abstract class Monster : Character
     {
         roomGrid = grid;
     }
+
+    public override bool GetDead()
+    {
+        return isDead;
+    }
+
 
 }

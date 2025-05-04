@@ -132,7 +132,6 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
-    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 4793144639647665465}
   jumpHeight: 2
@@ -144,14 +143,15 @@ MonoBehaviour:
   animator: {fileID: 5467925109308273892}
   controller: {fileID: 1601174441402230910}
   fxSystem: {fileID: 5696247204516319646}
-  chaseRange: 10
-  attackRange: 7
   abilitySystem: {fileID: 5314433099697966927}
+  chaseRange: 10
+  attackRange: 9
+  isDead: 0
   MaxBullet: -1
   patrolTime: 2
   roomGrid: {fileID: 0}
   evadeRatio: 0.3
-  throwCount: 3
+  throwCount: 5
   armTrans: {fileID: 5467925110715598809}
 --- !u!114 &7836095756557533361
 MonoBehaviour:
@@ -619,30 +619,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1192451285098997322}
     m_Modifications:
-    - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
-      propertyPath: Duration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
-      propertyPath: fireCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
-      propertyPath: AbilityTag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
-      propertyPath: AbilityName
-      value: FanShapeFire
-      objectReference: {fileID: 0}
-    - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
-      propertyPath: projectileType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 436414465282009857, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
-      propertyPath: targetMask.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
     - target: {fileID: 1015730315210352836, guid: 7beeb9962f9268849b5be83937564f31, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

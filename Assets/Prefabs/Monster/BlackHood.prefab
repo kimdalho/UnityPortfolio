@@ -56,7 +56,6 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
-    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 764802606740835985}
   jumpHeight: 2
@@ -68,9 +67,10 @@ MonoBehaviour:
   animator: {fileID: 8904112648037604784}
   controller: {fileID: 2758657109547335978}
   fxSystem: {fileID: -8783207560054830842}
+  abilitySystem: {fileID: 758250089743701821}
   chaseRange: 5
   attackRange: 1.5
-  abilitySystem: {fileID: 758250089743701821}
+  isDead: 0
   MaxBullet: -1
   patrolTime: 2
   roomGrid: {fileID: 0}
@@ -169,6 +169,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c800aec2fc7201442874e7394c8adc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5660559294586371122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2821012100624720023}
+  - component: {fileID: 8664536788976057209}
+  m_Layer: 0
+  m_Name: SkillAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2821012100624720023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5660559294586371122}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8341230479772298803}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8664536788976057209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5660559294586371122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5d62fbc178a804a9577f4b24d97ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  AbilityTag: 15
+  AbilityName: 
+  Duration: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 128
+  eWeaponType: 0
+  Equip_state_Tag: 21
 --- !u!1 &5838591459782860879
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,80 +253,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2519238138761132304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &3220212601230803611
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 8341230479772298803}
-    m_Modifications:
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: Duration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: AbilityTag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2251704862427300321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: targetMask.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079138422186737321, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-      propertyPath: m_Name
-      value: SkillAttack
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
---- !u!4 &2821012100624720023 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 834927088867336716, guid: 6472d0582e517dd40bb0017fba4367b6, type: 3}
-  m_PrefabInstance: {fileID: 3220212601230803611}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3939834277883685412
 PrefabInstance:
   m_ObjectHideFlags: 0

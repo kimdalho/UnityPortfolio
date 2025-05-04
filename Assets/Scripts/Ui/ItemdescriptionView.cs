@@ -37,7 +37,7 @@ public class ItemdescriptionView : MonoBehaviour
 
     }
 
-    private void EnableCheck(LocalizedText tmp, int value)
+    private void EnableCheck(LocalizedText tmp, float value)
     {
         tmp.gameObject.SetActive(value > 0);
         tmp.UpdateLocalizedText(value);

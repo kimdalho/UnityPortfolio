@@ -50,8 +50,10 @@ MonoBehaviour:
   Duration: 0
   targetMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   condtionper: 1
   conditionSec: 3
   radius: 2
   speed: 50
+  maxCount: 2
+  flys: []

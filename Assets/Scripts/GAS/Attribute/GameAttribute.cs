@@ -2,11 +2,11 @@ using UnityEngine;
 [System.Serializable]
 public class GameAttribute
 {
-    public int MaxHart;
-    public int CurHart;
-    public int atk;
-    public int attackSpeed;
-    public int speed;
+    public float MaxHart;
+    public float CurHart;
+    public float atk;
+    public float attackSpeed;
+    public float speed;
 
     //모든 스탯의 최대 수치값
     private static int MaxValue = 30;
@@ -20,7 +20,7 @@ public class GameAttribute
         speed = 0;
     }
 
-    public GameAttribute(int MaxHart, int CurHart, int atk, int attackSpeed, int speed)
+    public GameAttribute(float MaxHart, float CurHart, float atk, float attackSpeed, float speed)
     {
         this.MaxHart = Mathf.Clamp(MaxHart,0, MaxValue);
         this.CurHart = Mathf.Clamp(CurHart, 0, MaxHart);
@@ -44,8 +44,28 @@ public class GameAttribute
             a.MaxHart * b.MaxHart,
             a.CurHart * b.CurHart,
                 a.atk * b.atk,
-            a.attackSpeed + b.attackSpeed,
+            a.attackSpeed * b.attackSpeed,
               a.speed * b.speed);
+    }
+
+    public static GameAttribute operator /(GameAttribute a, GameAttribute b)
+    {
+        return new GameAttribute(
+            a.MaxHart / b.MaxHart,
+            a.CurHart / b.CurHart,
+                a.atk / b.atk,
+            a.attackSpeed / b.attackSpeed,
+              a.speed / b.speed);
+    }
+
+    public static GameAttribute operator -(GameAttribute a, GameAttribute b)
+    {
+        return new GameAttribute(
+            a.MaxHart - b.MaxHart,
+            a.CurHart - b.CurHart,
+                a.atk - b.atk,
+            a.attackSpeed - b.attackSpeed,
+              a.speed - b.speed);
     }
 
 }

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class ReLoadState : IState
 {
+    private float duration = 2f; // 지속 시간
+    private float elapsedTime = 0f;
+
     public bool IsState(Monster monster) => monster.CurBullet.Equals(0) && !monster.IsAtk;
     public void Enter(Monster monster)
     {
@@ -9,7 +12,14 @@ public class ReLoadState : IState
     }
     public void Action(Monster monster)
     {
-        monster.ReLoadAction();
+        elapsedTime += Time.deltaTime;
+        
+        //IsReloading
+
+        if (elapsedTime >= duration)
+        {
+            monster.ReLoadAction();
+        }
     }
     public void Exit(Monster monster)
     {

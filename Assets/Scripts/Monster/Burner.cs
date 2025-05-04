@@ -9,6 +9,6 @@ public class Burner : Monster
 
     public override void AttackAction()
     {
-        
+        ExecuteAttack();
     }
 }

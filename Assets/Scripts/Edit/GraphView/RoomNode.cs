@@ -19,14 +19,14 @@ public class RoomNode : Node
     public RoomNode()
     {
         title = "Room";
-        roomID = System.Guid.NewGuid().ToString();
+        roomID = "0,0";
         RoomType = eRoomType.Empty; // 기본값
         Initialize();
     }
 
     public RoomNode(Vector2 position)
     {
-        roomID = System.Guid.NewGuid().ToString();
+        roomID = string.Format("{0},{1}",position.x,position.y);        
         RoomType = eRoomType.Empty; // 기본값
         VirtualPos = position;
         Initialize();

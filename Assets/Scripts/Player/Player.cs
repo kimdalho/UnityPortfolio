@@ -1,21 +1,40 @@
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Unity.Cinemachine;
 using UnityEngine;
 
-public partial class Player : Character
+public interface IOnGameOver
 {
+    public void OnGameOver();
+
     
+}
+
+
+public partial class Player : Character , IOnGameOver ,IOnNextFlow
+{
+    #region 이동 컨트롤러
     [SerializeField]
     private InputController inputController;
     public float rotationSpeed = 10f;
     public Transform cameraTransform;
     private Vector3 moveDirection;
+    private readonly float moveThresholdSqr = 0.01f;
+    #endregion
+    private bool isDead;
+
+    #region 룩엣
 
     [SerializeField]
     private ScanForTargets scanForTargets;
+    [SerializeField]
+    private CinemachineCamera lookatCam;
+    #endregion
 
-    Vector3 moveVec;
-    
+
     private HashSet<Collider> detectedItems = new HashSet<Collider>();
 
     #region 아이템 설명창
@@ -28,9 +47,21 @@ public partial class Player : Character
     public ItemdescriptionView itemdescriptionView;
     #endregion
 
-    [SerializeField]
-    private AbilitySystem abilitySystem;
- 
+    private void Awake()
+    {
+        GameManager.OnGameOver += OnGameOver;
+        GameManager.OnNextFlow += OnNextFlow;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnGameOver -= OnGameOver;
+        GameManager.OnNextFlow -= OnNextFlow;
+    }
+
+
+
+
     private void Start()
     {        
         if (abilitySystem == null)
@@ -50,12 +81,8 @@ public partial class Player : Character
 
     private void Update()
     {
-        if(gameplayTagSystem != null)
-        {
-            var tagSystem = gameplayTagSystem;
-            if (tagSystem.HasTag(eTagType.portalLock) == true)
-                return;
-        }
+        if (GetDead())
+            return;
 
         Move();
 
@@ -65,60 +92,61 @@ public partial class Player : Character
         //아이템 상태창
         HasPickupablesNearby();
         //
-        AutoAttack();
-    }
+        ActivateAbilityAttack();
 
-    private void OnDestroy()
-    {
-        if (inputController == null) return;
+        FallDeathCheck();
     }
 
 
-    bool isAttack;
-    private void AbilitySkillAttack()
+    private void ActivateAbilityAttack()
     {
+        if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget) is false)
+        {            
+            return;
+        }            
+
         abilitySystem.ActivateAbility(eTagType.Attack, this);
     }
 
-    private void AbilitySkillAttackEnd()
+    public void AbilitySkillAttackEnd()
     {
-        if (abilitySystem == null)
-        {
-            Debug.LogError("AbilitySystem이 존재하지 않아 AbilitySkillAttackEnd() 실행 불가!");
-            return;
-        }
-
         abilitySystem.DeactivateAbility(eTagType.Attack);
+    }
+
+    public void OnJumpStart()
+    {
+        animator.SetTrigger("Trg_JumpStart");
+    }
+
+    public void OnFalling()
+    {
+        animator.SetBool(FallingHash, true);
+    }
+
+    public void OnEndJump()
+    {
+        animator.SetBool(FallingHash, false);
     }
 
     private void Move()
     {
+        if (gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput))
+            return;
+
         float hAxis = inputController.InputDirection.x;
         float vAxis = inputController.InputDirection.y;
         Vector3 move = new Vector3(hAxis, 0, vAxis);
-        //moveDirection = attribute.speed * move;
+        SetPlayerMoveDirectionToCameraDirection(hAxis, vAxis);
 
-        Vector3 forward = cameraTransform.forward;
-        Vector3 right = cameraTransform.right;
-        forward.y = 0;
-        right.y = 0;
-        forward.Normalize();
-        right.Normalize();
-
-        moveDirection = forward * vAxis + right * hAxis;
-        moveDirection *= attribute.speed;
-
-        isGrounded = characterController.isGrounded;
-
+        GroundCheck();
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
+            animator.SetBool(FallingHash, false);
         }
-
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        else if(!isGrounded && calcVelocity.y > 0)
         {
-            calcVelocity.y += Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+            animator.SetBool(FallingHash, true);
         }
 
         calcVelocity.y += gravity * Time.deltaTime;
@@ -130,45 +158,50 @@ public partial class Player : Character
         animator.SetBool(moveHash, ismove);
     }
 
-    void RotateToCameraDirection()
-    {   
-        if(scanForTargets.lookatMonster != null)
-        {
-            Vector3 direction = scanForTargets.lookatMonster.position - transform.position;
-            if (direction != Vector3.zero)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            }
-        }
-        else if (moveDirection.sqrMagnitude > 0.1f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        }
-    }
-
-    void AutoAttack()
+    public void MoveAnimStop()
     {
-        Debug.Log(moveDirection);
-        if (scanForTargets.lookatMonster != null && moveDirection == Vector3.zero && isAttack == false)
-        {
-            isAttack = true;
-          
-        }
-        else if((scanForTargets.lookatMonster == null || moveDirection != Vector3.zero) && isAttack == true)
-        {
-            isAttack = false;
-            AbilitySkillAttackEnd();
-        }
-
-        if(isAttack == true)
-        {
-            AbilitySkillAttack();
-        }
-       
+        animator.SetBool(moveHash, false);
     }
 
+    public void FallDeathCheck()
+    {
+        if(transform.position.y < -4f)
+        {
+            GameManager.instance.GameOver();
+        }
+    }
+
+    
+
+    void RotateToCameraDirection()
+    {
+        bool isMoving = moveDirection.sqrMagnitude > moveThresholdSqr; // moveThresholdSqr = 0.01f 정도 미리 정의
+        if (scanForTargets.lookatMonster != null)
+        {          
+            if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget))
+            {
+                lookatCam.Priority = 2;
+                RotateTowardsHorizontal(scanForTargets.lookatMonster.position - transform.position);
+            }
+            return;
+        }       
+        else if (isMoving)
+        {           
+            RotateTowardsHorizontal(moveDirection);
+        }
+        lookatCam.Priority = 0;
+    }
+
+    void RotateTowardsHorizontal(Vector3 direction)
+    {
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.001f) // 거의 0에 가까우면 무시
+            return;
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
 
     private void OnTriggerExit(Collider other)
     {
@@ -220,18 +253,13 @@ public partial class Player : Character
     #endregion
 
 
-    public AbilitySystem GetAbilitySystem()
-    {
-        return abilitySystem;
-    }
-
     /// <summary>
     /// 카메라 방향으로 플레이어 이동 방향 정하기
     /// 이렇게 하면 엘든링이나 몬헌처럼 카메라로 플레이어의 정면을 볼수있다.
     /// </summary>
     /// <param name="vAxis"></param>
     /// <param name="hAxis"></param>
-    private void SetPlayerMoveDirectionToCameraDirection(float vAxis, float hAxis)
+    private void SetPlayerMoveDirectionToCameraDirection(float hAxis,float vAxis)
     {
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
@@ -241,7 +269,69 @@ public partial class Player : Character
         right.Normalize();
 
         moveDirection = forward * vAxis + right * hAxis;
+        moveDirection *= attribute.speed;
     }
 
+    public void OnGameOver()
+    {
+        isDead = true;
+        gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
+        animator.Play(DeadHash);
+    }
+
+    public const float portalDelay = 5.0f;
+
+    public void PortalDelay()
+    {
+        StartCoroutine(CoPortalDelay());
+    }
+
+    private IEnumerator CoPortalDelay()
+    {
+        gameplayTagSystem.AddTag(eTagType.Player_State_IgnorePortal);
+        float deltime = 0f;
+        while(deltime < portalDelay)
+        {
+            deltime += Time.deltaTime;
+            yield return null;
+        }
+        gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnorePortal);
+    }
+
+    public void OnNextFlow()
+    {     
+        gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
+        StartCoroutine(CoOnNextFlow());
+    
+    }
+
+    private IEnumerator CoOnNextFlow()
+    {
+        gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);      
+        yield return new WaitForSeconds(0.6f);
+        transform.position = Vector3.zero;
+
+        while (GameManager.Leveling)
+        {
+            yield return null;
+        }
+        gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
+    }
+
+    public override bool GetDead()
+    {
+        return isDead;
+    }
+    public void SetPlayerTarget(Monster monster)
+    {
+        gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
+        scanForTargets.SetPlayerTarget(monster);
+    }
+
+    public void ResetTarget()
+    {
+        
+        scanForTargets.ResetTarget();
+    }
 }
 

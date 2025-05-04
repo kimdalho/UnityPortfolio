@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,7 +33,7 @@ public class Panel_CharacterSelect : MonoBehaviour
                 //해당 슬롯에 캐릭터가 이미 존재하는경우
                 if(slot.existCharacter)
                 {
-                    
+                    ChangeSelectSlot(slot);
                 }
                 else
                 {
@@ -46,16 +45,10 @@ public class Panel_CharacterSelect : MonoBehaviour
                         //새로운 플레이어를 생성 또는 기존 플레이어 캐릭터 선택완료
                         img_Status.gameObject.SetActive(true);
                         model.gameObject.SetActive(true);
-                        var data = UserData.Instance.slots[slot.index];
-                        tmpStats[0].UpdateLocalizedText(data.dungeonLevel);
-                        tmpStats[1].UpdateLocalizedText(data.playerAttribute.MaxHart, data.playerAttribute.CurHart);
-                        tmpStats[2].UpdateLocalizedText(data.playerAttribute.atk);
-                        tmpStats[3].UpdateLocalizedText(data.playerAttribute.attackSpeed);
-                        tmpStats[4].UpdateLocalizedText(data.playerAttribute.speed);
+                        ChangeSelectSlot(slot);
                     });
 
                 }
-                UserData.Instance.CurIndex = slot.index;
             });
         }
 
@@ -65,19 +58,30 @@ public class Panel_CharacterSelect : MonoBehaviour
         {
             gameObject.SetActive(false);
             LobbySceneController.Instance.panel_Title.gameObject.SetActive(true);
+            img_Status.gameObject.SetActive(false);
         });
 
         btn_GameAccess.onClick.AddListener(GameStart);
     }
-
+    private void ChangeSelectSlot(CharacterSlot _slot)
+    {
+        var data = UserData.Instance.slots[_slot.index];
+        tmpStats[0].UpdateLocalizedText(data.dungeonLevel);
+        tmpStats[1].UpdateLocalizedText(data.playerAttribute.MaxHart, data.playerAttribute.CurHart);
+        tmpStats[2].UpdateLocalizedText(data.playerAttribute.atk);
+        tmpStats[3].UpdateLocalizedText(data.playerAttribute.attackSpeed);
+        tmpStats[4].UpdateLocalizedText(data.playerAttribute.speed);
+        _slot.tmp_Nickname.GetComponent<LocalizedText>().UnUpdate();
+        foreach (var checkslot in slotList)
+        {
+            checkslot.imgbutton.color = Color.white;
+        }
+        _slot.imgbutton.color = Color.blue;
+        UserData.Instance.CurIndex = _slot.index;
+    }
 
     public void GameStart()
-    {
-        //SaveData saveData = new SaveData();
-        //saveData.attribute = model.character.attribute;
-        //saveData.floow = 1;
-        //saveData.nickname = panel_CharacterName.GetNickName();
-        //UserData.Instance.saveData = saveData;
+    {;
         SceneContainer.Instance.LoadScene(eSceneType.GameScene);
     }
 
@@ -90,10 +94,4 @@ public class Panel_CharacterSelect : MonoBehaviour
     {
 
     }
-
-
-
-
-
-
 }

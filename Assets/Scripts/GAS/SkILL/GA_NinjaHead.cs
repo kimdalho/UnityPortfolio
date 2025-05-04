@@ -1,52 +1,51 @@
 using System.Collections;
 using UnityEngine;
-//피격 시 15% 확률로 1초간 무적
+
+//피격 시 30% 확률로 3초간 무적
 /// </summary>
 public class GA_NinjaHead : GameAbility
 {
     //성공 확률 0~1; 1이면 100퍼센트 성공
     public float condtionper = 0.15f;
-    /// 발동 시속시간
-    public float abilityDuration;
 
-    //액티브되면 해당 태그가 플레이어에게 1초동안 추가됨
-    private void Start()
+    public eTagType state = eTagType.NinjaHead_State_Invincible;
+
+    protected override IEnumerator ExecuteAbility()
     {
-		AbilityTag = eTagType.ninjahead;
-        owner.onHit += StartAbility;
-        owner.gameplayTagSystem.AddTag(AbilityTag);
+        StartAbility();
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill,owner.transform);
+        yield return null;
     }
 
     private void StartAbility()
     {
-        StartCoroutine(ExecuteAbility());
+        owner.gameplayTagSystem.AddTag(AbilityTag);
+        owner.OnHit += OnHit;
+    }
+    private void OnHit()
+    {     
+        StartCoroutine(OnHitProcess());
+        owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
     }
 
-    protected override IEnumerator ExecuteAbility()
+    private IEnumerator OnHitProcess()
     {
-
-        float chance = Random.value; // 0.0 ~ 1.0
-        Debug.Log($"찬스 {chance}");
-
-        if (chance < condtionper) //0.3 이면 30퍼센트 성공
-        {
-            
-        }
-        else
-        {
+        if (owner.gameplayTagSystem.HasTag(state) == true)
             yield break;
-        }
-
-        yield return new WaitForSeconds(abilityDuration);
-
-        EndAbility();
+        var value = Random.value;
+        if (value < condtionper)
+        {
+            owner.gameplayTagSystem.AddTag(state);
+        }        
+        yield return new WaitForSeconds(Duration);
+        EndOnHitProcess();
     }
 
-    public override void EndAbility()
+
+    private void EndOnHitProcess()
     {
-        owner.gameplayTagSystem.RemoveTag(AbilityTag);
+        owner.gameplayTagSystem.RemoveTag(state);
     }
-
 
 }
 

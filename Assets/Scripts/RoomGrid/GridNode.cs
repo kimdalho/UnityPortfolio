@@ -12,7 +12,7 @@ public enum eEntityType
 public class GridNode : MonoBehaviour
 {
     public GameObject wall;
-
+    public bool exist = false;
     /// <summary>
     /// 타입은 어떤 테이블데이터를 참조할지 알려준다
     /// id는 해당 참조할 테이블 데이터의 데이터이다.
@@ -31,11 +31,7 @@ public class GridNode : MonoBehaviour
         newEntity.transform.localPosition = new Vector3(0, 1f, 0);
     }
 
-    public void CreateEnemy()
-    {
-        var newEntity = Instantiate(wall);
-        newEntity.transform.localPosition = Vector3.zero;
-    }
+    
     public void CreateWall()
     {
         var newEntity = Instantiate(wall);
