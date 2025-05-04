@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -127,6 +128,19 @@ public class GameManager : MonoBehaviour
     {
         OnGameOver?.Invoke();
         SoundManager.instance.audioSource.Pause();
+        SoundManager.instance.PlayEffect(eEffectType.Gameover,this.transform);
     }
 
+    public void SetPlayerTarget(Monster monster)
+    {
+        if(player != null)
+        {
+            player.SetPlayerTarget(monster);
+        }
+    }
+
+    public void ResetTarget()
+    {
+        player.ResetTarget();
+    }
 }

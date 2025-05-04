@@ -45,6 +45,7 @@ public class Character : AttributeEntity , IcanGetHead
     private void Awake()
     {
         abilitySystem = GetComponentInChildren<AbilitySystem>();
+
     }
 
 

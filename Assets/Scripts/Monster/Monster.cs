@@ -1,5 +1,6 @@
 using System;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using static Unity.Burst.Intrinsics.Arm;
 
@@ -12,6 +13,7 @@ public abstract class Monster : Character
     public float attackRange;   // 공격 가능 범위
     public bool isDead = false;
     public event Action<Monster> OnDeath;
+    public Rigidbody _rigidbody;
 
     [SerializeField] protected int MaxBullet = -1;
     public int CurBullet { get; private set; }
@@ -47,6 +49,11 @@ public abstract class Monster : Character
         effect.modifierOp = eModifier.Add;
         effect.ApplyGameplayEffectToSelf(this);
         transform.position = startNode.GetItemPos();
+        _rigidbody = GetComponent<Rigidbody>();
+        if(_rigidbody == null)
+        {
+            _rigidbody = this.gameObject.AddComponent<Rigidbody>();
+        }
     }
 
     protected virtual void Initialized()
@@ -135,6 +142,7 @@ public abstract class Monster : Character
         isDead = true;
         OnDeath?.Invoke(this);
         gameObject.SetActive(false);
+        SoundManager.instance.PlayEffect(eEffectType.oop);
         //Destroy(gameObject);
     }
     #endregion

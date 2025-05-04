@@ -1,9 +1,20 @@
 using System.Collections;
 
 //GA_AlienHead, 투사체 다발 증가
-public class GA_AlienHead : GameAbility
+public class GA_AlienHead : GameAbility , IProjectileCountModifiable
+
 {
-    public int multypleCount;
+    public int fireMultypleCount;
+
+    public void SetFireMultypleCount(eModifier type, int count)
+    {
+        switch (type)
+        {
+            case eModifier.Add:
+                fireMultypleCount += count;
+                break;
+        }
+    }
 
     protected override IEnumerator ExecuteAbility()
     {
@@ -14,8 +25,8 @@ public class GA_AlienHead : GameAbility
            GameAbility ability  = character.GetAbilitySystem().GetGameAbility(eTagType.Attack);
            if (ability != null)
            {
-                IProjectileCountModifiable modifiable = ability.GetComponent<IProjectileCountModifiable>();
-                modifiable.SetFireMultypleCount(eModifier.Add, multypleCount);
+                IProjectileCountModifiable modifiable = GetComponent<IProjectileCountModifiable>();
+                modifiable.SetFireMultypleCount(eModifier.Add, fireMultypleCount);
            }
         }
         yield return null;

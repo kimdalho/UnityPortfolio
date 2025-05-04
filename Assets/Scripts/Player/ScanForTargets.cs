@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ScanForTargets : MonoBehaviour
@@ -11,106 +10,71 @@ public class ScanForTargets : MonoBehaviour
     [SerializeField]
     private Player player;
 
-    public float scanRadius = 5f;
-    public LayerMask targetLayer;
-    public float scanInterval = 0.2f;
-
     private float timer;
     private Collider[] buffer = new Collider[20]; // 최대 20개까지 감지
-    private List<IcanGetHead> currentTargets  = new List<IcanGetHead>();
+    private List<IcanGetHead> currentTargets = new List<IcanGetHead>();
+    private IcanGetHead _lookatMonster;
+
     public Transform lookatMonster
     {
         get
         {
-            if(_lookatMonster == null || _lookatMonster.GetDead() )
+            if (_lookatMonster == null || _lookatMonster.GetDead())
                 return null;
             return _lookatMonster.GetHead();
         }
     }
-
-    private IcanGetHead _lookatMonster;
-
 
     private void Start()
     {
         player = GameManager.instance.GetPlayer();
     }
 
-    void Update()
+    private readonly int condition = 0;
+    private readonly int TargetIndex = 0;
+
+    private void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= scanInterval)
+        if (m_TargetGroup.Targets.Count > condition)
         {
-            timer = 0f;
-            Scan();           
+            Transform target = m_TargetGroup.Targets[TargetIndex].Object;
+            bool targetDead = target.GetComponent<IcanGetHead>().GetDead();
+            if(targetDead)
+            {
+                ResetTarget();
+            }
         }
     }
 
-    void Scan()
+    public void SetPlayerTarget(Monster monster)
     {
-        bool IgnoreInput =  player.gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput);
-
-        if (IgnoreInput)
-            return;
-
-
-        int count = Physics.OverlapSphereNonAlloc(transform.position, scanRadius, buffer, targetLayer);
-
-        // 현재 감지된 타겟 새로 수집
-        HashSet<IcanGetHead> newTargets = new HashSet<IcanGetHead>();
-
-        for (int i = 0; i < count; i++)
+        if (monster != null)
         {
-            IcanGetHead targetHead = buffer[i].GetComponent<IcanGetHead>();
-            if (targetHead == null) continue;
-
-            if(!player.gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget))
-                player.gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
-
-            newTargets.Add(targetHead);
-
-            if (!currentTargets.Contains(targetHead))
-            {
-                currentTargets.Add(targetHead);
-
-                Transform headTransform = targetHead.GetHead();
-                if (m_TargetGroup.FindMember(headTransform) == -1 && m_TargetGroup.Targets.Count < 3)
-                {                    
-                    m_TargetGroup.AddMember(headTransform, 1f, 0.5f);
-                    _lookatMonster = targetHead;
+            Transform monsterHead = monster.GetHead();  // 몬스터의 머리 Transform을 가져옴
+            if (m_TargetGroup.FindMember(monsterHead) == -1)  // 아직 그룹에 없으면
+            {                             
+                if (m_TargetGroup.Targets.Count > condition)
+                {
+                    Transform targetToRemove = m_TargetGroup.Targets[TargetIndex].Object;
+                    m_TargetGroup.RemoveMember(targetToRemove);                                                                
                 }
+                m_TargetGroup.AddMember(monsterHead, 0.3f, 0.5f);  // 타겟 그룹에 추가
+                _lookatMonster = monsterHead.GetComponent<IcanGetHead>();  // 해당 몬스터를 _lookatMonster로 설정     
+
             }
-        }
-
-        // currentTargets에서 사라진 애들 + 죽은대상 제거
-        List<IcanGetHead> toRemove = new List<IcanGetHead>();
-
-        foreach (var target in currentTargets)
-        {
-            if (!newTargets.Contains(target) || target.GetDead())
-            {
-                toRemove.Add(target);
-            }
-        }
-
-        foreach (var target in toRemove)
-        {
-            Transform headTransform = target.GetHead();
-            if (m_TargetGroup.FindMember(headTransform) >= 0)
-            {
-                m_TargetGroup.RemoveMember(headTransform);
-                player.gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
-                _lookatMonster = null;
-            }
-
-            currentTargets.Remove(target);
+            
         }
     }
 
-    private void OnDrawGizmos()
+    public void ResetTarget()
     {
-        Gizmos.color = new Color(0f, 1f, 0f, 0.25f); 
-        Gizmos.DrawSphere(transform.position, scanRadius);
+        if(m_TargetGroup.Targets.Count > condition)
+        {
+            Transform targetToRemove = m_TargetGroup.Targets[TargetIndex].Object;
+            m_TargetGroup.RemoveMember(targetToRemove);
+            _lookatMonster = null;
+            player.gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
+        }
     }
 }
 
