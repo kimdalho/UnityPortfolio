@@ -46,6 +46,8 @@ public class PlayerTraversal : MonoBehaviour
         }
         
         yield return new WaitForSeconds(0.2f);
+        if(SoundManager.instance != null)
+                SoundManager.instance.PlayEffect(eEffectType.Jump);
         while (time < duration)
         {
             float t = time / duration;

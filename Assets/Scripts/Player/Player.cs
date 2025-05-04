@@ -1,8 +1,9 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public interface IOnGameOver
@@ -176,9 +177,8 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     {
         bool isMoving = moveDirection.sqrMagnitude > moveThresholdSqr; // moveThresholdSqr = 0.01f 정도 미리 정의
         if (scanForTargets.lookatMonster != null)
-        {
-            bool hasMultipleTargets = scanForTargets.m_TargetGroup.Targets.Count >= 2;
-            if (hasMultipleTargets)
+        {          
+            if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget))
             {
                 lookatCam.Priority = 2;
                 RotateTowardsHorizontal(scanForTargets.lookatMonster.position - transform.position);
@@ -186,10 +186,10 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
             return;
         }       
         else if (isMoving)
-        {
-            lookatCam.Priority = 0;
+        {           
             RotateTowardsHorizontal(moveDirection);
         }
+        lookatCam.Priority = 0;
     }
 
     void RotateTowardsHorizontal(Vector3 direction)
@@ -321,6 +321,17 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     public override bool GetDead()
     {
         return isDead;
+    }
+    public void SetPlayerTarget(Monster monster)
+    {
+        gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
+        scanForTargets.SetPlayerTarget(monster);
+    }
+
+    public void ResetTarget()
+    {
+        
+        scanForTargets.ResetTarget();
     }
 }
 

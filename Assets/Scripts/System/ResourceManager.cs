@@ -184,10 +184,6 @@ public class ResourceManager : MonoBehaviour
 
         var targetMonster = monsters[rnd.Next(monsters.Count)];
         GameObject model = Instantiate(targetMonster);
-        model.transform.SetParent(parent);
-        model.transform.localPosition = new Vector3(0, 2, 0);
-        model.transform.localScale = Vector3.one;
-        
         return model;
     }
 

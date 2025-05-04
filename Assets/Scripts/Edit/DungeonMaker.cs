@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+
 public class DungeonMaker : MonoBehaviour
 {
     public DungeonData roomData;
@@ -28,6 +31,8 @@ public class DungeonMaker : MonoBehaviour
     private GameObject monsterHolder;
     List<GameObject> dungeons = new List<GameObject>();
     public List<DungeonData> DungeonDatas;
+
+    
     
 
    
@@ -209,7 +214,7 @@ public class DungeonMaker : MonoBehaviour
                         int rollData = Random.Range(1, 3);                        
                         MonsterLevelDataSO  modelData = monsterLvDatas[rolllevel][rollData];
                         Monster createdMonster = room.grid.CreateMonster(monsterHolder.transform);
-
+                        createdMonster.name = room.name + room.grid;
                         createdMonster.transform.localScale *= modelData.size;
                         createdMonster.SetData(modelData);
 

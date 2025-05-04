@@ -35,7 +35,7 @@ public class FXFactory : MonoBehaviour
     {
         return Instantiate(GetPrefab(abilityTag), parent, isWorldPos);
     }
-
+    
     public GameObject GetFX(string abilityTag, Vector3 pos, Quaternion rot)
     {
         return Instantiate(GetPrefab(abilityTag), pos, rot);

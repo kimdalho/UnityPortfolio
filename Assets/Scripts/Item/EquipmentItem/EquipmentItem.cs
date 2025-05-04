@@ -25,6 +25,8 @@ public abstract class EquipmentItem : GameEffect, IPickupable
 
         if (ability != null)
         {
+            FXFactory.Instance.GetFX("Effect_NinjaSkill", source.transform);
+            SoundManager.instance.PlayEffect(eEffectType.levelup);
             var newskill = Instantiate(ability);
             var skillCompo = newskill.GetComponent<GameAbility>();
             player.GetAbilitySystem().AddAndActivateAbility(skilltag, skillCompo,source);

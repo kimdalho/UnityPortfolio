@@ -12,7 +12,6 @@ public class GA_NinjaHead : GameAbility
 
     protected override IEnumerator ExecuteAbility()
     {
-
         StartAbility();
         owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill,owner.transform);
         yield return null;

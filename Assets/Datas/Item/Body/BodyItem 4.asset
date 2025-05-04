@@ -16,14 +16,14 @@ MonoBehaviour:
   itemData:
     itemName: Condition_ItemBody4
     description: Equip_Body_Description4
-  modelIndex: 3
-  objectIndex: 2
-  Rank: 1
   tag: 10
+  gameAbility: {fileID: 7079138422186737321, guid: 94cff59a2316d9245a3854fcbc8abf6c, type: 3}
+  modelIndex: 3
   attribute:
     MaxHart: 0
     CurHart: 0
     atk: 2
     attackSpeed: 1
     speed: 1
-  gameAbility: {fileID: 0}
+  objectIndex: 2
+  Rank: 1

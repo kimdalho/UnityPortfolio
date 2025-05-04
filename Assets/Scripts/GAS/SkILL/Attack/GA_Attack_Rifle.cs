@@ -61,6 +61,7 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
             var projectile = ProjectileFactory.Instance.GetProjectile(projectileType, armTransform.position, Quaternion.identity);
             projectile.Initialized(owner, direction, targetMask, AbilityTag, true);                     
         }
+        SoundManager.instance.PlayEffect(eEffectType.Shoot, armTransform);
         yield return new WaitForSeconds(delayAtkTime);
     }
 
