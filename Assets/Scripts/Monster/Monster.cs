@@ -13,7 +13,6 @@ public abstract class Monster : Character
     public float attackRange;   // 공격 가능 범위
     public bool isDead = false;
     public event Action<Monster> OnDeath;
-    public Rigidbody _rigidbody;
 
     [SerializeField] protected int MaxBullet = -1;
     public int CurBullet { get; private set; }
@@ -49,11 +48,11 @@ public abstract class Monster : Character
         effect.modifierOp = eModifier.Add;
         effect.ApplyGameplayEffectToSelf(this);
         transform.position = startNode.GetItemPos();
-        _rigidbody = GetComponent<Rigidbody>();
+        /*_rigidbody = GetComponent<Rigidbody>();
         if(_rigidbody == null)
         {
             _rigidbody = this.gameObject.AddComponent<Rigidbody>();
-        }
+        }*/
     }
 
     protected virtual void Initialized()
