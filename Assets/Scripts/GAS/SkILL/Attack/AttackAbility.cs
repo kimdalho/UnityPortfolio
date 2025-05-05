@@ -11,6 +11,13 @@ using UnityEngine;
 /// </summary>
 public class AttackAbility : GameAbility
 {
+
+    //포워드 방향 카운트
+    [SerializeField] public int fireCount = 1; // 발사 횟수
+    //멀티플 스킬 획득 시
+    [SerializeField] public float fireMultypleAngleRange = 20f;
+    [SerializeField] public int fireMultypleCount = 1;
+
     public eWeaponType eWeaponType;
     
     public eTagType Equip_state_Tag = eTagType.Equip_Weapon_State_default;

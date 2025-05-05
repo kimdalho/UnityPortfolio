@@ -52,8 +52,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   eWeaponType: 2
-  Equip_state_Tag: 24
+  Equip_state_Tag: 23
   fireCount: 1
-  fireAngleRange: 20
+  fireMultypleAngleRange: 20
+  fireMultypleCount: 1
   projectileType: 2
   delayAtkTime: 0.3

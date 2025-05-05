@@ -20,7 +20,7 @@ public class RoomGrid : MonoBehaviour
         Debug.Log("자식 객체 위치 재배치 완료");
     }
 
-    private GridNode GetRandomGridNode()
+    public GridNode GetRandomGridNode()
     {
         System.Random rand1 = new System.Random();
         System.Random rand2 = new System.Random();
@@ -60,7 +60,7 @@ public class RoomGrid : MonoBehaviour
     private void Start()
     {
         //ItemTest();
-        WeaponTest();
+        //WeaponTest();
     }
     
     public void ItemTest()

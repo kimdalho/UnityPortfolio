@@ -120,12 +120,17 @@ public class GameManager : MonoBehaviour
         Leveling = false;
 
     }
-   
 
 
+
+    bool gameover = false;
 
     public void GameOver()
     {
+        if (gameover == true)
+            return;
+
+        gameover = true;
         OnGameOver?.Invoke();
         SoundManager.instance.audioSource.Pause();
         SoundManager.instance.PlayEffect(eEffectType.Gameover,this.transform);

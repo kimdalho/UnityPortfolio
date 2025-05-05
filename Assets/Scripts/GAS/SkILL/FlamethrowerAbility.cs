@@ -37,7 +37,7 @@ public class FlamethrowerAbility : GameAbility
         }
 
         // 화염 방사기 FX 자연스럽게 삭제
-        _particle.GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        //_particle.GetComponent<ParticleSystem>().Stop(true, ParticleSystemStopBehavior.StopEmitting);
         owner.GetAnimator().SetBool("LoopAttack", false);
 
         if (owner is Monster) (owner as Monster).IsAtk = false;

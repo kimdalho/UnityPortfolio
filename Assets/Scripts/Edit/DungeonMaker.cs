@@ -214,7 +214,7 @@ public class DungeonMaker : MonoBehaviour
                         int rollData = Random.Range(1, 3);                        
                         MonsterLevelDataSO  modelData = monsterLvDatas[rolllevel][rollData];
                         Monster createdMonster = room.grid.CreateMonster(monsterHolder.transform);
-                        createdMonster.name = room.name + room.grid;
+                        createdMonster.name = i + createdMonster.name;
                         createdMonster.transform.localScale *= modelData.size;
                         createdMonster.SetData(modelData);
 
@@ -222,6 +222,11 @@ public class DungeonMaker : MonoBehaviour
                         dc.monsters.Add(createdMonster);
                         createdMonster.OnDeath += room.OnMonsterDeath;
                     }
+                    break;
+                case eRoomType.Start:
+                    var rnd =  Random.Range(0, 2);
+                    var node =  room.grid.GetRandomGridNode();
+                    ResourceManager.Instance.CreateweaponItemToIndex(rnd, node.transform);
                     break;
             }
 

@@ -19,10 +19,20 @@ public class DungeonController : MonoBehaviour
                 case eRoomType.Boss:
                     room.isClear = true;
                     break;
+                case eRoomType.Monster:
+                    foreach (Monster monster in monsters)
+                    {
+                        monster.ResetPos();
+                        Debug.Log("던전 컨트롤러 셋업" + monster.transform.position);
+                    }
+                    break;
             }
             
         }
     }
+
+
+
 
     public Room FindRoombyType(eRoomType type)
     {

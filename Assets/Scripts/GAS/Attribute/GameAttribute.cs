@@ -67,5 +67,14 @@ public class GameAttribute
             a.attackSpeed - b.attackSpeed,
               a.speed - b.speed);
     }
+    public static GameAttribute operator &(GameAttribute a, GameAttribute b)
+    {
+        return new GameAttribute(
+            a.MaxHart,
+            a.CurHart,
+                a.atk + b.atk,
+        a.attackSpeed,
+              a.speed);
+    }
 
 }
