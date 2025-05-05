@@ -9,7 +9,17 @@ public class UserData : MonoBehaviour
 
 
     public static UserData Instance;
-    
+
+    public int level1_itemCount;
+    public int level2_itemCount;
+    public int level3_itemCount;
+
+    public int level1_killMonster;
+    public int level2_killMonster;
+    public int level3_killMonster;
+
+
+
 
     private void Awake()
     {
@@ -57,6 +67,38 @@ public class UserData : MonoBehaviour
     public GameData LoadData()
     {
         return slots[CurIndex];
+    }
+
+    public void SetKillMonster(int monsterlevel)
+    {
+        switch (monsterlevel)
+        {
+            case 1:
+                level1_killMonster++;
+                break;
+            case 2:
+                level2_killMonster++;
+                break;
+            case 3:
+                level3_killMonster++;
+                break;
+        }
+    }
+
+    public void SetPickupedItem(int itemRank)
+    {
+        switch (itemRank)
+        {
+            case 1:
+                level1_itemCount++;
+                break;
+            case 2:
+                level2_itemCount++;
+                break;
+            case 3:
+                level3_itemCount++;
+                break;
+        }
     }
 
 }

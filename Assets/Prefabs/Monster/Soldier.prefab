@@ -71,8 +71,9 @@ MonoBehaviour:
   chaseRange: 7
   attackRange: 5
   isDead: 0
-  MaxBullet: -1
+  MaxBullet: 3
   patrolTime: 2
+  startNode: {fileID: 0}
   roomGrid: {fileID: 0}
   BulletPrefab: {fileID: 0}
   gunTrans: {fileID: 1555058468039031767}

@@ -101,12 +101,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect:
-    MaxHart: 1
+    MaxHart: 0
     CurHart: 0
-    atk: 0
+    atk: 3
     attackSpeed: 0
     speed: 0
-  modifierOp: 0
+  modifierOp: 5
   itemData:
     itemName: "\uB77C\uC774\uD50C"
     description: 

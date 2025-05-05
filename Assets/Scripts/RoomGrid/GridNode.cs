@@ -41,6 +41,7 @@ public class GridNode : MonoBehaviour
 
     public Vector3 GetItemPos()
     {
+        
         return new Vector3(transform.position.x, transform.position.y + 1.2f, transform.position.z);
       
     }

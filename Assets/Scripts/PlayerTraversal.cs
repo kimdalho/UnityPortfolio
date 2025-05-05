@@ -86,6 +86,7 @@ public class PlayerTraversal : MonoBehaviour
             player.gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
             player.PortalDelay();
             GameManager.instance.ChangeCurrentRoom(nextRoom);
+            player.PlayAnimIdle();
         }
     }
 }

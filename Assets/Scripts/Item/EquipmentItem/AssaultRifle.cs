@@ -25,6 +25,8 @@ public class AssaultRifle : EquipmentItem
         modifierOp = eModifier.Add;
         ApplyGameplayEffectToSelf(source, partType);
         gameObject.SetActive(false);
+
+        UserData.Instance.SetPickupedItem(rank);
     }
 
     public void ModelUpdate(Character source)

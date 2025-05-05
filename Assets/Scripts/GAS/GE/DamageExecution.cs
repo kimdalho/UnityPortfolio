@@ -32,7 +32,7 @@ public class DamageExecution : IGameEffectExecutionCalculation
         {
             IOnGameOver player = target.GetComponent<IOnGameOver>();
             if (player != null)
-            {
+            {                
                 GameManager.instance.GameOver();
             }
 

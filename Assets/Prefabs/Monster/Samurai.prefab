@@ -70,8 +70,10 @@ MonoBehaviour:
   abilitySystem: {fileID: 8359127840597823985}
   chaseRange: 5
   attackRange: 2
-  MaxBullet: -1
+  isDead: 0
+  MaxBullet: 3
   patrolTime: 2
+  startNode: {fileID: 0}
   roomGrid: {fileID: 0}
   evadeRatio: 0.3
 --- !u!114 &6940413212348406184

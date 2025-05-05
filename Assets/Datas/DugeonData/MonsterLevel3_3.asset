@@ -16,8 +16,8 @@ MonoBehaviour:
   attribute:
     MaxHart: 200
     CurHart: 200
-    atk: 3
+    atk: 0
     attackSpeed: 2
-    speed: 2
+    speed: 0
   attackRange: 4
   size: 4

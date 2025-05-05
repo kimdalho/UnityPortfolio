@@ -8,7 +8,7 @@ public class MonsterLevelDataSO : ScriptableObject
 {
     public int level;
     public GameAttribute attribute;
-    public float attackRange;
+    public float attackRange; //만들긴했는데 엄두가 안나네
     public float size = 1f;
 
 }

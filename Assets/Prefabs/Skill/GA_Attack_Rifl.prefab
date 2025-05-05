@@ -47,14 +47,14 @@ MonoBehaviour:
   owner: {fileID: 0}
   AbilityTag: 15
   AbilityName: 
-  Duration: 0
+  Duration: 3
   targetMask:
     serializedVersion: 2
     m_Bits: 1024
-  eWeaponType: 0
+  eWeaponType: 1
   Equip_state_Tag: 21
   fireCount: 3
   fireMultypleAngleRange: 20
   fireMultypleCount: 1
   projectileType: 0
-  delayAtkTime: 0.3
+  delayAtkTime: 0.33
