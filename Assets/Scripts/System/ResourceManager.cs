@@ -170,7 +170,7 @@ public class ResourceManager : MonoBehaviour
         GameObject NewWeapon = Instantiate(reuslt1);
 
         NewWeapon.transform.SetParent(parent);
-        NewWeapon.transform.localScale = Vector3.one;
+        NewWeapon.transform.position = parent.GetComponent<GridNode>().GetItemPos();
 
         var itemCompo = NewWeapon.GetComponent<EquipmentItem>();
         itemCompo.Init(result);

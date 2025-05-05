@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
 
     public Panel_GameOver gameOver;
 
+    [SerializeField]
+    private BossHud bossHud;
+
 
     private void Awake()
     {
@@ -63,15 +66,14 @@ public class GameManager : MonoBehaviour
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
         dungeon.Setup();
         Room startRoom = dungeon.FindRoombyType(eRoomType.Start);        
-        ChangeCurrentRoom(startRoom);
+        yield return ChangeCurrentRoom(startRoom);
         #endregion
-        yield return new WaitForEndOfFrame();
 
         if(SoundManager.instance != null)
         SoundManager.instance.PlayBGM(eBGMType.GameSoundTrack);
     }
 
-    public void ChangeCurrentRoom(Room newCurrentRoom)
+    public IEnumerator ChangeCurrentRoom(Room newCurrentRoom)
     {
         //¿Ãµå ·ë
         if(curRoom != null)
@@ -83,9 +85,41 @@ public class GameManager : MonoBehaviour
         {
             newCurrentRoom.EnableRoom();
         }
-
         curRoom = newCurrentRoom;
+        yield return StartCoroutine(CoCheckBoss());
+
     }
+
+    private IEnumerator CoCheckBoss()
+    {        
+        switch (curRoom.roomType)
+        {
+            case eRoomType.Boss:
+                Monster bossMonster = curRoom.roomMonsters[0];
+                yield return bossHud.SetData(bossMonster);
+                bossMonster.onlyIdle = false;
+                bossMonster.OnDeath += BossDead;
+                break;
+            case eRoomType.Monster:
+                foreach (Monster monster in curRoom.roomMonsters)
+                {
+                    monster.onlyIdle = false;
+                }
+                break;
+        }
+    }
+
+    public void BossDead(Monster boss)
+    {
+        SoundManager Sm = SoundManager.instance;
+        if (Sm != null)
+        {
+            Sm.PlayBGM(eBGMType.GameSoundTrack);          
+        }
+        bossHud.Hide();
+        curRoom.Next.gameObject.SetActive(true);
+    }
+
 
     private void Start()
     {
@@ -115,8 +149,7 @@ public class GameManager : MonoBehaviour
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
         dungeon.Setup();
         Room startRoom = dungeon.FindRoombyType(eRoomType.Start);
-        ChangeCurrentRoom(startRoom);
-        yield return new WaitForSeconds(1f);
+        yield return ChangeCurrentRoom(startRoom);        
         Leveling = false;
 
     }
@@ -131,7 +164,9 @@ public class GameManager : MonoBehaviour
             return;
 
         gameover = true;
+        dungeon.OnGameover();
         OnGameOver?.Invoke();
+        bossHud.Hide();
         SoundManager.instance.audioSource.Pause();
         SoundManager.instance.PlayEffect(eEffectType.Gameover,this.transform);
     }

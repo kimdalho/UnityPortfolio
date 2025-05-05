@@ -46,7 +46,7 @@ public class LobbySceneController : MonoBehaviour
     }
     public void OnClickExitButton()
     {
-
+        Application.Quit();
     }
 
 

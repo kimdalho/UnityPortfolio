@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PatrolState : IState
 {
-    public bool IsState(Monster monster) => monster.patrolTargetPos != default(Vector3) && monster.chaseTarget == null;
+    public bool IsState(Monster monster) => !monster.onlyIdle && (monster.patrolTargetPos != default(Vector3) && monster.chaseTarget == null);
     public void Enter(Monster monster)
     {
         monster.GetAnimator().SetBool("Move", true);

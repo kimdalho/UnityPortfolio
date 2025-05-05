@@ -16,7 +16,7 @@ public class Panel_GameOver : MonoBehaviour ,IOnGameOver
         gameObject.SetActive(false);
         reStart.gameObject.SetActive(false);
         reStart.onClick.AddListener(OnClickRestartButton);
-        GameManager.OnGameOver += OnGameOver;
+        GameManager.OnGameOver += OnGameOver;       
     }
 
     private void OnClickRestartButton()
@@ -54,7 +54,7 @@ public class Panel_GameOver : MonoBehaviour ,IOnGameOver
 
         yield return new WaitForSeconds(0.3f);
         reStart.gameObject.SetActive(true);
-
+        UserData.Instance.DataReset();
 
     }
 

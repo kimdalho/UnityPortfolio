@@ -13,6 +13,7 @@ public abstract class Monster : Character
     public float attackRange;   // 공격 가능 범위
     public bool isDead = false;
     public event Action<Monster> OnDeath;
+    MonsterFSM monsterFSM = null;
 
     [SerializeField] protected int MaxBullet = -1;
     public int CurBullet { get; private set; }
@@ -49,9 +50,7 @@ public abstract class Monster : Character
         GameEffectSelf effect = new GameEffectSelf(model.attribute);
         effect.modifierOp = eModifier.Add;
         level = model.level;
-        effect.ApplyGameplayEffectToSelf(this);
-        gameObject.transform.position = startNode.GetItemPos();
-        Debug.Log(gameObject.name + "Monster  SetData" + startNode.GetItemPos());
+        effect.ApplyGameplayEffectToSelf(this);     
     }
    
     protected virtual void Initialized()
@@ -70,8 +69,11 @@ public abstract class Monster : Character
         var _hit = StateFactory.GetState(MonsterState.Hit);
         var _dead = StateFactory.GetState(MonsterState.Dead);
 
-        GetComponent<MonsterFSM>().Initialized(this, _dead, _hit, _reLoad, _attack, _chase, _patrol, _idle);
+        monsterFSM = GetComponent<MonsterFSM>();
+        monsterFSM.Initialized(this, _dead, _hit, _reLoad, _attack, _chase, _patrol, _idle);
     }
+
+  
 
     #region Action
     public void IdleAction()
@@ -211,17 +213,23 @@ public abstract class Monster : Character
         GroundCheck();
         if (attribute.CurHart <= 0) return;
 
-        if (isGrounded && calcVelocity.y < 0)
+        if (isGrounded && calcVelocity.y < 0 || onlyIdle)
         {
             calcVelocity.y = 0;
         }
+
         calcVelocity.y += gravity * Time.deltaTime;
 
         characterController.Move(calcVelocity * Time.deltaTime);
     }
+    protected void Awake()
+    {
+        onlyIdle = true;
+    }
 
     protected virtual void Start()
     {
+       
         Initialized();
     }
 
@@ -234,6 +242,7 @@ public abstract class Monster : Character
 #endif
 
     float deltime = 0;
+    public bool onlyIdle;
 
     void Update()
     {

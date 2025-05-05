@@ -18,6 +18,7 @@ public class Room : MonoBehaviour
     public Portal top, bottom, left, right;
     public Portal Next;    
     public RoomGrid grid;
+    
 
     public List<PlayerTraversal> traversals;
 
@@ -71,14 +72,11 @@ public class Room : MonoBehaviour
     }
 
     public void SetDatatoType()
-    {
-     
+    {     
         switch (roomType)
         {
             case eRoomType.Boss:
-                Next.gameObject.SetActive(true);
-                break;
-            case eRoomType.Monster:
+                Next.gameObject.SetActive(false);
                 break;
             case eRoomType.Start:
                 transform.position = Vector3.zero;

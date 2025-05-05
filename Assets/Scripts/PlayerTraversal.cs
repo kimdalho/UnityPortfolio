@@ -84,9 +84,9 @@ public class PlayerTraversal : MonoBehaviour
             flow = 0;
             // 마지막 점프 끝! 조작 가능 상태로 복구
             player.gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
-            player.PortalDelay();
-            GameManager.instance.ChangeCurrentRoom(nextRoom);
+            player.PortalDelay();            
             player.PlayAnimIdle();
+            StartCoroutine(GameManager.instance.ChangeCurrentRoom(nextRoom));
         }
     }
 }

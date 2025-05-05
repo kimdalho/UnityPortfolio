@@ -167,7 +167,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
 
     public void FallDeathCheck()
     {
-        if(transform.position.y < -4f)
+        if(transform.position.y < -8f)
         {
             GameManager.instance.GameOver();
         }

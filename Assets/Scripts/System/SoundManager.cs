@@ -7,6 +7,7 @@ public enum eBGMType
 {
     LobbySoundTrack = 1,
     GameSoundTrack = 2,
+    BossTrack =3,
 }
 
 
