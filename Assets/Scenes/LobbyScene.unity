@@ -1628,6 +1628,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slots: []
   CurIndex: 0
+  level1_itemCount: 0
+  level2_itemCount: 0
+  level3_itemCount: 0
+  level1_killMonster: 0
+  level2_killMonster: 0
+  level3_killMonster: 0
 --- !u!4 &941982998
 Transform:
   m_ObjectHideFlags: 0
