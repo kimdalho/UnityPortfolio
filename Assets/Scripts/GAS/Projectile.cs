@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour
         this.targetLayer = targetLayer;
         this.abilityTag = abilityTag;
 
-        baseSpeed *= IsAtkSpeedAdd ? owner.attribute.attackSpeed : 1f;
+        baseSpeed *= IsAtkSpeedAdd ? (owner.attribute.attackSpeed * 0.3f) : 1f;
 
         moveDirection = dir;
 
@@ -72,9 +72,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void Move()
     {
-        transform.Translate(moveDirection * baseSpeed * Time.deltaTime, Space.World);
-
-        
+        transform.Translate(moveDirection * baseSpeed * Time.deltaTime, Space.World);        
     }
 
     private void ApplyGravity()

@@ -9,6 +9,7 @@ public enum eModifier
     Equal = 2,
     Division = 3,
     Minus = 4,
+    AddOnlyAttack = 5,
 
 }
 
@@ -58,6 +59,9 @@ public class GameEffect : MonoBehaviour ,IGameEffect
                 break;
             case eModifier.Minus:
                 attribute -= effect;
+                break;
+            case eModifier.AddOnlyAttack:
+                attribute &= effect;
                 break;
             default:
                 Debug.LogWarning("사실상 버그임");

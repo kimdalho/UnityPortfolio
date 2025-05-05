@@ -71,8 +71,9 @@ MonoBehaviour:
   chaseRange: 5
   attackRange: 1.5
   isDead: 0
-  MaxBullet: -1
+  MaxBullet: 3
   patrolTime: 2
+  startNode: {fileID: 0}
   roomGrid: {fileID: 0}
 --- !u!114 &6940413212348406184
 MonoBehaviour:

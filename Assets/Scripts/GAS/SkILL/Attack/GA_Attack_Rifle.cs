@@ -8,20 +8,10 @@ public interface IProjectileCountModifiable
 
 public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
 {
-    //포워드 방향 카운트
-    [SerializeField] private int fireCount = 1; // 발사 횟수
-    //멀티플 스킬 획득 시
-    [SerializeField] private float fireMultypleAngleRange = 20f;
-    [SerializeField] private int fireMultypleCount = 1;
-
 
     [SerializeField] private ProjectileType projectileType;
     [SerializeField] private float delayAtkTime = 0.3f;
 
-    private void Awake()
-    {
-        Duration = 4;
-    }
 
     protected override IEnumerator ExecuteAbility()
     {

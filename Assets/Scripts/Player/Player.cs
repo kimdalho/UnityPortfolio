@@ -10,11 +10,10 @@ public interface IOnGameOver
 {
     public void OnGameOver();
 
-    
 }
 
 
-public partial class Player : Character , IOnGameOver ,IOnNextFlow
+public partial class Player : Character , IOnGameOver ,IOnNextFlow 
 {
     #region 이동 컨트롤러
     [SerializeField]
@@ -60,6 +59,9 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     }
 
 
+    //포워드 방향 카운트
+    [SerializeField] protected int fireCount = 1; // 발사 횟수
+    [SerializeField] protected int fireMultypleCount = 1;
 
 
     private void Start()
@@ -332,6 +334,11 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     {
         
         scanForTargets.ResetTarget();
+    }
+
+    public void PlayAnimIdle()
+    {
+        animator.Play("FallingEnd");
     }
 }
 

@@ -30,6 +30,7 @@ public abstract class EquipmentItem : GameEffect, IPickupable
             var newskill = Instantiate(ability);
             var skillCompo = newskill.GetComponent<GameAbility>();
             player.GetAbilitySystem().AddAndActivateAbility(skilltag, skillCompo,source);
+            UserData.Instance.SetPickupedItem(rank);
         }
         else
         {
@@ -94,6 +95,7 @@ public abstract class EquipmentItem : GameEffect, IPickupable
 
     }
 
+    public int rank;
 
     public virtual void Init(PickupItemData data) 
     {
@@ -103,6 +105,7 @@ public abstract class EquipmentItem : GameEffect, IPickupable
         effect = data.attribute;
         partType = data.eEquipmentType;
         skilltag = data.tag;
+        rank = data.Rank;
     }
 
     public virtual void Init(PickupWeaponItemData data)
@@ -113,6 +116,7 @@ public abstract class EquipmentItem : GameEffect, IPickupable
         itemAnim = data.runtimeAnimatorController;        
         partType = data.eEquipmentType;
         skilltag = data.tag;
+        rank = 3;
     }
 
 

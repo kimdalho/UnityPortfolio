@@ -56,7 +56,6 @@ MonoBehaviour:
     atk: 1
     attackSpeed: 1
     speed: 1
-    MaxValue: 15
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 7238699780026430288}
   jumpHeight: 2
@@ -68,11 +67,13 @@ MonoBehaviour:
   animator: {fileID: 1064726689573047387}
   controller: {fileID: 5989734767020855489}
   fxSystem: {fileID: -770563901117985350}
+  abilitySystem: {fileID: 7643396454371422051}
   chaseRange: 10
   attackRange: 3
-  abilitySystem: {fileID: 7643396454371422051}
-  MaxBullet: -1
+  isDead: 0
+  MaxBullet: 3
   patrolTime: 2
+  startNode: {fileID: 0}
   roomGrid: {fileID: 0}
 --- !u!114 &2563671461830074345
 MonoBehaviour:

@@ -42,19 +42,18 @@ public abstract class Monster : Character
     }
     #endregion
 
+    public int level;
+
     public void SetData(MonsterLevelDataSO model)
     {
         GameEffectSelf effect = new GameEffectSelf(model.attribute);
         effect.modifierOp = eModifier.Add;
+        level = model.level;
         effect.ApplyGameplayEffectToSelf(this);
-        transform.position = startNode.GetItemPos();
-        /*_rigidbody = GetComponent<Rigidbody>();
-        if(_rigidbody == null)
-        {
-            _rigidbody = this.gameObject.AddComponent<Rigidbody>();
-        }*/
+        gameObject.transform.position = startNode.GetItemPos();
+        Debug.Log(gameObject.name + "Monster  SetData" + startNode.GetItemPos());
     }
-
+   
     protected virtual void Initialized()
     {
         CurBullet = MaxBullet;
@@ -133,6 +132,8 @@ public abstract class Monster : Character
     {
         if (IsAnimPlay()) return;
         IsHit = false;
+        aggro = true;
+        chaseTarget = GameManager.instance.GetPlayer().transform;
     }
     
     public void DeadAction()
@@ -142,7 +143,7 @@ public abstract class Monster : Character
         OnDeath?.Invoke(this);
         gameObject.SetActive(false);
         SoundManager.instance.PlayEffect(eEffectType.oop);
-        //Destroy(gameObject);
+        UserData.Instance.SetKillMonster(level);
     }
     #endregion
 
@@ -182,9 +183,12 @@ public abstract class Monster : Character
         var _targetRot = Quaternion.LookRotation(new Vector3(dir.x, 0f, dir.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, _targetRot, rotSpeed * Time.deltaTime);
     }
-
+    public bool aggro;
     private void SearchTarget()
     {
+        if (aggro && chaseTarget != null)
+            return;
+
         var _hits = Physics.OverlapSphere(transform.position, chaseRange, LayerMask.GetMask("Player"));
 
         chaseTarget = _hits == null || _hits.Length.Equals(0) ? null: _hits[0].transform;
@@ -229,10 +233,24 @@ public abstract class Monster : Character
     }
 #endif
 
+    float deltime = 0;
+
     void Update()
     {
         SearchTarget();
         ApplyGravity();
+        
+        if(aggro)
+        {            
+            if(deltime > 4)
+            {
+                deltime = 0;
+                aggro = false;
+            }
+            deltime += Time.deltaTime;
+
+        }
+
     }
 
     public void SetRoomGrid(Transform grid)
@@ -245,5 +263,8 @@ public abstract class Monster : Character
         return isDead;
     }
 
-
+    public void ResetPos()
+    {
+        gameObject.transform.position = startNode.GetItemPos();
+    }
 }

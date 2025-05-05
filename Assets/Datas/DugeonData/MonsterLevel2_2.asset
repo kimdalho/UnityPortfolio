@@ -18,6 +18,6 @@ MonoBehaviour:
     CurHart: 5
     atk: 0
     attackSpeed: 2
-    speed: 4
+    speed: 0
   attackRange: 4
   size: 1.4
