@@ -28,7 +28,14 @@ public class RoomGrid : MonoBehaviour
         List<GridNode> result  = selectRowGrid.GetGrid();
         return result[rand2.Next(selectRowGrid.GetGrid().Count)];
     }
-    
+
+    public GridNode GetFirGridNode()
+    {        
+        GridRow selectRowGrid = grid[grid.Count / 2];
+        List<GridNode> result = selectRowGrid.GetGrid();
+        return result[result.Count / 2];
+    }
+
     public Monster CreateMonster(Transform parent)
     {        
         GridNode node = GetRandomGridNode();

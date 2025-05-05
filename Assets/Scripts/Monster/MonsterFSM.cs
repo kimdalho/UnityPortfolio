@@ -53,7 +53,7 @@ public class MonsterFSM : MonoBehaviour
     }
 
     private void Update()
-    {
+    {      
         DecideState();
         UpdateState();
         Debug.Log("내 현재 상태" + currentState);

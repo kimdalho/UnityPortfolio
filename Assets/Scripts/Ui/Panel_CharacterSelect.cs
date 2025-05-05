@@ -82,7 +82,11 @@ public class Panel_CharacterSelect : MonoBehaviour
     }
 
     public void GameStart()
-    {;
+    {
+        bool exsitCharacter  = UserData.Instance.CurIndex >= 0;
+        if (!exsitCharacter)
+            return;
+
         SceneContainer.Instance.LoadScene(eSceneType.GameScene);
     }
 

@@ -68,8 +68,8 @@ public class Character : AttributeEntity , IcanGetHead
     
     protected void GroundCheck()
     {
-        Debug.DrawRay(transform.position, transform.up * -1 * groundCheckDistance, Color.blue, 0.3f);
-        if (Physics.Raycast(transform.position, transform.up * -1, out groundhit, groundCheckDistance, groundLayerMask))
+        Debug.DrawRay(transform.position, transform.up * -0.3f * groundCheckDistance, Color.blue, 0.3f);
+        if (Physics.Raycast(transform.position, transform.up * -0.3f, out groundhit, groundCheckDistance, groundLayerMask))
         {
             isGrounded = true;
         }

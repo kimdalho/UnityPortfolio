@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,25 +10,28 @@ public class DungeonController : MonoBehaviour
     public List<GameObject> items = new List<GameObject>();
 
     public void Setup()
-    {
+    {        
         foreach (Room room in rooms)
         {
             switch(room.roomType)
             {
                 case eRoomType.Item:
                 case eRoomType.Start:
-                case eRoomType.Boss:
-                    room.isClear = true;
-                    break;
-                case eRoomType.Monster:
-                    foreach (Monster monster in monsters)
-                    {
-                        monster.ResetPos();
-                        Debug.Log("던전 컨트롤러 셋업" + monster.transform.position);
-                    }
+                    room.isClear = true;                   
                     break;
             }
             
+        }
+    }
+
+    public void OnGameover()
+    {
+        foreach (Room room in rooms)
+        {
+            foreach (var monster in room.roomMonsters)
+            {
+                monster.onlyIdle = true;
+            }
         }
     }
 

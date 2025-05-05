@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 
@@ -8,6 +9,7 @@ public class DungeonMaker : MonoBehaviour
 {
     public DungeonData roomData;
     public GameObject roomprefab;
+    public BossHud BossHud;
     public int offsetX;
     public int offsetY;
 
@@ -127,8 +129,7 @@ public class DungeonMaker : MonoBehaviour
             portal.toNodeGUID = linkData.toNodeGUID;
             portal.toNextRoom = dic[linkData.toNodeGUID];
             portal.toNextPoint = dic[linkData.toNodeGUID].keyValuePairs[flip_direction].PortalPoint;
-            input.enablePortal.Add(portal);
-            //portal.gameObject.SetActive(true);
+            input.enablePortal.Add(portal);          
             dc.portals.Add(portal);
         }        
     }
@@ -217,16 +218,29 @@ public class DungeonMaker : MonoBehaviour
                         createdMonster.name = i + createdMonster.name;
                         createdMonster.transform.localScale *= modelData.size;
                         createdMonster.SetData(modelData);
-
                         room.roomMonsters.Add(createdMonster);
                         dc.monsters.Add(createdMonster);
                         createdMonster.OnDeath += room.OnMonsterDeath;
+                        createdMonster.ResetPos();
                     }
                     break;
                 case eRoomType.Start:
-                    var rnd =  Random.Range(0, 2);
-                    var node =  room.grid.GetRandomGridNode();
+                    var rnd =  Random.Range(0, 3);
+                    var node = room.grid.GetFirGridNode();
                     ResourceManager.Instance.CreateweaponItemToIndex(rnd, node.transform);
+                    break;
+                case eRoomType.Boss:
+                    int rolllevel2 = RollLevel(config.monsterLevel1Chance, config.monsterLevel2Chance, config.monsterLevel3Chance);
+                    int rollData2 = Random.Range(1, 3);
+                    MonsterLevelDataSO modelData1 = monsterLvDatas[rolllevel2][rollData2];
+                    Monster createdMonster1 = room.grid.CreateMonster(monsterHolder.transform);
+                    createdMonster1.name = "Boss" + createdMonster1.name;
+                    createdMonster1.transform.localScale *= 2.3f;
+                    createdMonster1.SetData(modelData1);
+                    room.roomMonsters.Add(createdMonster1);
+                    dc.monsters.Add(createdMonster1);
+                    createdMonster1.ResetPos();
+                    createdMonster1.OnDeath += room.OnMonsterDeath;
                     break;
             }
 

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class UserData : MonoBehaviour 
 {
@@ -101,6 +103,18 @@ public class UserData : MonoBehaviour
         }
     }
 
+    public void DataReset()
+    {
+        slots[CurIndex] = new GameData();
+        CurIndex = -1;
+        level1_itemCount = 0;
+        level2_itemCount = 0;
+        level3_itemCount = 0;
+
+       level1_killMonster = 0;
+       level2_killMonster = 0;
+       level3_killMonster = 0;
+    }
 }
 
 /// <summary>
