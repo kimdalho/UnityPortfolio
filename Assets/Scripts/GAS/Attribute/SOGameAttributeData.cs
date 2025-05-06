@@ -7,5 +7,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewStatData", menuName = "Game/StatData")]
 public class SOGameAttributeData :ScriptableObject
 {
-    public GameAttribute attribute;
+    public AttributeSet attribute;
 }

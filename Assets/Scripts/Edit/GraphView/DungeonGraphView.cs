@@ -82,9 +82,9 @@ public class DungeonGraphView : GraphView
         return compatiblePorts;
     }
 
-    public DungeonData SaveGraphData()
+    public DungeonDataSO SaveGraphData()
     {
-        DungeonData dungeonData = ScriptableObject.CreateInstance<DungeonData>();
+        DungeonDataSO dungeonData = ScriptableObject.CreateInstance<DungeonDataSO>();
 
         // 노드 저장
         foreach (var node in nodes)

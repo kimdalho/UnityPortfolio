@@ -73,8 +73,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4612327678523367436}
   - component: {fileID: 4612327678530326508}
-  - component: {fileID: -4273004617200939535}
   - component: {fileID: 7710608074971605074}
+  - component: {fileID: 6533827469618471684}
   m_Layer: 0
   m_Name: Bazooka
   m_TagString: Untagged
@@ -121,33 +121,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-4273004617200939535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4612327678523079724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e73fcd72a57f3714aabe245850d691b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effect:
-    MaxHart: 0
-    CurHart: 0
-    atk: 6
-    attackSpeed: 0
-    speed: 0
-  modifierOp: 5
-  itemData:
-    itemName: 
-    description: 
-  partType: 0
-  skilltag: 0
-  ability: {fileID: 0}
-  itemAnim: {fileID: 0}
-  eWeaponType: 0
 --- !u!135 &7710608074971605074
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -169,6 +142,26 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.6854016
   m_Center: {x: 0, y: 0.07456762, z: 0.46759018}
+--- !u!114 &6533827469618471684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4612327678523079724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3256b63f87aa06b42b3a3904e21d7bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData:
+    itemName: 
+    description: 
+  ability: {fileID: 0}
+  skilltag: 15
+  partType: 3
+  rank: 0
+  itemAnim: {fileID: 22100000, guid: c3a1d6297cbd2bb40b211b20c855b52c, type: 2}
 --- !u!1 &4612327678523079726
 GameObject:
   m_ObjectHideFlags: 0

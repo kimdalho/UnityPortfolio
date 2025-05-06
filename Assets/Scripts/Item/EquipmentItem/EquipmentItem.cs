@@ -2,32 +2,23 @@ using NUnit.Framework.Interfaces;
 using System;
 using UnityEngine;
 
-public abstract class EquipmentItem : GameEffect, IPickupable
+public abstract class EquipmentItem : BaseItem
 {
-    public ItemData itemData;
     //장비 아이템은 어느 파츠인지 타입을 가지고있다.
-    public eEuipmentType partType;
-    public eTagType skilltag;
-    public GameObject ability;
+
+
     private Vector3 rotationSpeed = new Vector3(0, 30, 0);
-    //애니메이션 정보
-    public RuntimeAnimatorController itemAnim;
 
-    public (ItemData, GameAttribute) GetItemData() 
-    {
-        return (itemData, effect);
-    }
-    
-
-    public virtual void OnPickup(Character source, GameObject picker) 
+   
+    public override void OnPickup(Character source) 
     {        
         Player player = source.GetComponent<Player>();
 
-        if (ability != null)
+        if (abilityPrefab != null)
         {
             FXFactory.Instance.GetFX("Effect_NinjaSkill", source.transform);
             SoundManager.instance.PlayEffect(eEffectType.levelup);
-            var newskill = Instantiate(ability);
+            var newskill = Instantiate(abilityPrefab);
             var skillCompo = newskill.GetComponent<GameAbility>();
             player.GetAbilitySystem().AddAndActivateAbility(skilltag, skillCompo,source);
             UserData.Instance.SetPickupedItem(rank);
@@ -39,8 +30,7 @@ public abstract class EquipmentItem : GameEffect, IPickupable
             player.GetAbilitySystem().AddAndActivateAbility(skilltag, skillCompo, source);                      
         }
 
-        ApplyGameplayEffectToSelf(source, partType);
-        gameObject.SetActive(false);
+        ItemApplyEffect(source, this);
     }
 
 
@@ -95,38 +85,11 @@ public abstract class EquipmentItem : GameEffect, IPickupable
 
     }
 
-    public int rank;
-
-    public virtual void Init(PickupItemData data) 
+    public override void Init(PickupItemData data) 
     {
-        ability = data.gameAbility;
-        itemData.itemName = data.itemData.itemName;
-        itemData.description = data.itemData.description;
-        effect = data.attribute;
-        partType = data.eEquipmentType;
-        skilltag = data.tag;
+        base.Init(data);
         rank = data.Rank;
-    }
-
-    public virtual void Init(PickupWeaponItemData data)
-    {
-        ability = data.gameAbility;
-        itemData.itemName = data.itemData.itemName;
-        itemData.description = data.itemData.description;
-        itemAnim = data.runtimeAnimatorController;        
-        partType = data.eEquipmentType;
-        skilltag = data.tag;
-        rank = 3;
-    }
-
-
-/// <summary>
-/// 장비 타입은 무기,머리,바디,파츠 상관없이 고유한 효과를 가지고있다.
-/// 자식에게 효과를 부여하는데 중요한건 어빌리티로 발동해야한다는점
-/// 그리고 태그를 만들어야한다는점
-/// 특히 무기 같은 경우는 애니메이션 전채가 바뀐다.
-/// </summary>
-
+    }     
 
 }
 

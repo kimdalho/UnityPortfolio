@@ -21,23 +21,25 @@ public class AttributeView : MonoBehaviour
         ShowData(player.attribute);
     }
 
-    public void ShowHart(GameAttribute model)
-    {       
+    public void ShowHart(AttributeSet model)
+    {
+       var MaxHart = model.GetMaxValue(eAttributeType.Health);
+       var CurHart = model.GetCurValue(eAttributeType.Health);
        for (int i = 0; i < hearts.Count; i++) 
        {
-            hearts[i].ShowMaxHeart(model.MaxHart > i);
+            hearts[i].ShowMaxHeart(MaxHart > i);
        }
 
-        for (int i = 0; i < model.MaxHart; i++)
+        for (int i = 0; i < MaxHart; i++)
         {
-            hearts[i].ShowCurrentHeart(model.CurHart > i);            
+            hearts[i].ShowCurrentHeart(CurHart > i);            
         }
     }
 
-    public void ShowData(GameAttribute model)
+    public void ShowData(AttributeSet model)
     {
-        localized[0].UpdateLocalizedText(model.atk);
-        localized[1].UpdateLocalizedText(model.attackSpeed);
-        localized[2].UpdateLocalizedText(model.speed);
+        localized[0].UpdateLocalizedText(model.GetCurValue(eAttributeType.Attack));
+        localized[1].UpdateLocalizedText(model.GetCurValue(eAttributeType.AttackSpeed));
+        localized[2].UpdateLocalizedText(model.GetCurValue(eAttributeType.Speed));
     }
 }

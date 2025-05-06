@@ -16,7 +16,7 @@ public class PlayerTraversal : MonoBehaviour
     private uint flow = 0;
     public void StartPlayerTraversal(Player player, Portal potal)
     {
-        jumpPoints.Last().nextPoint = potal.toNextPoint;
+        jumpPoints.Last().nextPoint = potal.toNextSpawnPoint;
         nextRoom = potal.toNextRoom;
         player.MoveAnimStop();
         player.gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);

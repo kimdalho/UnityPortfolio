@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5496435973971864460}
   - component: {fileID: 5496435973974731692}
   - component: {fileID: 5496435973973633388}
-  - component: {fileID: 3437681289601158151}
   - component: {fileID: -2334199265268689902}
+  - component: {fileID: 2332876593487322183}
   m_Layer: 0
   m_Name: HMG
   m_TagString: Untagged
@@ -88,33 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3437681289601158151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5496435973971703724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 770d951ea4bf3924b907119ef37e875e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effect:
-    MaxHart: 0
-    CurHart: 0
-    atk: 2
-    attackSpeed: 0
-    speed: 0
-  modifierOp: 5
-  itemData:
-    itemName: 
-    description: 
-  partType: 3
-  skilltag: 0
-  ability: {fileID: 0}
-  itemAnim: {fileID: 0}
-  eWeaponType: 0
 --- !u!135 &-2334199265268689902
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -136,3 +109,16 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.6854016
   m_Center: {x: 0, y: 0.07456762, z: 0.46759018}
+--- !u!114 &2332876593487322183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5496435973971703724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3256b63f87aa06b42b3a3904e21d7bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemAnim: {fileID: 22100000, guid: 0f05daa5d2bdbf841b88f9ce0bcd04c5, type: 2}

@@ -48,7 +48,7 @@ public class BossHud : MonoBehaviour
 
     public void OnHit()
     {
-        slider.value = Mathf.Lerp(bossMonster.attribute.MaxHart, bossMonster.attribute.CurHart,1);
+        //slider.value = Mathf.Lerp(bossMonster.attribute.GetCurValue(eAttributeType.Health), bossMonster.attribute.GetCurValue(eAttributeType.Health),1);
     }
 
 }

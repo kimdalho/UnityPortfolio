@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 public class ItemdescriptionView : MonoBehaviour
 {
     public Player player;
@@ -18,7 +17,7 @@ public class ItemdescriptionView : MonoBehaviour
     {
         var pairdata = model.GetItemData();
         ItemData itemdata = pairdata.Item1;
-        GameAttribute attribute = pairdata.Item2;
+        AttributeSet attribute = pairdata.Item2;
 
         if (itemdata == null || attribute == null)
             return;
@@ -28,10 +27,10 @@ public class ItemdescriptionView : MonoBehaviour
 
         list[0].SetLocalizationID(itemdata.itemName);
         
-        EnableCheck(list[1], attribute.MaxHart);
-        EnableCheck(list[2], attribute.atk);
-        EnableCheck(list[3], attribute.attackSpeed);
-        EnableCheck(list[4], attribute.speed);
+        EnableCheck(list[1], attribute.GetMaxValue(eAttributeType.Health));
+        EnableCheck(list[2], attribute.GetCurValue(eAttributeType.Attack));
+        EnableCheck(list[3], attribute.GetCurValue(eAttributeType.Speed));
+        EnableCheck(list[4], attribute.GetCurValue(eAttributeType.AttackSpeed));
         
         list[5].SetLocalizationID(itemdata.description);
 

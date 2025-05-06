@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -67,11 +68,18 @@ public class Panel_CharacterSelect : MonoBehaviour
     private void ChangeSelectSlot(CharacterSlot _slot)
     {
         var data = UserData.Instance.slots[_slot.index];
+
+        var MaxHart = data.playerdata.GetMaxValue(eAttributeType.Health);
+        var CurHealth = data.playerdata.GetCurValue(eAttributeType.Health);
+        var Attack = data.playerdata.GetCurValue(eAttributeType.Attack);
+        var AttackSpeed = data.playerdata.GetCurValue(eAttributeType.AttackSpeed);
+        var speed = data.playerdata.GetCurValue(eAttributeType.Speed);
+
         tmpStats[0].UpdateLocalizedText(data.dungeonLevel);
-        tmpStats[1].UpdateLocalizedText(data.playerAttribute.MaxHart, data.playerAttribute.CurHart);
-        tmpStats[2].UpdateLocalizedText(data.playerAttribute.atk);
-        tmpStats[3].UpdateLocalizedText(data.playerAttribute.attackSpeed);
-        tmpStats[4].UpdateLocalizedText(data.playerAttribute.speed);
+        tmpStats[1].UpdateLocalizedText(MaxHart, CurHealth);
+        tmpStats[2].UpdateLocalizedText(Attack);
+        tmpStats[3].UpdateLocalizedText(AttackSpeed);
+        tmpStats[4].UpdateLocalizedText(speed);
         _slot.tmp_Nickname.GetComponent<LocalizedText>().UnUpdate();
         foreach (var checkslot in slotList)
         {

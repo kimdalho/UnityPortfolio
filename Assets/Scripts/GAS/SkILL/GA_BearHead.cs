@@ -20,6 +20,11 @@ public class GA_BearHead : GameAbility
     {
         owner.gameplayTagSystem.AddTag(AbilityTag);
         owner.Onkill += Onkill;
+        if(effectHill == null)
+        {
+            effectHill = new GameEffect(eModifier.Add);
+            effectHill.AddModifier(eAttributeType.Health, 1);
+        }
     }
 
     private void Onkill()
@@ -34,7 +39,7 @@ public class GA_BearHead : GameAbility
         int remainder = killcount % CONDITION_Count;
         if(remainder <= 0)
         {
-            effectHill.ApplyGameplayEffectToSelf(owner);
+            owner.ApplyEffect(effectHill);
             owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
             killcount = 0;
         }        

@@ -50,7 +50,7 @@ public class PickupItemData : PickupItemDataBase
     //플레이어 인덱스
     public int modelIndex;
 
-    public GameAttribute attribute;
+    public AttributeSet attribute;
 
     //오브젝트 인덱스
     public int objectIndex;

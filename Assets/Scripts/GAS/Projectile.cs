@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class Projectile : MonoBehaviour
 {
@@ -36,8 +37,9 @@ public class Projectile : MonoBehaviour
         this.owner = owner;
         this.targetLayer = targetLayer;
         this.abilityTag = abilityTag;
+        float attackSpeed = owner.attribute.GetCurValue(eAttributeType.AttackSpeed);
 
-        baseSpeed *= IsAtkSpeedAdd ? (owner.attribute.attackSpeed * 0.3f) : 1f;
+        baseSpeed *= IsAtkSpeedAdd ? (attackSpeed * 0.3f) : 1f;
 
         moveDirection = dir;
 
@@ -58,8 +60,12 @@ public class Projectile : MonoBehaviour
         {
             if (_hit.TryGetComponent<AttributeEntity>(out var _ae))
             {
-                var _effect = new DamageExecution();
-                _effect.Execute(owner, _ae);
+                float takeDamage = owner.attribute.GetCurValue(eAttributeType.Attack);
+                GameEffect effect = new GameEffect(eModifier.Add);
+                effect.AddModifier(eAttributeType.Health, -takeDamage);
+                _ae.ApplyEffect(effect);
+
+
                 (_ae as Character)?.fxSystem?.ExecuteFX(abilityTag);
                 SoundManager.instance.PlayEffect(eEffectType.Hit, _ae.transform);
                 if (--PenetrateCnt > 0) return;

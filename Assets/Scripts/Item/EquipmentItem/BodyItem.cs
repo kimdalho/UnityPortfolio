@@ -17,9 +17,9 @@ public class BodyItem : EquipmentItem
         skilltag = data.tag;
     }
 
-    public override void OnPickup(Character source, GameObject picker)
+    public override void OnPickup(Character source)
     {
-        base.OnPickup(source, picker);
+        base.OnPickup(source);
         source.GetModelController().SetActiveExclusive(partType, index);
     }
 }

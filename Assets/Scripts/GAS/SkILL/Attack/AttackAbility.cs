@@ -24,6 +24,7 @@ public class AttackAbility : GameAbility
     
     //공격중일때
     protected eTagType stateTagType = eTagType.Attacking;
+    protected readonly string String_AttackTrigger = "Trg_Attack";
     
     protected override IEnumerator ExecuteAbility()
     {         
@@ -39,7 +40,7 @@ public class AttackAbility : GameAbility
         }
         CreateDetectObject();
        
-        float delay = Duration / Mathf.Max(character.attribute.attackSpeed, 0.01f); // 0으로 나누는 것 방지
+        float delay = Duration / Mathf.Max(character.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f); // 0으로 나누는 것 방지
         Debug.Log($"Duration {Duration} , {delay}");
         yield return new WaitForSeconds(delay);  // 지속 효과 처리
         EndAbility();
@@ -48,6 +49,7 @@ public class AttackAbility : GameAbility
 
     private void CreateDetectObject()
     {
+        float takeDamage = owner.attribute.GetCurValue(eAttributeType.Attack);
         Vector3 spherePosition = owner.transform.position + owner.transform.forward * 1f; // 정면에서 +3 이동
         int layerMask = LayerMask.GetMask("Item"); // "Enemy" 레이어만 감지
         Collider[] results = SphereDetector.DetectObjectsInSphere(spherePosition, 1, targetMask);
@@ -56,13 +58,14 @@ public class AttackAbility : GameAbility
             AttributeEntity ae = col.GetComponent<AttributeEntity>();
             if (ae != null) 
             {
-                var effect = new DamageExecution();                
-                effect.Execute(owner, ae);
 
                 var character = ae as Character;
+
                 if (character != null && character.fxSystem != null)
                 {
-                    //character.fxSystem?.ExecuteFX(AbilityTag);
+                    GameEffect effect = new GameEffect(eModifier.Add);
+                    effect.AddModifier(eAttributeType.Health, -takeDamage);
+                    ae.ApplyEffect(effect);
                 }
                 else
                 {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -8,8 +9,9 @@ public class Samurai : BlackHood
 
     protected override void TakeDamage()
     {
-        // 공격을 맞았을 때 회피 판정을 받으면 백덤블링으로 캐릭터와 멀어지도록
-        if (Random.Range(0f, 1f) <= evadeRatio && attribute.CurHart > 0)
+        var CurHealth = attribute.GetCurValue(eAttributeType.Health);
+        
+        if (UnityEngine.Random.Range(0f, 1f) <= evadeRatio && CurHealth > 0)
         {
             animator.SetTrigger("Evade");
             // 회피하는 동안은 피해를 입지 않음
@@ -43,7 +45,8 @@ public class Samurai : BlackHood
             else
             {
                 // 덤블링 하는 방향으로 이동 Update
-                characterController.Move(-transform.forward * Time.deltaTime * attribute.speed);
+                var speed = attribute.GetCurValue(eAttributeType.Speed);
+                characterController.Move(-transform.forward * Time.deltaTime * speed);
             }
         }
         else

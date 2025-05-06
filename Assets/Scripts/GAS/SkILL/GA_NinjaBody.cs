@@ -1,15 +1,16 @@
 using System.Collections;
 using UnityEngine;
 
-
+// 적 처치 시 30초간 공속 30% 증가
 public class GA_NinjaBody : GameAbility
 {
-    public GameEffect GE_NinjaBodyspeedUp;
-
     public eTagType state = eTagType.NinjaBody_State_SpeedUp;
 
     protected override IEnumerator ExecuteAbility()
     {
+        if (owner.gameplayTagSystem.HasTag(AbilityTag))
+            yield break;
+
         StartAbility();
         owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
         yield return null;
@@ -17,15 +18,17 @@ public class GA_NinjaBody : GameAbility
 
     private void StartAbility()
     {
-        owner.gameplayTagSystem.AddTag(AbilityTag);
+        owner.gameplayTagSystem.AddTag(AbilityTag);        
         owner.Onkill += Onkill;
     }
 
     private void Onkill()
     {
-        GE_NinjaBodyspeedUp.modifierOp = eModifier.Multiply;
-
-        GE_NinjaBodyspeedUp.ApplyGameplayEffectToSelf(owner);
+        var baseAttackSpeed = owner.attribute.GetBaseValue(eAttributeType.AttackSpeed) * 0.3f;
+        GameEffect effect = new GameEffect(eModifier.Multiply);
+        effect.eDurationPolicy = eDurationPolicy.HasDuration;
+        effect.duration = Duration;
+        effect.AddModifier(eAttributeType.AttackSpeed, baseAttackSpeed);
         StartCoroutine(OnkillProcess());
     }
 
@@ -35,29 +38,13 @@ public class GA_NinjaBody : GameAbility
             yield break;
         owner.gameplayTagSystem.AddTag(state);
         owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
-        Debug.Log("atk speed" + owner.attribute.attackSpeed);
-
-
         yield return new WaitForSeconds(Duration);
-        EndOnkillProcess();
-    }
-
-    private void EndOnkillProcess()
-    {
-        GE_NinjaBodyspeedUp.modifierOp = eModifier.Division;
-        GE_NinjaBodyspeedUp.ApplyGameplayEffectToSelf(owner);
         owner.gameplayTagSystem.RemoveTag(state);
     }
-
-
-
-
     
     public override void EndAbility()
     {
         base.EndAbility();
-        GE_NinjaBodyspeedUp.modifierOp = eModifier.Division;
-
-
+        owner.Onkill -= Onkill;
     }
 }
