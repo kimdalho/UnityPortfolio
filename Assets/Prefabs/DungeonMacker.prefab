@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &678737340351561179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5544491846484596900}
+  - component: {fileID: 728277861705819174}
+  m_Layer: 0
+  m_Name: dungeonController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5544491846484596900
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678737340351561179}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -242.41406, y: 7.4167385, z: -1486.2876}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2273127656600762665}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &728277861705819174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 678737340351561179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff20cdfecb724c047b86c3538eb4fdba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rooms: []
+  portals: []
+  monsters: []
+  items: []
 --- !u!1 &2839640134614853808
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,7 +57,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2273127656600762665}
-  - component: {fileID: 48656915701471544}
+  - component: {fileID: 8983685128303373188}
   m_Layer: 0
   m_Name: DungeonMacker
   m_TagString: Untagged
@@ -29,10 +77,11 @@ Transform:
   m_LocalPosition: {x: -1.6695008, y: -6.400713, z: -1.7472305}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5544491846484596900}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &48656915701471544
+--- !u!114 &8983685128303373188
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,18 +90,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2839640134614853808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98f44f6136495e249abbb31441e01c80, type: 3}
+  m_Script: {fileID: 11500000, guid: debed4bc22afd2644b67d9ac8df2d9dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomData: {fileID: 0}
-  roomprefab: {fileID: 8356782459759718623, guid: 208164d420ed3a64ab551f4cc92f5727, type: 3}
-  offsetX: 10
-  offsetY: 10
+  roomPrefab: {fileID: 8356782459759718623, guid: 208164d420ed3a64ab551f4cc92f5727, type: 3}
+  dungeonControllerPrefab: {fileID: 678737340351561179}
   dungeonConfig: {fileID: 11400000, guid: a35d5158a85b08343b485dc1622a016d, type: 2}
-  currentDungeonLevel: 0
-  dungeonControllerPrfab: {fileID: 5922409987601910099, guid: b81b1e4732e392c499dd26e9a4eff4cd, type: 3}
-  dungeonController: {fileID: 0}
-  DungeonDatas:
+  dungeonDatas:
   - {fileID: 11400000, guid: 77dbb9d2b59443b49a32fe06dc82a666, type: 2}
   - {fileID: 11400000, guid: 16a512f037f67894abaf13463b003094, type: 2}
   - {fileID: 11400000, guid: 8aeed7b99d19634448b1848509e26ce9, type: 2}
@@ -63,3 +107,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c577e6c167dd3c94f8becefd7c530f64, type: 2}
   - {fileID: 11400000, guid: e43eada5e9b426e45a6cece5f3ea938a, type: 2}
   - {fileID: 11400000, guid: 242ee80a72afd5544923d05a6616f6e1, type: 2}
+  monsters:
+  - {fileID: 11400000, guid: c4a39539d5541ee4f8a3ceed0e48abe2, type: 2}
+  - {fileID: 11400000, guid: f5a7a798a7519e34aaface6679dd276c, type: 2}
+  - {fileID: 11400000, guid: 10cec96f4e16b3445b8fda939676f943, type: 2}
+  - {fileID: 11400000, guid: fb63dc3f2ae218b4c8eb9e2510d01792, type: 2}
+  - {fileID: 11400000, guid: 1b75664767a3c40478cde5155263e6f2, type: 2}
+  - {fileID: 11400000, guid: c7989ecd74a331c4eafaac5d3a9cd8e5, type: 2}
+  - {fileID: 11400000, guid: fbf4e16a6abd08d409f0a6e4545dc8f1, type: 2}
+  - {fileID: 11400000, guid: c77a1825faa003142bf3d4f8dafe0f7b, type: 2}
+  - {fileID: 11400000, guid: 14d2c2a57a28b084191a7b797c9275e0, type: 2}

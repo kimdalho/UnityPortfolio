@@ -110,11 +110,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         abilitySystem.ActivateAbility(eTagType.Attack, this);
     }
 
-    public void AbilitySkillAttackEnd()
-    {
-        abilitySystem.DeactivateAbility(eTagType.Attack);
-    }
-
     public void OnJumpStart()
     {
         animator.SetTrigger("Trg_JumpStart");
@@ -227,7 +222,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         IPickupable pickup = other.GetComponent<IPickupable>();
         if (pickup != null)
         {            
-            pickup.OnPickup(this,gameObject);
+            pickup.OnPickup(this);
         }
     }
 
@@ -271,7 +266,9 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         right.Normalize();
 
         moveDirection = forward * vAxis + right * hAxis;
-        moveDirection *= attribute.speed;
+        moveDirection *= attribute.GetCurValue(eAttributeType.Speed);
+
+        Debug.Log(moveDirection + "¼Óµµ" + attribute.GetCurValue(eAttributeType.Speed));
     }
 
     public void OnGameOver()

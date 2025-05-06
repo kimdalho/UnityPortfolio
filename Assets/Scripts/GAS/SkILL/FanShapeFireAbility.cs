@@ -44,7 +44,7 @@ public class FanShapeFireAbility : GameAbility
         var _animLength = owner.GetAnimator().GetCurrentAnimatorStateInfo(0).length;
         var _duration = _animLength > Duration ? _animLength : Duration;
 
-        var _delay = _duration / Mathf.Max(owner.attribute.attackSpeed, 0.01f); // 0으로 나누는 것 방지
+        var _delay = _duration / Mathf.Max(owner.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f); // 0으로 나누는 것 방지
 
         yield return new WaitForSeconds(_delay);
         EndAbility();

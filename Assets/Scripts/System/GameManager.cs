@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private Player player;
     [SerializeField]
     private DungeonController dungeon;
-    public DungeonMaker dungeonMaker;
+    public DungeonGenerator dungeonMaker;
     public static event Action OnGameOver;
     public static event Action OnNextFlow;
   
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     {
         var loadplayerdata = UserData.Instance.LoadData();
         #region 플레이어 셋업
-        player.attribute = loadplayerdata.playerAttribute;
+        player.attribute = loadplayerdata.playerdata;
         #endregion
 
         #region 던전 셋업

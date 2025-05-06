@@ -4,8 +4,8 @@ using UnityEngine;
 /// </summary>
 public interface IPickupable
 {
-    void OnPickup(Character character, GameObject picker);
+    void OnPickup(Character character);
 
-    (ItemData, GameAttribute) GetItemData();
+    (ItemData, AttributeSet) GetItemData();
     
 }

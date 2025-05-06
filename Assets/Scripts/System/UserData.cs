@@ -48,19 +48,13 @@ public class UserData : MonoBehaviour
         newSaveData.index = index;
         newSaveData.nickname = _nickname;
         newSaveData.dungeonLevel = 1;
-        newSaveData.playerAttribute = new GameAttribute();
-        GameObject obj = new GameObject();
-        GameEffect defaultGE = obj.AddComponent<GameEffect>();
-        defaultGE.modifierOp = eModifier.Add;
-        defaultGE.effect = new GameAttribute();
-        defaultGE.effect.MaxHart = 3;
-        defaultGE.effect.CurHart = 3;
-        defaultGE.effect.atk = 1;
-        defaultGE.effect.attackSpeed = 1;
-        defaultGE.effect.speed = 4;
+        newSaveData.playerdata = new AttributeSet();
 
+        newSaveData.playerdata.SetValue(eAttributeType.Health, 3,3);
+        newSaveData.playerdata.SetValue(eAttributeType.Attack, 1);
+        newSaveData.playerdata.SetValue(eAttributeType.AttackSpeed, 1);
+        newSaveData.playerdata.SetValue(eAttributeType.Speed, 4);
 
-        newSaveData.playerAttribute = defaultGE.ApplyGameplayEffectToSelf(newSaveData.playerAttribute);
         newSaveData.headIndex = 1;
         newSaveData.bodyIndex = 1;
         slots[index] =  newSaveData;
@@ -126,7 +120,7 @@ public class GameData
     public int index;
     public string nickname;
     public int dungeonLevel;    
-    public GameAttribute playerAttribute;
+    public AttributeSet playerdata;
     public int bodyIndex;
     public int headIndex;
 }

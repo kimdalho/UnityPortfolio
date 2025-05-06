@@ -15,7 +15,7 @@ public class ControllerCharacter : Character
         }
         
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        characterController.Move(move * Time.deltaTime * attribute.speed);
+        characterController.Move(move * Time.deltaTime * attribute.GetCurValue(eAttributeType.Speed));
       
         // jump input
         if (Input.GetButtonDown("Jump") && isGrounded)

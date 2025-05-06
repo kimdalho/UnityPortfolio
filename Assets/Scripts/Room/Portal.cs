@@ -17,8 +17,8 @@ public class Portal : MonoBehaviour
     public Room toNextRoom;
     public string fromNodeGUID;
     public string toNodeGUID;
-    public JumpPoint toNextPoint;
-    public JumpPoint PortalPoint;
+    public JumpPoint toNextSpawnPoint;
+    public JumpPoint SpawnPoint;
     public PlayerTraversal traversal;
 
 

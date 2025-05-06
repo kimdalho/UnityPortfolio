@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 5472654233320130611}
   - component: {fileID: 2425522466196387584}
   - component: {fileID: 6720017100277650553}
-  - component: {fileID: 4190281111653866315}
   - component: {fileID: 6174658098138165160}
+  - component: {fileID: 2557303499370246957}
   m_Layer: 8
   m_Name: AssaultRifle
   m_TagString: Untagged
@@ -88,32 +88,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4190281111653866315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482464491900682601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e26719f3ff82c141b3fa2da7644af06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effect:
-    MaxHart: 0
-    CurHart: 0
-    atk: 3
-    attackSpeed: 0
-    speed: 0
-  modifierOp: 5
-  itemData:
-    itemName: "\uB77C\uC774\uD50C"
-    description: 
-  partType: 3
-  skilltag: 0
-  ability: {fileID: 0}
-  itemAnim: {fileID: 0}
 --- !u!135 &6174658098138165160
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -135,3 +109,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.6854016
   m_Center: {x: 0, y: 0.07456762, z: 0.46759018}
+--- !u!114 &2557303499370246957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482464491900682601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3256b63f87aa06b42b3a3904e21d7bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData:
+    itemName: 
+    description: 
+  ability: {fileID: 0}
+  rank: 0
+  itemAnim: {fileID: 22100000, guid: d665dcbba2bf8f74089682883297e50a, type: 2}

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class FlamethrowerAbility : GameAbility
 {
@@ -14,7 +15,7 @@ public class FlamethrowerAbility : GameAbility
         var _particle = FXFactory.Instance.GetFX("FlameThrower", _fxPos, Quaternion.LookRotation(owner.transform.forward));
 
         owner.GetAnimator().SetBool("LoopAttack", true);
-
+        var takeDamage = owner.attribute.GetCurValue(eAttributeType.Attack);
         var _center = owner.transform.position + owner.transform.forward * 1f;
 
         var _applyCount = Duration * applyPerSecond;
@@ -27,8 +28,9 @@ public class FlamethrowerAbility : GameAbility
             {
                 if (_hit.TryGetComponent<AttributeEntity>(out var _ae))
                 {
-                    var _effect = new DamageExecution();
-                    _effect.Execute(owner, _ae);
+                    GameEffect effect = new GameEffect(eModifier.Add);
+                    effect.AddModifier(eAttributeType.Health, -takeDamage);
+                    _ae.ApplyEffect(effect);
                     // FX Àû¿ë
                 }
             }
@@ -42,7 +44,7 @@ public class FlamethrowerAbility : GameAbility
 
         if (owner is Monster) (owner as Monster).IsAtk = false;
 
-        var _delay = Duration / Mathf.Max(owner.attribute.attackSpeed, 0.01f);
+        var _delay = Duration / Mathf.Max(owner.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f);
         yield return new WaitForSeconds(_delay);
         EndAbility();
     }

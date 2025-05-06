@@ -160,7 +160,7 @@ public class ResourceManager : MonoBehaviour
 
 
 
-    public GameObject CreateweaponItemToIndex(int index, Transform parent)
+    public GameObject CreateWeaponItemToIndex(int index, Transform parent)
     {
         if (index > weaponPickupItemDatas.Count-1)
             return null;
@@ -172,7 +172,7 @@ public class ResourceManager : MonoBehaviour
         NewWeapon.transform.SetParent(parent);
         NewWeapon.transform.position = parent.GetComponent<GridNode>().GetItemPos();
 
-        var itemCompo = NewWeapon.GetComponent<EquipmentItem>();
+        var itemCompo = NewWeapon.GetComponent<WeaponItem>();
         itemCompo.Init(result);
         return NewWeapon;
     }

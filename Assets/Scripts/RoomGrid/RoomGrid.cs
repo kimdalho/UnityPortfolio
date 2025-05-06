@@ -29,7 +29,7 @@ public class RoomGrid : MonoBehaviour
         return result[rand2.Next(selectRowGrid.GetGrid().Count)];
     }
 
-    public GridNode GetFirGridNode()
+    public GridNode GetFirstGridNode()
     {        
         GridRow selectRowGrid = grid[grid.Count / 2];
         List<GridNode> result = selectRowGrid.GetGrid();
@@ -42,6 +42,7 @@ public class RoomGrid : MonoBehaviour
         GameObject newmon =  ResourceManager.Instance.CreateMonster(parent);
         node.gameObject.name = "XX1";
         Monster newMonsterCompo = newmon.GetComponent<Monster>();
+        newMonsterCompo.attribute = new AttributeSet();
         newMonsterCompo.startNode = node;
         newMonsterCompo.SetRoomGrid(transform);       
         return newMonsterCompo;
@@ -88,23 +89,23 @@ public class RoomGrid : MonoBehaviour
         }
     }
 
-    public void WeaponTest()
-    {
-        int index = 0;
-        foreach (var rownode in grid)
-        {
-            foreach (var node in rownode.GetGrid())
-            {
-                var newItem = ResourceManager.Instance.CreateweaponItemToIndex(index, node.transform);
-                if (newItem == null)
-                {
-                    return;
-                }
-                newItem.transform.position = node.GetItemPos();
-                index++;
-            }
-        }
-    }
+    //public void WeaponTest()
+    //{
+    //    int index = 0;
+    //    foreach (var rownode in grid)
+    //    {
+    //        foreach (var node in rownode.GetGrid())
+    //        {
+    //            var newItem = ResourceManager.Instance.CreateweaponItemToIndex(index, node.transform);
+    //            if (newItem == null)
+    //            {
+    //                return;
+    //            }
+    //            newItem.transform.position = node.GetItemPos();
+    //            index++;
+    //        }
+    //    }
+    //}
 
 
     public void SetList()

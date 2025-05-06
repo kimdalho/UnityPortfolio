@@ -14,10 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   attribute:
-    MaxHart: 2
-    CurHart: 2
-    atk: 0
-    attackSpeed: 0
-    speed: 0
+    Health:
+      AttributeName: Health
+      MaxValue: 3
+      BaseValue: 3
+      CurValue: 3
+    Attack:
+      AttributeName: Attack
+      MaxValue: 1
+      BaseValue: 1
+      CurValue: 1
+    AttackSpeed:
+      AttributeName: AttackSpeed
+      MaxValue: 1
+      BaseValue: 1
+      CurValue: 1
+    Speed:
+      AttributeName: Speed
+      MaxValue: 1
+      BaseValue: 1
+      CurValue: 1
   attackRange: 4
   size: 1

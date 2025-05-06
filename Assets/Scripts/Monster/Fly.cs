@@ -41,12 +41,10 @@ public class Fly : Character
         {
             // 몬스터에게 피격 -1
             var target = other.GetComponent<Character>();
-            DamageExecution ge = new DamageExecution();
-            ge.Execute(this, target);
-            
 
-            
-
+            GameEffect effect = new GameEffect(eModifier.Add);
+            effect.AddModifier(eAttributeType.Health, -1);
+            target.ApplyEffect(effect);
             Destroy(gameObject);
         }
         else if(other.tag == "Projectile")

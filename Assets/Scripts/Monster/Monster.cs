@@ -45,12 +45,10 @@ public abstract class Monster : Character
 
     public int level;
 
-    public void SetData(MonsterLevelDataSO model)
+    public void SetData(MonsterDataSO model)
     {
-        GameEffectSelf effect = new GameEffectSelf(model.attribute);
-        effect.modifierOp = eModifier.Add;
         level = model.level;
-        effect.ApplyGameplayEffectToSelf(this);     
+        attribute = model.attribute;
     }
    
     protected virtual void Initialized()
@@ -98,7 +96,8 @@ public abstract class Monster : Character
     public virtual void PatrolAction()
     {
         var _moveDir = patrolTargetPos - transform.position;
-        MoveAction(_moveDir.normalized, attribute.speed);
+        var speed = attribute.GetCurValue(eAttributeType.Speed);
+        MoveAction(_moveDir.normalized, speed);
 
         // 목표 위치에 도달하면 Idle 상태로 변경
         if (Vector3.Distance(patrolTargetPos, transform.position) < 0.01f)
@@ -113,7 +112,8 @@ public abstract class Monster : Character
         if (chaseTarget == null) return;
 
         var _moveDir = chaseTarget.transform.position - transform.position;
-        MoveAction(_moveDir.normalized, attribute.speed * 2f);
+        var speed = attribute.GetCurValue(eAttributeType.Speed);
+        MoveAction(_moveDir.normalized, speed * 2f);
     }
 
     public virtual void AttackAction()
@@ -199,8 +199,8 @@ public abstract class Monster : Character
     protected virtual void TakeDamage()
     {
         animElapsed = 0f;
-
-        if (attribute.CurHart <= 0)
+        var CurHealth = attribute.GetCurValue(eAttributeType.Health);
+        if (CurHealth <= 0)
         {
             GetComponent<Collider>().enabled = false;
             return;
@@ -211,7 +211,7 @@ public abstract class Monster : Character
     protected void ApplyGravity()
     {
         GroundCheck();
-        if (attribute.CurHart <= 0) return;
+        if (attribute.GetCurValue(eAttributeType.Health) <= 0) return;
 
         if (isGrounded && calcVelocity.y < 0 || onlyIdle)
         {

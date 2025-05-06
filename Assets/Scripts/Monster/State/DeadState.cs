@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DeadState : IState
 {
-    public bool IsState(Monster monster) => monster.attribute.CurHart <= 0;
+    public bool IsState(Monster monster) => monster.attribute.GetCurValue(eAttributeType.Health) <= 0;
     public void Enter(Monster monster)
     {
         monster.GetAnimator().SetTrigger("Trg_Dead");

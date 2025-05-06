@@ -15,14 +15,15 @@ public class BazookaMissile : Projectile
     protected override void ReleaseProjectile()
     {
         FXFactory.Instance.GetFX("Explosion", transform.position, Quaternion.identity);
-
+        float takeDamage = owner.attribute.GetCurValue(eAttributeType.Attack);
         var _hits = SphereDetector.DetectObjectsInSphere(transform.position, explosionRange, targetLayer);
         foreach (var _hit in _hits)
         {
             if (_hit.TryGetComponent<AttributeEntity>(out var _ae))
-            {
-                var _effect = new DamageExecution();
-                _effect.Execute(owner, _ae);
+            {              
+                GameEffect effect = new GameEffect(eModifier.Add);
+                effect.AddModifier(eAttributeType.Health, -takeDamage);
+                _ae.ApplyEffect(effect);
                 (_ae as Character)?.fxSystem?.ExecuteFX(abilityTag);
             }
         }
