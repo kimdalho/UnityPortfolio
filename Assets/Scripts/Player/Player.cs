@@ -15,10 +15,18 @@ public interface IControllerCharacter
     public void SetPlayerTarget(ILockOnTarget monster);
     public void ResetTarget();  
 }
+/// <summary>
+/// 릭 타겟,또는 투사체 발사 방향인 타겟을 반환
+/// </summary>
+public interface IHasLockOnTarget
+{
+    public Transform GetLockOnTarget();
+
+}
 
 
 
-public partial class Player : Character , IOnGameOver ,IOnNextFlow , IControllerCharacter
+public partial class Player : Character , IOnGameOver ,IOnNextFlow , IControllerCharacter , IHasLockOnTarget    
 {
     #region 이동 컨트롤러
     [SerializeField]
@@ -330,6 +338,11 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IController
     public void PlayAnimIdle()
     {
         animator.Play(GlobalDefine.FallingEndHash);
+    }
+
+    public Transform GetLockOnTarget()
+    {
+        return scanForTargets.lookatMonster;
     }
 }
 

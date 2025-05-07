@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using static UnityEngine.UI.GridLayoutGroup;
 
 public interface ILockOnTarget
@@ -54,10 +55,12 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
 
     protected Transform armTransform;
 
+    public WeaponController currentWeaponEffect;
+
     private void Awake()
     {
         abilitySystem = GetComponentInChildren<AbilitySystem>();
-
+        currentWeaponEffect = null;
     }
 
     public Animator GetAnimator()
@@ -116,9 +119,12 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
         return armTransform;
     }
 
-    public virtual void SetWeaponMuzzle(Transform NewWeaponPos)
+   
+
+    public virtual void SetWeaponEffect(WeaponController NewWeapon)
     {
-        armTransform = NewWeaponPos;
+        currentWeaponEffect = NewWeapon;
+        armTransform = currentWeaponEffect.bulletStartPos;
     }
 
 

@@ -13,6 +13,8 @@ public class ScanForTargets : MonoBehaviour
     private readonly int condition = 0;
     private readonly int TargetIndex = 0;
 
+    public static Action<Transform> OnSetLockOnTarget;
+
     public Transform lookatMonster
     {
         get
@@ -51,7 +53,8 @@ public class ScanForTargets : MonoBehaviour
                 }
                 m_TargetGroup.AddMember(monsterHead, 0.3f, 0.5f);  // 타겟 그룹에 추가
                 _lookatMonster = monsterHead.GetComponent<ILockOnTarget>();  // 해당 몬스터를 _lookatMonster로 설정     
-
+                
+                OnSetLockOnTarget?.Invoke(monsterHead);
             }
             
         }

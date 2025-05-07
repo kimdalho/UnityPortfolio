@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public enum eEuipmentType
 {
@@ -21,7 +22,14 @@ public class ModelController : MonoBehaviour
     public Dictionary<eWeaponType, WeaponController> dicWeapons;
 
     public Character character;
-   
+
+    public Rig HeadAnim;
+    public Rig HandRighAnim;
+    public Rig HandLeftAnim;
+    public Rig LowerarmLeftAnim;
+    public Rig LowerarmRightAnim;
+
+
     //파츠바디 타입에는 무기를 포함하지않는다.
     public Dictionary<eEuipmentType, List<GameObject>> partsByType = new Dictionary<eEuipmentType, List<GameObject>>();
     private void InitializeParts()
@@ -51,6 +59,27 @@ public class ModelController : MonoBehaviour
             dicWeapons.Add(weapon.eWeaponType, weapon);
         }
 
+        ScanForTargets.OnSetLockOnTarget += OnSetLockOnTarget;
+    }
+
+    public WeightedTransform posxxx;
+
+    public void OnSetLockOnTarget(Transform Target)
+    {
+
+    }
+
+    private void AimingPosesRigging(Rig weiponAimLayer, Transform Target)
+    {
+
+
+        weiponAimLayer.weight = 1;
+        GameObject child = weiponAimLayer.transform.GetChild(0).gameObject;
+        MultiAimConstraint childCompo =  child.GetComponent<MultiAimConstraint>();
+
+        childCompo.weight = 1;
+        posxxx = childCompo.data.sourceObjects[0];
+        
     }
 
 
@@ -58,11 +87,6 @@ public class ModelController : MonoBehaviour
     private void Awake()
     {        
         InitializeParts();
-    }
-
-    public void Start()
-    {
-        
     }
 
 
@@ -124,8 +148,8 @@ public class ModelController : MonoBehaviour
 
             //활성화된 현제 무기
             if (isActive)
-            {
-                character.SetWeaponMuzzle(dicWeapons[type].bulletStartPos);
+            {                
+                character.SetWeaponEffect(dicWeapons[type]);
             }
         }
     }

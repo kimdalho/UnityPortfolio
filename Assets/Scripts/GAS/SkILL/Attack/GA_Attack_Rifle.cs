@@ -61,11 +61,13 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
         owner.GetAnimator().SetBool(GlobalDefine.AnimFire, true);
         try
         {
-            SoundManager.instance.PlayEffect(eEffectType.Shoot, armTransform);
+            if (owner.currentWeaponEffect != null)
+            {
+                owner.currentWeaponEffect.PlayEffect();
+            }
         }
-        catch
-        {
-            Debug.LogError("사운드 매니저 없다 테스트중인지 확인하라");
+        finally
+        {            
             IsOnCooldown = false;
         }              
 
