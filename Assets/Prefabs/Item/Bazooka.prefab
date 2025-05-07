@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1382040594195263256}
   - component: {fileID: 443611204287582001}
   - component: {fileID: 4995661455655572861}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bazooka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 865275400150628161}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5565434, y: 0.010222296, z: 0.006848398, w: 0.8307274}
-  m_LocalPosition: {x: 0.06, y: 0, z: 0.48}
+  m_LocalPosition: {x: -0.1, y: 0, z: 0.351}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 4612327678530326508}
   - component: {fileID: 7710608074971605074}
   - component: {fileID: 6533827469618471684}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bazooka
   m_TagString: Untagged
   m_Icon: {fileID: 0}
