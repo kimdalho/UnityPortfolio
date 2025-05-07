@@ -1,6 +1,7 @@
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
-public interface ILockOnService
+public interface ILockOnTarget
 {
     public Transform GetLockOnTransform();
     public bool GetDead();
@@ -14,12 +15,17 @@ public interface IGameAbilityCharacterService
 }
 
 
-public class Character : AttributeEntity , ILockOnService , IGameAbilityCharacterService
+public interface IWeaponService
+{
+    public Transform GetWeaponMuzzle();
+}
+
+
+public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacterService , IWeaponService
 {
 
     //저항력
     public Vector3 calcVelocity;
-
 
     //플레이어가 획득한 상태효과
     protected GameplayTagSystem gameplayTagSystem = new GameplayTagSystem();
@@ -33,6 +39,7 @@ public class Character : AttributeEntity , ILockOnService , IGameAbilityCharacte
     protected bool isGrounded = false;
     public LayerMask groundLayerMask;
     public float groundCheckDistance = 0.1f;
+    public bool isDead;
 
     [SerializeField] protected Animator animator;
     [SerializeField] protected ModelController controller;
@@ -45,12 +52,13 @@ public class Character : AttributeEntity , ILockOnService , IGameAbilityCharacte
     //그라운드
     protected RaycastHit groundhit;
 
+    protected Transform armTransform;
+
     private void Awake()
     {
         abilitySystem = GetComponentInChildren<AbilitySystem>();
 
     }
-
 
     public Animator GetAnimator()
     {
@@ -96,4 +104,22 @@ public class Character : AttributeEntity , ILockOnService , IGameAbilityCharacte
     {
         return gameplayTagSystem;
     }
+
+    public virtual Transform GetWeaponMuzzle()
+    {
+        if (armTransform == null)
+        {
+            transform.GetChild(0).GetChild(transform.GetChild(0).childCount - 1);
+            for (int i = 0; i < 8; i++)
+                armTransform = armTransform.GetChild(0);
+        }
+        return armTransform;
+    }
+
+    public virtual void SetWeaponMuzzle(Transform NewWeaponPos)
+    {
+        armTransform = NewWeaponPos;
+    }
+
+
 }

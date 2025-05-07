@@ -16,12 +16,12 @@ public class ModelController : MonoBehaviour
     public GameObject[] m_heads;
     public GameObject[] m_bodys;
    
-    public GameObject[] m_weapons;
+    public WeaponController[] m_weapons;
+
+    public Dictionary<eWeaponType, WeaponController> dicWeapons;
+
     public Character character;
-
-    
-
-
+   
     //파츠바디 타입에는 무기를 포함하지않는다.
     public Dictionary<eEuipmentType, List<GameObject>> partsByType = new Dictionary<eEuipmentType, List<GameObject>>();
     private void InitializeParts()
@@ -45,14 +45,24 @@ public class ModelController : MonoBehaviour
                 //Debug.LogWarning($"[{partType}] 파츠 목록이 비어있습니다.");
             }
         }
+        dicWeapons = new Dictionary<eWeaponType, WeaponController>();
+        foreach (var weapon in m_weapons)
+        {
+            dicWeapons.Add(weapon.eWeaponType, weapon);
+        }
+
     }
 
 
 
     private void Awake()
-    {
-        character = GetComponent<Character>();
+    {        
         InitializeParts();
+    }
+
+    public void Start()
+    {
+        
     }
 
 
@@ -107,15 +117,15 @@ public class ModelController : MonoBehaviour
 
     public void SetWeaponByIndex(eWeaponType type)
     {      
-        for (int i = 0; i < m_weapons.Length; i++)
+        foreach(var weapon in dicWeapons)
         {
-            bool isActive = (int)type - 1 == i;
-            m_weapons[i].SetActive(isActive);
+            bool isActive = type == weapon.Key;
+            dicWeapons[weapon.Key].gameObject.SetActive(isActive);
 
             //활성화된 현제 무기
             if (isActive)
             {
-              
+                character.SetWeaponMuzzle(dicWeapons[type].bulletStartPos);
             }
         }
     }

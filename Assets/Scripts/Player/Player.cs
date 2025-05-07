@@ -10,9 +10,15 @@ public interface IOnGameOver
 
 }
 
+public interface IControllerCharacter
+{
+    public void SetPlayerTarget(ILockOnTarget monster);
+    public void ResetTarget();  
+}
 
 
-public partial class Player : Character , IOnGameOver ,IOnNextFlow
+
+public partial class Player : Character , IOnGameOver ,IOnNextFlow , IControllerCharacter
 {
     #region ÀÌµ¿ ÄÁÆ®·Ñ·¯
     [SerializeField]
@@ -22,10 +28,8 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     private Vector3 moveDirection;
     private readonly float moveThresholdSqr = 0.01f;
     #endregion
-    private bool isDead;
 
     #region ·è¿§
-
     [SerializeField]
     private ScanForTargets scanForTargets;
     [SerializeField]
@@ -53,7 +57,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         GameManager.OnGameOver += OnGameOver;
         GameManager.OnNextFlow += OnNextFlow;
         itemLayer = LayerMask.NameToLayer(GlobalDefine.String_Item);
-        gameObject.tag = GlobalDefine.String_Player;
+        gameObject.tag = GlobalDefine.String_Player;        
     }
 
     private void OnDestroy()
@@ -309,7 +313,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     {
         return isDead;
     }
-    public void SetPlayerTarget(Monster monster)
+    public void SetPlayerTarget(ILockOnTarget monster)
     {
         gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
         scanForTargets.SetPlayerTarget(monster);

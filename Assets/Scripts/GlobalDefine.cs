@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class GlobalDefine
+public class GlobalDefine
 {
     //플레이어
     public const float PlayerRotationBaseSpeed = 7.0f;
@@ -14,6 +14,8 @@ public static class GlobalDefine
     public static string String_Item = "Item";
     public static string String_Monster = "Monster";
     public static int moveHash = Animator.StringToHash("Move");
+    public static int AnimFire = Animator.StringToHash("IsFire");
+
     public static int FallingHash = Animator.StringToHash("Falling");
     public static int FallingEndHash = Animator.StringToHash("FallingEnd");
     public static int DeadHash = Animator.StringToHash("Die");
@@ -24,6 +26,4 @@ public static class GlobalDefine
     public static string String_Player = "Player";
     public static string String_Door = "Door";
     public static string String_Stairs = "Stairs";
-
-
 }

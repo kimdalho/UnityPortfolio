@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 /// <summary>
@@ -183,6 +184,15 @@ public class ResourceManager : MonoBehaviour
         System.Random rnd = new System.Random();
 
         var targetMonster = monsters[rnd.Next(monsters.Count)];
+        GameObject model = Instantiate(targetMonster);
+        return model;
+    }
+
+    public GameObject CreateMonsterToIndex(int index, Transform parent)
+    {
+        System.Random rnd = new System.Random();
+
+        var targetMonster = monsters[index];
         GameObject model = Instantiate(targetMonster);
         return model;
     }

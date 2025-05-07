@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 
 public class WeaponItem :BaseItem
 {
+    [SerializeField]
     protected eWeaponType eWeaponType;
     //애니메이션 정보
     public RuntimeAnimatorController itemAnim;
@@ -29,8 +30,8 @@ public class WeaponItem :BaseItem
 
         ModelUpdate(source);
         ItemApplyEffect(source, item);
-
-        UserData.Instance.SetPickupedItem(rank);
+        if(UserData.Instance != null)
+            UserData.Instance.SetPickupedItem(rank);
     }
 
     public void ModelUpdate(Character source)

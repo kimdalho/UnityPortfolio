@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Data;
 using UnityEngine;
 
 public interface IProjectileCountModifiable
@@ -24,15 +25,8 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
         if (condition)
             yield break;
 
-        owner.GetGameplayTagSystem().AddTag(eTagType.Attacking); 
-        
-        if(armTransform == null)
-        {
-            // 손(Arm) 위치 탐색 (자식 → 자식으로 8단계 탐색)
-            armTransform = owner.transform.GetChild(0).GetChild(owner.transform.GetChild(0).childCount - 1);
-            for (int i = 0; i < 8; i++)
-                armTransform = armTransform.GetChild(0);
-        }
+        owner.GetGameplayTagSystem().AddTag(eTagType.Attacking);
+        armTransform = owner.GetWeaponMuzzle();        
         
         // 탄환 생성
         yield return Shoot(armTransform);
@@ -43,7 +37,11 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
 
         EndAbility();
     }
-
+    /// <summary>
+    /// 다발사격을 서비스합니다. forward,forward,endDir 다발사격의 라운드 범위를 의미합니다.
+    /// </summary>
+    /// <param name="armTransform"></param>
+    /// <returns></returns>
     protected virtual IEnumerator CoMultypleShoot(Transform armTransform)
     {
         float angleRange = (fireMultypleCount == 1) ? 0f : fireMultypleAngleRange;
@@ -59,7 +57,18 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
             var projectile = ProjectileFactory.Instance.GetProjectile(projectileType, armTransform.position, Quaternion.identity);
             projectile.Initialized(owner, direction, targetMask, AbilityTag, true);                     
         }
-        SoundManager.instance.PlayEffect(eEffectType.Shoot, armTransform);
+
+        owner.GetAnimator().SetBool(GlobalDefine.AnimFire, true);
+        try
+        {
+            SoundManager.instance.PlayEffect(eEffectType.Shoot, armTransform);
+        }
+        catch
+        {
+            Debug.LogError("사운드 매니저 없다 테스트중인지 확인하라");
+            IsOnCooldown = false;
+        }              
+
         yield return delayAtkTime;
     }
 
@@ -67,7 +76,7 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
     {
         for (int i = 0; i < fireCount; i++)
         {
-            owner.GetAnimator().SetTrigger(String_AttackTrigger);
+
             yield return CoMultypleShoot(armTransform);
         }
     }
@@ -83,5 +92,11 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
                 Debug.LogError("GA_Attack_Rifle -> Non-existent modifier type");
                 break;
         }
+    }
+
+    public override void EndAbility()
+    {
+        base.EndAbility();
+        owner.GetAnimator().SetBool(GlobalDefine.AnimFire, false);
     }
 }

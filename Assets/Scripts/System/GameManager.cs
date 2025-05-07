@@ -154,8 +154,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
-
     bool gameover = false;
 
     public void GameOver()
@@ -169,18 +167,5 @@ public class GameManager : MonoBehaviour
         bossHud.Hide();
         SoundManager.instance.audioSource.Pause();
         SoundManager.instance.PlayEffect(eEffectType.Gameover,this.transform);
-    }
-
-    public void SetPlayerTarget(Monster monster)
-    {
-        if(player != null)
-        {
-            player.SetPlayerTarget(monster);
-        }
-    }
-
-    public void ResetTarget()
-    {
-        player.ResetTarget();
     }
 }

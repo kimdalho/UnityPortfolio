@@ -8,8 +8,8 @@ public class ScanForTargets : MonoBehaviour
     [SerializeField]
     public CinemachineTargetGroup m_TargetGroup;    
     
-    private List<ILockOnService> currentTargets = new List<ILockOnService>();
-    private ILockOnService _lookatMonster;
+    private List<ILockOnTarget> currentTargets = new List<ILockOnTarget>();
+    private ILockOnTarget _lookatMonster;
     private readonly int condition = 0;
     private readonly int TargetIndex = 0;
 
@@ -29,7 +29,7 @@ public class ScanForTargets : MonoBehaviour
         if (m_TargetGroup.Targets.Count > condition)
         {
             Transform target = m_TargetGroup.Targets[TargetIndex].Object;
-            bool targetDead = target.GetComponent<ILockOnService>().GetDead();
+            bool targetDead = target.GetComponent<ILockOnTarget>().GetDead();
             if(targetDead)
             {
                 ResetTarget();
@@ -37,7 +37,7 @@ public class ScanForTargets : MonoBehaviour
         }
     }
 
-    public void SetPlayerTarget(Monster monster)
+    public void SetPlayerTarget(ILockOnTarget monster)
     {
         if (monster != null)
         {
@@ -50,7 +50,7 @@ public class ScanForTargets : MonoBehaviour
                     m_TargetGroup.RemoveMember(targetToRemove);                                                                
                 }
                 m_TargetGroup.AddMember(monsterHead, 0.3f, 0.5f);  // 타겟 그룹에 추가
-                _lookatMonster = monsterHead.GetComponent<ILockOnService>();  // 해당 몬스터를 _lookatMonster로 설정     
+                _lookatMonster = monsterHead.GetComponent<ILockOnTarget>();  // 해당 몬스터를 _lookatMonster로 설정     
 
             }
             

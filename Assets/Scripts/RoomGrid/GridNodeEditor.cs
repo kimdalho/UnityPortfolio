@@ -5,7 +5,7 @@ using UnityEngine;
 [CustomEditor(typeof(GridNode))]
 public class GridNodeEditor : Editor
 {
-    int selectedNumber = 0; // 입력받을 숫자
+    int index = 0; // 입력받을 숫자
 
     public override void OnInspectorGUI()
     {
@@ -15,23 +15,23 @@ public class GridNodeEditor : Editor
         //라벨
         GUILayout.Label("엔티티 생성 도구", EditorStyles.boldLabel);
 
-        selectedNumber = EditorGUILayout.IntField("타겟 아이디 입력", selectedNumber);
+        index = EditorGUILayout.IntField("타겟 아이디 입력", index);
 
-        if (GUILayout.Button("상자 생성", GUILayout.Height(30)))
+        if (GUILayout.Button("무기 생성", GUILayout.Height(30)))
         {
             GridNode node = (GridNode)target;
-            node.CreateBox();
+            var newitem = ResourceManager.Instance.CreateWeaponItemToIndex(index, node.transform);            
         }
 
         if (GUILayout.Button("몬스터 생성", GUILayout.Height(30)))
         {
-            GridNode node = (GridNode)target;            
+            GridNode node = (GridNode)target;
+            var newitem = ResourceManager.Instance.CreateMonsterToIndex(index, node.transform);            
         }
 
         if (GUILayout.Button("박스 크기 확장", GUILayout.Height(30)))
         {
-            GridNode node = (GridNode)target;
-            node.gameObject.transform.localScale = new Vector3(1, 3, 1);
+            GridNode node = (GridNode)target;            
         }
     }
 }

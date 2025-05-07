@@ -3,12 +3,12 @@ using TMPro;
 using System.Collections.Generic;
 public class ItemdescriptionView : MonoBehaviour
 {
-    public Player player;
+    [SerializeField]
+    private Player player;
     public List<LocalizedText> list;
 
     private void Start()
     {
-        player = GameManager.instance.GetPlayer();
         gameObject.SetActive(false);
     }
 
