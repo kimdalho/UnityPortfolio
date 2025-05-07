@@ -31,7 +31,7 @@ public class AttackAbility : GameAbility
         Character character = owner.GetComponent<Character>();
         Animator animator = character.GetAnimator();
         character.GetAnimator().SetTrigger("Trg_Attack");
-        owner.gameplayTagSystem.AddTag(stateTagType);
+        owner.GetGameplayTagSystem().AddTag(stateTagType);
         AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
         float animationDuration = animationState.length;
         if(animationDuration > Duration)
@@ -83,8 +83,8 @@ public class AttackAbility : GameAbility
         if (owner == null)
             return;
         
-        if(owner.gameplayTagSystem.HasTag(stateTagType))       
-            owner.gameplayTagSystem.RemoveTag(stateTagType);
+        if(owner.GetGameplayTagSystem().HasTag(stateTagType))       
+            owner.GetGameplayTagSystem().RemoveTag(stateTagType);
     }
 
 }

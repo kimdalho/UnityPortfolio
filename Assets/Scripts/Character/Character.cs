@@ -1,25 +1,28 @@
-using System;
 using UnityEngine;
-/// <summary>
-/// 나중에 만들어야함 몬스터 플레이어 모두 머리 룩엣 좌표 필요
-/// </summary>
-public interface IcanGetHead
+
+public interface ILockOnService
 {
-    public Transform GetHead();
+    public Transform GetLockOnTransform();
     public bool GetDead();
 }
 
-public class Character : AttributeEntity , IcanGetHead
+public interface IGameAbilityCharacterService
+{
+    public AbilitySystem GetAbilitySystem();
+
+    public GameplayTagSystem GetGameplayTagSystem();
+}
+
+
+public class Character : AttributeEntity , ILockOnService , IGameAbilityCharacterService
 {
 
     //저항력
     public Vector3 calcVelocity;
-    protected readonly int moveHash = Animator.StringToHash("Move");
-    protected readonly int FallingHash = Animator.StringToHash("Falling");
-    protected readonly int DeadHash = Animator.StringToHash("Die");
+
 
     //플레이어가 획득한 상태효과
-    public GameplayTagSystem gameplayTagSystem = new GameplayTagSystem();
+    protected GameplayTagSystem gameplayTagSystem = new GameplayTagSystem();
 
     [SerializeField]
     protected CharacterController characterController;
@@ -29,7 +32,7 @@ public class Character : AttributeEntity , IcanGetHead
 
     protected bool isGrounded = false;
     public LayerMask groundLayerMask;
-    public float groundCheckDistance = 0.3f;
+    public float groundCheckDistance = 0.1f;
 
     [SerializeField] protected Animator animator;
     [SerializeField] protected ModelController controller;
@@ -60,7 +63,7 @@ public class Character : AttributeEntity , IcanGetHead
     }
 
 
-    public virtual Transform GetHead()
+    public virtual Transform GetLockOnTransform()
     {
         return gameObject.transform;
     }
@@ -68,8 +71,8 @@ public class Character : AttributeEntity , IcanGetHead
     
     protected void GroundCheck()
     {
-        Debug.DrawRay(transform.position, transform.up * -0.3f * groundCheckDistance, Color.blue, 0.3f);
-        if (Physics.Raycast(transform.position, transform.up * -0.3f, out groundhit, groundCheckDistance, groundLayerMask))
+        Debug.DrawRay(transform.position, transform.up * -1 * groundCheckDistance, Color.blue, 0.3f);
+        if (Physics.Raycast(transform.position, transform.up * -1, out groundhit, groundCheckDistance, groundLayerMask))
         {
             isGrounded = true;
         }
@@ -77,7 +80,6 @@ public class Character : AttributeEntity , IcanGetHead
         {
             isGrounded = false;
         }
-
     }
 
     public virtual bool GetDead()
@@ -88,5 +90,10 @@ public class Character : AttributeEntity , IcanGetHead
     public AbilitySystem GetAbilitySystem()
     {
         return abilitySystem;
+    }
+
+    public GameplayTagSystem GetGameplayTagSystem()
+    {
+        return gameplayTagSystem;
     }
 }

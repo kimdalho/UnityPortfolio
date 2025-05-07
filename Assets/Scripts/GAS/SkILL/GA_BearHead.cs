@@ -18,7 +18,7 @@ public class GA_BearHead : GameAbility
 
     private void StartAbility()
     {
-        owner.gameplayTagSystem.AddTag(AbilityTag);
+        owner.GetGameplayTagSystem().AddTag(AbilityTag);
         owner.Onkill += Onkill;
         if(effectHill == null)
         {

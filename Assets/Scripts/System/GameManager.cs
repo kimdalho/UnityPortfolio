@@ -137,11 +137,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(CoNextLevel());       
     }
     [HideInInspector]
-    static public bool Leveling = false;
+    static public bool isAnimAction = false;
     private IEnumerator CoNextLevel()
     {
         yield return null;
-        Leveling = true;
+        isAnimAction = true;
         OnNextFlow?.Invoke();
         var loadplayerdata = UserData.Instance.LoadData();
         loadplayerdata.dungeonLevel++;
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
         dungeon.Setup();
         Room startRoom = dungeon.FindRoombyType(eRoomType.Start);
         yield return ChangeCurrentRoom(startRoom);        
-        Leveling = false;
+        isAnimAction = false;
 
     }
 

@@ -20,11 +20,11 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
 
     protected override IEnumerator ExecuteAbility()
     {
-        bool condition = owner.gameplayTagSystem.HasTag(eTagType.Attacking);
+        bool condition = owner.GetGameplayTagSystem().HasTag(eTagType.Attacking);
         if (condition)
             yield break;
 
-        owner.gameplayTagSystem.AddTag(eTagType.Attacking); 
+        owner.GetGameplayTagSystem().AddTag(eTagType.Attacking); 
         
         if(armTransform == null)
         {

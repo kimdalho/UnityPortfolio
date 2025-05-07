@@ -14,11 +14,11 @@ public class ControllerCharacter : Character
             
         }
         
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 move = new Vector3(Input.GetAxis(GlobalDefine.String_Horizontal), 0, Input.GetAxis(GlobalDefine.String_Vertical));
         characterController.Move(move * Time.deltaTime * attribute.GetCurValue(eAttributeType.Speed));
       
         // jump input
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown(GlobalDefine.String_Jump) && isGrounded)
         {
             calcVelocity.y += Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
         }
@@ -28,8 +28,8 @@ public class ControllerCharacter : Character
 
         characterController.Move(calcVelocity * Time.deltaTime);
         bool ismove = (move != Vector3.zero);
-        animator.SetBool(moveHash, ismove);
-        animator.SetBool(FallingHash, !isGrounded);
+        animator.SetBool(GlobalDefine.moveHash, ismove);
+        animator.SetBool(GlobalDefine.FallingHash, !isGrounded);
 
     }
 

@@ -24,18 +24,18 @@ public class Portal : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        var tagSystem = GameManager.instance.GetPlayer().gameplayTagSystem;
+        var tagSystem = other.GetComponent<IGameAbilityCharacterService>().GetGameplayTagSystem();
         if (tagSystem.HasTag(eTagType.Player_State_IgnorePortal) == true)
             return;
 
-        if (other.gameObject.tag == "Player" && 
-            this.tag == "Door")
+        if (other.gameObject.tag == GlobalDefine.String_Player && 
+            this.tag == GlobalDefine.String_Door)
         {
             Player player = other.GetComponent<Player>();
             traversal.StartPlayerTraversal(player, this);
         }
-        else if(other.gameObject.tag == "Player" 
-            && this.tag == "Stairs")
+        else if(other.gameObject.tag == GlobalDefine.String_Player
+            && this.tag == GlobalDefine.String_Stairs)
         {            
             var GM = GameManager.instance;
             GM.GoToNextFloor();
