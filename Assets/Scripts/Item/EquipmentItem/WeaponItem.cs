@@ -14,6 +14,7 @@ public class WeaponItem :BaseItem
         itemAnim = data.runtimeAnimatorController;
         partType = data.eEquipmentType;
         skilltag = data.tag;
+        eWeaponType = data.type;
         rank = 3;
     }
 
