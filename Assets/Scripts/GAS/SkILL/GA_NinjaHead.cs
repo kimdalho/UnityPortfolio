@@ -19,7 +19,7 @@ public class GA_NinjaHead : GameAbility
 
     private void StartAbility()
     {
-        owner.gameplayTagSystem.AddTag(AbilityTag);
+        owner.GetGameplayTagSystem().AddTag(AbilityTag);
         owner.OnHit += OnHit;
     }
     private void OnHit()
@@ -30,12 +30,12 @@ public class GA_NinjaHead : GameAbility
 
     private IEnumerator OnHitProcess()
     {
-        if (owner.gameplayTagSystem.HasTag(state) == true)
+        if (owner.GetGameplayTagSystem().HasTag(state) == true)
             yield break;
         var value = Random.value;
         if (value < condtionper)
         {
-            owner.gameplayTagSystem.AddTag(state);
+            owner.GetGameplayTagSystem().AddTag(state);
         }        
         yield return new WaitForSeconds(Duration);
         EndOnHitProcess();
@@ -44,7 +44,7 @@ public class GA_NinjaHead : GameAbility
 
     private void EndOnHitProcess()
     {
-        owner.gameplayTagSystem.RemoveTag(state);
+        owner.GetGameplayTagSystem().RemoveTag(state);
     }
 
 }

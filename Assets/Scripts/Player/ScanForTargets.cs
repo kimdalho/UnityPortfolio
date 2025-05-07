@@ -6,14 +6,14 @@ using UnityEngine;
 public class ScanForTargets : MonoBehaviour
 {
     [SerializeField]
-    public CinemachineTargetGroup m_TargetGroup;
-    [SerializeField]
-    private Player player;
+    public CinemachineTargetGroup m_TargetGroup;    
+    
+    private List<ILockOnTarget> currentTargets = new List<ILockOnTarget>();
+    private ILockOnTarget _lookatMonster;
+    private readonly int condition = 0;
+    private readonly int TargetIndex = 0;
 
-    private float timer;
-    private Collider[] buffer = new Collider[20]; // 최대 20개까지 감지
-    private List<IcanGetHead> currentTargets = new List<IcanGetHead>();
-    private IcanGetHead _lookatMonster;
+    public static Action<Transform> OnSetLockOnTarget;
 
     public Transform lookatMonster
     {
@@ -21,24 +21,17 @@ public class ScanForTargets : MonoBehaviour
         {
             if (_lookatMonster == null || _lookatMonster.GetDead())
                 return null;
-            return _lookatMonster.GetHead();
+            return _lookatMonster.GetLockOnTransform();
         }
     }
 
-    private void Start()
-    {
-        player = GameManager.instance.GetPlayer();
-    }
-
-    private readonly int condition = 0;
-    private readonly int TargetIndex = 0;
 
     private void Update()
     {
         if (m_TargetGroup.Targets.Count > condition)
         {
             Transform target = m_TargetGroup.Targets[TargetIndex].Object;
-            bool targetDead = target.GetComponent<IcanGetHead>().GetDead();
+            bool targetDead = target.GetComponent<ILockOnTarget>().GetDead();
             if(targetDead)
             {
                 ResetTarget();
@@ -46,11 +39,11 @@ public class ScanForTargets : MonoBehaviour
         }
     }
 
-    public void SetPlayerTarget(Monster monster)
+    public void SetPlayerTarget(ILockOnTarget monster)
     {
         if (monster != null)
         {
-            Transform monsterHead = monster.GetHead();  // 몬스터의 머리 Transform을 가져옴
+            Transform monsterHead = monster.GetLockOnTransform();  // 몬스터의 머리 Transform을 가져옴
             if (m_TargetGroup.FindMember(monsterHead) == -1)  // 아직 그룹에 없으면
             {                             
                 if (m_TargetGroup.Targets.Count > condition)
@@ -59,22 +52,24 @@ public class ScanForTargets : MonoBehaviour
                     m_TargetGroup.RemoveMember(targetToRemove);                                                                
                 }
                 m_TargetGroup.AddMember(monsterHead, 0.3f, 0.5f);  // 타겟 그룹에 추가
-                _lookatMonster = monsterHead.GetComponent<IcanGetHead>();  // 해당 몬스터를 _lookatMonster로 설정     
-
+                _lookatMonster = monsterHead.GetComponent<ILockOnTarget>();  // 해당 몬스터를 _lookatMonster로 설정     
+                
+                OnSetLockOnTarget?.Invoke(monsterHead);
             }
             
         }
     }
 
-    public void ResetTarget()
+    public bool ResetTarget()
     {
         if(m_TargetGroup.Targets.Count > condition)
         {
             Transform targetToRemove = m_TargetGroup.Targets[TargetIndex].Object;
             m_TargetGroup.RemoveMember(targetToRemove);
-            _lookatMonster = null;
-            player.gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
+            _lookatMonster = null;  
+            return true;
         }
+        return false;
     }
 }
 

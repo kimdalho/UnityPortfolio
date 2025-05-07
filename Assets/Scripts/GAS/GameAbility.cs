@@ -48,7 +48,7 @@ public abstract class GameAbility : MonoBehaviour
     /// </summary>
     protected IEnumerator CoActivateAbility()
     {
-        var ownerTagSystem = owner.gameplayTagSystem;
+        var ownerTagSystem = owner.GetGameplayTagSystem();
 
         if (IsOnCooldown || ownerTagSystem.HasTag(eTagType.Stunned))
         {

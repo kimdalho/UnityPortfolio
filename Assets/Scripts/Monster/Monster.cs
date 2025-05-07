@@ -11,7 +11,6 @@ public abstract class Monster : Character
     private float rotSpeed = 10f;
     public float chaseRange;    // 추격 시작 범위
     public float attackRange;   // 공격 가능 범위
-    public bool isDead = false;
     public event Action<Monster> OnDeath;
     MonsterFSM monsterFSM = null;
 

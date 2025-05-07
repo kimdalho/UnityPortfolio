@@ -48,7 +48,7 @@ public class GA_AlienBody : GameAbility
 
     protected override IEnumerator ExecuteAbility()
     {
-        owner.gameplayTagSystem.AddTag(AbilityTag);
+        owner.GetGameplayTagSystem().AddTag(AbilityTag);
         while (true)
         {
             if (flys.Count >= maxCount)

@@ -35,6 +35,16 @@ public class InputController : MonoBehaviour
     public Camera mainCamera;
     public LayerMask monsterLayer;
 
+    bool alreadyhasTarget;
+    float deltime;
+
+
+    private void Awake()
+    {        
+        var player = GameObject.Find(GlobalDefine.String_Player);
+        controllerCharacter = player.GetComponent<IControllerCharacter>(); ;
+    }
+
     private void OnEnable()
     {
         pointerAction = inputActions.FindActionMap("Joystick").FindAction("Pointer");
@@ -97,17 +107,16 @@ public class InputController : MonoBehaviour
         }
     }
 
-    bool ignor;
-    float deltime;
+
     private void SetTargetDelay()
     {
-        if(deltime < 5 && ignor is true)
+        if(deltime < 5 && alreadyhasTarget is true)
         {
             deltime += Time.deltaTime;
         }
         else
         {
-            ignor = false;
+            alreadyhasTarget = false;
             deltime = 0;
         }
     }
@@ -118,33 +127,31 @@ public class InputController : MonoBehaviour
         joystickHandle.anchoredPosition = Vector2.zero;
     }
     
+    private IControllerCharacter controllerCharacter;
 
     void RaycastToMonster(Vector2 screenPosition)
     {
-        if (ignor == true)
+        if (alreadyhasTarget == true)
             return;
 
-        Player player = GameManager.instance.GetPlayer();
         Ray ray = mainCamera.ScreenPointToRay(screenPosition);
 
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-      
-        
-
+           
         if (Physics.Raycast(ray.origin, ray.direction * 100, out RaycastHit hit, 100f, monsterLayer))
         {
-            Monster monster =  hit.collider.gameObject.GetComponent<Monster>();
-            if(monster != null && monster.isDead == false)
-            {                
-                GameManager.instance.SetPlayerTarget(monster);
-                ignor = true; 
+            ILockOnTarget lockOnTarget =  hit.collider.gameObject.GetComponent<ILockOnTarget>();
+            ;
+            if (lockOnTarget != null && lockOnTarget.GetDead() == false)
+            {
+                controllerCharacter.SetPlayerTarget(lockOnTarget);                
+                alreadyhasTarget = true; 
                 return;
             }
             
         }
-        GameManager.instance.ResetTarget();
+        controllerCharacter.ResetTarget();
     }
-
 
     public void Keyboard()
     {

@@ -5,7 +5,9 @@ public abstract class BaseItem : MonoBehaviour, IPickupable
 {
     protected ItemData itemData;
     public AttributeSet attributeSet;
+    [SerializeField]
     protected GameObject abilityPrefab;
+    [SerializeField]
     protected eTagType skilltag;
     protected eEuipmentType partType;
     protected int rank;

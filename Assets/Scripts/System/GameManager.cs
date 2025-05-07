@@ -137,11 +137,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(CoNextLevel());       
     }
     [HideInInspector]
-    static public bool Leveling = false;
+    static public bool isAnimAction = false;
     private IEnumerator CoNextLevel()
     {
         yield return null;
-        Leveling = true;
+        isAnimAction = true;
         OnNextFlow?.Invoke();
         var loadplayerdata = UserData.Instance.LoadData();
         loadplayerdata.dungeonLevel++;
@@ -150,11 +150,9 @@ public class GameManager : MonoBehaviour
         dungeon.Setup();
         Room startRoom = dungeon.FindRoombyType(eRoomType.Start);
         yield return ChangeCurrentRoom(startRoom);        
-        Leveling = false;
+        isAnimAction = false;
 
     }
-
-
 
     bool gameover = false;
 
@@ -169,18 +167,5 @@ public class GameManager : MonoBehaviour
         bossHud.Hide();
         SoundManager.instance.audioSource.Pause();
         SoundManager.instance.PlayEffect(eEffectType.Gameover,this.transform);
-    }
-
-    public void SetPlayerTarget(Monster monster)
-    {
-        if(player != null)
-        {
-            player.SetPlayerTarget(monster);
-        }
-    }
-
-    public void ResetTarget()
-    {
-        player.ResetTarget();
     }
 }

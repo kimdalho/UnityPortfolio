@@ -1,8 +1,6 @@
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -12,21 +10,34 @@ public interface IOnGameOver
 
 }
 
+public interface IControllerCharacter
+{
+    public void SetPlayerTarget(ILockOnTarget monster);
+    public void ResetTarget();  
+}
+/// <summary>
+/// 릭 타겟,또는 투사체 발사 방향인 타겟을 반환
+/// </summary>
+public interface IHasLockOnTarget
+{
+    public Transform GetLockOnTarget();
 
-public partial class Player : Character , IOnGameOver ,IOnNextFlow 
+}
+
+
+
+public partial class Player : Character , IOnGameOver ,IOnNextFlow , IControllerCharacter , IHasLockOnTarget    
 {
     #region 이동 컨트롤러
     [SerializeField]
     private InputController inputController;
-    public float rotationSpeed = 10f;
+    public float rotationSpeed = GlobalDefine.PlayerRotationBaseSpeed;
     public Transform cameraTransform;
     private Vector3 moveDirection;
     private readonly float moveThresholdSqr = 0.01f;
     #endregion
-    private bool isDead;
 
     #region 룩엣
-
     [SerializeField]
     private ScanForTargets scanForTargets;
     [SerializeField]
@@ -37,19 +48,24 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     private HashSet<Collider> detectedItems = new HashSet<Collider>();
 
     #region 아이템 설명창
-    public Color gizmoColor = Color.red;
-    public float scanRadius = 5f;
+    public Color gizmoColor = GlobalDefine.Red;
+    public float scanRadius = GlobalDefine.ScanBaseRadius;
     public LayerMask itemLayer;
-    public LayerMask monsterLayer;
-
-    private Collider[] buffer = new Collider[4]; // 미리 할당된 버퍼
+    private Collider[] buffer = GlobalDefine.Basebuffer;
     public ItemdescriptionView itemdescriptionView;
     #endregion
+
+    [SerializeField] protected int fireCount = 1; // 발사 횟수
+    [SerializeField] protected int fireMultypleCount = 1;
+
+    public readonly float portalDelay = GlobalDefine.PlayerPortalDelayTime;
 
     private void Awake()
     {
         GameManager.OnGameOver += OnGameOver;
         GameManager.OnNextFlow += OnNextFlow;
+        itemLayer = LayerMask.NameToLayer(GlobalDefine.String_Item);
+        gameObject.tag = GlobalDefine.String_Player;        
     }
 
     private void OnDestroy()
@@ -57,12 +73,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         GameManager.OnGameOver -= OnGameOver;
         GameManager.OnNextFlow -= OnNextFlow;
     }
-
-
-    //포워드 방향 카운트
-    [SerializeField] protected int fireCount = 1; // 발사 횟수
-    [SerializeField] protected int fireMultypleCount = 1;
-
 
     private void Start()
     {        
@@ -72,7 +82,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
             return;
         }
 
-        gameObject.tag = "Player";
+     
 
         if (inputController == null)
         {
@@ -112,17 +122,17 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
 
     public void OnJumpStart()
     {
-        animator.SetTrigger("Trg_JumpStart");
+        animator.SetTrigger(GlobalDefine.Trigger_JumpStart);
     }
 
     public void OnFalling()
     {
-        animator.SetBool(FallingHash, true);
+        animator.SetBool(GlobalDefine.FallingHash, true);
     }
 
     public void OnEndJump()
     {
-        animator.SetBool(FallingHash, false);
+        animator.SetBool(GlobalDefine.FallingHash, false);
     }
 
     private void Move()
@@ -139,11 +149,11 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
-            animator.SetBool(FallingHash, false);
+            animator.SetBool(GlobalDefine.FallingHash, false);
         }
         else if(!isGrounded && calcVelocity.y > 0)
         {
-            animator.SetBool(FallingHash, true);
+            animator.SetBool(GlobalDefine.FallingHash, true);
         }
 
         calcVelocity.y += gravity * Time.deltaTime;
@@ -152,22 +162,21 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         characterController.Move(calcVelocity * Time.deltaTime);
 
         bool ismove = (move != Vector3.zero);
-        animator.SetBool(moveHash, ismove);
+        animator.SetBool(GlobalDefine.moveHash, ismove);
     }
 
     public void MoveAnimStop()
     {
-        animator.SetBool(moveHash, false);
+        animator.SetBool(GlobalDefine.moveHash, false);
     }
 
     public void FallDeathCheck()
     {
-        if(transform.position.y < -8f)
+        if(transform.position.y < GlobalDefine.FallDeath)
         {
             GameManager.instance.GameOver();
         }
     }
-
     
 
     void RotateToCameraDirection()
@@ -226,12 +235,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         }
     }
 
-    public void SetPos(Vector3 vec3)
-    {
-        gameObject.transform.position = vec3;
-    }
-
-
     #region 아이템 설명창
     public void HasPickupablesNearby()
     {
@@ -267,18 +270,15 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
 
         moveDirection = forward * vAxis + right * hAxis;
         moveDirection *= attribute.GetCurValue(eAttributeType.Speed);
-
-        Debug.Log(moveDirection + "속도" + attribute.GetCurValue(eAttributeType.Speed));
     }
 
     public void OnGameOver()
     {
         isDead = true;
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
-        animator.Play(DeadHash);
+        animator.Play(GlobalDefine.DeadHash);
     }
 
-    public const float portalDelay = 5.0f;
 
     public void PortalDelay()
     {
@@ -300,17 +300,17 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     public void OnNextFlow()
     {     
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
-        StartCoroutine(CoOnNextFlow());
+        StartCoroutine(CoOnNextLeveling());
     
     }
 
-    private IEnumerator CoOnNextFlow()
+    private IEnumerator CoOnNextLeveling()
     {
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);      
-        yield return new WaitForSeconds(0.6f);
+        yield return GlobalDefine.FadeInDelayTime;
         transform.position = Vector3.zero;
 
-        while (GameManager.Leveling)
+        while (GameManager.isAnimAction)
         {
             yield return null;
         }
@@ -321,21 +321,28 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     {
         return isDead;
     }
-    public void SetPlayerTarget(Monster monster)
+    public void SetPlayerTarget(ILockOnTarget monster)
     {
         gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
         scanForTargets.SetPlayerTarget(monster);
     }
 
     public void ResetTarget()
-    {
+    {        
+        bool onTargetRemove  = scanForTargets.ResetTarget();
         
-        scanForTargets.ResetTarget();
+        if (onTargetRemove)
+            gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
     }
 
     public void PlayAnimIdle()
     {
-        animator.Play("FallingEnd");
+        animator.Play(GlobalDefine.FallingEndHash);
+    }
+
+    public Transform GetLockOnTarget()
+    {
+        return scanForTargets.lookatMonster;
     }
 }
 

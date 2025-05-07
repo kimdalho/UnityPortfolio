@@ -35,7 +35,7 @@ public class FadeController : MonoBehaviour , IOnNextFlow
 
         yield return new WaitForSeconds(0.3f);
 
-        while (GameManager.Leveling)
+        while (GameManager.isAnimAction)
         {
             yield return null;
         }

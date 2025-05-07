@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public enum eEuipmentType
 {
@@ -16,10 +17,17 @@ public class ModelController : MonoBehaviour
     public GameObject[] m_heads;
     public GameObject[] m_bodys;
    
-    public GameObject[] m_weapons;
+    public WeaponController[] m_weapons;
+
+    public Dictionary<eWeaponType, WeaponController> dicWeapons;
+
     public Character character;
 
-    
+    public Rig HeadAnim;
+    public Rig HandRighAnim;
+    public Rig HandLeftAnim;
+    public Rig LowerarmLeftAnim;
+    public Rig LowerarmRightAnim;
 
 
     //파츠바디 타입에는 무기를 포함하지않는다.
@@ -45,13 +53,39 @@ public class ModelController : MonoBehaviour
                 //Debug.LogWarning($"[{partType}] 파츠 목록이 비어있습니다.");
             }
         }
+        dicWeapons = new Dictionary<eWeaponType, WeaponController>();
+        foreach (var weapon in m_weapons)
+        {
+            dicWeapons.Add(weapon.eWeaponType, weapon);
+        }
+
+        ScanForTargets.OnSetLockOnTarget += OnSetLockOnTarget;
+    }
+
+    public WeightedTransform posxxx;
+
+    public void OnSetLockOnTarget(Transform Target)
+    {
+
+    }
+
+    private void AimingPosesRigging(Rig weiponAimLayer, Transform Target)
+    {
+
+
+        weiponAimLayer.weight = 1;
+        GameObject child = weiponAimLayer.transform.GetChild(0).gameObject;
+        MultiAimConstraint childCompo =  child.GetComponent<MultiAimConstraint>();
+
+        childCompo.weight = 1;
+        posxxx = childCompo.data.sourceObjects[0];
+        
     }
 
 
 
     private void Awake()
-    {
-        character = GetComponent<Character>();
+    {        
         InitializeParts();
     }
 
@@ -107,15 +141,15 @@ public class ModelController : MonoBehaviour
 
     public void SetWeaponByIndex(eWeaponType type)
     {      
-        for (int i = 0; i < m_weapons.Length; i++)
+        foreach(var weapon in dicWeapons)
         {
-            bool isActive = (int)type - 1 == i;
-            m_weapons[i].SetActive(isActive);
+            bool isActive = type == weapon.Key;
+            dicWeapons[weapon.Key].gameObject.SetActive(isActive);
 
             //활성화된 현제 무기
             if (isActive)
-            {
-              
+            {                
+                character.SetWeaponEffect(dicWeapons[type]);
             }
         }
     }

@@ -8,7 +8,7 @@ public class GA_NinjaBody : GameAbility
 
     protected override IEnumerator ExecuteAbility()
     {
-        if (owner.gameplayTagSystem.HasTag(AbilityTag))
+        if (owner.GetGameplayTagSystem().HasTag(AbilityTag))
             yield break;
 
         StartAbility();
@@ -18,7 +18,7 @@ public class GA_NinjaBody : GameAbility
 
     private void StartAbility()
     {
-        owner.gameplayTagSystem.AddTag(AbilityTag);        
+        owner.GetGameplayTagSystem().AddTag(AbilityTag);        
         owner.Onkill += Onkill;
     }
 
@@ -34,12 +34,12 @@ public class GA_NinjaBody : GameAbility
 
     private IEnumerator OnkillProcess()
     {
-        if (owner.gameplayTagSystem.HasTag(state) == true)
+        if (owner.GetGameplayTagSystem().HasTag(state) == true)
             yield break;
-        owner.gameplayTagSystem.AddTag(state);
+        owner.GetGameplayTagSystem().AddTag(state);
         owner.fxSystem.ExecuteFX(eTagType.Effect_NinjaSkill, owner.transform);
         yield return new WaitForSeconds(Duration);
-        owner.gameplayTagSystem.RemoveTag(state);
+        owner.GetGameplayTagSystem().RemoveTag(state);
     }
     
     public override void EndAbility()

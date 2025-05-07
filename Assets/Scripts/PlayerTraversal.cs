@@ -19,7 +19,7 @@ public class PlayerTraversal : MonoBehaviour
         jumpPoints.Last().nextPoint = potal.toNextSpawnPoint;
         nextRoom = potal.toNextRoom;
         player.MoveAnimStop();
-        player.gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
+        player.GetGameplayTagSystem().AddTag(eTagType.Player_State_IgnoreInput);
         StartCoroutine(TraverseTo(player, jumpPoints[0]));
         cams[0].LookAt = player.transform;
         cams[1].LookAt = player.transform;
@@ -83,7 +83,7 @@ public class PlayerTraversal : MonoBehaviour
             cams[1].Priority = 0;
             flow = 0;
             // 마지막 점프 끝! 조작 가능 상태로 복구
-            player.gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
+            player.GetGameplayTagSystem().RemoveTag(eTagType.Player_State_IgnoreInput);
             player.PortalDelay();            
             player.PlayAnimIdle();
             StartCoroutine(GameManager.instance.ChangeCurrentRoom(nextRoom));
