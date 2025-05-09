@@ -100,8 +100,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IController
         Move();
 
         RotateToCameraDirection();
-        //자석기능 없앨까 생각중        
-        DropItemUpdate();
         //아이템 상태창
         HasPickupablesNearby();
         //
@@ -210,24 +208,11 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IController
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent(out DroppedItem item))
-        {
-            nearbyItems.Remove(item);
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (detectedItems.Contains(other)) return;
         detectedItems.Add(other);
-
-        if (other.TryGetComponent(out DroppedItem item))
-        {
-            Debug.Log($"{other.gameObject.name}");
-            nearbyItems.Add(item);
-        }
 
         IPickupable pickup = other.GetComponent<IPickupable>();
         if (pickup != null)

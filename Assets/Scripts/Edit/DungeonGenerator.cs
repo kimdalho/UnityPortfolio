@@ -1,28 +1,24 @@
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.Arm;
 /// <summary>
 /// 던전 제너레이터입니다. 던전은 Room의 집합으로 구성된 미로형 구조입니다.
 /// 현재 오브젝트 풀링은 적용되어 있지 않으며, 이는 런타임이 아닌 에디터 상에서
 /// 커스텀 툴을 통해 테스트를 진행하고 있기 때문입니다.
 /// </summary>
 public class DungeonGenerator : MonoBehaviour
-{
-    [Header("Prefab")]
-    [SerializeField]
-    private GameObject roomPrefab;
+{ 
     [SerializeField]
     private GameObject dungeonControllerPrefab;
     [Header("ScriptablObject")]
     [SerializeField]
     private DungeonConfigSO dungeonConfig;
     [SerializeField]
-    public List<DungeonDataSO> dungeonDatas;
-    [SerializeField]
-    private MonsterDataSO[] monsters;
+    public List<DungeonCraftDataSO> dungeonDatas;
 
 
     private Dictionary<string, Room> dic = new Dictionary<string, Room>();
-    private Dictionary<int, List<MonsterDataSO>> monsterLvDatas;
     
     private GameObject dungeonController;
 
@@ -88,9 +84,8 @@ public class DungeonGenerator : MonoBehaviour
     /// <summary>
     /// 룸, 몬스터, 아이템을 담을 빈 오브젝트 생성
     /// </summary>
-    private DungeonController CreateHolder(DungeonDataSO model)
+    private DungeonController CreateHolder(DungeonCraftDataSO model)
     {
-        EnsureMonsterLevelDataInitialized();
 
         dungeonController = Instantiate(dungeonControllerPrefab);
         dungeonController.name = $"Dungeon {model.name}";
@@ -103,25 +98,6 @@ public class DungeonGenerator : MonoBehaviour
         return dungeonController.GetComponent<DungeonController>();
 
     }
-
-    private void EnsureMonsterLevelDataInitialized()
-    {
-        if (monsterLvDatas != null) return;
-
-        monsterLvDatas = new Dictionary<int, List<MonsterDataSO>>();
-
-        foreach (var data in monsters)
-        {
-            if (!monsterLvDatas.TryGetValue(data.level, out var list))
-            {
-                list = new List<MonsterDataSO>();
-                monsterLvDatas[data.level] = list;
-            }
-
-            list.Add(data);
-        }
-    }
-
     private GameObject CreateChildHolder(string prefix, string modelName, Transform parent)
     {
         GameObject holder = new GameObject($"{prefix} {modelName}");
@@ -132,21 +108,20 @@ public class DungeonGenerator : MonoBehaviour
     /// <summary>
     /// 던전을 인스턴스화합니다.
     /// </summary>
-    private void RoomBuild(DungeonDataSO model)
+    private void RoomBuild(DungeonCraftDataSO model)
     {
         DungeonController dc = CreateHolder(model);
         dic.Clear();
 
         // 룸 생성
-        foreach (var roomData in model.rooms)
+        foreach (var dungeonData in model.dungeonDatas)
         {
-            var objRoom = Instantiate(roomPrefab);
-            Room roomComp = objRoom.GetComponent<Room>();
+            Room roomComp = ResourceManager.Instance.CreateRoom(dungeonData.roomType, roomHolder.transform);
             dc.rooms.Add(roomComp);
-            objRoom.transform.SetParent(roomHolder.transform);
-
-            roomComp.Init(roomData);
-            dic.Add(roomComp.Guid, roomComp);
+            roomComp.transform.position = new Vector3(dungeonData.position.x, 0, dungeonData.position.y);
+            roomComp.transform.SetParent(roomHolder.transform);
+            
+            dic.Add(dungeonData.guid, roomComp);
         }
 
         // 룸 간의 포탈 셋업
@@ -226,11 +201,11 @@ public class DungeonGenerator : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            MonsterDataSO data = GetRandomMonsterData(config);
-            Monster monster = InstantiateMonster(room, data,$"Monster {i}");
+            int level = RollLevel(config.monsterLevel1Chance, config.monsterLevel2Chance, config.monsterLevel3Chance);
+            Monster monster = ResourceManager.Instance.CreateMonsterToLevel(level,monsterHolder.transform);
+            monster.SetNode(room);  
             dc.monsters.Add(monster);
             room.roomMonsters.Add(monster);
-
             monster.OnDeath += room.OnMonsterDeath;
             monster.ResetPos();
         }
@@ -238,11 +213,11 @@ public class DungeonGenerator : MonoBehaviour
 
     private void CreateBossInRoom(Room room, DungeonRoomConfig config, DungeonController dc)
     {
-        MonsterDataSO data = GetRandomMonsterData(config);
-        Monster boss = InstantiateMonster(room, data, "Boss", BOSS_SCALE);
+        int level = RollLevel(config.monsterLevel1Chance, config.monsterLevel2Chance, config.monsterLevel3Chance);
+        Monster boss = ResourceManager.Instance.CreateMonsterToLevel(level, monsterHolder.transform);
+        boss.SetNode(room);
         dc.monsters.Add(boss);
         room.roomMonsters.Add(boss);
-
         boss.OnDeath += room.OnMonsterDeath;
         boss.ResetPos();
     }
@@ -253,22 +228,6 @@ public class DungeonGenerator : MonoBehaviour
         int rifleIndex = 0;
         var node = room.grid.GetFirstGridNode();
         ResourceManager.Instance.CreateWeaponItemToIndex(rifleIndex, node.transform);
-    }
-
-    private Monster InstantiateMonster(Room room, MonsterDataSO data, string namePrefix, float scaleMultiplier = 1.0f)
-    {
-        Monster monster = room.grid.CreateMonster(monsterHolder.transform);
-        monster.name = $"{namePrefix} {monster.name}";
-        monster.transform.localScale *= scaleMultiplier;
-        monster.SetData(data);
-        return monster;
-    }
-
-    private MonsterDataSO GetRandomMonsterData(DungeonRoomConfig config)
-    {
-        int level = RollLevel(config.monsterLevel1Chance, config.monsterLevel2Chance, config.monsterLevel3Chance);
-        int index = Random.Range(MIN_LEVEL, MAX_LEVEL);
-        return monsterLvDatas[level][index];
     }
 
     /// <summary>

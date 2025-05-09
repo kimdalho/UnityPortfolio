@@ -1,6 +1,12 @@
-using UnityEditor.Playables;
 using UnityEngine;
-using UnityEngine.Rendering;
+
+public enum eWeaponType
+{
+    Punch = 0,
+    Rifl = 1,
+    Bazooka = 2,
+    Handgun = 3,
+}
 
 public class WeaponItem :BaseItem
 {

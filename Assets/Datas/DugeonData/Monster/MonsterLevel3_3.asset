@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 942558f8923c98944b82125ebf1e56aa, type: 3}
+  m_Name: MonsterLevel3_3
+  m_EditorClassIdentifier: 
+  level: 3
+  attribute:
+    Health:
+      AttributeName: Health
+      MaxValue: 20
+      BaseValue: 20
+      CurValue: 20
+    Attack:
+      AttributeName: Attack
+      MaxValue: 1
+      BaseValue: 1
+      CurValue: 1
+    AttackSpeed:
+      AttributeName: AttackSpeed
+      MaxValue: 1.3
+      BaseValue: 1.3
+      CurValue: 1.3
+    Speed:
+      AttributeName: Speed
+      MaxValue: 1
+      BaseValue: 1
+      CurValue: 1
+  attackRange: 4
+  prefab: {fileID: 2566851810599489288, guid: 188f7ae028d352e4aa4ab64200ff5717, type: 3}

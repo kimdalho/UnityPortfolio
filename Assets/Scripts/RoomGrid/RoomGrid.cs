@@ -35,22 +35,6 @@ public class RoomGrid : MonoBehaviour
         List<GridNode> result = selectRowGrid.GetGrid();
         return result[result.Count / 2];
     }
-
-    public Monster CreateMonster(Transform parent)
-    {        
-        GridNode node = GetRandomGridNode();
-        GameObject newmon =  ResourceManager.Instance.CreateMonster(parent);
-        node.gameObject.name = "XX1";
-        Monster newMonsterCompo = newmon.GetComponent<Monster>();
-        newMonsterCompo.attribute = new AttributeSet();
-        newMonsterCompo.startNode = node;
-        newMonsterCompo.SetRoomGrid(transform);       
-        return newMonsterCompo;
-
-    }
-
-
-
     
 
     /// <summary>

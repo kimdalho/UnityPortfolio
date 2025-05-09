@@ -64,7 +64,6 @@ public class GameManager : MonoBehaviour
 
         #region 던전 셋업
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
-        dungeon.Setup();
         Room startRoom = dungeon.FindRoombyType(eRoomType.Start);        
         yield return ChangeCurrentRoom(startRoom);
         #endregion
@@ -81,11 +80,14 @@ public class GameManager : MonoBehaviour
             curRoom.DisableRoom();
         }
 
+      
         if (newCurrentRoom != null)
         {
-            newCurrentRoom.EnableRoom();
+            curRoom = newCurrentRoom;
+            dungeon.EnterTheRoom(curRoom);
+            curRoom.OpenToRoomPortals();
         }
-        curRoom = newCurrentRoom;
+
         yield return StartCoroutine(CoCheckBoss());
 
     }
@@ -147,7 +149,6 @@ public class GameManager : MonoBehaviour
         loadplayerdata.dungeonLevel++;
         Destroy(dungeon.gameObject);
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
-        dungeon.Setup();
         Room startRoom = dungeon.FindRoombyType(eRoomType.Start);
         yield return ChangeCurrentRoom(startRoom);        
         isAnimAction = false;

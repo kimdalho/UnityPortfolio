@@ -9,18 +9,25 @@ public class DungeonController : MonoBehaviour
     public List<Monster> monsters = new List<Monster>();
     public List<GameObject> items = new List<GameObject>();
 
-    public void Setup()
-    {        
-        foreach (Room room in rooms)
+    public void EnterTheRoom(Room room)
+    {
+        switch (room.roomType)
         {
-            switch(room.roomType)
-            {
-                case eRoomType.Item:
-                case eRoomType.Start:
-                    room.isClear = true;                   
-                    break;
-            }
+            case eRoomType.Item:
+            case eRoomType.Start:
+            case eRoomType.NPCRoom:
+            case eRoomType.SacrificeRoom:
+            case eRoomType.Empty:
+                Debug.Log($"EnterTheRoom => {room.roomType} is clear");
+                room.isClear = true;
+                break;
+            case eRoomType.Boss:
+            case eRoomType.Monster:
             
+                return;
+            default:
+                Debug.LogError(room.roomType + " not found");
+                break;
         }
     }
 
