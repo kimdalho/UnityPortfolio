@@ -9,7 +9,7 @@ public enum ProjectileType
     ALL // 모든 투사체 중 랜덤으로 뽑을 때 사용
 }
 
-public class ProjectileFactory : MonoBehaviour
+public class ProjectileFactory : MonoBehaviour , IPoolable
 {
     #region Singleton
     public static ProjectileFactory Instance { get; private set; } = null;
@@ -48,4 +48,13 @@ public class ProjectileFactory : MonoBehaviour
         return Instantiate(projectilePrefabs[GetIndex(type)], pos, rot);
     }
 
+    public void OnSpawn()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnDespawn()
+    {
+        throw new System.NotImplementedException();
+    }
 }
