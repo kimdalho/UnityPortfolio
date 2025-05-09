@@ -57,7 +57,7 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
 
     public WeaponController currentWeaponEffect;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         abilitySystem = GetComponentInChildren<AbilitySystem>();
         currentWeaponEffect = null;

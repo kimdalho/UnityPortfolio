@@ -60,8 +60,9 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IController
 
     public readonly float portalDelay = GlobalDefine.PlayerPortalDelayTime;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         GameManager.OnGameOver += OnGameOver;
         GameManager.OnNextFlow += OnNextFlow;
         itemLayer = LayerMask.NameToLayer(GlobalDefine.String_Item);
@@ -107,7 +108,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IController
         ActivateAbilityAttack();
 
         FallDeathCheck();
-    }
+    } 
 
 
     private void ActivateAbilityAttack()
@@ -329,10 +330,8 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IController
 
     public void ResetTarget()
     {        
-        bool onTargetRemove  = scanForTargets.ResetTarget();
-        
-        if (onTargetRemove)
-            gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
+        scanForTargets.ResetTarget();        
+        gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
     }
 
     public void PlayAnimIdle()

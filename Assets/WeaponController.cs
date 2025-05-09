@@ -19,8 +19,18 @@ public class WeaponController : MonoBehaviour
 
     public void PlayEffect()
     {
-        SoundManager.instance.PlayEffect(eEffectType.Shoot, bulletStartPos);
-        muzzle.Play();
+        try
+        {
+            SoundManager.instance.PlayEffect(eEffectType.Shoot, bulletStartPos);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogException(e);
+        }
+        finally
+        {
+            muzzle.Play();
+        }            
     }
 
 

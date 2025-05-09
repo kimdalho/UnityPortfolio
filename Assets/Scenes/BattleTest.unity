@@ -13621,6 +13621,9 @@ MonoBehaviour:
   HandLeftAnim: {fileID: 2101642796}
   LowerarmLeftAnim: {fileID: 1730535414}
   LowerarmRightAnim: {fileID: 1490365126}
+  posxxx:
+    transform: {fileID: 0}
+    weight: 0
 --- !u!1001 &4659452295779773584
 PrefabInstance:
   m_ObjectHideFlags: 0

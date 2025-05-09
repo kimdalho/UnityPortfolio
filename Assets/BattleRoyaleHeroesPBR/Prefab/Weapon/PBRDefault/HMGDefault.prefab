@@ -135,6 +135,7 @@ MonoBehaviour:
   Animator: {fileID: 0}
   eWeaponType: 3
   bulletStartPos: {fileID: 3384555121807068240}
+  muzzle: {fileID: 0}
 --- !u!1001 &2169101389284134659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -188,7 +189,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198234346748616026, guid: 5d559f54d8e6ab74bbb6f949e8b8b23c, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198234346748616026, guid: 5d559f54d8e6ab74bbb6f949e8b8b23c, type: 3}
       propertyPath: UVModule.flipV
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198515452120210940, guid: 5d559f54d8e6ab74bbb6f949e8b8b23c, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198515452120210940, guid: 5d559f54d8e6ab74bbb6f949e8b8b23c, type: 3}

@@ -249,9 +249,10 @@ public class DungeonGenerator : MonoBehaviour
 
     private void CreateStartRoomItem(Room room)
     {
-        int weaponIndex = Random.Range(0, 3);
+        //int weaponIndex = Random.Range(0, 3);
+        int rifleIndex = 0;
         var node = room.grid.GetFirstGridNode();
-        ResourceManager.Instance.CreateWeaponItemToIndex(weaponIndex, node.transform);
+        ResourceManager.Instance.CreateWeaponItemToIndex(rifleIndex, node.transform);
     }
 
     private Monster InstantiateMonster(Room room, MonsterDataSO data, string namePrefix, float scaleMultiplier = 1.0f)
