@@ -51,11 +51,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attribute:
-    MaxHart: 5
-    CurHart: 5
-    atk: 1
-    attackSpeed: 1
-    speed: 1
+    Health:
+      AttributeName: Health
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Attack:
+      AttributeName: Attack
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    AttackSpeed:
+      AttributeName: AttackSpeed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Speed:
+      AttributeName: Speed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 7238699780026430288}
   jumpHeight: 2
@@ -64,17 +79,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundCheckDistance: 0.3
+  isDead: 0
   animator: {fileID: 1064726689573047387}
   controller: {fileID: 5989734767020855489}
   fxSystem: {fileID: -770563901117985350}
   abilitySystem: {fileID: 7643396454371422051}
+  currentWeaponEffect: {fileID: 0}
   chaseRange: 10
   attackRange: 3
-  isDead: 0
   MaxBullet: 3
   patrolTime: 2
   startNode: {fileID: 0}
   roomGrid: {fileID: 0}
+  level: 0
+  aggro: 0
+  onlyIdle: 0
 --- !u!114 &2563671461830074345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,7 +231,7 @@ PrefabInstance:
     - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5582010176628933906}
     - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: m_bodys.Array.size
       value: 1

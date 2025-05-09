@@ -131,8 +131,6 @@ public class InputController : MonoBehaviour
 
     void RaycastToMonster(Vector2 screenPosition)
     {
-        if (alreadyhasTarget == true)
-            return;
 
         Ray ray = mainCamera.ScreenPointToRay(screenPosition);
 
@@ -145,10 +143,9 @@ public class InputController : MonoBehaviour
             if (lockOnTarget != null && lockOnTarget.GetDead() == false)
             {
                 controllerCharacter.SetPlayerTarget(lockOnTarget);                
-                alreadyhasTarget = true; 
                 return;
-            }
             
+            }
         }
         controllerCharacter.ResetTarget();
     }

@@ -42,6 +42,8 @@ public class SoundManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            audioSource = GetComponent<AudioSource>();
+            Setup();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -50,12 +52,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        audioSource = GetComponent<AudioSource>();
-        
-        Setup();
-    }
+    
 
     private void Setup()
     {

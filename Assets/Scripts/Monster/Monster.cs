@@ -221,8 +221,9 @@ public abstract class Monster : Character
 
         characterController.Move(calcVelocity * Time.deltaTime);
     }
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         onlyIdle = true;
     }
 

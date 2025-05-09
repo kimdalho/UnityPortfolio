@@ -14,7 +14,7 @@ public class TagDebugger : MonoBehaviour
               
         if (tagSystem == null)
         {
-            tagSystem = GameManager.instance.GetPlayer().GetGameplayTagSystem();
+            tagSystem = GetComponent<Player>().GetGameplayTagSystem();
         }
 
         GUIStyle style = new GUIStyle(GUI.skin.label);

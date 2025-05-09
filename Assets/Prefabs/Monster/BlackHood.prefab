@@ -51,11 +51,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attribute:
-    MaxHart: 5
-    CurHart: 5
-    atk: 1
-    attackSpeed: 1
-    speed: 1
+    Health:
+      AttributeName: Health
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Attack:
+      AttributeName: Attack
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    AttackSpeed:
+      AttributeName: AttackSpeed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Speed:
+      AttributeName: Speed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 764802606740835985}
   jumpHeight: 2
@@ -64,17 +79,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundCheckDistance: 0.3
+  isDead: 0
   animator: {fileID: 8904112648037604784}
   controller: {fileID: 2758657109547335978}
   fxSystem: {fileID: -8783207560054830842}
   abilitySystem: {fileID: 758250089743701821}
+  currentWeaponEffect: {fileID: 0}
   chaseRange: 5
   attackRange: 1.5
-  isDead: 0
   MaxBullet: 3
   patrolTime: 2
   startNode: {fileID: 0}
   roomGrid: {fileID: 0}
+  level: 0
+  aggro: 0
+  onlyIdle: 0
 --- !u!114 &6940413212348406184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,13 +233,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5d62fbc178a804a9577f4b24d97ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  AbilityTag: 15
   AbilityName: 
+  AbilityTag: 15
   Duration: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 128
+  owner: {fileID: 0}
+  fireCount: 1
+  fireMultypleAngleRange: 20
+  fireMultypleCount: 1
   eWeaponType: 0
   Equip_state_Tag: 21
 --- !u!1 &5838591459782860879
@@ -265,7 +287,7 @@ PrefabInstance:
     - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 355589838402576648}
     - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: m_bodys.Array.size
       value: 1
