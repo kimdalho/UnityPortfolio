@@ -33,9 +33,4 @@ public class RigModelController : ModelController
             dicWeapons.Add(weapon.eWeaponType, weapon);
         }
     }
-
-
-
-
-
 }

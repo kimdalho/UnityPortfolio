@@ -77,6 +77,12 @@ public class DungeonGenerator : MonoBehaviour
 
     public DungeonController Build(int level)
     {
+        if (level - 1 >= dungeonDatas.Count)
+        {
+            Debug.Log("클리어");
+            return null;
+        }
+
         BuildToLevel(level);
         return dungeons[level - 1].GetComponent<DungeonController>();
     }
@@ -151,7 +157,7 @@ public class DungeonGenerator : MonoBehaviour
     /// 계층에 맞는 룸을 생성하고, 아이템과 몬스터를 생성합니다.
     /// </summary>
     public void BuildToLevel(int level)
-    {
+    {    
         RoomBuild(dungeonDatas[level - 1]);
         CreateMonsterAndItem(level);
     }
@@ -193,7 +199,7 @@ public class DungeonGenerator : MonoBehaviour
     private void CreateItemInRoom(Room room, DungeonRoomConfig config, DungeonController dc)
     {
         int tier = RollLevel(config.itemTier1Chance, config.itemTier2Chance, config.itemTier3Chance);
-        GameObject item = room.grid.CreateItem(itemHolder.transform, tier);
+        EquipmentItem item = room.grid.CreateItem(itemHolder.transform, tier);
         dc.items.Add(item);
     }
 
@@ -203,11 +209,11 @@ public class DungeonGenerator : MonoBehaviour
         {
             int level = RollLevel(config.monsterLevel1Chance, config.monsterLevel2Chance, config.monsterLevel3Chance);
             Monster monster = ResourceManager.Instance.CreateMonsterToLevel(level,monsterHolder.transform);
-            monster.SetNode(room);  
-            dc.monsters.Add(monster);
-            room.roomMonsters.Add(monster);
+            monster.SetNode(room);                     
             monster.OnDeath += room.OnMonsterDeath;
             monster.ResetPos();
+            room.roomMonsters.Add(monster);
+            dc.monsters.Add(monster);
         }
     }
 

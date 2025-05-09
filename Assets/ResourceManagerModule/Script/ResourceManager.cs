@@ -25,33 +25,15 @@ public class ResourceManager : MonoBehaviour
     //0에서5까지는 머리 아이템
     //6부터 끝까지 바디아이템
     
-    public List<PickupItemData> pickupItemDatas = new List<PickupItemData>();
     public List<PickupWeaponItemData> weaponPickupItemDatas = new List<PickupWeaponItemData>();
-    [Header("모델 오브젝트")]
-    public GameObject HeadItemPrefab;
-    public GameObject BodyItemPrefab;
     public List<GameObject> WeaponItemPrefab;
     public MonsterFactory monsterFactory;
     public RoomFactory roomFactory;
-
+    public ItemFactory itemFactory;
     public GameObject FlyPrefab;
     
-    private Dictionary<eEuipmentType, boxInfo> itemInfos;
-
     public Dictionary<eWeaponType, RuntimeAnimatorController> dic = new Dictionary<eWeaponType, RuntimeAnimatorController>();
 
-
-    private class boxInfo
-    {
-       public GameObject prefab;
-       public Type compo;
-
-        public boxInfo(GameObject obj,Type type)
-        {
-            this.prefab = obj;
-            compo = type;   
-        }
-    }
 
 
 
@@ -88,14 +70,6 @@ public class ResourceManager : MonoBehaviour
         }
     }
 
-    private void ItemPrefabSetup()
-    {
-        itemInfos = new Dictionary<eEuipmentType, boxInfo>();
-        itemInfos.Add(eEuipmentType.Head,new boxInfo(HeadItemPrefab, typeof(HeadItem)));
-        itemInfos.Add(eEuipmentType.Body,new boxInfo(BodyItemPrefab, typeof(BodyItem)));
-    }
-    
-
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -109,48 +83,17 @@ public class ResourceManager : MonoBehaviour
         {
             dic.Add((eWeaponType)i, list2[i]);
         }
-        ItemPrefabSetup();
     }
 
-    public GameObject CreateItemToTier(int tier, Transform parent)
+    public EquipmentItem CreateItemToTier(int tier, Transform parent)
     {
-        if(itemInfos == null)
-        {
-            ItemPrefabSetup();
-        }
-
-        System.Random rand = new System.Random();
-        var result = pickupItemDatas.Where(_ => _.Rank == tier)
-        .OrderBy(x => rand.Next())
-        .Take(1)
-        .ToList();
-
-        var data = itemInfos[result[0].eEquipmentType];
-       
-        GameObject item = Instantiate(data.prefab);
-        item.transform.SetParent(parent);               
-        item.transform.localScale = Vector3.one;
-        // compo는 type 변수임
-        var itemCompo = item.GetComponent(data.compo) as EquipmentItem;
-        itemCompo.Init(result[0]);
+        var item = itemFactory.CreateItemToTier(tier, parent);
         return item;
     }
 
-    public GameObject CreateItemToIndex(int index, Transform parent)
+    public EquipmentItem CreateItemToIndex(int index, Transform parent)
     {
-        if (index > pickupItemDatas.Count - 1)
-            return null;    
-
-        var result = pickupItemDatas[index];
-
-        var data = itemInfos[result.eEquipmentType];
-
-        GameObject item = Instantiate(data.prefab);
-        item.transform.SetParent(parent);
-        item.transform.localScale = Vector3.one;
-        // compo는 type 변수임
-        var itemCompo = item.GetComponent(data.compo) as EquipmentItem;
-        itemCompo.Init(result);
+        var item = itemFactory.CreateItemToIndex(index, parent);
         return item;
     }
 

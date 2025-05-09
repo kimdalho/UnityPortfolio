@@ -149,10 +149,12 @@ public class GameManager : MonoBehaviour
         loadplayerdata.dungeonLevel++;
         Destroy(dungeon.gameObject);
         dungeon = dungeonMaker.Build(loadplayerdata.dungeonLevel);
-        Room startRoom = dungeon.FindRoombyType(eRoomType.Start);
-        yield return ChangeCurrentRoom(startRoom);        
-        isAnimAction = false;
-
+        if(dungeon != null)
+        {
+            Room startRoom = dungeon.FindRoombyType(eRoomType.Start);
+            yield return ChangeCurrentRoom(startRoom);
+            isAnimAction = false;
+        }        
     }
 
     bool gameover = false;

@@ -7,7 +7,7 @@ public class DungeonController : MonoBehaviour
     public List<Room> rooms = new List<Room>();
     public List<Portal> portals = new List<Portal>();
     public List<Monster> monsters = new List<Monster>();
-    public List<GameObject> items = new List<GameObject>();
+    public List<EquipmentItem> items = new List<EquipmentItem>();
 
     public void EnterTheRoom(Room room)
     {

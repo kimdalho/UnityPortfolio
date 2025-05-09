@@ -16,13 +16,31 @@ MonoBehaviour:
   itemData:
     itemName: Condition_ItemHead6
     description: Equip_Head_Description6
+  tag: 5
+  gameAbility: {fileID: 0}
   modelIndex: 5
+  attribute:
+    Health:
+      AttributeName: Health
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Attack:
+      AttributeName: Attack
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    AttackSpeed:
+      AttributeName: AttackSpeed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Speed:
+      AttributeName: Speed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
   objectIndex: 4
   Rank: 2
-  tag: 5
-  attribute:
-    MaxHart: 0
-    CurHart: 0
-    atk: 0
-    attackSpeed: 0
-    speed: 0
+  prefab: {fileID: 4409540416937846297, guid: 4c59d2e7b7792c841b1b2e6cb281d6a4, type: 3}
+  eEuipmentType: 1

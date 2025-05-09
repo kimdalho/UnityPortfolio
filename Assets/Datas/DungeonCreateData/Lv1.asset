@@ -9,56 +9,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 7e4cd72be2b11ae4a96dd0c6af4203cd, type: 3}
   m_Name: Lv1
-  m_EditorClassIdentifier: Assembly-CSharp::DungeonCraftDataSO
+  m_EditorClassIdentifier: 
   dungeonDatas:
   - guid: 0,0
     position: {x: 0, y: 0}
     roomType: 6
-  - guid: 0,100
-    position: {x: 0, y: 100}
-    roomType: 5
-  - guid: 100,100
-    position: {x: 100, y: 100}
+  - guid: -100,-100
+    position: {x: -100, y: -100}
     roomType: 1
-  - guid: 100,200
-    position: {x: 100, y: 200}
-    roomType: 2
-  - guid: 100,400
-    position: {x: 100, y: 400}
+  - guid: -300,-200
+    position: {x: -300, y: -200}
     roomType: 7
-  - guid: 100,300
-    position: {x: 100, y: 300}
-    roomType: 8
+  - guid: -200,-200
+    position: {x: -200, y: -200}
+    roomType: 4
+  - guid: 0,-100
+    position: {x: 0, y: -100}
+    roomType: 2
+  - guid: -100,-200
+    position: {x: -100, y: -200}
+    roomType: 5
   links:
   - fromNodeGUID: 0,0
-    toNodeGUID: 0,100
-    direction: Output Top
-  - fromNodeGUID: 0,100
+    toNodeGUID: 0,-100
+    direction: Output Bottom
+  - fromNodeGUID: 0,-100
     toNodeGUID: 0,0
-    direction: Output Bottom
-  - fromNodeGUID: 0,100
-    toNodeGUID: 100,100
-    direction: Output Right
-  - fromNodeGUID: 100,100
-    toNodeGUID: 0,100
+    direction: Output Top
+  - fromNodeGUID: 0,-100
+    toNodeGUID: -100,-100
     direction: Output Left
-  - fromNodeGUID: 100,100
-    toNodeGUID: 100,200
-    direction: Output Top
-  - fromNodeGUID: 100,200
-    toNodeGUID: 100,100
+  - fromNodeGUID: -100,-100
+    toNodeGUID: 0,-100
+    direction: Output Right
+  - fromNodeGUID: -100,-100
+    toNodeGUID: -100,-200
     direction: Output Bottom
-  - fromNodeGUID: 100,200
-    toNodeGUID: 100,300
+  - fromNodeGUID: -100,-200
+    toNodeGUID: -100,-100
     direction: Output Top
-  - fromNodeGUID: 100,300
-    toNodeGUID: 100,200
-    direction: Output Bottom
-  - fromNodeGUID: 100,300
-    toNodeGUID: 100,400
-    direction: Output Top
-  - fromNodeGUID: 100,400
-    toNodeGUID: 100,300
-    direction: Output Bottom
+  - fromNodeGUID: -100,-200
+    toNodeGUID: -200,-200
+    direction: Output Left
+  - fromNodeGUID: -200,-200
+    toNodeGUID: -100,-200
+    direction: Output Right
+  - fromNodeGUID: -200,-200
+    toNodeGUID: -300,-200
+    direction: Output Left
+  - fromNodeGUID: -300,-200
+    toNodeGUID: -200,-200
+    direction: Output Right

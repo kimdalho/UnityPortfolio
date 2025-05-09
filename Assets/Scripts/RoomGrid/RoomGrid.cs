@@ -40,11 +40,11 @@ public class RoomGrid : MonoBehaviour
     /// <summary>
     /// 아이템 테스트를 위해서 생성 스타트에서 GameScene에서 Start 함수로 사용
     /// </summary>
-    public GameObject CreateItem(Transform parent, int tier) 
+    public EquipmentItem CreateItem(Transform parent, int tier) 
     {
         GridNode node = GetRandomGridNode();
         node.exist = true;
-        GameObject newItem = ResourceManager.Instance.CreateItemToTier(tier, parent);
+        EquipmentItem newItem = ResourceManager.Instance.CreateItemToTier(tier, parent);
         newItem.transform.position = node.GetItemPos();
         return newItem;
     }
