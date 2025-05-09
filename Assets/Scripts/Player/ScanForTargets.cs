@@ -20,8 +20,15 @@ public class ScanForTargets : MonoBehaviour
         get
         {
             if (_lookatMonster == null || _lookatMonster.GetDead())
+            {
+                ResetTarget();
                 return null;
-            return _lookatMonster.GetLockOnTransform();
+            }
+            else
+            {
+                return _lookatMonster.GetLockOnTransform();
+            }                
+            
         }
     }
 
@@ -60,16 +67,14 @@ public class ScanForTargets : MonoBehaviour
         }
     }
 
-    public bool ResetTarget()
+    public void ResetTarget()
     {
         if(m_TargetGroup.Targets.Count > condition)
         {
             Transform targetToRemove = m_TargetGroup.Targets[TargetIndex].Object;
             m_TargetGroup.RemoveMember(targetToRemove);
             _lookatMonster = null;  
-            return true;
         }
-        return false;
     }
 }
 

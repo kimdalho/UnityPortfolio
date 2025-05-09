@@ -51,11 +51,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attribute:
-    MaxHart: 5
-    CurHart: 5
-    atk: 1
-    attackSpeed: 1
-    speed: 1
+    Health:
+      AttributeName: Health
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Attack:
+      AttributeName: Attack
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    AttackSpeed:
+      AttributeName: AttackSpeed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Speed:
+      AttributeName: Speed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
   calcVelocity: {x: 0, y: 0, z: 0}
   characterController: {fileID: 764802606740835985}
   jumpHeight: 2
@@ -64,17 +79,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundCheckDistance: 0.3
+  isDead: 0
   animator: {fileID: 8904112648037604784}
-  controller: {fileID: 2758657109547335978}
+  controller: {fileID: 0}
   fxSystem: {fileID: 7337048175519719326}
   abilitySystem: {fileID: 2043262270310123978}
+  currentWeaponEffect: {fileID: 0}
   chaseRange: 7
   attackRange: 5
-  isDead: 0
   MaxBullet: 3
   patrolTime: 2
   startNode: {fileID: 0}
   roomGrid: {fileID: 0}
+  level: 0
+  aggro: 0
+  onlyIdle: 0
   BulletPrefab: {fileID: 0}
   gunTrans: {fileID: 1555058468039031767}
 --- !u!114 &6940413212348406184
@@ -214,7 +233,7 @@ PrefabInstance:
     - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: character
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -6665059317169354917}
     - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: m_bodys.Array.size
       value: 1
@@ -375,6 +394,14 @@ PrefabInstance:
       propertyPath: 'm_heads.Array.data[18]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+      propertyPath: 'm_weapons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4848333196644607021}
+    - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+      propertyPath: 'm_weapons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8456174879193521918}
     - target: {fileID: 2538261173460028883, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -571,15 +598,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2538261173460521459, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 3939834277883685412}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2758657109547335978 stripped
+--- !u!114 &4848333196644607021 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8495380148740574729, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 3939834277883685412}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93005e4cac64995478b011a4506c7e69, type: 3}
+  m_Script: {fileID: 11500000, guid: 18698fe9baef4b0488e5c4ab914a10aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8456174879193521918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4897458269767038170, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+  m_PrefabInstance: {fileID: 3939834277883685412}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18698fe9baef4b0488e5c4ab914a10aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8904112648037604783 stripped
