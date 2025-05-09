@@ -56,5 +56,8 @@ public class PickupItemData : PickupItemDataBase
     public int objectIndex;
     //아이템 등급 높은 템일수록 상위 층에서만 드랍되는게 조건    
     public int Rank;
+
+    public GameObject prefab;
+    public eEuipmentType eEuipmentType;
 }
 

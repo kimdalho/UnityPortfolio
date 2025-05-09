@@ -8,7 +8,7 @@ public enum eDirection
     Right
 }
 
-public class Room : MonoBehaviour
+public class Room : MonoBehaviour , IInitializableItem<RoomPrefabSO>
 {
     public string Guid;
     public eRoomType roomType;
@@ -18,9 +18,7 @@ public class Room : MonoBehaviour
     public Portal Next;    
     public RoomGrid grid;
     
-
     public List<PlayerTraversal> traversals;
-
     public List<Monster> roomMonsters;
 
     public bool isClear = false;
@@ -28,9 +26,8 @@ public class Room : MonoBehaviour
     //런타임중에 사용되는 포탈들
     public List<Portal> enablePortal;
        
-    public void Init(RoomData model)
-    {
-        Guid = model.guid;        
+    public void SetData(RoomPrefabSO model)
+    {     
         string str_name = string.Format("{0},{1}", model.roomType.ToString(), this.Guid);
         gameObject.name = str_name;
         this.roomType = model.roomType;
@@ -39,9 +36,7 @@ public class Room : MonoBehaviour
         bottom.gameObject.name = eDirection.Bottom.ToString();
         left.gameObject.name = eDirection.Left.ToString();
         right.gameObject.name = eDirection.Right.ToString();
-
-        transform.position = new Vector3(model.position.x, 0, model.position.y);
-
+        
         keyValuePairs.Add(eDirection.Top, top);
         keyValuePairs.Add(eDirection.Right, right);
         keyValuePairs.Add(eDirection.Left, left);
@@ -55,7 +50,7 @@ public class Room : MonoBehaviour
     {
         if (IsAllDead())
         {
-            EnableRoom();
+            OpenToRoomPortals();
         }
     }
 
@@ -95,9 +90,12 @@ public class Room : MonoBehaviour
             traversal.gameObject.SetActive(false);
         }
     }
-    public void EnableRoom()
+    public void OpenToRoomPortals()
     {
         if (!isClear)
+            return;
+
+        if (this != GameManager.instance.curRoom)
             return;
 
         foreach (Portal portal in enablePortal)

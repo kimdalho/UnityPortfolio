@@ -1,4 +1,3 @@
-using System.Drawing;
 using UnityEngine;
 
 
@@ -9,4 +8,5 @@ public class MonsterDataSO : ScriptableObject
     public int level;
     public AttributeSet attribute;
     public float attackRange;
+    public GameObject prefab;
 }

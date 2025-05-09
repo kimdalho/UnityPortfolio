@@ -1,5 +1,7 @@
 /* DungeonGraphStyle.uss */
-
+/*
+    던전 맵을 사용하는 그래프 뷰(VisualElement)에서 노드의 스타일과 포트 타입의 css가 반드시 있어야합니다.    
+*/
 .node {
     background-color: #333333;
     border-radius: 8px;

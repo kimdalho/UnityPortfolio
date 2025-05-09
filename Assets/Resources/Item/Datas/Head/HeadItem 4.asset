@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 871c604d6ddfedc44948b5d60323325b, type: 3}
+  m_Name: HeadItem 4
+  m_EditorClassIdentifier: 
+  eEquipmentType: 1
+  itemData:
+    itemName: Condition_ItemHead4
+    description: Equip_Head_Description4
+  tag: 3
+  gameAbility: {fileID: 7079138422186737321, guid: 641990c760ac7c74884839f873b8dd0e, type: 3}
+  modelIndex: 3
+  attribute:
+    Health:
+      AttributeName: Health
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Attack:
+      AttributeName: Attack
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    AttackSpeed:
+      AttributeName: AttackSpeed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+    Speed:
+      AttributeName: Speed
+      MaxValue: 10
+      BaseValue: 0
+      CurValue: 0
+  objectIndex: 2
+  Rank: 1
+  prefab: {fileID: 4409540416937846297, guid: 4c59d2e7b7792c841b1b2e6cb281d6a4, type: 3}
+  eEuipmentType: 1

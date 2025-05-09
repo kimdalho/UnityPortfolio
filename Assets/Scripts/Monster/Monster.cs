@@ -1,11 +1,12 @@
 using System;
+using System.Threading;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using static Unity.Burst.Intrinsics.Arm;
 
 [RequireComponent(typeof(MonsterFSM))]
-public abstract class Monster : Character
+public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
 {
     #region Monster Stats
     private float rotSpeed = 10f;
@@ -47,7 +48,11 @@ public abstract class Monster : Character
     public void SetData(MonsterDataSO model)
     {
         level = model.level;
-        attribute = model.attribute;
+        attribute = new AttributeSet(model.attribute,
+            eAttributeType.Health,
+            eAttributeType.Attack,
+            eAttributeType.Speed,
+            eAttributeType.AttackSpeed);      
     }
    
     protected virtual void Initialized()
@@ -68,6 +73,14 @@ public abstract class Monster : Character
 
         monsterFSM = GetComponent<MonsterFSM>();
         monsterFSM.Initialized(this, _dead, _hit, _reLoad, _attack, _chase, _patrol, _idle);
+    }
+
+    public void SetNode(Room room , float scaleMultiplier = 1.0f)
+    {
+        GridNode node = room.grid.GetRandomGridNode();
+        startNode = node;
+       SetRoomGrid(room.grid.transform);
+       transform.localScale *= scaleMultiplier;
     }
 
   
