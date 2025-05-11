@@ -20,18 +20,13 @@ public class ResourceManager : MonoBehaviour
     [SerializeField]
     public List<AnimatorClipInfo> list = new List<AnimatorClipInfo>();  
 
-    public List<RuntimeAnimatorController> list2 = new List<RuntimeAnimatorController>();
-
-    //0에서5까지는 머리 아이템
-    //6부터 끝까지 바디아이템
-    
+    public List<RuntimeAnimatorController> list2 = new List<RuntimeAnimatorController>();    
     public List<PickupWeaponItemData> weaponPickupItemDatas = new List<PickupWeaponItemData>();
     public List<GameObject> WeaponItemPrefab;
     public MonsterFactory monsterFactory;
     public RoomFactory roomFactory;
     public ItemFactory itemFactory;
-    public GameObject FlyPrefab;
-    
+    public GameObject FlyPrefab;    
     public Dictionary<eWeaponType, RuntimeAnimatorController> dic = new Dictionary<eWeaponType, RuntimeAnimatorController>();
 
 
@@ -113,6 +108,53 @@ public class ResourceManager : MonoBehaviour
         itemCompo.Init(result);
         return NewWeapon;
     }
+
+
+    //TODO: 추후 풀링 매니저에서 프레임워크 분리 예정
+
+    //풀링된 오브젝트
+    private Dictionary<eRoomType,Queue<Room>> _roomMap;
+    //사용중인 오브젝트
+    private Dictionary<eRoomType, Queue<Room>> _roomMap2;
+
+    public void CreateRoomPool(Transform parent)
+    {
+            _roomMap = new Dictionary<eRoomType, Queue<Room>>();
+            _roomMap2 = new Dictionary<eRoomType, Queue<Room>>();
+
+            nameless(eRoomType.Start, parent, 1);
+            nameless(eRoomType.Item, parent);
+            nameless(eRoomType.Monster, parent);
+            nameless(eRoomType.NPCRoom, parent, 1);
+            nameless(eRoomType.Boss, parent, 1);
+            nameless(eRoomType.SacrificeRoom, parent, 1);
+               
+    }
+
+    private void nameless(eRoomType type, Transform parent,int count = 7)
+    {
+        Room room = null;        
+        _roomMap[type] = new Queue<Room>();
+        for (int x = 0; x < count; x++)
+        {
+            room = roomFactory.CreateRoomToType(type, parent);
+            _roomMap[type].Enqueue(room);   
+        }             
+    }
+
+    public Room GetRoom(eRoomType type)
+    {
+        var room = _roomMap[type].Dequeue() as Room;
+        if( _roomMap2.ContainsKey(type) is false)
+        {
+            _roomMap2[type] = new Queue<Room>();
+        }
+        _roomMap2[type].Enqueue(room);
+        return room;
+    }
+
+
+
 
     public Room CreateRoom(eRoomType type, Transform parent)
     {

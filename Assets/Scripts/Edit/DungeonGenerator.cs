@@ -23,14 +23,10 @@ public class DungeonGenerator : MonoBehaviour
     private GameObject dungeonController;
 
     private GameObject itemHolder;
-    private GameObject roomHolder;
     private GameObject monsterHolder;
     private List<GameObject> dungeons = new List<GameObject>();
     
     private readonly float BOSS_SCALE = 2.3f;
-
-    private readonly int MIN_LEVEL = 1;
-    private readonly int MAX_LEVEL = 3;
 
     private static readonly Dictionary<eDirection, eDirection> flipMap = new Dictionary<eDirection, eDirection>
     {
@@ -42,10 +38,18 @@ public class DungeonGenerator : MonoBehaviour
 
 #region EditCode
 #if UNITY_EDITOR
+
+    public void BuildPoolingRooms()
+    {
+        GameObject pooling = new GameObject();
+        ResourceManager.Instance.CreateRoomPool(pooling.transform);
+    }
+
     /// <summary>
     /// 모든 던전을 생성하고, 첫 번째 던전만 활성화합니다.
     /// 해당 매소드는 테스트를 위해 존재합니다.    
     /// </summary>
+    
     public void BuildAllDungeonsInEditor()
     {
         dungeons.Clear();
@@ -95,9 +99,7 @@ public class DungeonGenerator : MonoBehaviour
 
         dungeonController = Instantiate(dungeonControllerPrefab);
         dungeonController.name = $"Dungeon {model.name}";
-        dungeons.Add(dungeonController);
-
-        roomHolder = CreateChildHolder("RoomHolder", model.name, dungeonController.transform);
+        dungeons.Add(dungeonController);   
         monsterHolder = CreateChildHolder("MonsterHolder", model.name, dungeonController.transform);
         itemHolder = CreateChildHolder("ItemHolder", model.name, dungeonController.transform);
 
@@ -122,10 +124,9 @@ public class DungeonGenerator : MonoBehaviour
         // 룸 생성
         foreach (var dungeonData in model.dungeonDatas)
         {
-            Room roomComp = ResourceManager.Instance.CreateRoom(dungeonData.roomType, roomHolder.transform);
+            Room roomComp = ResourceManager.Instance.GetRoom(dungeonData.roomType);
             dc.rooms.Add(roomComp);
-            roomComp.transform.position = new Vector3(dungeonData.position.x, 0, dungeonData.position.y);
-            roomComp.transform.SetParent(roomHolder.transform);
+            roomComp.transform.position = new Vector3(dungeonData.position.x, 0, dungeonData.position.y);           
             
             dic.Add(dungeonData.guid, roomComp);
         }

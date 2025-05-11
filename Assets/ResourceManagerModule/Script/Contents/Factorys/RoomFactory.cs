@@ -15,6 +15,9 @@ public class RoomFactory : MonoBehaviour, IFactory<RoomPrefabSO, Room>
             Debug.LogError($"Room of type {type} not found");
             return null;
         }
+        else
+            
+
         return Create(data, parent);
     }
 

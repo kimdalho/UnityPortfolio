@@ -14,8 +14,8 @@ public enum eEuipmentType
 
 public class ModelController : MonoBehaviour
 {
-    public GameObject[] m_heads;
-    public GameObject[] m_bodys;
+    public GameObject m_head;
+    public GameObject m_body;
    
     public WeaponController[] m_weapons;
     public Dictionary<eWeaponType, WeaponController> dicWeapons;
@@ -24,27 +24,19 @@ public class ModelController : MonoBehaviour
 
 
     //파츠바디 타입에는 무기를 포함하지않는다.
-    public Dictionary<eEuipmentType, List<GameObject>> partsByType = new Dictionary<eEuipmentType, List<GameObject>>();
+    public Dictionary<eEuipmentType, GameObject> partsByType = new Dictionary<eEuipmentType, GameObject>();
     protected virtual void InitializeParts()
     {
         // 배열을 Dictionary에 등록합니다.
-        partsByType[eEuipmentType.Head] = new List<GameObject>(m_heads);
-        partsByType[eEuipmentType.Body] = new List<GameObject>(m_bodys);
+        partsByType[eEuipmentType.Head] = m_head;
+        partsByType[eEuipmentType.Body] = m_body;
 
         // 각 파츠 타입마다 기본 파츠를 활성화 (있다면)
         foreach (var kvp in partsByType)
         {
             eEuipmentType partType = kvp.Key;
-            List<GameObject> parts = kvp.Value;
-
-            if (parts.Count > 0)
-            {
-                EquipPart(partType, 0);
-            }
-            else
-            {
-                //Debug.LogWarning($"[{partType}] 파츠 목록이 비어있습니다.");
-            }
+            GameObject parts = kvp.Value;
+            EquipPart(partType);
         }
     }
 
@@ -64,7 +56,7 @@ public class ModelController : MonoBehaviour
     /// </summary>
     /// <param name="partType">장착할 파츠 타입</param>
     /// <param name="index">해당 타입 내에서 선택할 인덱스</param>
-    public void EquipPart(eEuipmentType partType, int index)
+    public void EquipPart(eEuipmentType partType)
     {
         if (!partsByType.ContainsKey(partType))
         {
@@ -72,38 +64,19 @@ public class ModelController : MonoBehaviour
             return;
         }
 
-        List<GameObject> parts = partsByType[partType];
-        if (index < 0 || index >= parts.Count)
+        GameObject part = partsByType[partType];
+        if(part == null)
         {
-            Debug.LogWarning($"파츠 타입 [{partType}]에 대해 인덱스 {index}가 범위를 벗어났습니다.");
-            return;
+            Debug.LogWarning("Not Found");
         }
-
-        // 해당 파츠 타입 내에서 하나의 오브젝트만 활성화하도록 처리
-        SetActiveExclusive(partType, index);
     }
 
-    /// <summary>
-    /// 같은 파츠 타입 내에서 지정한 인덱스의 오브젝트만 활성화하고, 나머지는 비활성화합니다.
-    /// </summary>
-    /// <param name="partType">파츠 타입</param>
-    /// <param name="activeIndex">활성화할 오브젝트의 인덱스</param>
-    public void SetActiveExclusive(eEuipmentType partType, int activeIndex)
+    public void SetActiveExclusive(eEuipmentType partType, Mesh mesh)
     {
-        List<GameObject> parts = partsByType[partType];
+        GameObject part = partsByType[partType];
+        var render = part.GetComponent<SkinnedMeshRenderer>();
+        render.sharedMesh = mesh;
 
-        for (int i = 0; i < parts.Count; i++)
-        {
-            bool shouldActivate = (i == activeIndex);
-            
-            parts[i].SetActive(shouldActivate);
-
-            // 활성화
-            if (shouldActivate)
-            {
-                
-            }
-        }
     }
 
 
