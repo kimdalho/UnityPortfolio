@@ -10,7 +10,7 @@ public interface IOnGameOver
 
 }
 
-public interface IControllerCharacter
+public interface IPlayer
 {
     public void SetPlayerTarget(ILockOnTarget monster);
     public void ResetTarget();  
@@ -26,7 +26,7 @@ public interface IHasLockOnTarget
 
 
 
-public partial class Player : Character , IOnGameOver ,IOnNextFlow , IControllerCharacter , IHasLockOnTarget    
+public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer , IHasLockOnTarget    
 {
     #region 이동 컨트롤러
     [SerializeField]

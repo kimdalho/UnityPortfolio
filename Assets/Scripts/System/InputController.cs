@@ -35,10 +35,16 @@ public class InputController : MonoBehaviour
     public Camera mainCamera;
     public LayerMask monsterLayer;
 
-    bool alreadyhasTarget;
+    [SerializeReference]
+    private IPlayer controllerCharacter;
+    [SerializeField] private MonoBehaviour playerMono; // 인스펙터 노출 
+
     float deltime;
 
-
+    private void Awake()
+    {
+        controllerCharacter = playerMono as IPlayer;
+    }
 
     private void OnEnable()
     {
@@ -105,13 +111,12 @@ public class InputController : MonoBehaviour
 
     private void SetTargetDelay()
     {
-        if(deltime < 5 && alreadyhasTarget is true)
+        if(deltime < 5)
         {
             deltime += Time.deltaTime;
         }
         else
         {
-            alreadyhasTarget = false;
             deltime = 0;
         }
     }
@@ -121,13 +126,12 @@ public class InputController : MonoBehaviour
         inputVector = Vector2.zero;
         joystickHandle.anchoredPosition = Vector2.zero;
     }
-
-    [SerializeField]
-    private Player controllerCharacter;
-
+    /// <summary>
+    /// 터치된 대상이 없으면 리셋
+    /// </summary>
+    /// <param name="screenPosition"></param>
     void RaycastToMonster(Vector2 screenPosition)
     {
-
         Ray ray = mainCamera.ScreenPointToRay(screenPosition);
 
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
@@ -139,8 +143,7 @@ public class InputController : MonoBehaviour
             if (lockOnTarget != null && lockOnTarget.GetDead() == false)
             {
                 controllerCharacter.SetPlayerTarget(lockOnTarget);                
-                return;
-            
+                return;            
             }
         }
         controllerCharacter.ResetTarget();

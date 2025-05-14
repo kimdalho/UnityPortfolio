@@ -1337,7 +1337,14 @@ MonoBehaviour:
   monsterLayer:
     serializedVersion: 2
     m_Bits: 1024
-  controllerCharacter: {fileID: 9156603284735616508}
+  controllerCharacter:
+    rid: -2
+  playerMono: {fileID: 9156603284735616508}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!4 &592921303
 Transform:
   m_ObjectHideFlags: 0
@@ -3806,6 +3813,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8446997893072694455, guid: a860dd8f27743ad42ba4b8591da41450, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 9156603284735616508}
     - target: {fileID: 8446997893072694455, guid: a860dd8f27743ad42ba4b8591da41450, type: 3}
       propertyPath: list.Array.size
       value: 6
