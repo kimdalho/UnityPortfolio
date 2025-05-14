@@ -14,85 +14,6 @@ using UnityEngine;
 //current Value는 스킬 버프,디버프 효과에 따라 base보다 낮거나 높을수있다.
 //하지만 적용받은 모든 스킬들이 릴리즈된다면 base와 값은 동일해야한다.
 
-[System.Serializable]
-public class GameAttribute
-{
-    [SerializeField]
-    private string AttributeName;
-    [SerializeField]
-    private float MaxValue;
-    [SerializeField]
-    private float BaseValue;
-    [SerializeField]
-    private float CurValue;
-
-    public GameAttribute(string _name,float maxvalue,float basevalue)
-    {
-        AttributeName = _name;
-        MaxValue = maxvalue;
-        BaseValue = basevalue;
-        CurValue = basevalue;   
-    }
-
-
-    public void SetValue(float maxvalue, float basevalue)
-    {
-        MaxValue = maxvalue;
-        BaseValue = basevalue;
-        CurValue =  BaseValue;
-    }
-    public void SetValue(float basevalue)
-    {
-        BaseValue = Mathf.Clamp(basevalue, 0, MaxValue);
-        CurValue = BaseValue;
-    }
-
-    public void Modify(float value , eModifier modifierOp)
-    {
-        switch(modifierOp)
-        {
-            case eModifier.Add:
-                BaseValue += value;
-                CurValue += value;
-                break;
-            case eModifier.Multiply:
-                BaseValue *= value;
-                CurValue *= value;
-                break;
-        }      
-    }
-
-    public void RemoveModify(float value, eModifier modifierOp)
-    {
-        switch (modifierOp)
-        {
-            case eModifier.Add:
-                BaseValue -= value;
-                CurValue -= value;
-                break;
-            case eModifier.Multiply:
-                BaseValue /= value;
-                CurValue /= value;
-                break;
-        }
-    }    
-
-
-    public float GetBaseValue()
-    {
-        return BaseValue;
-    }
-
-    public float GetMaxValue()
-    {
-        return MaxValue;
-    }
-
-    public float GetCurrentValue()
-    {
-        return CurValue;
-    }
-}
 
 public enum eAttributeType
 {
@@ -119,16 +40,29 @@ public class AttributeSet
     [SerializeField]
     GameAttribute Speed;
 
-
-
     private Dictionary<eAttributeType, GameAttribute> attributes = new Dictionary<eAttributeType, GameAttribute>();
 
     //모든 스탯의 최대 수치값
 
+    public AttributeSet(AttributeSet attribute)
+    {
+        foreach (eAttributeType attributetype in Enum.GetValues(typeof(eAttributeType)))
+        {
+            attributes.Add(attributetype, new GameAttribute(attributetype.ToString(),
+                                                attribute.GetMaxValue(attributetype),
+                                                attribute.GetBaseValue(attributetype)));
+        }
+
+        Health = attributes[eAttributeType.Health];
+        Attack = attributes[eAttributeType.Attack];
+        AttackSpeed = attributes[eAttributeType.AttackSpeed];
+        Speed = attributes[eAttributeType.Speed];
+    }
+
     public AttributeSet()
     {
         foreach (eAttributeType attributetype in Enum.GetValues(typeof(eAttributeType)))
-        {            
+        {
             attributes.Add(attributetype, new GameAttribute(attributetype.ToString(), 10, 0));
         }
 
