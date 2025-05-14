@@ -66,7 +66,8 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IController
         GameManager.OnGameOver += OnGameOver;
         GameManager.OnNextFlow += OnNextFlow;
         itemLayer = LayerMask.NameToLayer(GlobalDefine.String_Item);
-        gameObject.tag = GlobalDefine.String_Player;        
+        gameObject.tag = GlobalDefine.String_Player;
+        gameplayTagSystem = new GameplayTagSystem();
     }
 
     private void OnDestroy()
@@ -111,7 +112,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IController
 
     private void ActivateAbilityAttack()
     {
-        if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget) is false)
+        if (scanForTargets.lookatMonster == null)
         {            
             return;
         }            

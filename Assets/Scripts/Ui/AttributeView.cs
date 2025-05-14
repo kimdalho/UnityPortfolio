@@ -10,10 +10,6 @@ public class AttributeView : MonoBehaviour
     public List<HeartIcon> hearts;
 
     public Player player;
-    public void Start()
-    {
-        player = GameObject.Find("Player").GetComponent<Player>();
-    }
 
     public void Update()
     {

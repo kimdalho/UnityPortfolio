@@ -39,11 +39,6 @@ public class InputController : MonoBehaviour
     float deltime;
 
 
-    private void Awake()
-    {        
-        var player = GameObject.Find(GlobalDefine.String_Player);
-        controllerCharacter = player.GetComponent<IControllerCharacter>(); ;
-    }
 
     private void OnEnable()
     {
@@ -126,8 +121,9 @@ public class InputController : MonoBehaviour
         inputVector = Vector2.zero;
         joystickHandle.anchoredPosition = Vector2.zero;
     }
-    
-    private IControllerCharacter controllerCharacter;
+
+    [SerializeField]
+    private Player controllerCharacter;
 
     void RaycastToMonster(Vector2 screenPosition)
     {

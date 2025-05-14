@@ -48,11 +48,9 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
     public void SetData(MonsterDataSO model)
     {
         level = model.level;
-        attribute = new AttributeSet(model.attribute,
-            eAttributeType.Health,
-            eAttributeType.Attack,
-            eAttributeType.Speed,
-            eAttributeType.AttackSpeed);      
+        attribute = new AttributeSet();
+
+        attribute = model.attribute;
     }
    
     protected virtual void Initialized()

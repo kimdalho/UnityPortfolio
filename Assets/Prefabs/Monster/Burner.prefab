@@ -392,6 +392,14 @@ PrefabInstance:
       propertyPath: 'm_heads.Array.data[18]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+      propertyPath: 'm_weapons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+      propertyPath: 'm_weapons.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2538261173460028883, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: m_IsActive
       value: 0
