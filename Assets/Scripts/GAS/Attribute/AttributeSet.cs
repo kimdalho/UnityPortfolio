@@ -138,48 +138,6 @@ public class AttributeSet
         Speed = attributes[eAttributeType.Speed];
     }
 
-    public AttributeSet(AttributeSet basedata, params eAttributeType[] attributeTypes)
-    {
-        foreach (eAttributeType attributetype in Enum.GetValues(typeof(eAttributeType)))
-        {
-            attributes.Add(attributetype, new GameAttribute(attributetype.ToString(), 10, 0));
-        }
-
-        Health = attributes[eAttributeType.Health];
-        Attack = attributes[eAttributeType.Attack];
-        AttackSpeed = attributes[eAttributeType.AttackSpeed];
-        Speed = attributes[eAttributeType.Speed];
-
-
-        foreach (eAttributeType type in attributeTypes)
-        {
-            SetAttribute(type, basedata.GetAttribute(type));
-        }
-    }
-
-    private void SetAttribute(eAttributeType type , GameAttribute basedata)
-    {
-
-
-        if (attributes.ContainsKey(type))
-        {
-            attributes[type] = basedata;
-        }
-        else
-        {
-            
-        }
-    }
-
-    public GameAttribute GetAttribute(eAttributeType type)
-    {
-        if (attributes.ContainsKey(type))
-        {
-            return attributes[type];
-        }
-        Debug.LogError("GetAttribute Not Found");
-        return null;
-    }
 
 
     public float GetCurValue(eAttributeType type)

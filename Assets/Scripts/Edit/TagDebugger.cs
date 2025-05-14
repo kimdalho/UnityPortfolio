@@ -11,11 +11,8 @@ public class TagDebugger : MonoBehaviour
     {
         if(onTest is false)
             return;
-              
-        if (tagSystem == null)
-        {
-            tagSystem = GetComponent<Player>().GetGameplayTagSystem();
-        }
+
+        tagSystem = GetComponent<Player>().GetGameplayTagSystem();
 
         GUIStyle style = new GUIStyle(GUI.skin.label);
         style.fontSize = 34; // 원하는 크기로 조절 (예: 24, 32, 48 등)

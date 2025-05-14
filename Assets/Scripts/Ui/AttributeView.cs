@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AttributeView : MonoBehaviour
 {
@@ -10,10 +8,6 @@ public class AttributeView : MonoBehaviour
     public List<HeartIcon> hearts;
 
     public Player player;
-    public void Start()
-    {
-        player = GameObject.Find("Player").GetComponent<Player>();
-    }
 
     public void Update()
     {
