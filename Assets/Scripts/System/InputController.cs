@@ -35,16 +35,7 @@ public class InputController : MonoBehaviour
     public Camera mainCamera;
     public LayerMask monsterLayer;
 
-    [SerializeReference]
-    private IPlayer controllerCharacter;
-    [SerializeField] private MonoBehaviour playerMono; // 인스펙터 노출 
-
     float deltime;
-
-    private void Awake()
-    {
-        controllerCharacter = playerMono as IPlayer;
-    }
 
     private void OnEnable()
     {
@@ -142,11 +133,11 @@ public class InputController : MonoBehaviour
             ;
             if (lockOnTarget != null && lockOnTarget.GetDead() == false)
             {
-                controllerCharacter.SetPlayerTarget(lockOnTarget);                
+                LockOnSystem.instance.SetPlayerTarget(lockOnTarget);                
                 return;            
             }
         }
-        controllerCharacter.ResetTarget();
+        LockOnSystem.instance.KillTarget();
     }
 
     public void Keyboard()

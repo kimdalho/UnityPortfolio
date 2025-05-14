@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
@@ -12,21 +13,10 @@ public interface IOnGameOver
 
 public interface IPlayer
 {
-    public void SetPlayerTarget(ILockOnTarget monster);
-    public void ResetTarget();  
-}
-/// <summary>
-/// 릭 타겟,또는 투사체 발사 방향인 타겟을 반환
-/// </summary>
-public interface IHasLockOnTarget
-{
-    public Transform GetLockOnTarget();
-
 }
 
 
-
-public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer , IHasLockOnTarget    
+public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer    
 {
     #region 이동 컨트롤러
     [SerializeField]
@@ -38,8 +28,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer , I
     #endregion
 
     #region 룩엣
-    [SerializeField]
-    private ScanForTargets scanForTargets;
     [SerializeField]
     private CinemachineCamera lookatCam;
     #endregion
@@ -65,15 +53,16 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer , I
         base.Awake();
         GameManager.OnGameOver += OnGameOver;
         GameManager.OnNextFlow += OnNextFlow;
+        LockOnSystem.OnResetTarget += OnResetTarget;
         itemLayer = LayerMask.NameToLayer(GlobalDefine.String_Item);
         gameObject.tag = GlobalDefine.String_Player;
-        gameplayTagSystem = new GameplayTagSystem();
     }
 
     private void OnDestroy()
     {
         GameManager.OnGameOver -= OnGameOver;
         GameManager.OnNextFlow -= OnNextFlow;
+        LockOnSystem.OnResetTarget -= OnResetTarget;
     }
 
     private void Start()
@@ -83,9 +72,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer , I
             Debug.LogError("AbilitySystem을 찾을 수 없습니다!");
             return;
         }
-
-     
-
+    
         if (inputController == null)
         {
             Debug.LogError("InputController를 찾을 수 없습니다!");
@@ -109,10 +96,12 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer , I
         FallDeathCheck();
     } 
 
-
-    private void ActivateAbilityAttack()
+    /// <summary>
+    /// 공격 어빌리티
+    /// </summary>
+    protected virtual void ActivateAbilityAttack()
     {
-        if (scanForTargets.lookatMonster == null)
+        if (LockOnSystem.instance.lookatMonster == null)
         {            
             return;
         }            
@@ -181,13 +170,19 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer , I
 
     void RotateToCameraDirection()
     {
+        LockOnSystem LOS = LockOnSystem.instance;
+        if (LOS == null)
+        {
+            Debug.LogError("Player => LockOnSystem is Null");
+        }
+
         bool isMoving = moveDirection.sqrMagnitude > moveThresholdSqr; // moveThresholdSqr = 0.01f 정도 미리 정의
-        if (scanForTargets.lookatMonster != null)
+        if (LOS.lookatMonster != null)
         {          
             if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget))
             {
                 lookatCam.Priority = 2;
-                RotateTowardsHorizontal(scanForTargets.lookatMonster.position - transform.position);
+                RotateTowardsHorizontal(LOS.lookatMonster.position - transform.position);
             }
             return;
         }       
@@ -308,15 +303,9 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer , I
     {
         return isDead;
     }
-    public void SetPlayerTarget(ILockOnTarget monster)
-    {
-        gameplayTagSystem.AddTag(eTagType.Player_State_HasAttackTarget);
-        scanForTargets.SetPlayerTarget(monster);
-    }
 
-    public void ResetTarget()
-    {        
-        scanForTargets.ResetTarget();        
+    public void OnResetTarget()
+    {   
         gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
     }
 
@@ -325,9 +314,5 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer , I
         animator.Play(GlobalDefine.FallingEndHash);
     }
 
-    public Transform GetLockOnTarget()
-    {
-        return scanForTargets.lookatMonster;
-    }
 }
 

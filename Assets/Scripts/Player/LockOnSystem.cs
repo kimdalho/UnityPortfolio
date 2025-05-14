@@ -3,17 +3,40 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class ScanForTargets : MonoBehaviour
+public class LockOnSystem : MonoBehaviour
 {
-    [SerializeField]
-    public CinemachineTargetGroup m_TargetGroup;    
-    
     private List<ILockOnTarget> currentTargets = new List<ILockOnTarget>();
     private ILockOnTarget _lookatMonster;
     private readonly int condition = 0;
     private readonly int TargetIndex = 0;
 
-    public static Action<Transform> OnSetLockOnTarget;
+    [SerializeField]
+    public CinemachineTargetGroup m_TargetGroup;
+    public static LockOnSystem instance;
+    public static event Action OnResetTarget;
+
+
+    public void Awake()
+    {
+        //controllerCharacter = playerMono as IPlayer;
+        //controllerCharacter.onResetTarget += ResetTarget;
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        OnResetTarget += () =>
+        {
+            KillTarget();
+        };
+
+
+    }
 
     public Transform lookatMonster
     {
@@ -21,7 +44,7 @@ public class ScanForTargets : MonoBehaviour
         {
             if (_lookatMonster == null || _lookatMonster.GetDead())
             {
-                ResetTarget();
+                OnResetTarget?.Invoke();
                 return null;
             }
             else
@@ -41,7 +64,7 @@ public class ScanForTargets : MonoBehaviour
             bool targetDead = target.GetComponent<ILockOnTarget>().GetDead();
             if(targetDead)
             {
-                ResetTarget();
+                OnResetTarget?.Invoke();
             }
         }
     }
@@ -59,21 +82,35 @@ public class ScanForTargets : MonoBehaviour
                     m_TargetGroup.RemoveMember(targetToRemove);                                                                
                 }
                 m_TargetGroup.AddMember(monsterHead, 0.3f, 0.5f);  // 타겟 그룹에 추가
-                _lookatMonster = monsterHead.GetComponent<ILockOnTarget>();  // 해당 몬스터를 _lookatMonster로 설정     
-                
-                OnSetLockOnTarget?.Invoke(monsterHead);
-            }
-            
+                _lookatMonster = monsterHead.GetComponent<ILockOnTarget>();  // 해당 몬스터를 _lookatMonster로 설정                    
+
+                GameManager GM = GameManager.instance;
+                if (GM == null)
+                {
+                    Debug.LogError("LockOnSystme => GameManager is Null");
+                    return;
+                }
+                Player player = GM.GetPlayer();
+                if (player == null)
+                {
+                    Debug.LogError("LockOnSystme => Player is Null");
+                    return;
+                }
+                player.GetGameplayTagSystem().AddTag(eTagType.Player_State_HasAttackTarget);
+            }            
         }
     }
-
-    public void ResetTarget()
+    /// <summary>
+    /// 강제 종료와 같다
+    /// </summary>
+    public void KillTarget()
     {
         if(m_TargetGroup.Targets.Count > condition)
         {
             Transform targetToRemove = m_TargetGroup.Targets[TargetIndex].Object;
             m_TargetGroup.RemoveMember(targetToRemove);
-            _lookatMonster = null;  
+            _lookatMonster = null;
+            OnResetTarget?.Invoke();
         }
     }
 }
