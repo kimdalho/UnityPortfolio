@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+/// <summary>
+/// IState는 지금은 몬스터 전용으로만 사용 플레이는 로직이 다르다.
+/// </summary>
 public interface IState
 {
     public bool IsState(Monster monster); // 상태가 활성화 되었는지 확인

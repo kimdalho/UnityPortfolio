@@ -18,7 +18,6 @@ public class PlayerTraversal : MonoBehaviour
     {
         jumpPoints.Last().nextPoint = potal.toNextSpawnPoint;
         nextRoom = potal.toNextRoom;
-        player.MoveAnimStop();
         player.GetGameplayTagSystem().AddTag(eTagType.Player_State_IgnoreInput);
         StartCoroutine(TraverseTo(player, jumpPoints[0]));
         cams[0].LookAt = player.transform;

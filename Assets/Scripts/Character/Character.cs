@@ -27,13 +27,11 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
 
     //저항력
     public Vector3 calcVelocity;
-
     //플레이어가 획득한 상태효과
     protected GameplayTagSystem gameplayTagSystem = new GameplayTagSystem();
 
     [SerializeField]
     protected CharacterController characterController;
-
     public float jumpHeight = 2f;
     public float gravity = -9.81f;
 
@@ -41,8 +39,7 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
     public LayerMask groundLayerMask;
     public float groundCheckDistance = 0.1f;
     public bool isDead;
-
-    [SerializeField] protected Animator animator;
+   
     [SerializeField] protected ModelController controller;
 
     public FXSystem fxSystem;
@@ -63,9 +60,10 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
         currentWeaponEffect = null;
     }
 
+    //제거 대상자
     public Animator GetAnimator()
     {
-        return animator;
+        return null;
     }
 
     public ModelController GetModelController()
@@ -95,7 +93,7 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
 
     public virtual bool GetDead()
     {
-        return false;
+        return isDead;
     }
 
     public AbilitySystem GetAbilitySystem()
@@ -126,6 +124,5 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
         currentWeaponEffect = NewWeapon;
         armTransform = currentWeaponEffect.bulletStartPos;
     }
-
 
 }

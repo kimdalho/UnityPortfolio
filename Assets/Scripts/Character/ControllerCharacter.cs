@@ -25,9 +25,9 @@ public class ControllerCharacter : Character
         calcVelocity.y += gravity * Time.deltaTime;
 
         characterController.Move(calcVelocity * Time.deltaTime);
-        bool ismove = (move != Vector3.zero);
-        animator.SetBool(GlobalDefine.moveHash, ismove);
-        animator.SetBool(GlobalDefine.FallingHash, !isGrounded);
+        //bool ismove = (move != Vector3.zero);
+        //animator.SetBool(GlobalDefine.moveHash, ismove);
+        //animator.SetBool(GlobalDefine.FallingHash, !isGrounded);
 
     }
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -30,14 +31,25 @@ public class AttackAbility : GameAbility
     {         
         Character character = owner.GetComponent<Character>();
         Animator animator = character.GetAnimator();
-        character.GetAnimator().SetTrigger("Trg_Attack");
+        //character.GetAnimator().SetTrigger("Trg_Attack");
+        //AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
+        //float animationDuration = animationState.length;
+        //if (animationDuration > Duration)
+        //{
+        //    Duration = animationDuration;
+        //}
+
+        GameAbilityTask animTask = new GameAbilityTask(owner);
+        Task task = animTask.AnimExecute(AnimState.Attack);
+        //yield return new WaitForTask(task);
+
+
+
+
+
+
         owner.GetGameplayTagSystem().AddTag(stateTagType);
-        AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
-        float animationDuration = animationState.length;
-        if(animationDuration > Duration)
-        {
-            Duration = animationDuration;
-        }
+
         CreateDetectObject();
        
         float delay = Duration / Mathf.Max(character.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f); // 0으로 나누는 것 방지

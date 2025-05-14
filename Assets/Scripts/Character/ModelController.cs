@@ -12,7 +12,7 @@ public enum eEuipmentType
 
 
 
-public class ModelController : MonoBehaviour
+public class ModelController : AnimationControllerBase
 {
     public GameObject[] m_heads;
     public GameObject[] m_bodys;
@@ -51,7 +51,7 @@ public class ModelController : MonoBehaviour
 
 
 
-    private void Awake()
+    protected override void Awake()
     {        
         InitializeParts();
     }

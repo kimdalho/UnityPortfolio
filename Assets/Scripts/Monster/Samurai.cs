@@ -13,7 +13,7 @@ public class Samurai : BlackHood
         
         if (UnityEngine.Random.Range(0f, 1f) <= evadeRatio && CurHealth > 0)
         {
-            animator.SetTrigger("Evade");
+            GetAnimator().SetTrigger("Evade");
             // 회피하는 동안은 피해를 입지 않음
             gameObject.layer = LayerMask.NameToLayer("Default");
 

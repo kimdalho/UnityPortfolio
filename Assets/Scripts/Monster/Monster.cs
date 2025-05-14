@@ -32,18 +32,19 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
     private float patrolElapsed = 0f;
     public float animElapsed { get; set; }
     public Vector3 patrolTargetPos { get; set; } = default(Vector3);
-
     public GridNode startNode;
+    public int level;
+
     [SerializeField] private Transform roomGrid;
 
     protected bool IsAnimPlay(float addTime = 0f)
-    {
-        var _animLength = animator.GetCurrentAnimatorStateInfo(0).length + addTime;
+    {        
+        var _animLength =  GetAnimator().GetCurrentAnimatorStateInfo(0).length + addTime;
         return (animElapsed += Time.deltaTime) < _animLength;
     }
     #endregion
 
-    public int level;
+
 
     public void SetData(MonsterDataSO model)
     {
@@ -174,7 +175,7 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
 
     public virtual void InitReLoad()
     {
-        animator.SetTrigger("Trg_ReLoad");
+        GetAnimator().SetTrigger("Trg_ReLoad");
     }
     #endregion
 
