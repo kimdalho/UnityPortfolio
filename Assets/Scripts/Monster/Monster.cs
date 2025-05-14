@@ -48,11 +48,15 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
     public void SetData(MonsterDataSO model)
     {
         level = model.level;
-        attribute = new AttributeSet();
-
-        attribute = model.attribute;
+        attribute = new AttributeSet(model.attribute);
     }
-   
+
+    public void FixedUpdate()
+    {
+       Debug.Log(gameObject.name +"몬스터 베이스 체력" +   attribute.GetBaseValue(eAttributeType.Health));
+    }
+
+
     protected virtual void Initialized()
     {
         CurBullet = MaxBullet;
