@@ -22,39 +22,22 @@ public class AttackAbility : GameAbility
     public eWeaponType eWeaponType;
     
     public eTagType Equip_state_Tag = eTagType.Equip_Weapon_State_default;
-    
+
+    private bool isExecuting = false;
+
     //공격중일때
     protected eTagType stateTagType = eTagType.Attacking;
-    protected readonly string String_AttackTrigger = "Trg_Attack";
-    
+
+    //float delay = Duration / Mathf.Max(character.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f); // 0으로 나누는 것 방지
+    //Debug.Log($"Duration {Duration} , {delay}");
+    //yield return new WaitForSeconds(delay);  // 지속 효과 처리
+
     protected override IEnumerator ExecuteAbility()
-    {         
-        Character character = owner.GetComponent<Character>();
-        Animator animator = character.GetAnimator();
-        //character.GetAnimator().SetTrigger("Trg_Attack");
-        //AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
-        //float animationDuration = animationState.length;
-        //if (animationDuration > Duration)
-        //{
-        //    Duration = animationDuration;
-        //}
-
-        GameAbilityTask animTask = new GameAbilityTask(owner);
-        Task task = animTask.AnimExecute(AnimState.Attack);
-        //yield return new WaitForTask(task);
-
-
-
-
-
-
+    {
+        Task task = animTask.AnimExecute(AnimState.Attack);        
+        yield return new WaitForTask(task);
         owner.GetGameplayTagSystem().AddTag(stateTagType);
-
-        CreateDetectObject();
-       
-        float delay = Duration / Mathf.Max(character.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f); // 0으로 나누는 것 방지
-        Debug.Log($"Duration {Duration} , {delay}");
-        yield return new WaitForSeconds(delay);  // 지속 효과 처리
+        CreateDetectObject();       
         EndAbility();
     }
 

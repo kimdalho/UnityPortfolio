@@ -76,7 +76,7 @@ public abstract class AnimationControllerBase :  MonoBehaviour
         animator.SetBool(GlobalAnim.IsDead, true);
     }
 
-    protected void SetState(AnimState newState)
+    public void SetState(AnimState newState)
     {
         currentState = newState;
         animator.SetBool(GlobalAnim.IsJumping, newState == AnimState.JumpStart);
@@ -85,5 +85,10 @@ public abstract class AnimationControllerBase :  MonoBehaviour
         animator.SetBool(GlobalAnim.IsAttacking, newState == AnimState.Attack);
         animator.SetBool(GlobalAnim.IsReloading, newState == AnimState.Reload);
         animator.SetBool(GlobalAnim.IsDead, newState == AnimState.Death);
+    }
+
+    public AnimState GetState()
+    {
+        return currentState;
     }
 }

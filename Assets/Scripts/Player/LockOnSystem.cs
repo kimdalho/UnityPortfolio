@@ -14,6 +14,8 @@ public class LockOnSystem : MonoBehaviour
     public CinemachineTargetGroup m_TargetGroup;
     public static LockOnSystem instance;
     public static event Action OnResetTarget;
+    [SerializeField]
+    private Player player;
 
 
     public void Awake()
@@ -84,13 +86,7 @@ public class LockOnSystem : MonoBehaviour
                 m_TargetGroup.AddMember(monsterHead, 0.3f, 0.5f);  // 타겟 그룹에 추가
                 _lookatMonster = monsterHead.GetComponent<ILockOnTarget>();  // 해당 몬스터를 _lookatMonster로 설정                    
 
-                GameManager GM = GameManager.instance;
-                if (GM == null)
-                {
-                    Debug.LogError("LockOnSystme => GameManager is Null");
-                    return;
-                }
-                Player player = GM.GetPlayer();
+
                 if (player == null)
                 {
                     Debug.LogError("LockOnSystme => Player is Null");

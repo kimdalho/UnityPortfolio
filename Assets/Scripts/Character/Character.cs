@@ -63,7 +63,7 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
     //제거 대상자
     public Animator GetAnimator()
     {
-        return null;
+        return controller.animator;
     }
 
     public ModelController GetModelController()

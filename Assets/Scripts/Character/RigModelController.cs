@@ -19,8 +19,9 @@ public class RigModelController : ModelController
         base.InitializeParts();     
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         InitializeParts();
         dicWeapons = new Dictionary<eWeaponType, WeaponController>();
         foreach (var weapon in m_weapons)
@@ -28,4 +29,19 @@ public class RigModelController : ModelController
             dicWeapons.Add(weapon.eWeaponType, weapon);
         }
     }
+    public void OnFireAnimationComplete()
+    {
+    }
+    public void OnJumpStartAnimationComplete() // Animation event at end of JumpStart clip
+    {
+        if (SoundManager.instance != null)
+            SoundManager.instance.PlayEffect(eEffectType.Jump);
+        SetState(AnimState.InAir);
+    }
+
+    public void OnLandAnimationComplete() // Animation event at end of Land clip
+    {
+        SetState(AnimState.Idle);
+    }
+
 }

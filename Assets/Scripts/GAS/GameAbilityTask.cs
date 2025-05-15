@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
+
 /// <summary>
 /// 애니메이션, 이펙트, 대기 등 추가 로직 관리
 /// </summary>
@@ -15,23 +16,23 @@ public class GameAbilityTask
     {
         this.owner = owner;
     }
-
-    public bool IsCompleted { get; protected set; } = false;
-    public async Task Execute()
-    {
-        IsCompleted = false;
-        await Task.Delay(3000); // 예: 3초 대기
-        IsCompleted = true;
-    }
-
+    
     public async Task AnimExecute(AnimState animState)
     {
-        IsCompleted = false;
+        owner.GetModelController().SetState(animState);
         Animator animator = owner.GetAnimator();
-        animator.SetBool(animState.ToString(), true);
         AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
         float animationDuration = animationState.length;
-        await Task.Delay(1000); // 예: 3초 대기
-        IsCompleted = true;
+        await Task.Delay((int)(animationDuration * 1000)); // 초 단위에서 밀리초 단위로 변환     
+        owner.GetModelController().SetState(AnimState.Idle);
     }
+
+    //기존 GAS
+    //character.GetAnimator().SetTrigger("Trg_Attack");
+    //AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
+    //float animationDuration = animationState.length;
+    //if (animationDuration > Duration)
+    //{
+    //    Duration = animationDuration;
+    //}
 }

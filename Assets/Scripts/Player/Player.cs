@@ -11,12 +11,9 @@ public interface IOnGameOver
 
 }
 
-public interface IPlayer
-{
-}
 
 
-public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer    
+public partial class Player : Character , IOnGameOver ,IOnNextFlow     
 {
     #region 이동 컨트롤러
     [SerializeField]
@@ -111,22 +108,20 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer
 
     public void OnJumpStart()
     {
-        //animator.SetTrigger(GlobalDefine.Trigger_JumpStart);
+        controller.SetState(AnimState.JumpStart);
     }
 
-    public void OnFalling()
+    public void OnJumpEnd()
     {
-       // animator.SetBool(GlobalDefine.FallingHash, true);
-    }
-
-    public void OnEndJump()
-    {
-       // animator.SetBool(GlobalDefine.FallingHash, false);
+        controller.SetState(AnimState.Land);
     }
 
     private void Move()
     {
-        if (gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput))
+        Debug.LogWarning(controller.GetState());
+
+        if (gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput) ||
+            (controller.GetState() == AnimState.Attack))
             return;
 
         float hAxis = inputController.InputDirection.x;
@@ -203,7 +198,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer
         Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
-
 
     private void OnTriggerEnter(Collider other)
     {

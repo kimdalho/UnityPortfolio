@@ -16,6 +16,7 @@ public abstract class GameAbility : MonoBehaviour
 
     [HideInInspector]
     public Character owner;
+    protected GameAbilityTask animTask;
 
     private bool isOnCooldown = false;
     protected bool IsOnCooldown
@@ -40,6 +41,7 @@ public abstract class GameAbility : MonoBehaviour
     public virtual void ActivateAbility(Character owner)
     {
         this.owner = owner;
+        if(animTask == null) { animTask = new GameAbilityTask(owner); }        
         StartCoroutine(CoActivateAbility());
     }
 
