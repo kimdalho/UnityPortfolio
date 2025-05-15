@@ -62,8 +62,6 @@ public class AttackAbility : GameAbility
                     Debug.LogWarning("맞은 대상 FX가 없다");
                 }
             }
-
-            Debug.Log("Detected: " + col.name);
         }
     }
 

@@ -149,11 +149,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         characterController.Move(calcVelocity * Time.deltaTime);            
     }
 
-    public void MoveAnimStop()
-    {
-      //  animator.SetBool(GlobalDefine.moveHash, false);
-    }
-
     public void FallDeathCheck()
     {
         if(transform.position.y < GlobalDefine.FallDeath)
@@ -258,7 +253,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     {
         isDead = true;
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
-       // animator.Play(GlobalDefine.DeadHash);
+        GetModelController().SetState(AnimState.Death);
     }
 
 
@@ -299,19 +294,11 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
     }
 
-    public override bool GetDead()
-    {
-        return isDead;
-    }
+
 
     public void OnResetTarget()
     {   
         gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
-    }
-
-    public void PlayAnimIdle()
-    {
-       // animator.Play(GlobalDefine.FallingEndHash);
     }
 
 }

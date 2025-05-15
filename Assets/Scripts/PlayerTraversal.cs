@@ -61,8 +61,9 @@ public class PlayerTraversal : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(target.transform.position.normalized);
             player.transform.rotation = targetRotation;
-        }  
+        }
 
+        bool jumpEnd = false;
         // 포물선 이동 로직
         while (time < duration)
         {
@@ -76,17 +77,22 @@ public class PlayerTraversal : MonoBehaviour
             //float y = Mathf.Lerp(start.y, end.y, t) + height * Mathf.Sin(Mathf.PI * t);
             float y = Mathf.Lerp(start.y, end.y, curvedT) + height * Mathf.Sin(Mathf.PI * curvedT);
 
-            player.transform.position = new Vector3(horizontal.x, y, horizontal.z);
-    
-           
+            player.transform.position = new Vector3(horizontal.x, y, horizontal.z);              
             time += Time.deltaTime;
+
+
+            if((duration - time) <= 0.4f && jumpEnd is false)
+            {
+                jumpEnd = true;
+                player.OnJumpEnd();
+            }
+
             yield return null;
         }
         
         //착지 이후 애니메이션 재생
         player.transform.position = end;
         yield return null;
-        player.OnJumpEnd();
         while (player.GetModelController().GetState() != AnimState.Idle)
         {
             yield return null;
@@ -108,7 +114,6 @@ public class PlayerTraversal : MonoBehaviour
             // 마지막 점프 끝! 조작 가능 상태로 복구
             player.GetGameplayTagSystem().RemoveTag(eTagType.Player_State_IgnoreInput);
             player.PortalDelay();            
-            player.PlayAnimIdle();
 
             if(nextRoom == null)
             {

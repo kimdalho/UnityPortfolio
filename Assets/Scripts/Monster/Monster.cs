@@ -157,7 +157,8 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
         OnDeath?.Invoke(this);
         gameObject.SetActive(false);
         if (SoundManager.instance != null)
-        SoundManager.instance.PlayEffect(eEffectType.oop);
+            SoundManager.instance.PlayEffect(eEffectType.oop);
+
         UserData.Instance.SetKillMonster(level);
     }
     #endregion

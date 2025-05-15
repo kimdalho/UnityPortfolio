@@ -12,10 +12,7 @@ public class GlobalDefine
     public static Color Red = Color.red;
     public static Collider[] Basebuffer = new Collider[4]; // 미리 할당된 버퍼
     public static string String_Item = "Item";
-    public static string String_Monster = "Monster";
-    public static int moveHash = Animator.StringToHash("Move");
-    public static int AnimFire = Animator.StringToHash("IsFire");
-
+    public static string String_Monster = "Monster";    
     public static int FallingHash = Animator.StringToHash("Falling");
     public static int FallingEndHash = Animator.StringToHash("FallingEnd");
     public static int DeadHash = Animator.StringToHash("Die");
