@@ -52,12 +52,6 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
         attribute = new AttributeSet(model.attribute);
     }
 
-    public void FixedUpdate()
-    {
-       Debug.Log(gameObject.name +"몬스터 베이스 체력" +   attribute.GetBaseValue(eAttributeType.Health));
-    }
-
-
     protected virtual void Initialized()
     {
         CurBullet = MaxBullet;
@@ -103,6 +97,9 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
     {
         // 이동하려는 방향으로 로테이션 변경
         RotateTowardTarget(moveDir);
+
+        //애니메이션
+        GetModelController().SetMoveDirection(moveDir.x, moveDir.z);
 
         // 이동
         characterController.Move(moveDir * speed * Time.deltaTime);
@@ -159,6 +156,7 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
         isDead = true;
         OnDeath?.Invoke(this);
         gameObject.SetActive(false);
+        if (SoundManager.instance != null)
         SoundManager.instance.PlayEffect(eEffectType.oop);
         UserData.Instance.SetKillMonster(level);
     }
@@ -171,11 +169,6 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
 
         ExecuteAttack();
         if (MaxBullet > 0) CurBullet--;
-    }
-
-    public virtual void InitReLoad()
-    {
-        GetAnimator().SetTrigger("Trg_ReLoad");
     }
     #endregion
 
@@ -244,8 +237,7 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
     }
 
     protected virtual void Start()
-    {
-       
+    {       
         Initialized();
     }
 

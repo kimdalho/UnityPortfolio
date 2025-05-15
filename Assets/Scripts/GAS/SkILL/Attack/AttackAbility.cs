@@ -28,16 +28,12 @@ public class AttackAbility : GameAbility
     //공격중일때
     protected eTagType stateTagType = eTagType.Attacking;
 
-    //float delay = Duration / Mathf.Max(character.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f); // 0으로 나누는 것 방지
-    //Debug.Log($"Duration {Duration} , {delay}");
-    //yield return new WaitForSeconds(delay);  // 지속 효과 처리
-
     protected override IEnumerator ExecuteAbility()
     {
         Task task = animTask.AnimExecute(AnimState.Attack);        
         yield return new WaitForTask(task);
         owner.GetGameplayTagSystem().AddTag(stateTagType);
-        CreateDetectObject();       
+            
         EndAbility();
     }
 
@@ -46,7 +42,6 @@ public class AttackAbility : GameAbility
     {
         float takeDamage = owner.attribute.GetCurValue(eAttributeType.Attack);
         Vector3 spherePosition = owner.transform.position + owner.transform.forward * 1f; // 정면에서 +3 이동
-        int layerMask = LayerMask.GetMask("Item"); // "Enemy" 레이어만 감지
         Collider[] results = SphereDetector.DetectObjectsInSphere(spherePosition, 1, targetMask);
         foreach (var col in results)
         {
@@ -71,7 +66,13 @@ public class AttackAbility : GameAbility
             Debug.Log("Detected: " + col.name);
         }
     }
-    
+
+    protected override void OnFireAnimationApply()
+    {
+        base.OnFireAnimationApply();
+        CreateDetectObject();
+    }
+
     public override void EndAbility()
     {
         base.EndAbility();

@@ -14,12 +14,12 @@ public abstract class AnimationControllerBase :  MonoBehaviour
     {
         if (x == 0 && y == 0)
         {
-            MoveEnd();
+            animator.SetBool(GlobalAnim.IsMove, false);
             return;
         }
-            
 
-        PlayMove();
+
+        animator.SetBool(GlobalAnim.IsMove, true);
         animator.SetFloat(GlobalAnim.MoveX, x);
         animator.SetFloat(GlobalAnim.MoveY, y);
     }
@@ -28,12 +28,6 @@ public abstract class AnimationControllerBase :  MonoBehaviour
     {
         animator.SetBool(GlobalAnim.IsMove, true);
     }
-
-    public void MoveEnd()
-    {
-        animator.SetBool(GlobalAnim.IsMove, false);
-    }
-
 
 
 

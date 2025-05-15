@@ -67,6 +67,7 @@ public class Projectile : MonoBehaviour
 
 
                 (_ae as Character)?.fxSystem?.ExecuteFX(abilityTag);
+                if(SoundManager.instance != null)
                 SoundManager.instance.PlayEffect(eEffectType.Hit, _ae.transform);
                 if (--PenetrateCnt > 0) return;
 

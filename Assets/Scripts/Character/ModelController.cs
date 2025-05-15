@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -53,6 +54,7 @@ public class ModelController : AnimationControllerBase
 
     protected override void Awake()
     {        
+        base.Awake();
         InitializeParts();
     }
 
@@ -126,5 +128,14 @@ public class ModelController : AnimationControllerBase
         }
     }
 
+    public void OnFireAnimationComplete()
+    {
+    }
+
+    public Action FireAnimationApply;
+    public void OnFireAnimationApply()
+    {
+        FireAnimationApply?.Invoke();
+    }
 
 }

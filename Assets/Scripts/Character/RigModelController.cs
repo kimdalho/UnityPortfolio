@@ -29,9 +29,6 @@ public class RigModelController : ModelController
             dicWeapons.Add(weapon.eWeaponType, weapon);
         }
     }
-    public void OnFireAnimationComplete()
-    {
-    }
     public void OnJumpStartAnimationComplete() // Animation event at end of JumpStart clip
     {
         if (SoundManager.instance != null)

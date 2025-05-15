@@ -80,7 +80,6 @@ MonoBehaviour:
     m_Bits: 8
   groundCheckDistance: 0.3
   isDead: 0
-  animator: {fileID: 8904112648037604784}
   controller: {fileID: 2758657109547335978}
   fxSystem: {fileID: -8783207560054830842}
   abilitySystem: {fileID: 758250089743701821}
@@ -90,8 +89,8 @@ MonoBehaviour:
   MaxBullet: 3
   patrolTime: 2
   startNode: {fileID: 0}
-  roomGrid: {fileID: 0}
   level: 0
+  roomGrid: {fileID: 0}
   aggro: 0
   onlyIdle: 0
 --- !u!114 &6940413212348406184
@@ -547,7 +546,7 @@ PrefabInstance:
     - target: {fileID: 5565561978727053204, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: bef81f11b2fe877428d2c767a2d5c6f4, type: 2}
+      objectReference: {fileID: 9100000, guid: 2b26cc3b803137d449a68e061b873417, type: 2}
     - target: {fileID: 5565561978727053204, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
@@ -629,11 +628,6 @@ MonoBehaviour:
 --- !u!4 &8904112648037604783 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5565561978727053195, guid: 446f9ff17434e8749a54822318712f49, type: 3}
-  m_PrefabInstance: {fileID: 3939834277883685412}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &8904112648037604784 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5565561978727053204, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 3939834277883685412}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8904112648636308370 stripped

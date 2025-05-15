@@ -125,4 +125,14 @@ public class Character : AttributeEntity , ILockOnTarget , IGameAbilityCharacter
         armTransform = currentWeaponEffect.bulletStartPos;
     }
 
+    public virtual void OnReLoadingAnimationComplete()
+    {
+        GetModelController().SetState(AnimState.Idle);
+    }
+
+    public virtual void InitReLoad()
+    {
+        GetModelController().SetState(AnimState.Reload);
+    }
+
 }
