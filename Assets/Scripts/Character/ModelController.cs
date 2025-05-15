@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -12,7 +13,7 @@ public enum eEuipmentType
 
 
 
-public class ModelController : MonoBehaviour
+public class ModelController : AnimationControllerBase
 {
     public GameObject[] m_heads;
     public GameObject[] m_bodys;
@@ -51,8 +52,9 @@ public class ModelController : MonoBehaviour
 
 
 
-    private void Awake()
+    protected override void Awake()
     {        
+        base.Awake();
         InitializeParts();
     }
 
@@ -126,5 +128,14 @@ public class ModelController : MonoBehaviour
         }
     }
 
+    public void OnFireAnimationComplete()
+    {
+    }
+
+    public Action FireAnimationApply;
+    public void OnFireAnimationApply()
+    {
+        FireAnimationApply?.Invoke();
+    }
 
 }

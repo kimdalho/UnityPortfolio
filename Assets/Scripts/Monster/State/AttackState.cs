@@ -11,7 +11,6 @@ public class AttackState : IState
     }
     public void Action(Monster monster)
     {
-        Debug.Log("АјАн");
         monster.AttackAction();
     }
     public void Exit(Monster monster)

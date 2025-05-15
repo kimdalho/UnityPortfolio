@@ -16,6 +16,7 @@ public abstract class GameAbility : MonoBehaviour
 
     [HideInInspector]
     public Character owner;
+    protected GameAbilityTask animTask;
 
     private bool isOnCooldown = false;
     protected bool IsOnCooldown
@@ -40,6 +41,8 @@ public abstract class GameAbility : MonoBehaviour
     public virtual void ActivateAbility(Character owner)
     {
         this.owner = owner;
+        owner.GetModelController().FireAnimationApply += OnFireAnimationApply;
+        if (animTask == null) { animTask = new GameAbilityTask(owner); }        
         StartCoroutine(CoActivateAbility());
     }
 
@@ -79,5 +82,12 @@ public abstract class GameAbility : MonoBehaviour
     public virtual void EndAbility()
     {
         IsOnCooldown = false;
+    }
+    /// <summary>
+    /// 공격 애니메이션이 절정 상태일경우 OnFireAnimationApply 호출된다.
+    /// </summary>
+    protected virtual void OnFireAnimationApply()
+    {
+        
     }
 }

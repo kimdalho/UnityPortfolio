@@ -11,12 +11,9 @@ public interface IOnGameOver
 
 }
 
-public interface IPlayer
-{
-}
 
 
-public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer    
+public partial class Player : Character , IOnGameOver ,IOnNextFlow     
 {
     #region 이동 컨트롤러
     [SerializeField]
@@ -111,26 +108,27 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer
 
     public void OnJumpStart()
     {
-        animator.SetTrigger(GlobalDefine.Trigger_JumpStart);
+        controller.SetState(AnimState.JumpStart);
     }
 
-    public void OnFalling()
+    public void OnJumpEnd()
     {
-        animator.SetBool(GlobalDefine.FallingHash, true);
-    }
-
-    public void OnEndJump()
-    {
-        animator.SetBool(GlobalDefine.FallingHash, false);
+        controller.SetState(AnimState.Land);
     }
 
     private void Move()
     {
-        if (gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput))
+        Debug.LogWarning(controller.GetState());
+
+        if (gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput) ||
+            (controller.GetState() == AnimState.Attack))
             return;
 
         float hAxis = inputController.InputDirection.x;
         float vAxis = inputController.InputDirection.y;
+        
+        controller.SetMoveDirection(hAxis, vAxis);
+
         Vector3 move = new Vector3(hAxis, 0, vAxis);
         SetPlayerMoveDirectionToCameraDirection(hAxis, vAxis);
 
@@ -138,25 +136,17 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
-            animator.SetBool(GlobalDefine.FallingHash, false);
+           // animator.SetBool(GlobalDefine.FallingHash, false);
         }
         else if(!isGrounded && calcVelocity.y > 0)
         {
-            animator.SetBool(GlobalDefine.FallingHash, true);
+          //  animator.SetBool(GlobalDefine.FallingHash, true);
         }
 
         calcVelocity.y += gravity * Time.deltaTime;
 
         characterController.Move(moveDirection * Time.deltaTime);
-        characterController.Move(calcVelocity * Time.deltaTime);
-
-        bool ismove = (move != Vector3.zero);
-        animator.SetBool(GlobalDefine.moveHash, ismove);
-    }
-
-    public void MoveAnimStop()
-    {
-        animator.SetBool(GlobalDefine.moveHash, false);
+        characterController.Move(calcVelocity * Time.deltaTime);            
     }
 
     public void FallDeathCheck()
@@ -204,7 +194,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (detectedItems.Contains(other)) return;
@@ -243,6 +232,12 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer
     /// <param name="hAxis"></param>
     private void SetPlayerMoveDirectionToCameraDirection(float hAxis,float vAxis)
     {
+        if(cameraTransform ==null)
+        {
+            Debug.LogError("Player => cameraTransform Null");
+            return;
+        }
+
         Vector3 forward = cameraTransform.forward;
         Vector3 right = cameraTransform.right;
         forward.y = 0;
@@ -258,7 +253,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer
     {
         isDead = true;
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
-        animator.Play(GlobalDefine.DeadHash);
+        GetModelController().SetState(AnimState.Death);
     }
 
 
@@ -299,19 +294,11 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow , IPlayer
         gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
     }
 
-    public override bool GetDead()
-    {
-        return isDead;
-    }
+
 
     public void OnResetTarget()
     {   
         gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
-    }
-
-    public void PlayAnimIdle()
-    {
-        animator.Play(GlobalDefine.FallingEndHash);
     }
 
 }

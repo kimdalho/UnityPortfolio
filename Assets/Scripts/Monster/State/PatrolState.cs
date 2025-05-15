@@ -5,7 +5,7 @@ public class PatrolState : IState
     public bool IsState(Monster monster) => !monster.onlyIdle && (monster.patrolTargetPos != default(Vector3) && monster.chaseTarget == null);
     public void Enter(Monster monster)
     {
-        monster.GetAnimator().SetBool("Move", true);
+        monster.GetModelController().SetState(AnimState.Move);
     }
 
     public void Action(Monster monster)
@@ -15,6 +15,6 @@ public class PatrolState : IState
 
     public void Exit(Monster monster)
     {
-        monster.GetAnimator().SetBool("Move", false);
+        monster.GetModelController().SetState(AnimState.Idle);
     }
 }

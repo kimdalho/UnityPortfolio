@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -12,10 +13,31 @@ public class FanShapeFireAbility : GameAbility
     [SerializeField] private ProjectileType projectileType;
     [SerializeField] private float delayAtkTime = 0.3f;
 
+
     protected override IEnumerator ExecuteAbility()
     {
-        owner.GetAnimator().SetTrigger("Trg_Attack");
+        Task task = animTask.AnimExecute(AnimState.Attack);
+        yield return new WaitForTask(task);
 
+        // Apply Delay
+        var _animLength = owner.GetAnimator().GetCurrentAnimatorStateInfo(0).length;
+        var _duration = _animLength > Duration ? _animLength : Duration;
+
+        var _delay = _duration / Mathf.Max(owner.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f); // 0으로 나누는 것 방지
+
+        yield return new WaitForSeconds(_delay);
+        EndAbility();
+    }
+
+    public void ChangeProjectileType(ProjectileType newType) => projectileType = newType;
+
+    protected override void OnFireAnimationApply()
+    {
+        StartCoroutine(CoFireApply());
+    }
+
+    public IEnumerator CoFireApply()
+    {
         // 발사 횟수가 1인 경우에는 정면으로 발사
         var _range = fireCount.Equals(1) ? 0f : fireAngleRange;
 
@@ -40,15 +62,5 @@ public class FanShapeFireAbility : GameAbility
             // yield return null;
         }
 
-        // Apply Delay
-        var _animLength = owner.GetAnimator().GetCurrentAnimatorStateInfo(0).length;
-        var _duration = _animLength > Duration ? _animLength : Duration;
-
-        var _delay = _duration / Mathf.Max(owner.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f); // 0으로 나누는 것 방지
-
-        yield return new WaitForSeconds(_delay);
-        EndAbility();
     }
-
-    public void ChangeProjectileType(ProjectileType newType) => projectileType = newType;
 }

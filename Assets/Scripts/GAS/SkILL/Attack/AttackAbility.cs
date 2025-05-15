@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
@@ -21,28 +22,18 @@ public class AttackAbility : GameAbility
     public eWeaponType eWeaponType;
     
     public eTagType Equip_state_Tag = eTagType.Equip_Weapon_State_default;
-    
+
+    private bool isExecuting = false;
+
     //공격중일때
     protected eTagType stateTagType = eTagType.Attacking;
-    protected readonly string String_AttackTrigger = "Trg_Attack";
-    
+
     protected override IEnumerator ExecuteAbility()
-    {         
-        Character character = owner.GetComponent<Character>();
-        Animator animator = character.GetAnimator();
-        character.GetAnimator().SetTrigger("Trg_Attack");
+    {
+        Task task = animTask.AnimExecute(AnimState.Attack);        
+        yield return new WaitForTask(task);
         owner.GetGameplayTagSystem().AddTag(stateTagType);
-        AnimatorStateInfo animationState = animator.GetCurrentAnimatorStateInfo(0);
-        float animationDuration = animationState.length;
-        if(animationDuration > Duration)
-        {
-            Duration = animationDuration;
-        }
-        CreateDetectObject();
-       
-        float delay = Duration / Mathf.Max(character.attribute.GetCurValue(eAttributeType.AttackSpeed), 0.01f); // 0으로 나누는 것 방지
-        Debug.Log($"Duration {Duration} , {delay}");
-        yield return new WaitForSeconds(delay);  // 지속 효과 처리
+            
         EndAbility();
     }
 
@@ -51,7 +42,6 @@ public class AttackAbility : GameAbility
     {
         float takeDamage = owner.attribute.GetCurValue(eAttributeType.Attack);
         Vector3 spherePosition = owner.transform.position + owner.transform.forward * 1f; // 정면에서 +3 이동
-        int layerMask = LayerMask.GetMask("Item"); // "Enemy" 레이어만 감지
         Collider[] results = SphereDetector.DetectObjectsInSphere(spherePosition, 1, targetMask);
         foreach (var col in results)
         {
@@ -72,11 +62,15 @@ public class AttackAbility : GameAbility
                     Debug.LogWarning("맞은 대상 FX가 없다");
                 }
             }
-
-            Debug.Log("Detected: " + col.name);
         }
     }
-    
+
+    protected override void OnFireAnimationApply()
+    {
+        base.OnFireAnimationApply();
+        CreateDetectObject();
+    }
+
     public override void EndAbility()
     {
         base.EndAbility();

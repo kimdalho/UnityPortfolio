@@ -11,6 +11,12 @@ public class AttributeView : MonoBehaviour
 
     public void Update()
     {
+        if (player == null)
+        {
+            Debug.LogError("AttributeView => player is null");
+            return;
+        }
+
         ShowHart(player.attribute);
         ShowData(player.attribute);
     }

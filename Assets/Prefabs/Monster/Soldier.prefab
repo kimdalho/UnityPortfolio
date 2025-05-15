@@ -80,8 +80,7 @@ MonoBehaviour:
     m_Bits: 8
   groundCheckDistance: 0.3
   isDead: 0
-  animator: {fileID: 8904112648037604784}
-  controller: {fileID: 0}
+  controller: {fileID: 2758657109547335978}
   fxSystem: {fileID: 7337048175519719326}
   abilitySystem: {fileID: 2043262270310123978}
   currentWeaponEffect: {fileID: 0}
@@ -90,8 +89,8 @@ MonoBehaviour:
   MaxBullet: 3
   patrolTime: 2
   startNode: {fileID: 0}
-  roomGrid: {fileID: 0}
   level: 0
+  roomGrid: {fileID: 0}
   aggro: 0
   onlyIdle: 0
   BulletPrefab: {fileID: 0}
@@ -521,7 +520,7 @@ PrefabInstance:
     - target: {fileID: 5565561978727053204, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: 768a3c878c148524491b8f9354def4c0, type: 2}
+      objectReference: {fileID: 9100000, guid: 2b26cc3b803137d449a68e061b873417, type: 2}
     - target: {fileID: 5565561978727053204, guid: 446f9ff17434e8749a54822318712f49, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
@@ -598,6 +597,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2538261173460521459, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 3939834277883685412}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2758657109547335978 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1217557810167343886, guid: 446f9ff17434e8749a54822318712f49, type: 3}
+  m_PrefabInstance: {fileID: 3939834277883685412}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93005e4cac64995478b011a4506c7e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4848333196644607021 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8495380148740574729, guid: 446f9ff17434e8749a54822318712f49, type: 3}
@@ -623,11 +633,6 @@ MonoBehaviour:
 --- !u!4 &8904112648037604783 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5565561978727053195, guid: 446f9ff17434e8749a54822318712f49, type: 3}
-  m_PrefabInstance: {fileID: 3939834277883685412}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &8904112648037604784 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5565561978727053204, guid: 446f9ff17434e8749a54822318712f49, type: 3}
   m_PrefabInstance: {fileID: 3939834277883685412}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8904112648636308370 stripped

@@ -8,7 +8,7 @@ public class ChaseState : IState
          && !monster.IsReloading));
     public virtual void Enter(Monster monster)
     {
-        monster.GetAnimator().SetBool("Move", true);
+        monster.GetModelController().SetState(AnimState.Move);
     }
     public virtual void Action(Monster monster)
     {
@@ -16,6 +16,6 @@ public class ChaseState : IState
     }
     public virtual void Exit(Monster monster)
     {
-        monster.GetAnimator().SetBool("Move", false);
+        monster.GetModelController().SetState(AnimState.Idle);
     }
 }

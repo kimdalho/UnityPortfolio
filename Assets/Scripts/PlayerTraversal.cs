@@ -14,11 +14,16 @@ public class PlayerTraversal : MonoBehaviour
     private Room nextRoom;
     [SerializeField]
     private uint flow = 0;
+
+    public bool isTravaling;
     public void StartPlayerTraversal(Player player, Portal potal)
     {
+        if (isTravaling == true)
+            return;
+
+        isTravaling = true;
         jumpPoints.Last().nextPoint = potal.toNextSpawnPoint;
         nextRoom = potal.toNextRoom;
-        player.MoveAnimStop();
         player.GetGameplayTagSystem().AddTag(eTagType.Player_State_IgnoreInput);
         StartCoroutine(TraverseTo(player, jumpPoints[0]));
         cams[0].LookAt = player.transform;
@@ -45,9 +50,21 @@ public class PlayerTraversal : MonoBehaviour
             cams[1].Priority = 10;
         }
         
-        yield return new WaitForSeconds(0.2f);
-        if(SoundManager.instance != null)
-                SoundManager.instance.PlayEffect(eEffectType.Jump);
+        //점프시작 애니메이션 끝날때까지 대기
+        while(player.GetModelController().GetState() != AnimState.InAir)
+        {          
+            yield return null;
+        }
+
+        //트레벌중인 플레이어의 뱡항을 다음 방향 로테이션
+        if(target.nextPoint != null)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(target.transform.position.normalized);
+            player.transform.rotation = targetRotation;
+        }
+
+        bool jumpEnd = false;
+        // 포물선 이동 로직
         while (time < duration)
         {
             float t = time / duration;
@@ -60,33 +77,55 @@ public class PlayerTraversal : MonoBehaviour
             //float y = Mathf.Lerp(start.y, end.y, t) + height * Mathf.Sin(Mathf.PI * t);
             float y = Mathf.Lerp(start.y, end.y, curvedT) + height * Mathf.Sin(Mathf.PI * curvedT);
 
-            player.transform.position = new Vector3(horizontal.x, y, horizontal.z);
-            player.OnFalling();
-           
+            player.transform.position = new Vector3(horizontal.x, y, horizontal.z);              
             time += Time.deltaTime;
+
+
+            if((duration - time) <= 0.4f && jumpEnd is false)
+            {
+                jumpEnd = true;
+                player.OnJumpEnd();
+            }
+
             yield return null;
         }
-
+        
+        //착지 이후 애니메이션 재생
         player.transform.position = end;
+        yield return null;
+        while (player.GetModelController().GetState() != AnimState.Idle)
+        {
+            yield return null;
+        }
+        
 
-        // 착지 후 다음으로 이동
+        //착지 애니메이션이 끝나면 다음 로직 체크
         if (target.nextPoint != null)
         {
             flow++;
-            player.OnEndJump();
-            yield return new WaitForSeconds(0.05f);
             StartCoroutine(TraverseTo(player,target.nextPoint));
         }
         else
         {
+            isTravaling = false;
             cams[0].Priority = 0;
             cams[1].Priority = 0;
             flow = 0;
             // 마지막 점프 끝! 조작 가능 상태로 복구
             player.GetGameplayTagSystem().RemoveTag(eTagType.Player_State_IgnoreInput);
             player.PortalDelay();            
-            player.PlayAnimIdle();
-            StartCoroutine(GameManager.instance.ChangeCurrentRoom(nextRoom));
+
+            if(nextRoom == null)
+            {
+                Debug.LogError("PlayerTraversal => Next Room is Null");
+            }
+            else
+            {
+                StartCoroutine(GameManager.instance.ChangeCurrentRoom(nextRoom));
+            }
+            
         }
+
+
     }
 }

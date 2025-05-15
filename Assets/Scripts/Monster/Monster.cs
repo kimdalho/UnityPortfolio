@@ -32,30 +32,25 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
     private float patrolElapsed = 0f;
     public float animElapsed { get; set; }
     public Vector3 patrolTargetPos { get; set; } = default(Vector3);
-
     public GridNode startNode;
+    public int level;
+
     [SerializeField] private Transform roomGrid;
 
     protected bool IsAnimPlay(float addTime = 0f)
-    {
-        var _animLength = animator.GetCurrentAnimatorStateInfo(0).length + addTime;
+    {        
+        var _animLength =  GetAnimator().GetCurrentAnimatorStateInfo(0).length + addTime;
         return (animElapsed += Time.deltaTime) < _animLength;
     }
     #endregion
 
-    public int level;
+
 
     public void SetData(MonsterDataSO model)
     {
         level = model.level;
         attribute = new AttributeSet(model.attribute);
     }
-
-    public void FixedUpdate()
-    {
-       Debug.Log(gameObject.name +"몬스터 베이스 체력" +   attribute.GetBaseValue(eAttributeType.Health));
-    }
-
 
     protected virtual void Initialized()
     {
@@ -102,6 +97,9 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
     {
         // 이동하려는 방향으로 로테이션 변경
         RotateTowardTarget(moveDir);
+
+        //애니메이션
+        GetModelController().SetMoveDirection(moveDir.x, moveDir.z);
 
         // 이동
         characterController.Move(moveDir * speed * Time.deltaTime);
@@ -158,7 +156,9 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
         isDead = true;
         OnDeath?.Invoke(this);
         gameObject.SetActive(false);
-        SoundManager.instance.PlayEffect(eEffectType.oop);
+        if (SoundManager.instance != null)
+            SoundManager.instance.PlayEffect(eEffectType.oop);
+
         UserData.Instance.SetKillMonster(level);
     }
     #endregion
@@ -170,11 +170,6 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
 
         ExecuteAttack();
         if (MaxBullet > 0) CurBullet--;
-    }
-
-    public virtual void InitReLoad()
-    {
-        animator.SetTrigger("Trg_ReLoad");
     }
     #endregion
 
@@ -243,8 +238,7 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
     }
 
     protected virtual void Start()
-    {
-       
+    {       
         Initialized();
     }
 
