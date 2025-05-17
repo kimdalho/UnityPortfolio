@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem.XInput;
 
 
 public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow ,IPlayerController
@@ -27,8 +28,7 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow ,IPlayerCon
     protected override void Awake()
     {
         base.Awake();
-        GameManager.OnGameOver += OnGameOver;
-        GameManager.OnNextFlow += OnNextFlow;
+
         itemLayer = LayerMask.NameToLayer(GlobalDefine.String_Item);
         gameObject.tag = GlobalDefine.String_Player;
 
@@ -37,12 +37,26 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow ,IPlayerCon
             Debug.LogError("AbilitySystem을 찾을 수 없습니다!");
             return;
         }
+
+        GameManager.OnGameOver += OnGameOver;
+        GameManager.OnNextFlow += OnNextFlow;
+        PCInputController pc = inputController as PCInputController;
+        if (pc != null)
+        {
+            pc.Onfire += ActivateAbilityAttack;
+        }
+        
     }
 
     private void OnDestroy()
     {
         GameManager.OnGameOver -= OnGameOver;
         GameManager.OnNextFlow -= OnNextFlow;
+        PCInputController pc = inputController as PCInputController;
+        if (pc != null)
+        {
+            pc.Onfire -= ActivateAbilityAttack;
+        }
     }
     
 
@@ -51,13 +65,10 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow ,IPlayerCon
         if (GetDead())
             return;
 
-        Move();
-
-        RotateToCameraDirection();
+        PCMove();
+        RotateToMouseDirection();
         //아이템 상태창
         HasPickupablesNearby();
-        //
-        ActivateAbilityAttack();
 
         FallDeathCheck();
     } 
@@ -123,6 +134,8 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow ,IPlayerCon
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
         GetModelController().SetState(AnimState.Death);
     }
+
+    
 
 
     public void PortalDelay()

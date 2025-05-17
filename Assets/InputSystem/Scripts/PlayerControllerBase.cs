@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem.XInput;
+using UnityEngine.UIElements;
 
 
 
@@ -8,7 +9,7 @@ public class PlayerControllerBase : Character , IPlayerController
     #region 이동 컨트롤러
     [SerializeField]    
     private MonoBehaviour inputProviderRaw; // 인스펙터에 할당할 객체
-    private IInputEventProvider inputController;
+    protected IInputEventProvider inputController;
     private float rotationSpeed = GlobalDefine.PlayerRotationBaseSpeed;
     private Vector3 moveDirection;
     private readonly float moveThresholdSqr = 0.01f;
@@ -48,12 +49,10 @@ public class PlayerControllerBase : Character , IPlayerController
         if (gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput))
             return;
 
-        float hAxis = inputController.InputDirection.x;
-        float vAxis = inputController.InputDirection.y;
+        float hAxis = inputController.moveInputDirection.x;
+        float vAxis = inputController.moveInputDirection.y;
 
         controller.SetMoveDirection(hAxis, vAxis);
-
-        Vector3 move = new Vector3(hAxis, 0, vAxis);
         SetPlayerMoveDirectionToCameraDirection(hAxis, vAxis);
 
         GroundCheck();
@@ -72,6 +71,33 @@ public class PlayerControllerBase : Character , IPlayerController
         characterController.Move(moveDirection * Time.deltaTime);
         characterController.Move(calcVelocity * Time.deltaTime);
     }
+
+    protected void PCMove()
+    {
+        if (gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput))
+            return;
+
+        float hAxis = inputController.moveInputDirection.x;
+        float vAxis = inputController.moveInputDirection.y;
+
+        //애니메이션
+        controller.SetMoveDirection(hAxis, vAxis);
+
+        //이동
+        SetPlayerMoveDirectionToPlayerDirection(hAxis, vAxis);
+        //중력
+        GroundCheck();
+        if (isGrounded && calcVelocity.y < 0)
+        {
+            calcVelocity.y = 0;
+        }
+
+        calcVelocity.y += gravity * Time.deltaTime;
+
+        characterController.Move(moveDirection * Time.deltaTime);
+        characterController.Move(calcVelocity * Time.deltaTime);
+    }
+
 
     /// <summary>
     /// 카메라 방향으로 플레이어 이동 방향 정하기
@@ -98,16 +124,45 @@ public class PlayerControllerBase : Character , IPlayerController
         moveDirection *= attribute.GetCurValue(eAttributeType.Speed);
     }
 
+
+    protected void SetPlayerMoveDirectionToPlayerDirection(float hAxis, float vAxis)
+    {
+        if (cameraTransform == null)
+        {
+            Debug.LogError("Player => cameraTransform Null");
+            return;
+        }
+
+        Vector3 forward = transform.forward;
+        Vector3 right = transform.right;
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        right.Normalize();
+
+        moveDirection = forward * vAxis + right * hAxis;
+        moveDirection *= attribute.GetCurValue(eAttributeType.Speed);
+    }
+
+
     protected void RotateToCameraDirection()
     {
-
         bool isMoving = moveDirection.sqrMagnitude > moveThresholdSqr; // moveThresholdSqr = 0.01f 정도 미리 정의    
         if (isMoving)
         {
             RotateTowardsHorizontal(moveDirection);
         }
-        //lookatCam.Priority = 0;
     }
+
+    public float xx;
+
+    protected void RotateToMouseDirection()
+    {
+        var result = Vector3.up * inputController.lookInputDirection.x * xx;
+
+        transform.Rotate(result);        
+    }
+
 
     protected void RotateTowardsHorizontal(Vector3 direction)
     {

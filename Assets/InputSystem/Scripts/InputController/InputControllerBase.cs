@@ -5,9 +5,15 @@ public abstract class InputControllerBase : MonoBehaviour, IInputEventProvider
 {
     //############ IInputEventProvider ####################
     [Header("Input Action Asset")]
-    [SerializeField] protected InputActionAsset _inputActions;
+    [SerializeField] protected PlayerInputActions _inputActions;
 
-    public InputActionAsset inputActions
+
+    protected void Awake()
+    {
+        inputActions = new PlayerInputActions();
+    }
+
+    public PlayerInputActions inputActions
     {
         get => _inputActions;
         set => _inputActions = value;
@@ -15,7 +21,10 @@ public abstract class InputControllerBase : MonoBehaviour, IInputEventProvider
 
     public InputAction pointerAction { get; set; }
 
-    public Vector2 InputDirection => inputVector;
+    public Vector2 moveInputDirection => inputVector;
     protected Vector2 inputVector;
+    public Vector2 lookInputDirection => inputVector2;
+    protected Vector2 inputVector2;
+
     //############ IInputEventProvider ####################
 }

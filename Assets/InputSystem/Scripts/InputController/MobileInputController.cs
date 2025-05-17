@@ -17,9 +17,6 @@ public class MobileInputController : InputControllerBase
 
     private bool isDragging = false;
 
-    private readonly string ActionMap_Joystick = "Joystick";
-    private readonly string Action_Pointer = "Pointer";
-
     [Header("Raycast Settings")]
     public GraphicRaycaster uiRaycaster;
     public EventSystem eventSystem;
@@ -27,11 +24,9 @@ public class MobileInputController : InputControllerBase
     [Header("Raycast")]
     public Camera mainCamera;
 
-    float deltime;
-
     private void OnEnable()
     {
-        pointerAction = inputActions.FindActionMap(ActionMap_Joystick).FindAction(Action_Pointer);
+        pointerAction = inputActions.Mobile.Pointer;
         pointerAction.Enable();
     }
 

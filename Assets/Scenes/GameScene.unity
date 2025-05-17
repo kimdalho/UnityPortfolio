@@ -5439,9 +5439,9 @@ MonoBehaviour:
   fxSystem: {fileID: 5340422708445382616}
   abilitySystem: {fileID: 4194943606350688919}
   currentWeaponEffect: {fileID: 0}
-  inputController: {fileID: 2623072801222187156}
-  rotationSpeed: 2
+  inputProviderRaw: {fileID: 2623072801222187156}
   cameraTransform: {fileID: 5852542501813127178}
+  xx: 0
   lookatCam: {fileID: 7506040676479822648}
   gizmoColor: {r: 1, g: 0, b: 0, a: 1}
   scanRadius: 5
@@ -6244,15 +6244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16d59955ec700a74a80c08b5c5c71cb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputActions: {fileID: -944628639613478452, guid: def1b0a15eb14e645884e16ce9cb251d, type: 3}
   joystickBG: {fileID: 6796749860764253024}
   joystickHandle: {fileID: 5038197438949078878}
   uiRaycaster: {fileID: 8427343100191230640}
   eventSystem: {fileID: 209396730}
   mainCamera: {fileID: 7339827637336972708}
-  monsterLayer:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!137 &2636111628181933807
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
