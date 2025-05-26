@@ -41,10 +41,10 @@ public class Projectile : MonoBehaviour
         transform.Translate(moveDirection * 1 * Time.deltaTime, Space.World);        
     }
 
-    protected virtual void ReleaseProjectile()
-    {
-        Destroy(gameObject);
-    }
+    //protected virtual void ReleaseProjectile()
+    //{
+    //    Destroy(gameObject);
+    //}
 
 
     protected virtual void Update()

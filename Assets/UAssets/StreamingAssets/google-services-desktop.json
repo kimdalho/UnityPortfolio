@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "510289259046",
+    "project_id": "unitypp-aee3b",
+    "storage_bucket": "unitypp-aee3b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510289259046:android:7c474862207e74e6c294e7",
+        "android_client_info": {
+          "package_name": "com.aron.simplerogue"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2N4QqLynYRXVZ1Cjja2qw277RBcxSloE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
