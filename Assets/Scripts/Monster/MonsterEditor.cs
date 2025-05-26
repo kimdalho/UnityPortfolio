@@ -9,7 +9,7 @@ public class MonsterEditor : Editor
         DrawDefaultInspector();
         //인스펙터 UI에서 세로로 공간(간격)을 만들어주는 함수
         GUILayout.Space(10);
-        GUILayout.Label("ㅈ같은 좌표 버그", EditorStyles.boldLabel);
+        GUILayout.Label("MonsterEditor", EditorStyles.boldLabel);
 
         if (GUILayout.Button("좌표 리셋", GUILayout.Height(30)))
         {

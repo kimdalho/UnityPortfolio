@@ -10,7 +10,6 @@ using UnityEngine.UI;
 /// </summary>
 public class MobileInputController : InputControllerBase
 {
-
     [Header("UI References")]
     public RectTransform joystickBG;
     public RectTransform joystickHandle;
