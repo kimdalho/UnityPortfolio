@@ -40,7 +40,7 @@ public class PCInputController : InputControllerBase
     {
         inputVector = inputActions.PC.Move.ReadValue<Vector2>();
         inputVector2 = inputActions.PC.Look.ReadValue<Vector2>();
-        Debug.Log(inputVector2);
+        //Debug.Log(inputVector2);
     }
 
     private void OnDisable()

@@ -4,17 +4,17 @@ using UnityEngine;
 public class HeadItem : EquipmentItem
 {
     public List<GameObject> models;
-    public int index;
+    public int objectIndex;
     public override void Init(PickupItemData data)
     {
         base.Init(data);
         models[data.objectIndex].gameObject.SetActive(true);
-        index = data.modelIndex;
+        objectIndex = data.objectIndex;
     }
 
     public override void OnPickup(Character source)
     {        
         base.OnPickup(source);
-        source.GetModelController().SetActiveExclusive(partType, index);
+        source.GetModelController().SetActiveExclusive(partType, models[objectIndex]);
     }
 }

@@ -12,7 +12,7 @@ public class BodyItem : EquipmentItem
     {
         base.Init(data);
         models[data.objectIndex].gameObject.SetActive(true);
-        index = data.modelIndex;
+        index = data.objectIndex;
         partType = data.eEquipmentType;      
         skilltag = data.tag;
     }
@@ -20,6 +20,6 @@ public class BodyItem : EquipmentItem
     public override void OnPickup(Character source)
     {
         base.OnPickup(source);
-        source.GetModelController().SetActiveExclusive(partType, index);
+        source.GetModelController().SetActiveExclusive(partType, models[index]);
     }
 }

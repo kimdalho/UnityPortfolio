@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.XInput;
 
 
-public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow ,IPlayerController
+public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow
 {
     #region ∑Ëøß
     [SerializeField]
@@ -67,7 +67,7 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow ,IPlayerCon
 
         PCMove();
         RotateToMouseDirection();
-        //æ∆¿Ã≈€ ªÛ≈¬√¢
+        HeadNameless();
         HasPickupablesNearby();
 
         FallDeathCheck();

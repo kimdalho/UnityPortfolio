@@ -1,10 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem.XInput;
-using UnityEngine.UIElements;
 
 
-
-public class PlayerControllerBase : Character , IPlayerController
+public class PlayerControllerBase : Character
 {
     #region 이동 컨트롤러
     [SerializeField]    
@@ -14,6 +11,7 @@ public class PlayerControllerBase : Character , IPlayerController
     private Vector3 moveDirection;
     private readonly float moveThresholdSqr = 0.01f;
     public Transform cameraTransform;
+    public float mouseSensitivity;
     #endregion
 
     private void Update()
@@ -59,7 +57,6 @@ public class PlayerControllerBase : Character , IPlayerController
         if (isGrounded && calcVelocity.y < 0)
         {
             calcVelocity.y = 0;
-            // animator.SetBool(GlobalDefine.FallingHash, false);
         }
         else if (!isGrounded && calcVelocity.y > 0)
         {
@@ -82,7 +79,6 @@ public class PlayerControllerBase : Character , IPlayerController
 
         //애니메이션
         controller.SetMoveDirection(hAxis, vAxis);
-
         //이동
         SetPlayerMoveDirectionToPlayerDirection(hAxis, vAxis);
         //중력
@@ -154,13 +150,25 @@ public class PlayerControllerBase : Character , IPlayerController
         }
     }
 
-    public float xx;
 
     protected void RotateToMouseDirection()
     {
-        var result = Vector3.up * inputController.lookInputDirection.x * xx;
+        var result = Vector3.up * inputController.lookInputDirection.x * mouseSensitivity;
 
         transform.Rotate(result);        
+    }
+    
+    //역할은 머리의 회전을 마우스 lookInput기준으로
+    public void HeadNameless()
+    {
+        RigModelController rigModelController = GetModelController() as RigModelController;
+        if(rigModelController == null)
+        {
+            Debug.LogError("PlayerControllerBase => rigModelController is null");
+        }
+
+        rigModelController.HeadController(inputController.lookInputDirection.y);
+
     }
 
 
