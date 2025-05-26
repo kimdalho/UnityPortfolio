@@ -844,6 +844,10 @@ PrefabInstance:
       propertyPath: Priority.m_Value
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8127924471463589060, guid: f242db17a7dc9794cb4fb7d967da8d4c, type: 3}
+      propertyPath: Target.TrackingTarget
+      value: 
+      objectReference: {fileID: 181856120}
     - target: {fileID: 8890205123916072089, guid: f242db17a7dc9794cb4fb7d967da8d4c, type: 3}
       propertyPath: m_Weight
       value: 1
@@ -915,7 +919,10 @@ PrefabInstance:
     - {fileID: 8468015973947200595, guid: f242db17a7dc9794cb4fb7d967da8d4c, type: 3}
     - {fileID: 1554721493572487319, guid: f242db17a7dc9794cb4fb7d967da8d4c, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1015333200634988237, guid: f242db17a7dc9794cb4fb7d967da8d4c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1391032590}
   m_SourcePrefab: {fileID: 100100000, guid: f242db17a7dc9794cb4fb7d967da8d4c, type: 3}
 --- !u!4 &1137835760 stripped
 Transform:
@@ -932,6 +939,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8362387743292551223, guid: a860dd8f27743ad42ba4b8591da41450, type: 3}
   m_PrefabInstance: {fileID: 2451526474041740729}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1391032586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1015333200634988237, guid: f242db17a7dc9794cb4fb7d967da8d4c, type: 3}
+  m_PrefabInstance: {fileID: 1037014574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1391032590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391032586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4afa82ae3200b82408d605c3dbdd1e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Damping: 0
 --- !u!114 &1495136037 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4055843437149584216, guid: f242db17a7dc9794cb4fb7d967da8d4c, type: 3}
