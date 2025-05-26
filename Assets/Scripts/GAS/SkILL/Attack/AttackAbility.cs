@@ -13,7 +13,7 @@ using UnityEngine;
 public class AttackAbility : GameAbility
 {
     [Header("무기 셋팅")]
-    WeaponSetting weaponSetting;
+    protected WeaponSetting weaponSetting;
 
     //포워드 방향 카운트
     [SerializeField] public int fireCount = 1; // 발사 횟수
