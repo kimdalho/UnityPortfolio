@@ -44,17 +44,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa327d47e8100d349aaf49778a929a64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
-  AbilityTag: 15
   AbilityName: 
+  AbilityTag: 15
   Duration: 3
   targetMask:
     serializedVersion: 2
     m_Bits: 1024
-  eWeaponType: 1
-  Equip_state_Tag: 21
-  fireCount: 3
+  owner: {fileID: 0}
+  fireCount: 1
   fireMultypleAngleRange: 20
   fireMultypleCount: 1
+  eWeaponType: 1
+  Equip_state_Tag: 21
   projectileType: 0
-  delayAtkTime: 0.33

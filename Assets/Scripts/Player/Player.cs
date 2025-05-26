@@ -4,31 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem.XInput;
 
-public interface IOnGameOver
+
+public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow ,IPlayerController
 {
-    public void OnGameOver();
-
-}
-
-
-
-public partial class Player : Character , IOnGameOver ,IOnNextFlow     
-{
-    #region 이동 컨트롤러
-    [SerializeField]
-    private InputController inputController;
-    public float rotationSpeed = GlobalDefine.PlayerRotationBaseSpeed;
-    public Transform cameraTransform;
-    private Vector3 moveDirection;
-    private readonly float moveThresholdSqr = 0.01f;
-    #endregion
-
     #region 룩엣
     [SerializeField]
     private CinemachineCamera lookatCam;
     #endregion
-
 
     private HashSet<Collider> detectedItems = new HashSet<Collider>();
 
@@ -40,55 +24,51 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     public ItemdescriptionView itemdescriptionView;
     #endregion
 
-    [SerializeField] protected int fireCount = 1; // 발사 횟수
-    [SerializeField] protected int fireMultypleCount = 1;
-
     public readonly float portalDelay = GlobalDefine.PlayerPortalDelayTime;
-
     protected override void Awake()
     {
         base.Awake();
-        GameManager.OnGameOver += OnGameOver;
-        GameManager.OnNextFlow += OnNextFlow;
-        LockOnSystem.OnResetTarget += OnResetTarget;
+
         itemLayer = LayerMask.NameToLayer(GlobalDefine.String_Item);
         gameObject.tag = GlobalDefine.String_Player;
+
+        if (abilitySystem == null)
+        {
+            Debug.LogError("AbilitySystem을 찾을 수 없습니다!");
+            return;
+        }
+
+        GameManager.OnGameOver += OnGameOver;
+        GameManager.OnNextFlow += OnNextFlow;
+        PCInputController pc = inputController as PCInputController;
+        if (pc != null)
+        {
+            pc.Onfire += ActivateAbilityAttack;
+        }
+        
     }
 
     private void OnDestroy()
     {
         GameManager.OnGameOver -= OnGameOver;
         GameManager.OnNextFlow -= OnNextFlow;
-        LockOnSystem.OnResetTarget -= OnResetTarget;
-    }
-
-    private void Start()
-    {        
-        if (abilitySystem == null)
+        PCInputController pc = inputController as PCInputController;
+        if (pc != null)
         {
-            Debug.LogError("AbilitySystem을 찾을 수 없습니다!");
-            return;
+            pc.Onfire -= ActivateAbilityAttack;
         }
-    
-        if (inputController == null)
-        {
-            Debug.LogError("InputController를 찾을 수 없습니다!");
-            return;
-        }        
     }
+    
 
     private void Update()
     {
         if (GetDead())
             return;
 
-        Move();
-
-        RotateToCameraDirection();
+        PCMove();
+        RotateToMouseDirection();
         //아이템 상태창
         HasPickupablesNearby();
-        //
-        ActivateAbilityAttack();
 
         FallDeathCheck();
     } 
@@ -98,11 +78,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     /// </summary>
     protected virtual void ActivateAbilityAttack()
     {
-        if (LockOnSystem.instance.lookatMonster == null)
-        {            
-            return;
-        }            
-
         abilitySystem.ActivateAbility(eTagType.Attack, this);
     }
 
@@ -114,40 +89,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
     public void OnJumpEnd()
     {
         controller.SetState(AnimState.Land);
-    }
-
-    private void Move()
-    {
-        Debug.LogWarning(controller.GetState());
-
-        if (gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput) ||
-            (controller.GetState() == AnimState.Attack))
-            return;
-
-        float hAxis = inputController.InputDirection.x;
-        float vAxis = inputController.InputDirection.y;
-        
-        controller.SetMoveDirection(hAxis, vAxis);
-
-        Vector3 move = new Vector3(hAxis, 0, vAxis);
-        SetPlayerMoveDirectionToCameraDirection(hAxis, vAxis);
-
-        GroundCheck();
-        if (isGrounded && calcVelocity.y < 0)
-        {
-            calcVelocity.y = 0;
-           // animator.SetBool(GlobalDefine.FallingHash, false);
-        }
-        else if(!isGrounded && calcVelocity.y > 0)
-        {
-          //  animator.SetBool(GlobalDefine.FallingHash, true);
-        }
-
-        calcVelocity.y += gravity * Time.deltaTime;
-
-        characterController.Move(moveDirection * Time.deltaTime);
-        characterController.Move(calcVelocity * Time.deltaTime);            
-    }
+    }  
 
     public void FallDeathCheck()
     {
@@ -156,44 +98,7 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
             GameManager.instance.GameOver();
         }
     }
-    
-
-    void RotateToCameraDirection()
-    {
-        LockOnSystem LOS = LockOnSystem.instance;
-        if (LOS == null)
-        {
-            Debug.LogError("Player => LockOnSystem is Null");
-        }
-
-        bool isMoving = moveDirection.sqrMagnitude > moveThresholdSqr; // moveThresholdSqr = 0.01f 정도 미리 정의
-        if (LOS.lookatMonster != null)
-        {          
-            if (gameplayTagSystem.HasTag(eTagType.Player_State_HasAttackTarget))
-            {
-                lookatCam.Priority = 2;
-                RotateTowardsHorizontal(LOS.lookatMonster.position - transform.position);
-            }
-            return;
-        }       
-        else if (isMoving)
-        {           
-            RotateTowardsHorizontal(moveDirection);
-        }
-        lookatCam.Priority = 0;
-    }
-
-    void RotateTowardsHorizontal(Vector3 direction)
-    {
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude < 0.001f) // 거의 0에 가까우면 무시
-            return;
-
-        Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    }
-
+   
     private void OnTriggerEnter(Collider other)
     {
         if (detectedItems.Contains(other)) return;
@@ -222,39 +127,15 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
         }
     }
     #endregion
-
-
-    /// <summary>
-    /// 카메라 방향으로 플레이어 이동 방향 정하기
-    /// 이렇게 하면 엘든링이나 몬헌처럼 카메라로 플레이어의 정면을 볼수있다.
-    /// </summary>
-    /// <param name="vAxis"></param>
-    /// <param name="hAxis"></param>
-    private void SetPlayerMoveDirectionToCameraDirection(float hAxis,float vAxis)
-    {
-        if(cameraTransform ==null)
-        {
-            Debug.LogError("Player => cameraTransform Null");
-            return;
-        }
-
-        Vector3 forward = cameraTransform.forward;
-        Vector3 right = cameraTransform.right;
-        forward.y = 0;
-        right.y = 0;
-        forward.Normalize();
-        right.Normalize();
-
-        moveDirection = forward * vAxis + right * hAxis;
-        moveDirection *= attribute.GetCurValue(eAttributeType.Speed);
-    }
-
+    
     public void OnGameOver()
     {
         isDead = true;
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
         GetModelController().SetState(AnimState.Death);
     }
+
+    
 
 
     public void PortalDelay()
@@ -292,13 +173,6 @@ public partial class Player : Character , IOnGameOver ,IOnNextFlow
             yield return null;
         }
         gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
-    }
-
-
-
-    public void OnResetTarget()
-    {   
-        gameplayTagSystem.RemoveTag(eTagType.Player_State_HasAttackTarget);
     }
 
 }

@@ -8,24 +8,14 @@ using UnityEngine.UI;
 /// <summary>
 /// 추후 인풋시스템으로 업데이트 할 수도 있다. 이식성을 위해 입력 이벤트를 관리하는 컨트롤러
 /// </summary>
-public class InputController : MonoBehaviour
+public class MobileInputController : InputControllerBase
 {
 
     [Header("UI References")]
     public RectTransform joystickBG;
     public RectTransform joystickHandle;
 
-    [Header("Input Action Asset")]
-    public InputActionAsset inputActions;
-    private InputAction pointerAction;
-
-    private Vector2 inputVector;
-    public Vector2 InputDirection => inputVector;
-
     private bool isDragging = false;
-
-    private readonly string ActionMap_Joystick = "Joystick";
-    private readonly string Action_Pointer = "Pointer";
 
     [Header("Raycast Settings")]
     public GraphicRaycaster uiRaycaster;
@@ -33,13 +23,10 @@ public class InputController : MonoBehaviour
 
     [Header("Raycast")]
     public Camera mainCamera;
-    public LayerMask monsterLayer;
-
-    float deltime;
 
     private void OnEnable()
     {
-        pointerAction = inputActions.FindActionMap("Joystick").FindAction("Pointer");
+        pointerAction = inputActions.Mobile.Pointer;
         pointerAction.Enable();
     }
 
@@ -70,14 +57,12 @@ public class InputController : MonoBehaviour
             else
             {
                 ResetJoystick();
-                RaycastToMonster(screenPos);
             }
         }
         else
         {
             ResetJoystick();
         }
-        SetTargetDelay();
     }
 
     void UpdateJoystick(Vector2 screenPosition)
@@ -99,53 +84,10 @@ public class InputController : MonoBehaviour
         }
     }
 
-
-    private void SetTargetDelay()
-    {
-        if(deltime < 5)
-        {
-            deltime += Time.deltaTime;
-        }
-        else
-        {
-            deltime = 0;
-        }
-    }
-
     void ResetJoystick()
     {
         inputVector = Vector2.zero;
         joystickHandle.anchoredPosition = Vector2.zero;
-    }
-    /// <summary>
-    /// 터치된 대상이 없으면 리셋
-    /// </summary>
-    /// <param name="screenPosition"></param>
-    void RaycastToMonster(Vector2 screenPosition)
-    {
-        Ray ray = mainCamera.ScreenPointToRay(screenPosition);
-
-        Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue, 0.3f);
-           
-        if (Physics.Raycast(ray.origin, ray.direction * 100, out RaycastHit hit, 100f, monsterLayer))
-        {
-            ILockOnTarget lockOnTarget =  hit.collider.gameObject.GetComponent<ILockOnTarget>();
-            ;
-            if (lockOnTarget != null && lockOnTarget.GetDead() == false)
-            {
-                LockOnSystem.instance.SetPlayerTarget(lockOnTarget);                
-                return;            
-            }
-        }
-        LockOnSystem.instance.KillTarget();
-    }
-
-    public void Keyboard()
-    {
-        #region 마우스 셋업
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        #endregion
     }
 
     bool IsPointerOverJoystick(Vector2 screenPosition)

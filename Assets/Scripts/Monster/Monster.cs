@@ -107,12 +107,14 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
 
     public virtual void PatrolAction()
     {
+        var localPos = new Vector3(transform.position.x, 0, transform.position.z);
+        patrolTargetPos = new Vector3(patrolTargetPos.x,0, patrolTargetPos.z);
         var _moveDir = patrolTargetPos - transform.position;
         var speed = attribute.GetCurValue(eAttributeType.Speed);
         MoveAction(_moveDir.normalized, speed);
 
         // 목표 위치에 도달하면 Idle 상태로 변경
-        if (Vector3.Distance(patrolTargetPos, transform.position) < 0.01f)
+        if (Vector3.Distance(patrolTargetPos, localPos) < 1.0f)
         {
             patrolElapsed = 0f;
             patrolTargetPos = default(Vector3);
@@ -159,7 +161,8 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
         if (SoundManager.instance != null)
             SoundManager.instance.PlayEffect(eEffectType.oop);
 
-        UserData.Instance.SetKillMonster(level);
+        if(UserData.Instance != null)
+            UserData.Instance.SetKillMonster(level);
     }
     #endregion
 
@@ -180,12 +183,11 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
         if (patrolTargetPos != default(Vector3)) return;
 
         // 맵에 배치 되어 있는 grid를 기준으로 patrol 진행
-        var _gridTrans = roomGrid.GetChild(2);
+        var _gridTrans = roomGrid.GetChild(0);
 
         var _randY = UnityEngine.Random.Range(0, _gridTrans.childCount);
         var _randX = UnityEngine.Random.Range(0, _gridTrans.GetChild(_randY).childCount);
 
-        //patrolTargetPos = roomGrid.GetChild(2).GetChild(_randY).GetChild(_randX).position;
         patrolTargetPos = roomGrid.GetChild(_randY).GetChild(_randX).position;
     }
 
