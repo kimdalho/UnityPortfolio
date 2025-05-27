@@ -4,6 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using static Unity.Burst.Intrinsics.Arm;
+using static UnityEngine.UI.GridLayoutGroup;
 
 [RequireComponent(typeof(MonsterFSM))]
 public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
@@ -286,5 +287,12 @@ public abstract class Monster : Character , IInitializableItem<MonsterDataSO>
     public void ResetPos()
     {
         gameObject.transform.position = startNode.GetItemPos();
+    }
+
+    public void Kill()
+    {
+        GameEffect effect = new GameEffect(eModifier.Add);
+        effect.AddModifier(eAttributeType.Health, -10000);
+        ApplyEffect(effect);
     }
 }

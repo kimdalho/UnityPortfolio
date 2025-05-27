@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.UI.GridLayoutGroup;
 
 public class Projectile : MonoBehaviour
 {
@@ -10,6 +9,7 @@ public class Projectile : MonoBehaviour
     private Vector3 moveDirection;
     private float accumulateGravityValue = 0f;
     protected eTagType abilityTag;
+    [SerializeField] private float projectileBaseSpeed;
 
     private void Awake()
     {
@@ -29,26 +29,55 @@ public class Projectile : MonoBehaviour
         this.targetLayer = targetLayer;
         this.abilityTag = abilityTag;
         float attackSpeed = owner.attribute.GetCurValue(eAttributeType.AttackSpeed);
-
         moveDirection = dir;
-
         var _eulerAngle = Quaternion.LookRotation(moveDirection).eulerAngles;
         transform.rotation = Quaternion.Euler(_eulerAngle.x, _eulerAngle.y, 0f);
+        Destroy(gameObject, 2f);
     } 
 
     protected virtual void Move()
     {
-        transform.Translate(moveDirection * 1 * Time.deltaTime, Space.World);        
+        transform.Translate(moveDirection * projectileBaseSpeed * Time.deltaTime, Space.World);        
     }
 
-    protected virtual void ReleaseProjectile()
+    private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        Debug.Log("Bullet 닿음");
     }
 
 
     protected virtual void Update()
     {
         Move();
+        float sphereRadius = 0.3f; // 구체 반지름 조정 가능
+        float takeDamage = owner.attribute.GetCurValue(eAttributeType.Attack);
+
+        Collider[] results = SphereDetector.DetectObjectsInSphere(transform.position, sphereRadius, targetLayer);
+        foreach (var col in results)
+        {
+            AttributeEntity ae = col.GetComponent<AttributeEntity>();
+            if (ae != null)
+            {
+                var character = ae as Character;
+
+                if (character != null && character != owner)
+                {
+                    
+                    if (character.fxSystem != null)
+                    {
+                        GameEffect effect = new GameEffect(eModifier.Add);
+                        effect.AddModifier(eAttributeType.Health, -takeDamage);
+                        ae.ApplyEffect(effect);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("맞은 대상 FX가 없다");
+                    }
+
+                    Destroy(gameObject); // 투사체 제거
+                    break; // 하나만 맞고 사라지게
+                }
+            }
+        }
     }
 }

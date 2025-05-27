@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8117979469834984983}
   - component: {fileID: 8117979469834984982}
-  - component: {fileID: -129116346194053633}
+  - component: {fileID: 6306752783846791611}
   m_Layer: 0
   m_Name: AKBullet
   m_TagString: Untagged
@@ -78,7 +78,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.05
+  m_Time: 0.01
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -135,12 +135,12 @@ TrailRenderer:
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 0.001
   m_MaskInteraction: 0
   m_Autodestruct: 1
   m_Emitting: 1
   m_ApplyActiveColorSpace: 0
---- !u!114 &-129116346194053633
+--- !u!114 &6306752783846791611
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,13 +149,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8117979469834984969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e1662076c60b874d904fe923deecce3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6bdcd7b84e8576e48b8aa05e331fb0dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckDistance: 0.2
-  baseSpeed: 100
-  PenetrateCnt: 1
-  detectSize: 0.5
-  gravity: 0
-  retentionTime: 3
   rig: {fileID: 0}
+  projectileBaseSpeed: 60
+  bulletDistance: 100

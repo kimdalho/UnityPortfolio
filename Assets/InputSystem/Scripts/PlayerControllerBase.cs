@@ -159,7 +159,7 @@ public class PlayerControllerBase : Character
     }
     
     //역할은 머리의 회전을 마우스 lookInput기준으로
-    public void HeadNameless()
+    public void RotateHeadToZoomDirection()
     {
         RigModelController rigModelController = GetModelController() as RigModelController;
         if(rigModelController == null)

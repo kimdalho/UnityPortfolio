@@ -1,13 +1,10 @@
-
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem.XInput;
 
 
-public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow
+public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow , IWeaponTarget
 {
     #region 룩엣
     [SerializeField]
@@ -44,8 +41,7 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow
         if (pc != null)
         {
             pc.Onfire += ActivateAbilityAttack;
-        }
-        
+        }        
     }
 
     private void OnDestroy()
@@ -67,18 +63,14 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow
 
         PCMove();
         RotateToMouseDirection();
-        HeadNameless();
+        RotateHeadToZoomDirection();
         HasPickupablesNearby();
-
         FallDeathCheck();
     } 
-
-    /// <summary>
-    /// 공격 어빌리티
-    /// </summary>
     protected virtual void ActivateAbilityAttack()
-    {
-        abilitySystem.ActivateAbility(eTagType.Attack, this);
+    {        
+        if(gameplayTagSystem.HasTag(eTagType.Player_State_IgnoreInput) == false)
+            abilitySystem.ActivateAbility(eTagType.Attack, this);
     }
 
     public void OnJumpStart()
@@ -133,10 +125,7 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow
         isDead = true;
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
         GetModelController().SetState(AnimState.Death);
-    }
-
-    
-
+    }   
 
     public void PortalDelay()
     {
@@ -158,8 +147,7 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow
     public void OnNextFlow()
     {     
         gameplayTagSystem.AddTag(eTagType.Player_State_IgnoreInput);
-        StartCoroutine(CoOnNextLeveling());
-    
+        StartCoroutine(CoOnNextLeveling());    
     }
 
     private IEnumerator CoOnNextLeveling()
@@ -174,6 +162,24 @@ public class Player : PlayerControllerBase, IOnGameOver ,IOnNextFlow
         }
         gameplayTagSystem.RemoveTag(eTagType.Player_State_IgnoreInput);
     }
+    [SerializeField] private float debugRayLength = 100f;
+    [SerializeField] private Color debugRayColor = Color.red;
 
+    public Vector3 GetTargetForward()
+    {
+        Vector3 targetPoint;
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
+        {
+            targetPoint = hit.point; // 명중 지점
+        }
+        else
+        {
+            targetPoint = ray.origin + ray.direction * 1000f; // 아무것도 안 맞았을 때
+        }
+
+        return ray.direction;
+
+      
+    }
 }
-

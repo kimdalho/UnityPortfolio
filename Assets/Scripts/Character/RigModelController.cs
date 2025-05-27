@@ -54,4 +54,9 @@ public class RigModelController : ModelController
         headTarget.position = basePosition + Vector3.up * currentOffsetY;
     }
 
+    public Transform GetHeadTarget()
+    {
+        return headTarget;
+    }
+
 }
