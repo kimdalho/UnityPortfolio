@@ -16,9 +16,9 @@ MonoBehaviour:
   attribute:
     Health:
       AttributeName: Health
-      MaxValue: 13
-      BaseValue: 13
-      CurValue: 13
+      MaxValue: 10
+      BaseValue: 10
+      CurValue: 10
     Attack:
       AttributeName: Attack
       MaxValue: 1

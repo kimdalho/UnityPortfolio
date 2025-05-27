@@ -11,10 +11,16 @@ public class MonsterEditor : Editor
         GUILayout.Space(10);
         GUILayout.Label("MonsterEditor", EditorStyles.boldLabel);
 
-        if (GUILayout.Button("ÁÂÇ¥ ¸®¼Â", GUILayout.Height(30)))
+        if (GUILayout.Button("ResetPos", GUILayout.Height(30)))
         {
             MonsterFSM mon = (MonsterFSM)target;
             mon.GetMon().ResetPos();
+        }
+
+        if (GUILayout.Button("Kill", GUILayout.Height(30)))
+        {
+            MonsterFSM mon = (MonsterFSM)target;
+            mon.GetMon().Kill();
         }
     }
 }

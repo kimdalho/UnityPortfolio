@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PCInputController : InputControllerBase
 {
+    public Action Onfire;
     public void Keyboard()
     {
         #region 마우스 셋업
@@ -20,8 +22,6 @@ public class PCInputController : InputControllerBase
         inputActions.PC.Zoom.canceled += ctx => StopZoom();
     }
 
-    public Action Onfire;
-
     private void StopZoom()
     {
         Debug.Log("StopZoom");
@@ -34,13 +34,22 @@ public class PCInputController : InputControllerBase
 
     private void Fire()
     {
-        Onfire?.Invoke();
+        StartCoroutine(xx());
     }
+
+    private IEnumerator xx()
+    {
+        while (true)
+        {
+            Onfire?.Invoke();
+            yield return null;
+        }
+    }
+
     private void Update()
     {
         inputVector = inputActions.PC.Move.ReadValue<Vector2>();
         inputVector2 = inputActions.PC.Look.ReadValue<Vector2>();
-        //Debug.Log(inputVector2);
     }
 
     private void OnDisable()

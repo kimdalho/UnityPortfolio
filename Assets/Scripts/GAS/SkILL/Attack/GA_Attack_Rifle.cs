@@ -46,7 +46,9 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
     {
         float angleRange = (fireMultypleCount == 1) ? 0f : fireMultypleAngleRange;
 
-        Vector3 forward = owner.transform.forward;
+        IWeaponTarget weaponTarget = owner.GetComponent<IWeaponTarget>();
+
+        Vector3 forward = weaponTarget.GetTargetForward();
         Vector3 startDir = Quaternion.AngleAxis(-angleRange, Vector3.up) * forward;
         Vector3 endDir = Quaternion.AngleAxis(angleRange, Vector3.up) * forward;
 
@@ -58,7 +60,6 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
             projectile.Initialized(owner, direction, targetMask, AbilityTag, true);                     
         }
 
-        //owner.GetAnimator().SetBool(GlobalDefine.AnimFire, true);
         try
         {
             if (owner.currentWeaponEffect != null)
@@ -99,6 +100,5 @@ public class GA_Attack_Rifle : AttackAbility , IProjectileCountModifiable
     public override void EndAbility()
     {
         base.EndAbility();
-        //owner.GetAnimator().SetBool(GlobalDefine.AnimFire, false);
     }
 }
