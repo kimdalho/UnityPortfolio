@@ -34,17 +34,8 @@ public class PCInputController : InputControllerBase
 
     private void Fire()
     {
-        StartCoroutine(xx());
-    }
-
-    private IEnumerator xx()
-    {
-        while (true)
-        {
-            Onfire?.Invoke();
-            yield return null;
-        }
-    }
+        Onfire?.Invoke();
+    }  
 
     private void Update()
     {
